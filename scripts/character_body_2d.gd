@@ -5,6 +5,8 @@ const SPEED = 300.0
 var rotation_speed = 2
 var rotation_direction = 0
 
+var bullet_scene = preload("res://scenes/bulletplayer.tscn")
+
 func _ready():
 	target_position = global_position # Store initial position as center
 
@@ -33,3 +35,10 @@ func _physics_process(delta: float) -> void:
 		rotation = rotation_minmax
 
 	#move_and_slide()
+
+
+func _on_timer_timeout() -> void: # BURST MODE
+	var bullet = bullet_scene.instantiate()
+	bullet.global_position = $FiringPosition.global_position #adjust starting firing position
+	
+	get_parent().add_child(bullet)
