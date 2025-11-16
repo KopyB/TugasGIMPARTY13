@@ -2,12 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://b3a0qpi13npj" path="res://icon.svg" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://cof2nk7b0xan" path="res://scenes/dummy.tscn" id="3_sugp2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
 size = Vector2(64, 131)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
-size = Vector2(128, 131)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20, 689)
@@ -36,16 +34,6 @@ autostart = true
 [node name="FiringPosition" type="Marker2D" parent="CharacterBody2D"]
 position = Vector2(1, -73)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(580, 90)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(2, 0.5)
-shape = SubResource("RectangleShape2D_0xm2m")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
-texture = ExtResource("2_h2yge")
-
 [node name="BorderLeft" type="StaticBody2D" parent="."]
 position = Vector2(0, 336)
 
@@ -58,5 +46,9 @@ position = Vector2(1160, 331)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BorderRight"]
 shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="Dummy" parent="." instance=ExtResource("3_sugp2")]
+position = Vector2(579, 101.000015)
+scale = Vector2(2.243505, 2.236937)
 
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
