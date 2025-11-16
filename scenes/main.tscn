@@ -16,6 +16,7 @@ anchors_preset = 0
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(579, 500)
+collision_layer = 2
 script = ExtResource("1_0xm2m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
