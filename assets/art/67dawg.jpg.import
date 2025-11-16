@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b5h3db1kpx3aw"
-path="res://.godot/imported/67dawg.jpg-75d8a2c5a3389cf9ef208c3a8d9c0855.ctex"
+path="res://.godot/imported/67dawg.jpg-496793cfed5d5374a94b313f58c740e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/67dawg.jpg"
-dest_files=["res://.godot/imported/67dawg.jpg-75d8a2c5a3389cf9ef208c3a8d9c0855.ctex"]
+source_file="res://assets/art/67dawg.jpg"
+dest_files=["res://.godot/imported/67dawg.jpg-496793cfed5d5374a94b313f58c740e6.ctex"]
 
 [params]
 
