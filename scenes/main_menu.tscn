@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=3 uid="uid://ynu4bos33vch"]
+
+[ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://cdi6611onmh2e" path="res://assets/art/export202511142313309120.png" id="2_ekxnf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vue75"]
+bg_color = Color(0.42927015, 0.80435985, 0.87020886, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="main_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ekxnf")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1600.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_ekxnf")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -179.5
+offset_top = 110.0
+offset_right = 179.5
+offset_bottom = 179.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 50
+text = "ROUGE WAVES"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -143.5
+offset_top = -31.5
+offset_right = 143.5
+offset_bottom = 31.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="START" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "START"
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "EXIT"
+expand_icon = true
+
+[connection signal="pressed" from="VBoxContainer/START" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]
