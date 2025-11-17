@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var target_position : Vector2
-const SPEED = 300.0
+const SPEED = 500.0
 var rotation_speed = 2
 var rotation_direction = 0
 

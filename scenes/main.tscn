@@ -1,23 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=7 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://b3a0qpi13npj" path="res://icon.svg" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cof2nk7b0xan" path="res://scenes/dummy.tscn" id="3_sugp2"]
-[ext_resource type="AudioStream" uid="uid://dwotmv5f1rmcy" path="res://assets/audio/33. SWORD - Toby Fox.ogg" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
 size = Vector2(64, 131)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
-size = Vector2(20, 689)
+size = Vector2(20, 1079.5)
 
 [node name="main" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(579, 500)
+position = Vector2(971, 944)
 collision_layer = 2
 script = ExtResource("1_0xm2m")
 
@@ -41,25 +40,30 @@ position = Vector2(1, -73)
 position = Vector2(0, 336)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderLeft"]
-position = Vector2(0, -1.5)
+position = Vector2(-10, 204)
 shape = SubResource("RectangleShape2D_h2yge")
 
 [node name="BorderRight" type="StaticBody2D" parent="."]
 position = Vector2(1160, 331)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BorderRight"]
+position = Vector2(771, 209.25)
 shape = SubResource("RectangleShape2D_h2yge")
 
 [node name="Dummy" parent="." instance=ExtResource("3_sugp2")]
-position = Vector2(579, 101.000015)
+position = Vector2(958.00006, 155)
+scale = Vector2(2.243505, 2.236937)
+
+[node name="Dummy" parent="Dummy" instance=ExtResource("3_sugp2")]
+position = Vector2(958.00006, 155)
 scale = Vector2(2.243505, 2.236937)
 
 [node name="BGMPlayer" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_jyhfs")
+visible = false
 autoplay = true
-parameters/looping = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_tbgi4")]
 
