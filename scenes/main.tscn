@@ -47,14 +47,10 @@ shape = SubResource("RectangleShape2D_h2yge")
 position = Vector2(1160, 331)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BorderRight"]
-position = Vector2(771, 209.25)
+position = Vector2(770, 211)
 shape = SubResource("RectangleShape2D_h2yge")
 
 [node name="Dummy" parent="." instance=ExtResource("3_sugp2")]
-position = Vector2(958.00006, 155)
-scale = Vector2(2.243505, 2.236937)
-
-[node name="Dummy" parent="Dummy" instance=ExtResource("3_sugp2")]
 position = Vector2(958.00006, 155)
 scale = Vector2(2.243505, 2.236937)
 
@@ -63,7 +59,6 @@ visible = false
 autoplay = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_tbgi4")]
 
