@@ -9,7 +9,8 @@ var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 
 func _ready():
 	target_position = global_position # Store initial position as center
-
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:

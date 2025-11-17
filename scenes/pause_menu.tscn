@@ -34,9 +34,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -147.0
-offset_top = -97.0
+offset_top = -105.0
 offset_right = 147.0
-offset_bottom = 113.0
+offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 30
@@ -54,17 +54,17 @@ text = "Restart"
 [node name="EXIT" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Exit"
+text = "Main Menu"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -79.5
-offset_top = 112.0
-offset_right = 79.5
-offset_bottom = 171.0
+offset_left = -75.75
+offset_top = 117.0
+offset_right = 83.75
+offset_bottom = 176.0
 grow_horizontal = 2
 theme_override_font_sizes/normal_font_size = 40
 text = "PAUSED"
