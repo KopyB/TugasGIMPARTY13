@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=9 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://b3a0qpi13npj" path="res://icon.svg" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://cof2nk7b0xan" path="res://scenes/dummy.tscn" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scenes/enemy_spawner.gd" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://demu8iu1eljjf" path="res://assets/art/seamlesstest.jpg" id="4_tbgi4"]
+[ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scenes/background_atmosphere.gd" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
@@ -50,10 +52,6 @@ position = Vector2(1160, 331)
 position = Vector2(770, 211)
 shape = SubResource("RectangleShape2D_h2yge")
 
-[node name="Dummy" parent="." instance=ExtResource("3_sugp2")]
-position = Vector2(958.00006, 155)
-scale = Vector2(2.243505, 2.236937)
-
 [node name="BGMPlayer" type="AudioStreamPlayer2D" parent="."]
 visible = false
 autoplay = true
@@ -63,9 +61,19 @@ autoplay = true
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_tbgi4")]
 
 [node name="BackgroundAtmosphere" type="ParallaxBackground" parent="."]
+script = ExtResource("4_tefeu")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="BackgroundAtmosphere"]
+motion_mirroring = Vector2(0, 3321)
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
+position = Vector2(0, -2205)
+scale = Vector2(2.9553847, 2.87695)
+texture = ExtResource("4_tbgi4")
+centered = false
+
+[node name="EnemySpawner" type="Marker2D" parent="."]
+position = Vector2(964, 175)
+script = ExtResource("4_jyhfs")
 
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
