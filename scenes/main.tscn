@@ -58,4 +58,10 @@ stream = ExtResource("4_jyhfs")
 autoplay = true
 parameters/looping = true
 
+[node name="BackgroundAtmosphere" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="BackgroundAtmosphere"]
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
+
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
