@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://fujugshyvkm6"]
+
+[ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://b3a0qpi13npj" path="res://icon.svg" id="2_qhqgy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(64, 131)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_g2els")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -0.25)
+scale = Vector2(0.5, 1.0117188)
+texture = ExtResource("2_qhqgy")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="FiringPosition" type="Marker2D" parent="."]
+position = Vector2(1, -73)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
