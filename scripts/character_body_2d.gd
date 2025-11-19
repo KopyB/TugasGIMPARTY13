@@ -6,7 +6,26 @@ var rotation_speed = 2
 var rotation_direction = 0
 
 var bullet_scene = preload("res://scenes/bulletplayer.tscn")
+var is_multishot_active = false
+var multishot_timer = null # Kita akan buat timer via kode
 
+func activate_multishot():
+	print("Multishot Aktif!")
+	is_multishot_active = true
+	
+	# Reset timer jika ambil bola lagi saat skill masih aktif
+	if multishot_timer:
+		multishot_timer.time_left = 7.0
+	else:
+		# Buat timer baru sementara (One Shot)
+		multishot_timer = get_tree().create_timer(7.0)
+		await multishot_timer.timeout
+		
+		# Setelah 7 detik:
+		is_multishot_active = false
+		multishot_timer = null
+		print("Multishot Habis.")
+		
 func _ready():
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -36,10 +55,26 @@ func _physics_process(delta: float) -> void:
 		rotation = rotation_minmax
 
 	#move_and_slide()
-
+func spawn_bullet(angle_in_degrees):
+	var bullet = bullet_scene.instantiate()
+	
+	# Set posisi awal
+	bullet.global_position = $FiringPosition.global_position
+	
+	# Set rotasi peluru (konversi derajat ke radian karena Godot pakai radian)
+	bullet.rotation_degrees = rotation_degrees + angle_in_degrees
+	
+	# Tambahkan ke Main Scene
+	get_parent().add_child(bullet)
 
 func _on_timer_timeout() -> void: # BURST MODE
-	var bullet = bullet_scene.instantiate()
-	bullet.global_position = $FiringPosition.global_position #adjust starting firing position
+	if is_multishot_active:
+		# Tembak 3 peluru (Kiri, Tengah, Kanan)
+		spawn_bullet(-15) # -15 derajat
+		spawn_bullet(0)   # Lurus
+		spawn_bullet(15)  # +15 derajat
+	else:
+		# Tembak 1 peluru normal
+		spawn_bullet(0)
+		
 	
-	get_parent().add_child(bullet)

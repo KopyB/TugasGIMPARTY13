@@ -1,13 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=6 format=3 uid="uid://c3fmrec3ntaaj"]
 
-[ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://b3a0qpi13npj" path="res://icon.svg" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scenes/enemy_spawner.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scenes/background_atmosphere.gd" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
-size = Vector2(64, 131)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20, 1079.5)
@@ -16,26 +12,8 @@ size = Vector2(20, 1079.5)
 layout_mode = 3
 anchors_preset = 0
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_jyhfs")]
 position = Vector2(971, 944)
-collision_layer = 2
-script = ExtResource("1_0xm2m")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_1bvp3")
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-position = Vector2(0, -0.25)
-scale = Vector2(0.5, 1.0117188)
-texture = ExtResource("2_h2yge")
-
-[node name="Timer" type="Timer" parent="CharacterBody2D"]
-wait_time = 0.2
-autostart = true
-
-[node name="FiringPosition" type="Marker2D" parent="CharacterBody2D"]
-position = Vector2(1, -73)
 
 [node name="BorderLeft" type="StaticBody2D" parent="."]
 position = Vector2(0, 336)
@@ -73,5 +51,3 @@ centered = false
 [node name="EnemySpawner" type="Marker2D" parent="."]
 position = Vector2(964, 175)
 script = ExtResource("4_jyhfs")
-
-[connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
