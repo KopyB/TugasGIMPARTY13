@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://be3gkgd4sqjkq"]
 
-[ext_resource type="Script" uid="uid://c1pmd2ba1da73" path="res://scenes/power_up.gd" id="1_ig136"]
+[ext_resource type="Script" uid="uid://c1pmd2ba1da73" path="res://scripts/power_up.gd" id="1_ig136"]
 [ext_resource type="Texture2D" uid="uid://co6gltq7i0ppk" path="res://assets/art/i hate ziggger.jpg" id="1_j7my0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ig136"]
