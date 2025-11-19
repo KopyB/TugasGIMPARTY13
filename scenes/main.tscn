@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=8 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://b3a0qpi13npj" path="res://icon.svg" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scenes/enemy_spawner.gd" id="4_jyhfs"]
-[ext_resource type="Texture2D" uid="uid://demu8iu1eljjf" path="res://assets/art/seamlesstest.jpg" id="4_tbgi4"]
 [ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scenes/background_atmosphere.gd" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 
@@ -69,7 +68,6 @@ motion_mirroring = Vector2(0, 3321)
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
 position = Vector2(0, -2205)
 scale = Vector2(2.9553847, 2.87695)
-texture = ExtResource("4_tbgi4")
 centered = false
 
 [node name="EnemySpawner" type="Marker2D" parent="."]
