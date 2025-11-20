@@ -20,14 +20,12 @@ func take_damage(amount: int):
 		print("Dummy died")
 
 func spawn_powerup_chance():
-	# LAMA: if randf() <= 0.3:
-	
-	# BARU (Gunakan ini sementara untuk test):
-	if randf() <= 1.0: 
-		print("Mencoba spawn powerup...") # Debug print
+	if randf() <= 0.9: 
 		var powerup = powerup_scene.instantiate()
 		powerup.global_position = global_position
 		
-		# Kita gunakan 'get_tree().current_scene' agar lebih aman
-		# daripada 'get_parent()', untuk memastikan bola masuk ke World utama
+		# Random angka acak 0 sampai 5 
+		var random_type = randi() % 6 
+		powerup.current_type = random_type
+		
 		get_tree().current_scene.call_deferred("add_child", powerup)
