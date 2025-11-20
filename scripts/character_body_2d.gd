@@ -19,6 +19,8 @@ var active_laser_node = null
 var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 @onready var shoot_timer = $Timer
 
+#animation
+@onready var _animation_player = $AnimatedSprite2D
 
 # Fungsi utama yang dipanggil oleh bola PowerUp
 func apply_powerup(type):
@@ -157,6 +159,13 @@ func _physics_process(delta: float) -> void:
 			global_position = target_position
 			velocity = Vector2.ZERO
 			rotation = lerp(rotation, 0.0, delta * 1.0)
+	#animation
+	if Input.is_action_pressed("ui_left"):
+		_animation_player.play("left")
+	elif Input.is_action_pressed("ui_right"):
+		_animation_player.play("right")
+	else:
+		_animation_player.play("idle")
 	
 	# rotasi kapal
 	rotation_direction = Input.get_axis("ui_left", "ui_right")
