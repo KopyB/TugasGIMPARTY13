@@ -1,6 +1,7 @@
 extends Area2D
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # Daftar tipe power-up sesuai tabel Anda
 enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND}
 
@@ -34,6 +35,8 @@ func _on_body_entered(body):
 		queue_free()
 
 =======
+=======
+>>>>>>> Stashed changes
 var speed = 150
 
 func _process(delta):
@@ -48,6 +51,9 @@ func _on_body_entered(body):
 		queue_free() # Hapus bola ini
 
 # Opsional: Hapus jika keluar layar (gunakan VisibleOnScreenNotifier2D seperti peluru)
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
