@@ -3,6 +3,7 @@ extends Area2D
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # Daftar tipe power-up sesuai tabel Anda
 enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND}
 
@@ -40,6 +41,8 @@ func _on_body_entered(body):
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 var speed = 150
 
 func _process(delta):
@@ -56,6 +59,9 @@ func _on_body_entered(body):
 # Opsional: Hapus jika keluar layar (gunakan VisibleOnScreenNotifier2D seperti peluru)
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
