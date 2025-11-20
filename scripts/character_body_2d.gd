@@ -107,24 +107,21 @@ func activate_second_wind():
 # --- FUNGSI MENERIMA DAMAGE & MATI ---
 # Pastikan logika mati Anda ada di fungsi ini
 func take_damage_player():
-	# 1. Cek Shield dulu
+	# --- LOGIKA SHIELD DI SINI ---
 	if has_shield:
 		has_shield = false
 		modulate = Color(1, 1, 1, 1)
 		print("Shield Pecah!")
-		return # Keluar, jangan lanjut ke logika mati
-
-	# 2. Jika tidak ada shield, cek apakah harusnya mati?
-	# Anggap ini fungsi dipanggil saat HP habis atau sekali tabrak mati
+		return 
 	
 	# --- LOGIKA REVIVE DI SINI ---
 	if has_second_wind:
 		trigger_shockwave() # Ledakkan semua musuh
 		has_second_wind = false # Pakai nyawa cadangannya
 		print("SECOND WIND ACTIVATED! Player bangkit kembali!")
-		return # JANGAN MATI
+		return 
 
-	# 3. Jika tidak ada shield & tidak ada second wind -> MATI
+	# Jika tidak ada shield & tidak ada second wind -> MATI
 	game_over()
 
 func game_over():
