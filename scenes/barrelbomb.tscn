@@ -1,17 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8sj2vdjmb2u8"]
+[gd_scene load_steps=4 format=3 uid="uid://nn4uivwhk0m2"]
 
-[ext_resource type="Script" path="res://scenes/barrelbomb.gd" id="1_6k5uj"]
+[ext_resource type="Script" uid="uid://cfq0qotj34ne7" path="res://scenes/barrelbomb.gd" id="1_6k5uj"]
+[ext_resource type="Texture2D" uid="uid://v8i5qbf0dc1q" path="res://assets/art/illustration-of-barrel-bomb-vector.jpg" id="1_elpax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6k5uj"]
-size = Vector2(90.75, 94)
+size = Vector2(93.375, 94)
 
 [node name="Barrel" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_6k5uj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1.1920929e-07, 0)
 scale = Vector2(0.10153062, 0.103622064)
+texture = ExtResource("1_elpax")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.375, 0)
+position = Vector2(0.3125, -1)
 shape = SubResource("RectangleShape2D_6k5uj")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

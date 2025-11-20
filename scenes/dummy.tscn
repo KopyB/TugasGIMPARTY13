@@ -6,7 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
 size = Vector2(269, 266)
 
-[node name="Dummy" type="StaticBody2D" groups=["enemies"]]
+[node name="Dummy" type="Area2D" groups=["enemies"]]
+collision_mask = 2
 script = ExtResource("1_k5f3b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -16,3 +17,5 @@ shape = SubResource("RectangleShape2D_xmspm")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5705869, 0.5671543)
 texture = ExtResource("1_gtj52")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

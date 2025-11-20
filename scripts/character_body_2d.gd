@@ -6,6 +6,7 @@ var rotation_speed = 2
 var rotation_direction = 0
 var normal_speed = 300.0
 var current_speed = normal_speed
+var is_dead = false
 
 # VARIABEL STATUS POWER-UP
 var has_shield = false
@@ -122,11 +123,13 @@ func take_damage_player():
 		return 
 
 	# Jika tidak ada shield & tidak ada second wind -> MATI
-	game_over()
+	die()
 
-func game_over():
-	print("Game Over")
-	get_tree().reload_current_scene()
+func die():
+	is_dead = true
+	print("Player Mati - Memulai Sequence Game Over")
+	#get_tree().reload_current_scene()
+	get_tree().paused = true
 
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
@@ -139,6 +142,7 @@ func trigger_shockwave():
 	get_tree().call_group("enemies", "take_damage", 9999)
 	
 func _ready():
+	add_to_group("player")
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
