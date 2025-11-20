@@ -11,6 +11,7 @@ var current_speed = normal_speed
 var has_shield = false
 var is_multishot_active = false
 var is_artillery_active = false # Tembakan cepat/banyak
+var is_kraken_active = false
 var has_second_wind = false
 var laser_scene = preload("res://scenes/LaserBeam.tscn")
 var active_laser_node = null
@@ -76,22 +77,26 @@ func activate_speed():
 func activate_kraken():
 	print("KRAKEN RELEASED!")
 	
-	# Jika laser belum ada, buat baru
+	# Deactivate gatekeeping timer
+	is_kraken_active = true 
+	
+	# Spawn Laser 
 	if active_laser_node == null:
 		active_laser_node = laser_scene.instantiate()
-		# Tempelkan laser sebagai ANAK Player, agar ikut bergerak
 		add_child(active_laser_node)
-		# Posisikan di titik tembak (sedikit ke atas)
 		active_laser_node.position = Vector2(0, -50) 
 	
-	# Durasi Laser X detik (misal 5 detik)
-	await get_tree().create_timer(5.0).timeout
+	# Duration Skill (laser)
+	await get_tree().create_timer(6.0).timeout
 	
-	# Hapus Laser setelah durasi habis
+	# ClearLaser
 	if active_laser_node != null:
 		active_laser_node.queue_free()
 		active_laser_node = null
 		print("Kraken selesai.")
+	
+	# Nyalakan kembali peluru biasa
+	is_kraken_active = false
 
 # --- LOGIKA BARU: SECOND WIND (REVIVE) ---
 func activate_second_wind():
@@ -165,6 +170,7 @@ func _physics_process(delta: float) -> void:
 		rotation = rotation_minmax
 
 	#move_and_slide()
+	
 func spawn_bullet(angle_in_degrees):
 	var bullet = bullet_scene.instantiate()
 	
@@ -177,7 +183,11 @@ func spawn_bullet(angle_in_degrees):
 	# Tambahkan ke Main Scene
 	get_parent().add_child(bullet)
 
-func _on_timer_timeout() -> void: # BURST MODE
+func _on_timer_timeout() -> void: # Timer
+	# Pasang gatekeeping peluru
+	if is_kraken_active:
+		return
+		
 	if is_multishot_active:
 		# Tembak 3 peluru (Kiri, Tengah, Kanan)
 		spawn_bullet(-15) # -15 derajat
