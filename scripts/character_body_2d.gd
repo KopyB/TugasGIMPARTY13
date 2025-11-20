@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var _animation_player = $AnimatedSprite2D
+@onready var _animation_player_shadow = $animatedshadow
 var target_position : Vector2
 # VARIABEL MOVEMENT
 var rotation_speed = 2
@@ -157,6 +159,17 @@ func _physics_process(delta: float) -> void:
 			global_position = target_position
 			velocity = Vector2.ZERO
 			rotation = lerp(rotation, 0.0, delta * 1.0)
+	
+	#animation
+	if Input.is_action_pressed("ui_left"):
+		_animation_player.play("left")
+		_animation_player_shadow.play("left")
+	elif Input.is_action_pressed("ui_right"):
+		_animation_player.play("right")
+		_animation_player_shadow.play("right")
+	else:
+		_animation_player.play("idle")
+		_animation_player_shadow.play("idle")
 	
 	# rotasi kapal
 	rotation_direction = Input.get_axis("ui_left", "ui_right")

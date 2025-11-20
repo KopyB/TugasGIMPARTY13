@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpho3o8db7fek" path="res://scripts/pause_menu.gd" id="1_n87rw"]
 
-[node name="pause_menu" type="Control"]
+[node name="pause_menu" type="Control" node_paths=PackedStringArray("state", "resume_button")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -11,6 +11,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n87rw")
+state = NodePath("VBoxContainer/state")
+resume_button = NodePath("VBoxContainer/RESUME")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -34,12 +36,18 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -147.0
-offset_top = -105.0
+offset_top = -194.0
 offset_right = 147.0
-offset_bottom = 105.0
+offset_bottom = 131.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 30
+
+[node name="state" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "[GAME STATE]"
+horizontal_alignment = 1
 
 [node name="RESUME" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -55,19 +63,6 @@ text = "Restart"
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Main Menu"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -75.75
-offset_top = 117.0
-offset_right = 83.75
-offset_bottom = 176.0
-grow_horizontal = 2
-theme_override_font_sizes/normal_font_size = 40
-text = "PAUSED"
 
 [connection signal="pressed" from="VBoxContainer/RESUME" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="VBoxContainer/RESTART" to="." method="_on_restart_pressed"]

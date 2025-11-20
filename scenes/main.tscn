@@ -1,10 +1,68 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=6 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
-[ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
+=======
+[gd_scene load_steps=16 format=3 uid="uid://c3fmrec3ntaaj"]
 
+[ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="2_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://bjmiy4v7rwka2" path="res://assets/art/player left.png" id="2_tefeu"]
+[ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scenes/enemy_spawner.gd" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scenes/background_atmosphere.gd" id="4_tefeu"]
+[ext_resource type="Texture2D" uid="uid://cy3otfdh5lio3" path="res://assets/art/player right.png" id="4_tipki"]
+[ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="5_85g3d"]
+>>>>>>> Stashed changes
+[ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://cjvrx0my80qfk" path="res://assets/art/WaterBGSquished.png" id="5_tefeu"]
+
+<<<<<<< Updated upstream
+=======
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(59, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tipki"]
+atlas = ExtResource("2_o6xl0")
+region = Rect2(100, 308, 2000, 2500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6xl0"]
+atlas = ExtResource("2_tefeu")
+region = Rect2(100, 308, 2000, 2500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85g3d"]
+atlas = ExtResource("4_tipki")
+region = Rect2(100, 308, 2300, 2500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tbgi4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tipki")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6xl0")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85g3d")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
+
+>>>>>>> Stashed changes
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20, 1079.5)
 
@@ -14,6 +72,42 @@ anchors_preset = 0
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_jyhfs")]
 position = Vector2(971, 944)
+<<<<<<< Updated upstream
+=======
+collision_layer = 2
+script = ExtResource("1_0xm2m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(2.5, 14)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="animatedshadow" type="AnimatedSprite2D" parent="CharacterBody2D"]
+modulate = Color(0.20784314, 0.3137255, 0.45490196, 1)
+visibility_layer = 2
+position = Vector2(-16, 15)
+scale = Vector2(0.055, 0.055)
+sprite_frames = SubResource("SpriteFrames_tbgi4")
+animation = &"idle"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+position = Vector2(-8, 0)
+scale = Vector2(0.055, 0.055)
+sprite_frames = SubResource("SpriteFrames_tbgi4")
+animation = &"idle"
+
+[node name="Timer" type="Timer" parent="CharacterBody2D"]
+wait_time = 0.2
+autostart = true
+
+[node name="FiringPosition" type="Marker2D" parent="CharacterBody2D"]
+position = Vector2(1, -73)
+>>>>>>> Stashed changes
+
+[node name="CopalGimming" type="Sprite2D" parent="CharacterBody2D"]
+visible = false
+position = Vector2(-403, -283)
+scale = Vector2(0.15981543, 0.17175257)
+texture = ExtResource("5_85g3d")
 
 [node name="BorderLeft" type="StaticBody2D" parent="."]
 position = Vector2(0, 336)
@@ -41,11 +135,17 @@ autoplay = true
 script = ExtResource("4_tefeu")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="BackgroundAtmosphere"]
-motion_mirroring = Vector2(0, 3321)
+motion_mirroring = Vector2(1135, 1375.1)
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
+<<<<<<< Updated upstream
 position = Vector2(0, -2205)
 scale = Vector2(2.9553847, 2.87695)
+=======
+position = Vector2(-22, -262)
+scale = Vector2(0.5911459, 1.2732464)
+texture = ExtResource("5_tefeu")
+>>>>>>> Stashed changes
 centered = false
 
 [node name="EnemySpawner" type="Marker2D" parent="."]
