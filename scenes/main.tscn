@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=7 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
-[ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
-[ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
+[ext_resource type="Script" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="4_tbgi4"]
+[ext_resource type="Script" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
@@ -41,11 +42,10 @@ autoplay = true
 script = ExtResource("4_tefeu")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="BackgroundAtmosphere"]
-motion_mirroring = Vector2(0, 3321)
+motion_mirroring = Vector2(0, 1080)
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
-position = Vector2(0, -2205)
-scale = Vector2(2.9553847, 2.87695)
+texture = ExtResource("4_tbgi4")
 centered = false
 
 [node name="EnemySpawner" type="Marker2D" parent="."]
