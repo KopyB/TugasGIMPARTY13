@@ -83,7 +83,7 @@ func activate_kraken():
 	# Spawn Laser 
 	if active_laser_node == null:
 		active_laser_node = laser_scene.instantiate()
-		add_child(active_laser_node)
+		call_deferred("add_child", active_laser_node)
 		active_laser_node.position = Vector2(0, -50) 
 	
 	# Duration Skill (laser)

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3aj4kgidet1u"]
+
+[ext_resource type="Script" path="res://scenes/enemybullet.gd" id="1_dw73b"]
+[ext_resource type="Texture2D" uid="uid://drxqwc74gefam" path="res://assets/art/bullet-png.png" id="1_p872y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dw73b"]
+size = Vector2(67, 293)
+
+[node name="EMBullet" type="Area2D"]
+script = ExtResource("1_dw73b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5591586
+texture = ExtResource("1_p872y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_dw73b")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-49, -48)
+rect = Rect2(-10, -10, 128, 128)
