@@ -48,7 +48,8 @@ func _process(delta):
 		shoot_timer = 0
 		perform_attack()
 		
-	if position.y > 800 or position.x > 1300: 
+	# Angka 1500 dan 900 ini harus lebih besar dari ukuran layar Anda
+	if position.x > 1940 or position.y > 1080: 
 		queue_free()
 
 # --- FUNGSI SERANGAN ---

@@ -1,54 +1,55 @@
 extends Marker2D
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
-@onready var spawn_timer = $SpawnTimer # Referensi ke Node Timer
+@onready var spawn_timer = $SpawnTimer
+
+# --- PENGATURAN DIFFICULTY ---
+var time_elapsed = 0.0     # Penghitung waktu bermain
+var initial_spawn_rate = 3.0 # Awal game: Spawn tiap 3 detik
+var min_spawn_rate = 0.5   # Batas ngebut: Paling cepat spawn tiap 0.5 detik
+var difficulty_curve = 0.02 # Seberapa cepat game jadi susah kalau mau kesulitannya eksponensial tambahkan 0.01 + n ; n > 0
 
 func _ready():
-	# Pastikan Timer dimulai
-	randomize() # Agar acakan selalu beda tiap game
-	
-	# Jika belum autostart, start manual:
-	if spawn_timer.is_stopped():
-		spawn_timer.start()
-		
-func _on_spawn_timer_timeout() -> void:
-	spawn_random_enemy()
-	
-	var random_interval = randf_range(2.0, 4.0)
-	spawn_timer.start(random_interval)
+	# Mulai timer pertama kali
+	spawn_timer.start(initial_spawn_rate)
 
-func spawn_random_enemy():
+func _process(delta):
+	# Hitung durasi permainan terus menerus
+	time_elapsed += delta
+
+func _on_spawn_timer_timeout():
+	spawn_linear_enemy()
+	
+	# --- DIFFICULTY LOGIC ---
+	# Rumus: Semakin lama main (time_elapsed naik), interval spawn makin kecil
+	var new_wait_time = initial_spawn_rate - (time_elapsed * difficulty_curve)
+	
+	# Agar tidak nol atau negatif (batas minimal 0.5 detik)
+	if new_wait_time < min_spawn_rate:
+		new_wait_time = min_spawn_rate
+	
+	# Debug print untuk melihat perubahan speed spawn
+	print("Waktu main: ", int(time_elapsed), "s | Spawn Rate: ", "%.2f" % new_wait_time)
+	
+	# Set timer untuk spawn berikutnya dengan waktu baru
+	spawn_timer.start(new_wait_time)
+
+func spawn_linear_enemy():
 	var new_enemy = enemy_scene.instantiate()
 	var viewport_rect = get_viewport_rect().size
 	
+	# Tentukan tipe musuh berdasarkan pola (bukan random murni lagi jika mau)
+	# Tapi untuk sekarang kita random tipe saja, tapi spawn-nya yang linear.
 	var type_rng = randi() % 2
 	
-	# --- SOLUSI 1 & 2: POSISI SPAWN ---
-	# Kita gunakan 'global_position' agar posisinya fix di layar
-	# tidak peduli dimana Anda menaruh node EnemySpawner.
-	
-	if type_rng == 0: 
-		# GUNBOAT (Atas ke Bawah)
+	if type_rng == 0: # GUNBOAT
 		new_enemy.enemy_type = 0
-		
-		# X: Acak dari kiri (50) sampai kanan ujung (lebar layar - 50)
 		var spawn_x = randf_range(50, viewport_rect.x - 50)
-		
-		# Y: Di atas layar (-60)
 		new_enemy.global_position = Vector2(spawn_x, -60)
-		
-	else: 
-		# BOMBER (Kiri ke Kanan)
+	else: # BOMBER
 		new_enemy.enemy_type = 1
-		
-		# X: Di kiri layar (-60)
 		var spawn_x = -60
-		
-		# Y: Acak dari atas (50) sampai setengah layar
-		var spawn_y = randf_range(50, viewport_rect.y / 2)
-		
+		var spawn_y = randf_range(50, viewport_rect.y / 3)
 		new_enemy.global_position = Vector2(spawn_x, spawn_y)
 	
-	# PENTING: Tambahkan musuh ke Scene Utama, bukan sebagai anak Spawner
-	# Ini mencegah musuh ikut posisi Spawner yang mungkin salah.
 	get_tree().current_scene.add_child(new_enemy)
