@@ -1,13 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=10 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="4_tbgi4"]
 [ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
+[ext_resource type="AudioStream" uid="uid://bwiuff7gptlix" path="res://assets/audio/Rogue Waves2.mp3" id="6_o6xl0"]
+[ext_resource type="AudioStream" uid="uid://7vncn2l70eqt" path="res://assets/audio/Rogue Waves.mp3" id="7_tipki"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20, 1079.5)
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_o6xl0"]
+clip_count = 2
+clip_0/name = &"Rogue Waves"
+clip_0/stream = ExtResource("7_tipki")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"Rogue Waves 2"
+clip_1/stream = ExtResource("6_o6xl0")
+clip_1/auto_advance = 1
+clip_1/next_clip = 0
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -55,5 +68,11 @@ script = ExtResource("4_jyhfs")
 wait_time = 3.0
 one_shot = true
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamInteractive_o6xl0")
+volume_db = 6.0
+autoplay = true
+bus = &"Music"
 
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]
