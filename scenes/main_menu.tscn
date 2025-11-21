@@ -1,14 +1,52 @@
-[gd_scene load_steps=10 format=3 uid="uid://ynu4bos33vch"]
+[gd_scene load_steps=15 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
-[ext_resource type="Texture2D" uid="uid://cdi6611onmh2e" path="res://assets/art/export202511142313309120.png" id="2_ekxnf"]
+[ext_resource type="Script" path="res://scripts/background_atmosphere.gd" id="2_oa1go"]
 [ext_resource type="AudioStream" uid="uid://cncjsucphp3t" path="res://assets/audio/OST2_3.mp3" id="3_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="3_tbmy8"]
 [ext_resource type="Script" uid="uid://ci7epneqyxjoa" path="res://scenes/music_control.gd" id="4_8ln24"]
 [ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="4_wu84c"]
-[ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://scenes/fulltoggle.gd" id="5_rtw2f"]
+[ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
+
+[sub_resource type="Animation" id="Animation_jk1qb"]
+resource_name = "nyoom"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(975, 2000), Vector2(975, -500)]
+}
+
+[sub_resource type="Animation" id="Animation_5dd4i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(975, 2000)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lgwnu"]
+_data = {
+&"RESET": SubResource("Animation_5dd4i"),
+&"nyoom": SubResource("Animation_jk1qb")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vue75"]
-bg_color = Color(0.42927015, 0.80435985, 0.87020886, 1)
+bg_color = Color(0.21960784, 0.49411765, 0.7529412, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -31,18 +69,28 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ekxnf")
 
-[node name="Background" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -1600.0
-grow_horizontal = 2
-grow_vertical = 0
-texture = ExtResource("2_ekxnf")
-expand_mode = 5
-stretch_mode = 5
+[node name="BackgroundAtmosphere" type="ParallaxBackground" parent="."]
+script = ExtResource("2_oa1go")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="BackgroundAtmosphere"]
+motion_mirroring = Vector2(0, 1080)
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
+texture = ExtResource("3_tbmy8")
+centered = false
+
+[node name="animationstella" type="Node2D" parent="."]
+position = Vector2(975, 2000)
+scale = Vector2(0.06, 0.06)
+
+[node name="Sprite2D" type="Sprite2D" parent="animationstella"]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("8_tbmy8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="animationstella"]
+libraries = {
+&"": SubResource("AnimationLibrary_lgwnu")
+}
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 1
@@ -85,7 +133,7 @@ text = "START"
 [node name="SETTINGS" type="Button" parent="mainbuttons"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
 theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_vue75")
@@ -96,7 +144,7 @@ expand_icon = true
 [node name="Exit" type="Button" parent="mainbuttons"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
 theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_vue75")

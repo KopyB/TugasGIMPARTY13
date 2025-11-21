@@ -3,6 +3,8 @@ extends Control
 @onready var mainbuttons: VBoxContainer = $mainbuttons
 @onready var settings: Panel = $Settings
 @onready var config = ConfigFile.new()
+@onready var animation_player: AnimationPlayer = $animationstella/AnimationPlayer
+
 var fstoggle
 var volume
 
@@ -26,14 +28,20 @@ func _ready() -> void:
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+#func _process(delta: float) -> void:
+	#pass
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
 
 func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	#animation stella zooming
+	animation_player.play("nyoom")
+	await animation_player.animation_finished
+	
+	#fade in transition
+	Transition.load_scene("res://scenes/main.tscn")
+	#get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func _on_settings_pressed() -> void:
 	mainbuttons.visible = false

@@ -24,11 +24,13 @@ func _on_resume_pressed() -> void:
 	
 func _on_restart_pressed() -> void:
 	resume()
-	get_tree().reload_current_scene()
+	Transition.reload_scene()
+	#get_tree().reload_current_scene()
 
 func _on_exit_pressed() -> void:
 	resume()
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	Transition.load_scene("res://scenes/main_menu.tscn")
+	#get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("escape") and not get_tree().paused:
@@ -38,7 +40,7 @@ func _process(delta: float) -> void:
 		resume()
 
 func health(health_value: int) -> void:
-	pass # nanti masukin fungsinya, hasilnya buat ngubah toggled_handler typenay jadi 0
+	pass # nanti masukin fungsinya, hasilnya buat ngubah toggled_handler typenya jadi 0
 
 func toggled_handler(type: int) -> void:
 	state.text = MAP_TYPE_STRING[type]
