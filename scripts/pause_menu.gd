@@ -36,7 +36,6 @@ func _on_exit_pressed() -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("escape") and not get_tree().paused:
 		toggled_handler(1) #masukin var baru buat klo mati atau tidak
-		paused()
 	elif Input.is_action_just_pressed("escape") and get_tree().paused:
 		resume()
 
