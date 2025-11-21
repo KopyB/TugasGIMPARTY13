@@ -18,6 +18,7 @@ func resume():
 
 func _ready() -> void:
 	hide()
+	add_to_group("ui_manager")
 
 func _on_resume_pressed() -> void:
 	resume()
@@ -48,3 +49,4 @@ func toggled_handler(type: int) -> void:
 		resume_button.hide()
 	else:
 		resume_button.show()
+	paused()

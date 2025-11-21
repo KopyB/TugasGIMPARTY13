@@ -5,7 +5,7 @@ var enemy_scene = preload("res://scenes/dummy.tscn")
 
 # --- SETTING DIFFICULTY ---
 var time_elapsed = 0.0
-var initial_spawn_rate = 10.0 # REQUEST: Awal game 10 detik
+var initial_spawn_rate = 8.0 # Awal game 8 detik
 var min_spawn_rate = 0.5      # Paling cepat 0.5 detik
 var difficulty_curve = 0.05   # Seberapa cepat jadi susah
 

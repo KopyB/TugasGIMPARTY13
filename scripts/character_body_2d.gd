@@ -23,6 +23,42 @@ var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 #animation
 @onready var _animation_player = $AnimatedSprite2D
 
+func _ready():
+	add_to_group("player")
+	target_position = global_position # Store initial position as center
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
+# --- FUNGSI MENERIMA DAMAGE & MATI ---
+# Pastikan logika mati Anda ada di fungsi ini
+func take_damage_player():
+	# --- LOGIKA SHIELD DI SINI ---
+	if has_shield:
+		has_shield = false
+		modulate = Color(1, 1, 1, 1)
+		print("Shield Pecah!")
+		return 
+	
+	# --- LOGIKA REVIVE DI SINI ---
+	if has_second_wind:
+		trigger_shockwave() # Ledakkan semua musuh
+		has_second_wind = false # Pakai nyawa cadangannya
+		print("SECOND WIND ACTIVATED! Player bangkit kembali!")
+		return 
+
+	# Jika tidak ada shield & tidak ada second wind -> MATI
+	die()
+
+func die():
+	is_dead = true
+	print("Player Mati - Memulai Sequence Game Over")
+	# Matikan visual kapal agar terlihat 'hancur'
+	_animation_player.visible = false 
+	set_physics_process(false) # Matikan pergerakan
+	
+	# Panggil UI Manager lewat Group
+	# Angka 0 artinya tipe "YOU DIED!" (sesuai dictionary di pause_menu.gd)
+	get_tree().call_group("ui_manager", "toggled_handler", 0)
+	
 # Fungsi utama yang dipanggil oleh bola PowerUp
 func apply_powerup(type):
 	# PowerUp.gd harus bisa diakses, atau kita pakai angka integer 0-3
@@ -84,6 +120,7 @@ func activate_kraken():
 	is_kraken_active = true 
 	
 	# Spawn Laser 
+	await get_tree().create_timer(1.0).timeout
 	if active_laser_node == null:
 		active_laser_node = laser_scene.instantiate()
 		call_deferred("add_child", active_laser_node)
@@ -106,33 +143,7 @@ func activate_second_wind():
 	has_second_wind = true
 	print("Second Wind Ready! (Nyawa cadangan aktif)")
 	# Opsional: Tambahkan visual effect (misal aura putih)
-
-# --- FUNGSI MENERIMA DAMAGE & MATI ---
-# Pastikan logika mati Anda ada di fungsi ini
-func take_damage_player():
-	# --- LOGIKA SHIELD DI SINI ---
-	if has_shield:
-		has_shield = false
-		modulate = Color(1, 1, 1, 1)
-		print("Shield Pecah!")
-		return 
 	
-	# --- LOGIKA REVIVE DI SINI ---
-	if has_second_wind:
-		trigger_shockwave() # Ledakkan semua musuh
-		has_second_wind = false # Pakai nyawa cadangannya
-		print("SECOND WIND ACTIVATED! Player bangkit kembali!")
-		return 
-
-	# Jika tidak ada shield & tidak ada second wind -> MATI
-	die()
-
-func die():
-	is_dead = true
-	print("Player Mati - Memulai Sequence Game Over")
-	#get_tree().reload_current_scene()
-	get_tree().paused = true
-
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
@@ -142,11 +153,6 @@ func trigger_shockwave():
 	# LOGIKA MEMBUNUH SEMUA MUSUH
 	# Kita panggil grup "enemies" yang sudah kita buat di Langkah 1
 	get_tree().call_group("enemies", "take_damage", 9999)
-	
-func _ready():
-	add_to_group("player")
-	target_position = global_position # Store initial position as center
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
