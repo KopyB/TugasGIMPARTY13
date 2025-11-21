@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7xqyn"]
 size = Vector2(6.5, 35.25)
 
-[node name="PLBullet" type="Area2D"]
+[node name="PLBullet" type="Area2D" groups=["player_bullet"]]
 collision_mask = 9
 script = ExtResource("1_7xqyn")
 

@@ -24,6 +24,6 @@ wait_time = 0.2
 autostart = true
 
 [node name="FiringPosition" type="Marker2D" parent="."]
-position = Vector2(1, -73)
+position = Vector2(0, -82)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
