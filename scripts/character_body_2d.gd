@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 		else: #sudah di center
 			global_position = target_position
 			velocity = Vector2.ZERO
-			rotation = clamp(rotation, 0.0, delta * 1.0)
+			rotation = lerp(rotation, 0.0, delta * 1.0)
 	
 	# rotasi kapal
 	rotation_direction = Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
