@@ -22,6 +22,7 @@ func _ready() -> void:
 	timer.timeout.connect(_on_score_timer_timeout)
 	update_score_display()
 	hide()
+	add_to_group("ui_manager")
 
 func _on_resume_pressed() -> void:
 	resume()
@@ -54,6 +55,7 @@ func toggled_handler(type: int) -> void:
 	else:
 		resume_button.show()
 		scorelabel.hide()
+   paused()
 		
 func _on_score_timer_timeout():
 	score += 1
