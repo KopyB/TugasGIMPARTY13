@@ -23,6 +23,8 @@ var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 #animation
 @onready var _animation_player = $AnimatedSprite2D
 
+@onready var skill_timer = $SkillDurationTimer
+
 func _ready():
 	add_to_group("player")
 	target_position = global_position # Store initial position as center
@@ -89,7 +91,11 @@ func activate_shield():
 # --- LOGIKA 2: MULTISHOT (Sudah Anda punya) ---
 func activate_multishot():
 	is_multishot_active = true
-	await get_tree().create_timer(7.0).timeout # Durasi 7 detik
+	
+	# Ganti create_timer dengan skill_timer
+	skill_timer.start(7.0)
+	await skill_timer.timeout
+	
 	is_multishot_active = false
 
 # --- LOGIKA 3: ARTILLERY (Burst/Fast Fire) ---
@@ -97,7 +103,8 @@ func activate_artillery():
 	is_artillery_active = true
 	shoot_timer.wait_time = 0.1 # Tembak jadi ngebut banget (0.1 detik)
 	
-	await get_tree().create_timer(5.0).timeout # Durasi 5 detik
+	skill_timer.start(5.0)
+	await skill_timer.timeout # Durasi 5 detik
 	
 	is_artillery_active = false
 	shoot_timer.wait_time = 0.2 # Balikin ke speed tembak normal (sesuaikan angka ini)
@@ -107,7 +114,8 @@ func activate_speed():
 	current_speed = 800.0 
 	rotation_speed = 6
 	
-	await get_tree().create_timer(5.0).timeout # Durasi 5 detik
+	skill_timer.start(5.0)
+	await skill_timer.timeout # Durasi 5 detik
 	
 	current_speed = normal_speed # Balik normal
 	rotation_speed = 2
@@ -115,29 +123,31 @@ func activate_speed():
 	# --- LOGIKA BARU: KRAKEN SLAYER (LASER) ---
 func activate_kraken():
 	print("KRAKEN RELEASED!")
-	
-	# Deactivate gatekeeping timer
 	is_kraken_active = true 
 	
-	# Spawn Laser 
-	await get_tree().create_timer(1.0).timeout
+	# Spawn Laser
+	# Kita tunggu sebentar (animasi charge) pakai timer juga
+	skill_timer.start(0.5)
+	await skill_timer.timeout 
+	
 	if active_laser_node == null:
 		active_laser_node = laser_scene.instantiate()
 		call_deferred("add_child", active_laser_node)
 		active_laser_node.position = Vector2(0, -50) 
 	
-	# Duration Skill (laser)
-	await get_tree().create_timer(6.0).timeout
+	# --- PERBAIKAN DURASI ---
+	# Gunakan Node Timer, bukan get_tree().create_timer
+	# Saat game dipause, timer ini akan berhenti menghitung.
+	skill_timer.start(6.0) # Durasi Laser 6 detik
+	await skill_timer.timeout
 	
-	# ClearLaser
+	# Clear Laser
 	if active_laser_node != null:
 		active_laser_node.queue_free()
 		active_laser_node = null
 		print("Kraken selesai.")
 	
-	# Nyalakan kembali peluru biasa
 	is_kraken_active = false
-
 # --- LOGIKA BARU: SECOND WIND (REVIVE) ---
 func activate_second_wind():
 	has_second_wind = true

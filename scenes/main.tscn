@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=11 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://bwiuff7gptlix" path="res://assets/audio/Rogue Waves2.mp3" id="6_o6xl0"]
 [ext_resource type="AudioStream" uid="uid://7vncn2l70eqt" path="res://assets/audio/Rogue Waves.mp3" id="7_tipki"]
+[ext_resource type="Script" uid="uid://dlp03cxd8mca3" path="res://scripts/maze_spawner.gd" id="8_tipki"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20, 1079.5)
@@ -74,5 +75,8 @@ stream = SubResource("AudioStreamInteractive_o6xl0")
 volume_db = 6.0
 autoplay = true
 bus = &"Music"
+
+[node name="MazeSpawner" type="Node2D" parent="."]
+script = ExtResource("8_tipki")
 
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]

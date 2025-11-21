@@ -58,3 +58,13 @@ func spawn_logic():
 		
 		new_enemy.global_position = Vector2(spawn_x, spawn_y)
 		get_tree().current_scene.add_child(new_enemy)
+		
+# Fungsi untuk mematikan spawn musuh biasa sementara
+func pause_spawning():
+	print("MAZE DIMULAI: Musuh biasa berhenti spawn.")
+	spawn_timer.stop() # Matikan timer
+
+# Fungsi untuk menyalakan kembali
+func resume_spawning():
+	print("MAZE SELESAI: Musuh biasa kembali spawn.")
+	spawn_timer.start(initial_spawn_rate) # Nyalakan lagi
