@@ -2,6 +2,7 @@ extends Control
 
 @onready var mainbuttons: VBoxContainer = $mainbuttons
 @onready var settings: Panel = $Settings
+@onready var credits : Panel = $Credits
 @onready var config = ConfigFile.new()
 @onready var animation_player: AnimationPlayer = $animationstella/AnimationPlayer
 
@@ -13,6 +14,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	mainbuttons.visible = true
 	settings.visible = false
+	credits.visible = false
 	
 	var load_err = config.load("user://settings.cfg")
 	if load_err == OK:
@@ -46,6 +48,10 @@ func _on_start_pressed() -> void:
 func _on_settings_pressed() -> void:
 	mainbuttons.visible = false
 	settings.visible = true
+	
+func _on_credits_pressed() -> void:
+	mainbuttons.visible = false
+	credits.visible = true
 
 func _on_back_pressed() -> void:
 	_ready()
