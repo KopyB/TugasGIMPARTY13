@@ -145,7 +145,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
 func _physics_process(delta: float) -> void:
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
 	if direction:
 		velocity.x = direction * current_speed
 		move_and_slide()
@@ -168,7 +168,7 @@ func _physics_process(delta: float) -> void:
 		_animation_player.play("idle")
 	
 	# rotasi kapal
-	rotation_direction = Input.get_axis("ui_left", "ui_right")
+	rotation_direction = Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
 	var rot = rotation
 	if velocity.x != 0:
 		rot += rotation_direction * rotation_speed * delta
