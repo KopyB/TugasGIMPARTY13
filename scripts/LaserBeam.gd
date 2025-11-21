@@ -21,3 +21,8 @@ func apply_damage():
 	for body in bodies:
 		if body.has_method("take_damage"):
 			body.take_damage(damage_per_tick)
+	
+	var areas = get_overlapping_areas()
+	for area in areas:
+		if area.has_method("take_damage"):
+			area.take_damage(damage_per_tick)

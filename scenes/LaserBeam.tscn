@@ -6,6 +6,7 @@
 size = Vector2(254, 2749)
 
 [node name="LaserBeam" type="Area2D"]
+collision_mask = 13
 script = ExtResource("1_tuomb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -6,6 +6,7 @@ var rotation_speed = 2
 var rotation_direction = 0
 var normal_speed = 300.0
 var current_speed = normal_speed
+var is_dead = false
 
 # VARIABEL STATUS POWER-UP
 var has_shield = false
@@ -85,7 +86,7 @@ func activate_kraken():
 	# Spawn Laser 
 	if active_laser_node == null:
 		active_laser_node = laser_scene.instantiate()
-		add_child(active_laser_node)
+		call_deferred("add_child", active_laser_node)
 		active_laser_node.position = Vector2(0, -50) 
 	
 	# Duration Skill (laser)
@@ -124,11 +125,13 @@ func take_damage_player():
 		return 
 
 	# Jika tidak ada shield & tidak ada second wind -> MATI
-	game_over()
+	die()
 
-func game_over():
-	print("Game Over")
-	get_tree().reload_current_scene()
+func die():
+	is_dead = true
+	print("Player Mati - Memulai Sequence Game Over")
+	#get_tree().reload_current_scene()
+	get_tree().paused = true
 
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
@@ -141,11 +144,12 @@ func trigger_shockwave():
 	get_tree().call_group("enemies", "take_damage", 9999)
 	
 func _ready():
+	add_to_group("player")
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
 func _physics_process(delta: float) -> void:
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
 	if direction:
 		velocity.x = direction * current_speed
 		move_and_slide()
@@ -168,7 +172,7 @@ func _physics_process(delta: float) -> void:
 		_animation_player.play("idle")
 	
 	# rotasi kapal
-	rotation_direction = Input.get_axis("ui_left", "ui_right")
+	rotation_direction = Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
 	var rot = rotation
 	if velocity.x != 0:
 		rot += rotation_direction * rotation_speed * delta
