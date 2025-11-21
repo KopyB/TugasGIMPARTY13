@@ -1,7 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
-[ext_resource type="Script" path="res://scripts/background_atmosphere.gd" id="2_oa1go"]
 [ext_resource type="AudioStream" uid="uid://cncjsucphp3t" path="res://assets/audio/OST2_3.mp3" id="3_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="3_tbmy8"]
 [ext_resource type="Script" uid="uid://ci7epneqyxjoa" path="res://scenes/music_control.gd" id="4_8ln24"]
@@ -9,20 +8,16 @@
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_rtw2f"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
 
-[sub_resource type="Animation" id="Animation_jk1qb"]
-resource_name = "nyoom"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(975, 2000), Vector2(975, -500)]
-}
+[sub_resource type="GDScript" id="GDScript_oa1go"]
+script/source = "extends ParallaxBackground
+
+@export var scroll_speed = 60.0 
+
+func _process(delta):
+	scroll_offset.y += scroll_speed * delta
+	
+	
+"
 
 [sub_resource type="Animation" id="Animation_5dd4i"]
 length = 0.001
@@ -37,6 +32,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(975, 2000)]
+}
+
+[sub_resource type="Animation" id="Animation_jk1qb"]
+resource_name = "nyoom"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(975, 2000), Vector2(975, -500)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lgwnu"]
@@ -70,7 +80,7 @@ grow_vertical = 2
 script = ExtResource("1_ekxnf")
 
 [node name="BackgroundAtmosphere" type="ParallaxBackground" parent="."]
-script = ExtResource("2_oa1go")
+script = SubResource("GDScript_oa1go")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="BackgroundAtmosphere"]
 motion_mirroring = Vector2(0, 1080)
@@ -230,10 +240,28 @@ script = ExtResource("4_8ln24")
 
 [node name="fulltoggle" type="CheckButton" parent="Settings/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
 text = "Fullscreen"
 expand_icon = true
 script = ExtResource("5_rtw2f")
+
+[node name="Label" type="Label" parent="Settings/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = " Controls
+ Left
+ Right"
+
+[node name="Label2" type="Label" parent="Settings/VBoxContainer/Label"]
+layout_mode = 1
+offset_right = 1243.0
+offset_bottom = 132.0
+theme_override_font_sizes/font_size = 30
+text = "
+LeftArrow / A
+RightArrow / D"
+horizontal_alignment = 2
 
 [node name="Back" type="Button" parent="Settings"]
 layout_mode = 1

@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://ierkg61h23va"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v73b6"]
+bg_color = Color(0.22190198, 0.22190201, 0.22190186, 1)
+corner_radius_top_right = 6
+
+[node name="POWERUPVIEW" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 50.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_v73b6")
