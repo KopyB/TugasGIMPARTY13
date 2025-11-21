@@ -1,18 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8qv1r8ggddgm"]
+[gd_scene load_steps=2 format=3 uid="uid://b8qv1r8ggddgm"]
 
 [ext_resource type="Script" uid="uid://dpho3o8db7fek" path="res://scripts/pause_menu.gd" id="1_n87rw"]
-[ext_resource type="FontFile" uid="uid://c50nkpgytghe1" path="res://assets/BiskiTrial-Regular.otf" id="2_myx47"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kukqi"]
-bg_color = Color(0.21960784, 0.49411765, 0.7529412, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-shadow_size = 3
-shadow_offset = Vector2(0, 5)
 
 [node name="pause_menu" type="Control" node_paths=PackedStringArray("state", "resume_button")]
 process_mode = 3
@@ -53,54 +41,28 @@ offset_right = 147.0
 offset_bottom = 115.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 35
+theme_override_constants/separation = 30
 
 [node name="state" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 40
 text = "[GAME STATE]"
-horizontal_alignment = 1
-
-[node name="scorelabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "score point"
 horizontal_alignment = 1
 
 [node name="RESUME" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
+theme_override_font_sizes/font_size = 30
 text = "Resume"
 
 [node name="RESTART" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
+theme_override_font_sizes/font_size = 30
 text = "Restart"
 
 [node name="EXIT" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
+theme_override_font_sizes/font_size = 30
 text = "Main Menu"
-
-[node name="Timer" type="Timer" parent="."]
-process_mode = 1
-autostart = true
 
 [connection signal="pressed" from="VBoxContainer/RESUME" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="VBoxContainer/RESTART" to="." method="_on_restart_pressed"]
