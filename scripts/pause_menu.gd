@@ -54,7 +54,7 @@ func toggled_handler(type: int) -> void:
 	else:
 		resume_button.show()
 		scorelabel.hide()
-	paused()
+		paused()
 		
 func _on_score_timer_timeout():
 	score += 1
