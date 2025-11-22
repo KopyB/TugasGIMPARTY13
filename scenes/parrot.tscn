@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://csrxucu8xfwbb"]
+
+[ext_resource type="Script" path="res://scripts/parrot.gd" id="1_w755j"]
+[ext_resource type="Texture2D" uid="uid://b5h3db1kpx3aw" path="res://assets/art/67dawg.jpg" id="2_i6g64"]
+
+[sub_resource type="Curve2D" id="Curve2D_w755j"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 2, 1, -62.656, -105.303, 62.656, 105.303, 31, 237, -34.606003, 78.529015, 34.606003, -78.529015, 337, 263, 171.67702, -33.175995, -171.67702, 33.175995, 165, 61, -62, -48, 62, 48, 2, 513, -1.1, 125.4, 1.1, -125.4, 560, 186, 63.63636, -39.090908, -63.63636, 39.090908, 89, -118, 0, 0, 0, 0, 2, 0)
+}
+point_count = 8
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
+size = Vector2(269, 266)
+
+[node name="Parrot" type="Node2D" groups=["enemies"]]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_w755j")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(37.229668, 246.47578)
+rotation = 0.9448788
+progress = 254.57617
+script = ExtResource("1_w755j")
+
+[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D"]
+position = Vector2(-118.068794, -18.839485)
+rotation = 0.34900546
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/Area2D"]
+position = Vector2(-33.913837, -4.674577)
+rotation = -1.5509313
+scale = Vector2(0.57058686, 0.56715435)
+texture = ExtResource("2_i6g64")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Area2D"]
+position = Vector2(-33.923767, -4.174679)
+rotation = -1.5509313
+shape = SubResource("RectangleShape2D_xmspm")
