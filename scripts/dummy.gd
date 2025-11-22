@@ -68,7 +68,7 @@ func _process(delta):
 func perform_attack():
 	if enemy_type == Type.GUNBOAT:
 		fire_gunboat()
-	elif enemy_type == Type.BOMBER or Type.RBOMBER:
+	elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
 
 func fire_gunboat():
@@ -112,7 +112,7 @@ func take_damage(amount):
 func die():
 	spawn_powerup_chance()
 	enemy_died.emit()
-	if enemy_type == Type.BOMBER or Type.RBOMBER:
+	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
 	queue_free()
 
