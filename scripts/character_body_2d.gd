@@ -53,6 +53,8 @@ func take_damage_player():
 func die():
 	is_dead = true
 	print("Player Mati - Memulai Sequence Game Over")
+	reset_all_skills()
+	get_tree().call_group("enemy_projectiles", "queue_free")
 	# Matikan visual kapal agar terlihat 'hancur'
 	_animation_player.visible = false 
 	set_physics_process(false) # Matikan pergerakan
@@ -208,6 +210,37 @@ func spawn_bullet(angle_in_degrees):
 	
 	# Tambahkan ke Main Scene
 	get_parent().add_child(bullet)
+func reset_all_skills():
+	print("Membersihkan semua skill aktif...")
+
+	# 1. Matikan semua status skill (Boolean)
+	is_kraken_active = false
+	is_multishot_active = false
+	is_artillery_active = false
+
+	has_shield = false
+	has_second_wind = false
+
+	# 2. Hentikan Timer Skill (Agar durasi tidak lanjut)
+	# Pastikan node Timer ini ada (SkillDurationTimer yang kita buat sebelumnya)
+	if has_node("SkillDurationTimer"):
+		$SkillDurationTimer.stop()
+
+	# 3. Reset Kecepatan Tembak (Artillery)
+	if shoot_timer:
+		shoot_timer.wait_time = 0.2 # Kembalikan ke default (sesuaikan angka ini jika default Anda beda)
+	
+	# 4. Reset Kecepatan Gerak & Rotasi (Speed Boost)
+	current_speed = normal_speed
+	rotation_speed = 2 # Kembalikan ke default
+
+	# 5. Hapus Laser (Kraken Slayer)
+	if active_laser_node != null and is_instance_valid(active_laser_node):
+		active_laser_node.queue_free()
+		active_laser_node = null
+
+	# 6. Reset Warna Player (Shield/Visual Effect)
+	modulate = Color(1, 1, 1, 1) # Putih normal
 
 func _on_timer_timeout() -> void: # Timer
 	# Pasang gatekeeping peluru

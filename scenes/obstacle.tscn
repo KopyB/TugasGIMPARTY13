@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://bcpf5otr8x08v"]
 
 [ext_resource type="Script" uid="uid://cvx1imre4rdk" path="res://scripts/obstacle.gd" id="1_drdry"]
-[ext_resource type="Texture2D" uid="uid://sey3upxt3deh" path="res://assets/art/bonepile.jpg" id="2_cjuko"]
+[ext_resource type="Texture2D" uid="uid://c56hin8tc082i" path="res://assets/art/bonepile.png" id="2_drdry"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qo2ef"]
-size = Vector2(64, 64)
+size = Vector2(248, 176)
 
 [node name="Obstacle" type="Area2D"]
 collision_layer = 8
@@ -12,12 +12,12 @@ collision_mask = 6
 script = ExtResource("1_drdry")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 8)
 shape = SubResource("RectangleShape2D_qo2ef")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(9.536743e-07, 0)
-scale = Vector2(0.09035326, 0.09035326)
-texture = ExtResource("2_cjuko")
+scale = Vector2(0.52882355, 0.52882355)
+texture = ExtResource("2_drdry")
 metadata/_edit_group_ = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

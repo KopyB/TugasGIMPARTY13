@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="3_tbmy8"]
-[ext_resource type="Script" uid="uid://ci7epneqyxjoa" path="res://scenes/music_control.gd" id="4_8ln24"]
+[ext_resource type="Script" uid="uid://ci7epneqyxjoa" path="res://music_control.gd" id="4_8ln24"]
 [ext_resource type="FontFile" uid="uid://c50nkpgytghe1" path="res://assets/BiskiTrial-Regular.otf" id="4_tbmy8"]
 [ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="4_wu84c"]
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_rtw2f"]

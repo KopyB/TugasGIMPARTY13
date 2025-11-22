@@ -60,19 +60,19 @@ func perform_attack():
 		drop_barrel()
 
 func fire_gunboat():
-	# Pastikan player masih hidup/ada
 	if is_instance_valid(player):
+		
+		# Jika Y Musuh > Y Player, artinya Musuh ada DI BAWAH (di belakang) Player.
+		# Beri toleransi sedikit (10 pixel)
+		if global_position.y >= player.global_position.y - 10:
+			return 
+			
 		var bullet = bullet_scene.instantiate()
 		bullet.global_position = global_position
 		
-		# 1. Hitung arah
 		var dir = (player.global_position - global_position).normalized()
 		bullet.direction = dir
-		
-		
-		# 2. VISUAL: Suruh peluru "menatap" posisi player
 		bullet.look_at(player.global_position)
-		bullet.rotation_degrees += 90
 		
 		get_tree().current_scene.add_child(bullet)
 		
@@ -103,7 +103,7 @@ func die():
 	queue_free()
 
 func spawn_powerup_chance():
-	if randf() <= 0.9: 
+	if randf() <= 0.5: 
 		var powerup = powerup_scene.instantiate()
 		powerup.global_position = global_position
 		
