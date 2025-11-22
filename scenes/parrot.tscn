@@ -1,12 +1,6 @@
-<<<<<<< Updated upstream
 [gd_scene load_steps=5 format=3 uid="uid://csrxucu8xfwbb"]
 
 [ext_resource type="Script" path="res://scripts/parrot.gd" id="1_w755j"]
-=======
-[gd_scene load_steps=5 format=3 uid="uid://bsdk2ko4rwh7x"]
-
-[ext_resource type="Script" uid="uid://ckdcr1tuok5dq" path="res://scripts/parrot.gd" id="1_w755j"]
->>>>>>> Stashed changes
 [ext_resource type="Texture2D" uid="uid://b5h3db1kpx3aw" path="res://assets/art/67dawg.jpg" id="2_i6g64"]
 
 [sub_resource type="Curve2D" id="Curve2D_w755j"]

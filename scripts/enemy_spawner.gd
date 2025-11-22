@@ -1,12 +1,8 @@
 extends Marker2D
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
-<<<<<<< Updated upstream
 var obstacle_scene = preload("res://scenes/Obstacle.tscn")
 
-=======
-var parrot_scene = preload("res://scenes/Parrot.tscn")
->>>>>>> Stashed changes
 @onready var spawn_timer = $SpawnTimer
 
 # --- SETTING DIFFICULTY ---
@@ -64,16 +60,9 @@ func spawn_logic():
 	# Randomizer Tipe Musuh (Persentase)
 	var chance = randi() % 100
 	
-<<<<<<< Updated upstream
 	if chance <= 40: 
 		# 40% Chance: Gunboat Group
 		spawn_gunboat_group(viewport_rect)
-=======
-	
-	if type_rng < 0: #chance gunboat lebih sering, jdi 70% - kaiser
-		# --- GUNBOAT (Spawn Berkelompok 1-3) ---
-		var group_count = randi_range(1, 3) # Random 1 sampai 3 kapal
->>>>>>> Stashed changes
 		
 	elif chance <= 70: 
 		# 30% Chance: Bomber
@@ -83,7 +72,6 @@ func spawn_logic():
 		# 30% Chance: Obstacle Satuan (Batu/Kapal Jatuh)
 		spawn_single_obstacle(viewport_rect)
 
-<<<<<<< Updated upstream
 # --- TIPE 1: OBSTACLE SATUAN ---
 func spawn_single_obstacle(viewport_rect):
 	var obs = obstacle_scene.instantiate()
@@ -123,39 +111,3 @@ func spawn_bomber(viewport_rect):
 	
 	new_enemy.global_position = Vector2(spawn_x, spawn_y)
 	get_tree().current_scene.add_child(new_enemy)
-=======
-			var offset_x = (i - (group_count - 1) / 2.0) * spacing
-			
-			new_enemy.global_position = Vector2(center_x + offset_x, -60)
-			get_tree().current_scene.add_child(new_enemy)
-			
-		if randi() % 2 == 0:
-			# --- BOMBER (Spawn Sendiri dari Kiri) ---
-			var new_enemy = enemy_scene.instantiate()
-			new_enemy.enemy_type = 1 # Bomber
-			
-			var spawn_x = -60
-			var spawn_y = randf_range(50, viewport_rect.y / 2)
-			
-			new_enemy.global_position = Vector2(spawn_x, spawn_y)
-			get_tree().current_scene.add_child(new_enemy)
-		else:
-			# --- BOMBER (Spawn Sendiri dari Kanan) ---
-			var new_enemy = enemy_scene.instantiate()
-			new_enemy.enemy_type = 2 # RBomber
-			
-			var spawn_x = viewport_rect.x + 60
-			var spawn_y = randf_range(50, viewport_rect.y / 2)
-			
-			new_enemy.global_position = Vector2(spawn_x, spawn_y)
-			get_tree().current_scene.add_child(new_enemy)
-	else:
-			# --- Parrot  (Spawn Sendiri dari atas) ---
-			var new_enemy = parrot_scene.instantiate()
-			
-			var spawn_x = randf_range(20, viewport_rect.x / 2)
-			var spawn_y = 0
-			
-			new_enemy.global_position = Vector2(spawn_x, spawn_y)
-			get_tree().current_scene.add_child(new_enemy)
->>>>>>> Stashed changes
