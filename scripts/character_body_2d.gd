@@ -20,8 +20,10 @@ var active_laser_node = null
 var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 @onready var shoot_timer = $Timer
 
+var explosion_scene = preload("res://scenes/explosion.tscn")
 #animation
 @onready var _animation_player = $AnimatedSprite2D
+@onready var k_sturret: Sprite2D = $KSturret
 
 # Fungsi utama yang dipanggil oleh bola PowerUp
 func apply_powerup(type):
@@ -88,7 +90,7 @@ func activate_kraken():
 		active_laser_node = laser_scene.instantiate()
 		call_deferred("add_child", active_laser_node)
 		active_laser_node.position = Vector2(0, -50) 
-	
+		k_sturret.show()
 	# Duration Skill (laser)
 	await get_tree().create_timer(6.0).timeout
 	
@@ -97,6 +99,7 @@ func activate_kraken():
 		active_laser_node.queue_free()
 		active_laser_node = null
 		print("Kraken selesai.")
+		k_sturret.hide()
 	
 	# Nyalakan kembali peluru biasa
 	is_kraken_active = false
@@ -130,6 +133,7 @@ func take_damage_player():
 func die():
 	is_dead = true
 	print("Player Mati - Memulai Sequence Game Over")
+	exploded()
 	#get_tree().reload_current_scene()
 	get_tree().paused = true
 
@@ -147,6 +151,7 @@ func _ready():
 	add_to_group("player")
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	k_sturret.hide()
 	
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
@@ -164,10 +169,12 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 			rotation = lerp(rotation, 0.0, delta * 1.0)
 	#animation
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("Left"):
 		_animation_player.play("left")
-	elif Input.is_action_pressed("ui_right"):
+		k_sturret.position.x = -15.0
+	elif Input.is_action_pressed("Right"):
 		_animation_player.play("right")
+		k_sturret.position.x = 15.0
 	else:
 		_animation_player.play("idle")
 	
@@ -210,4 +217,9 @@ func _on_timer_timeout() -> void: # Timer
 		# Tembak 1 peluru normal
 		spawn_bullet(0)
 		
+	
+func exploded():
+	var explosion = explosion_scene.instantiate()
+	explosion.global_position = global_position
+	get_tree().current_scene.add_child(explosion)
 	

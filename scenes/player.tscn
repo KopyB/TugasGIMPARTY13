@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://fujugshyvkm6"]
+[gd_scene load_steps=11 format=3 uid="uid://fujugshyvkm6"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://bjmiy4v7rwka2" path="res://assets/art/player left.png" id="3_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://cy3otfdh5lio3" path="res://assets/art/player right.png" id="4_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://onxr1237yysf" path="res://assets/art/KSTurret.png" id="5_qlg0r"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjrip"]
 radius = 30.0
@@ -60,7 +61,7 @@ shape = SubResource("CapsuleShape2D_fjrip")
 position = Vector2(-2.9999995, 0.99999917)
 scale = Vector2(0.06, 0.06)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
-animation = &"idle"
+animation = &"left"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
@@ -68,5 +69,10 @@ autostart = true
 
 [node name="FiringPosition" type="Marker2D" parent="."]
 position = Vector2(0, -82)
+
+[node name="KSturret" type="Sprite2D" parent="."]
+position = Vector2(0, -70)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("5_qlg0r")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

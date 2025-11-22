@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://c0b17q68j2xqh"]
+
+[ext_resource type="Texture2D" uid="uid://y2vak2ke27xr" path="res://assets/art/gimming beledug 1.png" id="1_hbmxj"]
+[ext_resource type="Texture2D" uid="uid://bokn48o0vifr0" path="res://assets/art/gimming beledug 2.png" id="2_xfoey"]
+[ext_resource type="Texture2D" uid="uid://cyqhl25m2sq3o" path="res://assets/art/gimming beledug 3.png" id="3_v8gpv"]
+[ext_resource type="Texture2D" uid="uid://dwewy1ubfu32w" path="res://assets/art/gimming beledug 4.png" id="4_cun36"]
+[ext_resource type="Texture2D" uid="uid://b1w02alub2fqs" path="res://assets/art/gimming beledug 5.png" id="5_vk406"]
+[ext_resource type="Script" uid="uid://6cnq78i1nljq" path="res://scripts/explosion.gd" id="6_xfoey"]
+[ext_resource type="AudioStream" uid="uid://xy1t7y3tpdlf" path="res://assets/audio/EXPLODE.mp3" id="7_v8gpv"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v8gpv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hbmxj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_xfoey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_v8gpv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_cun36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vk406")
+}],
+"loop": false,
+"name": &"boom",
+"speed": 12.0
+}]
+
+[node name="explosion" type="AnimatedSprite2D"]
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_v8gpv")
+animation = &"boom"
+script = ExtResource("6_xfoey")
+
+[node name="boomsfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_v8gpv")
+volume_db = -6.0
+bus = &"SFX"
