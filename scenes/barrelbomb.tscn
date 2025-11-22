@@ -1,12 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://bc10ky8v24j5k"]
 
-[ext_resource type="Script" uid="uid://cfq0qotj34ne7" path="res://scenes/barrelbomb.gd" id="1_6k5uj"]
+[ext_resource type="Script" uid="uid://cfq0qotj34ne7" path="res://scripts/barrelbomb.gd" id="1_6k5uj"]
 [ext_resource type="Texture2D" uid="uid://v8i5qbf0dc1q" path="res://assets/art/illustration-of-barrel-bomb-vector.jpg" id="1_elpax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6k5uj"]
 size = Vector2(93.375, 94)
 
 [node name="Barrel" type="Area2D"]
+z_index = 10
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_6k5uj")

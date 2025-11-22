@@ -1,21 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://be3gkgd4sqjkq"]
+[gd_scene load_steps=5 format=3 uid="uid://be3gkgd4sqjkq"]
 
-[ext_resource type="Script" uid="uid://du2b0u7jcpi2c" path="res://scripts/power_up.gd" id="1_ig136"]
-[ext_resource type="Texture2D" uid="uid://co6gltq7i0ppk" path="res://assets/art/i hate ziggger.jpg" id="1_j7my0"]
+[ext_resource type="Script" uid="uid://bij18o5bslq4h" path="res://scripts/power_up.gd" id="1_ig136"]
+[ext_resource type="Texture2D" uid="uid://do1mr841ko5l4" path="res://assets/art/CrateBase.png" id="2_ig136"]
+[ext_resource type="Texture2D" uid="uid://gh3osvf35hrd" path="res://assets/art/KrakenSlayerCrate.png" id="3_6iuya"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ig136"]
 size = Vector2(155, 156)
 
 [node name="PowerUp" type="Area2D"]
-z_index = 10
+z_index = 5
 collision_layer = 128
 collision_mask = 2
 script = ExtResource("1_ig136")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1.9073486e-06, -1.9073486e-06)
-scale = Vector2(0.2591667, 0.2591667)
-texture = ExtResource("1_j7my0")
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_ig136")
+
+[node name="krakencrate" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_6iuya")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0)
