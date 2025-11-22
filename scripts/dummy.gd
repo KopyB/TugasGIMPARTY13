@@ -1,10 +1,11 @@
 extends Area2D
+class_name EnemyBase
 
 #Beri signal saat musuh mati (BOSS EXCLUSIVE)
 signal enemy_died
 
 # TIPE MUSUH
-enum Type {GUNBOAT, BOMBER,RBOMBER}
+enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT}
 @export var enemy_type = Type.GUNBOAT
 
 # STATISTIK
@@ -17,6 +18,7 @@ var shoot_interval = 2.0 # Default Gunboat (2 detik)
 var powerup_scene = preload("res://scenes/power_up.tscn")
 var bullet_scene = preload("res://scenes/bulletenemy.tscn")
 var barrel_scene = preload("res://scenes/barrelbomb.tscn")
+var cparrot = preload("res://scenes/parrot.tscn")
 
 var player = null # Referensi
 
@@ -41,6 +43,10 @@ func _ready():
 		speed = 150 # Kecepatan gerak ke samping
 		rotation_degrees = -90 # Putar agar menghadap ke KIRI
 		
+	elif enemy_type == Type.PARROT:
+		# cparrot.get_child().get_child().texture = parrot_texture
+		speed = 250
+		
 func _process(delta):
 	if enemy_type == Type.GUNBOAT:
 		
@@ -51,6 +57,9 @@ func _process(delta):
 	
 	elif enemy_type == Type.RBOMBER:
 		position.x -= speed * delta
+	
+	elif enemy_type == Type.PARROT:
+		pass #dihandle parrot.gd
 		
 	shoot_timer += delta
 	if shoot_timer >= shoot_interval:
@@ -68,7 +77,7 @@ func _process(delta):
 func perform_attack():
 	if enemy_type == Type.GUNBOAT:
 		fire_gunboat()
-	elif enemy_type == Type.BOMBER or Type.RBOMBER:
+	elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
 
 func fire_gunboat():
@@ -110,13 +119,18 @@ func take_damage(amount):
 		die()
 
 func die():
-	spawn_powerup_chance()
+	if not enemy_type == Type.PARROT:
+		spawn_powerup_chance()
+		
 	enemy_died.emit()
-	if enemy_type == Type.BOMBER or Type.RBOMBER:
+	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
+	elif enemy_type == Type.PARROT:
+		drop_power()
 	queue_free()
 
 func spawn_powerup_chance():
+<<<<<<< Updated upstream
 	if randf() <= 0.5: 
 		var powerup = powerup_scene.instantiate()
 		powerup.global_position = global_position
@@ -126,3 +140,17 @@ func spawn_powerup_chance():
 		powerup.current_type = random_type
 		
 		get_tree().current_scene.call_deferred("add_child", powerup)
+=======
+	if randf() <= 0.9: 
+		drop_power()
+
+func drop_power():
+	var powerup = powerup_scene.instantiate()
+	powerup.global_position = global_position
+	
+	# Random angka acak 0 sampai 5 
+	var random_type = randi() % 6 
+	powerup.current_type = random_type
+	
+	get_tree().current_scene.call_deferred("add_child", powerup)
+>>>>>>> Stashed changes
