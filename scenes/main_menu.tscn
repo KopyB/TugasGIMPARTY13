@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ynu4bos33vch"]
+[gd_scene load_steps=19 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="3_tbmy8"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://b4yg8q076dfhv" path="res://assets/audio/Calm Waters.mp3" id="5_tbmy8"]
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="8_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
+[ext_resource type="AudioStream" uid="uid://cp6l6ms5o5es8" path="res://assets/audio/Click.mp3" id="11_lgwnu"]
 
 [sub_resource type="GDScript" id="GDScript_oa1go"]
 script/source = "extends ParallaxBackground
@@ -158,6 +159,7 @@ expand_icon = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
+theme_override_fonts/font = ExtResource("4_tbmy8")
 theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_vue75")
@@ -452,6 +454,10 @@ visible = false
 position = Vector2(429, 639.00006)
 scale = Vector2(0.0907089, 0.08546392)
 texture = ExtResource("4_wu84c")
+
+[node name="buttonclick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_lgwnu")
+bus = &"SFX"
 
 [connection signal="pressed" from="mainbuttons/START" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="mainbuttons/SETTINGS" to="." method="_on_settings_pressed"]

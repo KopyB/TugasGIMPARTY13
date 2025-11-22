@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bc10ky8v24j5k"]
 
-[ext_resource type="Script" uid="uid://cfq0qotj34ne7" path="res://scenes/barrelbomb.gd" id="1_6k5uj"]
+[ext_resource type="Script" path="res://scripts/barrelbomb.gd" id="1_6k5uj"]
 [ext_resource type="Texture2D" uid="uid://dmtf5ae1ynaqs" path="res://assets/art/Barrel.png" id="2_2u3ct"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u1qut"]

@@ -25,6 +25,8 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 #animation
 @onready var _animation_player = $AnimatedSprite2D
 @onready var k_sturret: Sprite2D = $KSturret
+@onready var shield_anim: AnimatedSprite2D = $shield_anim
+@onready var shockwaves_anim: AnimatedSprite2D = $shockwaves_anim
 
 @onready var skill_timer = $SkillDurationTimer
 
@@ -33,14 +35,18 @@ func _ready():
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	k_sturret.hide()
-	
+	shield_anim.hide()
+	shockwaves_anim.hide()
 # --- FUNGSI MENERIMA DAMAGE & MATI ---
 # Pastikan logika mati Anda ada di fungsi ini
 func take_damage_player():
 	# --- LOGIKA SHIELD DI SINI ---
 	if has_shield:
 		has_shield = false
-		modulate = Color(1, 1, 1, 1)
+		shield_anim.show()
+		shield_anim.play_backwards()
+		await shield_anim.animation_finished
+		shield_anim.hide()
 		print("Shield Pecah!")
 		return 
 	
@@ -93,7 +99,7 @@ func apply_powerup(type):
 # --- LOGIKA 1: SHIELD ---
 func activate_shield():
 	has_shield = true
-	modulate = Color(0.5, 0.5, 1, 1) # Ubah warna player jadi kebiruan (visual)
+	shield_anim.play("shieldup")
 	print("Shield Aktif!")
 
 # --- LOGIKA 2: MULTISHOT (Sudah Anda punya) ---
@@ -188,13 +194,15 @@ func activate_admiral():
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
+	shockwaves_anim.play("shocking")
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5) # Fade balik ke normal
 	
 	# LOGIKA MEMBUNUH SEMUA MUSUH
 	# Kita panggil grup "enemies" yang sudah kita buat di Langkah 1
 	get_tree().call_group("enemies", "take_damage", 9999)
-	
+	await shockwaves_anim.animation_finished
+	shockwaves_anim.hide()
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
 	if direction:
