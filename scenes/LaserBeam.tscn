@@ -69,6 +69,7 @@ position = Vector2(0, -1374.5)
 shape = SubResource("RectangleShape2D_1nnux")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_tuomb")
 animation = &"winding up"
 offset = Vector2(0, -30)
