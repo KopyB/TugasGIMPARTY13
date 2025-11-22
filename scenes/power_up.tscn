@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://be3gkgd4sqjkq"]
+[gd_scene load_steps=6 format=3 uid="uid://be3gkgd4sqjkq"]
 
 [ext_resource type="Script" uid="uid://bij18o5bslq4h" path="res://scripts/power_up.gd" id="1_ig136"]
 [ext_resource type="Texture2D" uid="uid://do1mr841ko5l4" path="res://assets/art/CrateBase.png" id="2_ig136"]
 [ext_resource type="Texture2D" uid="uid://gh3osvf35hrd" path="res://assets/art/KrakenSlayerCrate.png" id="3_6iuya"]
+[ext_resource type="Texture2D" uid="uid://dhgcpqhphihvv" path="res://assets/art/secondwindcrate.png" id="4_uk6or"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ig136"]
 size = Vector2(155, 156)
@@ -21,6 +22,10 @@ texture = ExtResource("2_ig136")
 [node name="krakencrate" type="Sprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_6iuya")
+
+[node name="secondwindcrate" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_uk6or")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0)
