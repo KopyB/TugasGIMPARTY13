@@ -93,6 +93,8 @@ script = SubResource("GDScript_oa1go")
 motion_mirroring = Vector2(0, 1080)
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
+position = Vector2(-1662, -1346)
+scale = Vector2(2.0760417, 2.9935184)
 texture = ExtResource("3_tbmy8")
 centered = false
 
@@ -150,6 +152,17 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_vue75")
 theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
 text = "SETTINGS"
+expand_icon = true
+
+[node name="CREDITS" type="Button" parent="mainbuttons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "CREDITS"
 expand_icon = true
 
 [node name="Exit" type="Button" parent="mainbuttons"]
@@ -343,6 +356,97 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
 text = "APPLY"
 expand_icon = true
 
+[node name="Credits" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -684.0
+offset_top = -291.0
+offset_right = 684.0
+offset_bottom = 415.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Credits"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -159.5
+offset_top = 16.0
+offset_right = 159.5
+offset_bottom = 82.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Credits"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Credits"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 83.0
+offset_right = 190.0
+offset_bottom = 215.0
+theme_override_font_sizes/font_size = 25
+text = "Project Manager
+
+Producer
+
+Visual Artists
+
+Audio Artists
+
+Programmers
+
+Game Designers
+
+Writers"
+
+[node name="Label2" type="Label" parent="Credits/Label2"]
+layout_mode = 1
+offset_right = 1243.0
+offset_bottom = 132.0
+theme_override_font_sizes/font_size = 25
+text = "Kaiser INAN
+
+viane
+
+viane, Comrade Blin, Fadhil, Raes
+
+miwa
+
+kopyb, CuzYTFnot
+
+Rayyis, Fuja, Comrade Blin
+
+Julio, Pasha"
+horizontal_alignment = 2
+
+[node name="Back" type="Button" parent="Credits"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -126.0
+offset_top = -88.0
+offset_right = 102.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "BACK"
+expand_icon = true
+
 [node name="CopalGimming" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(429, 639.00006)
@@ -351,9 +455,11 @@ texture = ExtResource("4_wu84c")
 
 [connection signal="pressed" from="mainbuttons/START" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="mainbuttons/SETTINGS" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="mainbuttons/CREDITS" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="mainbuttons/Exit" to="." method="_on_exit_pressed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/Labelmusic/MusicControl" to="Settings/VBoxContainer/Labelmusic/MusicControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/labelSFX/SFXControl" to="Settings/VBoxContainer/labelSFX/SFXControl" method="_on_value_changed"]
 [connection signal="toggled" from="Settings/VBoxContainer/fulltoggle" to="Settings/VBoxContainer/fulltoggle" method="_on_toggled"]
 [connection signal="pressed" from="Settings/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Settings/Apply" to="." method="_on_apply_pressed"]
+[connection signal="pressed" from="Credits/Back" to="." method="_on_back_pressed"]

@@ -5,9 +5,12 @@ extends Area2D
 
 var explosion_scene = preload("res://scenes/explosion.tscn")
 
-var fall_speed = 250 
+var fall_speed = 150 
 var damage = 1
 
+func _ready():
+	add_to_group("enemy_projectiles")
+	
 func _process(delta):
 	position.y += fall_speed * delta
 

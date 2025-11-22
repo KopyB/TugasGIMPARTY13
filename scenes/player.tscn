@@ -75,4 +75,7 @@ position = Vector2(0, -70)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("5_qlg0r")
 
+[node name="SkillDurationTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
