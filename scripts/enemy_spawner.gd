@@ -58,13 +58,24 @@ func spawn_logic():
 			new_enemy.global_position = Vector2(center_x + offset_x, -60)
 			get_tree().current_scene.add_child(new_enemy)
 			
-	else: 
-		# --- BOMBER (Spawn Sendiri dari Kiri) ---
-		var new_enemy = enemy_scene.instantiate()
-		new_enemy.enemy_type = 1 # Bomber
-		
-		var spawn_x = -60
-		var spawn_y = randf_range(50, viewport_rect.y / 2)
-		
-		new_enemy.global_position = Vector2(spawn_x, spawn_y)
-		get_tree().current_scene.add_child(new_enemy)
+	else:
+		if randi() % 2 == 0:
+			# --- BOMBER (Spawn Sendiri dari Kiri) ---
+			var new_enemy = enemy_scene.instantiate()
+			new_enemy.enemy_type = 1 # Bomber
+			
+			var spawn_x = -60
+			var spawn_y = randf_range(50, viewport_rect.y / 2)
+			
+			new_enemy.global_position = Vector2(spawn_x, spawn_y)
+			get_tree().current_scene.add_child(new_enemy)
+		else:
+			# --- BOMBER (Spawn Sendiri dari Kanan) ---
+			var new_enemy = enemy_scene.instantiate()
+			new_enemy.enemy_type = 2 # RBomber
+			
+			var spawn_x = viewport_rect.x + 60
+			var spawn_y = randf_range(50, viewport_rect.y / 2)
+			
+			new_enemy.global_position = Vector2(spawn_x, spawn_y)
+			get_tree().current_scene.add_child(new_enemy)
