@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdx5wwmxop0cc"]
+
+[sub_resource type="GDScript" id="GDScript_bue53"]
+script/source = "extends Node2D
+
+var obstacle_scene = preload(\"res://scenes/Obstacle.tscn\")
+
+# --- KONFIGURASI GRID MAZE ---
+var columns = 8          # Layar dibagi menjadi 8 kolom
+var block_size = 60      # Lebar satu kotak rintangan (sesuaikan sprite)
+var spawn_y = -100       # Spawn di atas layar
+var spawn_rate = 2.5     # Spawn baris baru setiap 2.5 detik
+
+var time_elapsed = 0.0
+var current_gap_index = 4 # Posisi celah awal (di tengah, jalur ke-4)
+
+func _ready():
+	# Hitung lebar kolom otomatis berdasarkan lebar layar
+	var screen_width = get_viewport_rect().size.x
+	block_size = screen_width / columns
+	
+	randomize()
+
+func _process(delta):
+	time_elapsed += delta
+	if time_elapsed >= spawn_rate:
+		time_elapsed = 0
+		spawn_maze_row()
+
+func spawn_maze_row():
+	# --- ALGORITMA JALUR BERKELOK (WINDING PATH) ---
+	# Celah hanya boleh geser -1, 0, atau +1 dari posisi sebelumnya.
+	# Ini menjamin jalurnya tersambung (bisa dilewati player).
+	
+	var move = randi() % 3 - 1 # Hasilnya: -1, 0, atau 1
+	current_gap_index += move
+	
+	# Pastikan celah tidak keluar batas kiri/kanan (Clamp)
+	current_gap_index = clamp(current_gap_index, 1, columns - 2)
+	
+	# --- GENERATE BARIS ---
+	for i in range(columns):
+		# Jika 'i' adalah index celah, JANGAN spawn obstacle (biarkan kosong)
+		# Kita juga bisa bikin celahnya lebar 2 kotak biar lebih mudah
+		if i == current_gap_index or i == current_gap_index + 1:
+			continue 
+		
+		# Chance spawn obstacle (agar tidak terlalu padat temboknya)
+		# 80% kemungkinan ada obstacle di jalur selain celah
+		if randf() > 0.2:
+			spawn_obstacle_at_column(i)
+
+func spawn_obstacle_at_column(col_index):
+	var obs = obstacle_scene.instantiate()
+	
+	# Tentukan posisi X berdasarkan index kolom * lebar blok
+	# Tambah setengah block_size agar pas di tengah kolom
+	var pos_x = (col_index * block_size) + (block_size / 2)
+	
+	obs.position = Vector2(pos_x, spawn_y)
+	
+	# Random Tipe (Bones atau Shipwreck)
+	var type = randi() % 2
+	obs.setup_obstacle(type)
+	
+	add_child(obs)
+"
+
+[node name="MazeSpawner" type="Node2D"]
+script = SubResource("GDScript_bue53")
