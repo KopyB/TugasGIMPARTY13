@@ -1,6 +1,6 @@
 extends Area2D
 
-var fall_speed = 250 
+var fall_speed = 150 #tadi beda sm fall speed power up - kaiser 
 var damage = 1
 
 func _ready():
