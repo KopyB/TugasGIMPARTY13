@@ -101,13 +101,26 @@ func spawn_gunboat_group(viewport_rect):
 		new_enemy.global_position = Vector2(center_x + offset_x, -60)
 		get_tree().current_scene.add_child(new_enemy)
 
-# --- TIPE 3: BOMBER DARI SAMPING ---
+# --- TIPE 3A: BOMBER DARI KIRI (DEFAULT) ---
 func spawn_bomber(viewport_rect):
 	var new_enemy = enemy_scene.instantiate()
 	new_enemy.enemy_type = 1 # Bomber
 	
-	var spawn_x = -60 # Di kiri layar
-	var spawn_y = randf_range(50, viewport_rect.y / 2) # Y acak (setengah atas layar)
+	var spawn_x = -60 # Di luar layar kiri
+	var spawn_y = randf_range(50, viewport_rect.y / 2) 
+	
+	new_enemy.global_position = Vector2(spawn_x, spawn_y)
+	get_tree().current_scene.add_child(new_enemy)
+
+# --- TIPE 3B: RBOMBER DARI KANAN (BARU) ---
+func spawn_rbomber(viewport_rect):
+	var new_enemy = enemy_scene.instantiate()
+	new_enemy.enemy_type = 2 # RBOMBER (Sesuai Enum di dummy.gd)
+	
+	# Spawn di luar layar KANAN
+	var spawn_x = viewport_rect.x + 60 
+	# Y acak (setengah atas layar)
+	var spawn_y = randf_range(50, viewport_rect.y / 2) 
 	
 	new_enemy.global_position = Vector2(spawn_x, spawn_y)
 	get_tree().current_scene.add_child(new_enemy)

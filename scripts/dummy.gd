@@ -68,7 +68,7 @@ func _process(delta):
 func perform_attack():
 	if enemy_type == Type.GUNBOAT:
 		fire_gunboat()
-	elif enemy_type == Type.BOMBER or Type.RBOMBER:
+	elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
 
 func fire_gunboat():
@@ -91,7 +91,7 @@ func fire_gunboat():
 func drop_barrel():
 	var barrel = barrel_scene.instantiate()
 	barrel.global_position = global_position
-	get_tree().current_scene.add_child(barrel)
+	get_tree().current_scene.call_deferred("add_child", barrel)
 	
 	# Opsional: Ubah sprite musuh jadi "kosong" sebentar (Visual Direction)
 	# $Sprite2D.texture = load("res://assets/bomber_empty.png")
@@ -112,12 +112,12 @@ func take_damage(amount):
 func die():
 	spawn_powerup_chance()
 	enemy_died.emit()
-	if enemy_type == Type.BOMBER or Type.RBOMBER:
+	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
 	queue_free()
 
 func spawn_powerup_chance():
-	if randf() <= 0.5: 
+	if randf() <= 0.25: 
 		var powerup = powerup_scene.instantiate()
 		powerup.global_position = global_position
 		
