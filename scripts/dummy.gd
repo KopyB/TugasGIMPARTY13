@@ -31,7 +31,7 @@ func _ready():
 		
 	elif enemy_type == Type.BOMBER:
 		# $Sprite2D.texture = bomber_texture
-		shoot_interval = 5.0 # Drop tiap 5 detik
+		shoot_interval = randf_range(2.5, 5.0) # Drop interval random range dari 2.5 - 5 detik (biar g gitu2 doang patternnya - kaiser)
 		speed = 150 # Kecepatan gerak ke samping
 		rotation_degrees = 90 # Putar agar menghadap ke KANAN
 		
