@@ -3,7 +3,7 @@ extends Area2D
 @onready var krakencrate: Sprite2D = $krakencrate
 
 # Daftar tipe power-up sesuai tabel Anda
-enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND}
+enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND, ADMIRAL}
 
 # Variabel untuk menyimpan tipe bola ini (Default Multishot)
 var current_type = Type.MULTISHOT
@@ -29,6 +29,9 @@ func _ready():
 			 # Ungu untuk Laser
 		Type.SECOND_WIND:
 			modulate = Color.WHITE # Putih suci untuk Revive
+			krakencrate.hide()
+		Type.ADMIRAL:
+			modulate = Color(1, 0.8, 0, 1) # Warna Emas / Oranye Petir
 			krakencrate.hide()
 
 func _process(delta):

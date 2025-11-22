@@ -13,6 +13,7 @@ var health = 3
 var shoot_timer = 0.0
 var shoot_interval = 2.0 # Default Gunboat (2 detik)
 
+var is_paralyzed = false
 # LOAD ASSET 
 var powerup_scene = preload("res://scenes/power_up.tscn")
 var bullet_scene = preload("res://scenes/bulletenemy.tscn")
@@ -42,6 +43,9 @@ func _ready():
 		rotation_degrees = -90 # Putar agar menghadap ke KIRI
 		
 func _process(delta):
+	if is_paralyzed:
+		return
+		
 	if enemy_type == Type.GUNBOAT:
 		
 		position.y += speed * delta
@@ -64,6 +68,14 @@ func _process(delta):
 		if position.x < -20 or position.y > 1080:
 			queue_free()
 
+# --- FUNGSI PARALYZED ---
+func set_paralyzed(status):
+	is_paralyzed = status
+	if is_paralyzed:
+		modulate = Color(0.5, 0.5, 0.5, 1) 
+	else:
+		modulate = Color.WHITE
+		
 # --- FUNGSI SERANGAN ---
 func perform_attack():
 	if enemy_type == Type.GUNBOAT:
@@ -117,12 +129,12 @@ func die():
 	queue_free()
 
 func spawn_powerup_chance():
-	if randf() <= 0.25: 
+	if randf() <= 0.75: 
 		var powerup = powerup_scene.instantiate()
 		powerup.global_position = global_position
 		
-		# Random angka acak 0 sampai 5 
-		var random_type = randi() % 6 
+		# Random angka acak 0 sampai 6
+		var random_type = randi() % 7 
 		powerup.current_type = random_type
 		
 		get_tree().current_scene.call_deferred("add_child", powerup)
