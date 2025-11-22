@@ -25,11 +25,6 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 @onready var _animation_player = $AnimatedSprite2D
 @onready var k_sturret: Sprite2D = $KSturret
 
-func _ready():
-	add_to_group("player")
-	target_position = global_position # Store initial position as center
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	
 # --- FUNGSI MENERIMA DAMAGE & MATI ---
 # Pastikan logika mati Anda ada di fungsi ini
 func take_damage_player():
@@ -156,13 +151,6 @@ func activate_second_wind():
 
 	# Jika tidak ada shield & tidak ada second wind -> MATI
 	die()
-
-func die():
-	is_dead = true
-	print("Player Mati - Memulai Sequence Game Over")
-	exploded()
-	#get_tree().reload_current_scene()
-	get_tree().paused = true
 
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
