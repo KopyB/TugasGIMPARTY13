@@ -83,6 +83,8 @@ func apply_powerup(type):
 			activate_kraken()      
 		5: # SECOND WIND
 			activate_second_wind() 
+		6: # ADMIRAL WILL
+			activate_admiral()
 
 # --- LOGIKA 1: SHIELD ---
 func activate_shield():
@@ -150,12 +152,33 @@ func activate_kraken():
 		print("Kraken selesai.")
 	
 	is_kraken_active = false
+	
 # --- LOGIKA BARU: SECOND WIND (REVIVE) ---
 func activate_second_wind():
 	has_second_wind = true
 	print("Second Wind Ready! (Nyawa cadangan aktif)")
 	# Opsional: Tambahkan visual effect (misal aura putih)
+
+func activate_admiral():
+	print("ADMIRAL'S WILL ACTIVATED! Musuh Terhenti!")
 	
+	# 1. Efek Visual: Flash Layar Kuning
+	modulate = Color(3, 3, 0, 1) # Terang banget (Kuning)
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color.WHITE, 0.5)
+	
+	# 2. Panggil grup "enemies" untuk stop bergerak
+	# Pastikan di dummy.gd sudah ada add_to_group("enemies")
+	get_tree().call_group("enemies", "set_paralyzed", true)
+	
+	# 3. Tunggu 5 Detik
+	skill_timer.start(5.0)
+	await skill_timer.timeout
+	
+	# 4. Kembalikan musuh jadi normal
+	print("Admiral's Will berakhir.")
+	get_tree().call_group("enemies", "set_paralyzed", false)
+
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
@@ -210,37 +233,33 @@ func spawn_bullet(angle_in_degrees):
 	
 	# Tambahkan ke Main Scene
 	get_parent().add_child(bullet)
+	
 func reset_all_skills():
 	print("Membersihkan semua skill aktif...")
-
-	# 1. Matikan semua status skill (Boolean)
+	
+	# ... (Reset skill lain yg sudah ada) ...
 	is_kraken_active = false
 	is_multishot_active = false
 	is_artillery_active = false
-
 	has_shield = false
 	has_second_wind = false
-
-	# 2. Hentikan Timer Skill (Agar durasi tidak lanjut)
-	# Pastikan node Timer ini ada (SkillDurationTimer yang kita buat sebelumnya)
+	
 	if has_node("SkillDurationTimer"):
 		$SkillDurationTimer.stop()
 
-	# 3. Reset Kecepatan Tembak (Artillery)
 	if shoot_timer:
-		shoot_timer.wait_time = 0.2 # Kembalikan ke default (sesuaikan angka ini jika default Anda beda)
+		shoot_timer.wait_time = 0.2 
 	
-	# 4. Reset Kecepatan Gerak & Rotasi (Speed Boost)
 	current_speed = normal_speed
-	rotation_speed = 2 # Kembalikan ke default
+	rotation_speed = 2 
 
-	# 5. Hapus Laser (Kraken Slayer)
 	if active_laser_node != null and is_instance_valid(active_laser_node):
 		active_laser_node.queue_free()
 		active_laser_node = null
 
-	# 6. Reset Warna Player (Shield/Visual Effect)
-	modulate = Color(1, 1, 1, 1) # Putih normal
+	modulate = Color.WHITE
+
+	get_tree().call_group("enemies", "set_paralyzed", false)
 
 func _on_timer_timeout() -> void: # Timer
 	# Pasang gatekeeping peluru
