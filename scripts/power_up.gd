@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var krakencrate: Sprite2D = $krakencrate
+@onready var secondwind: Sprite2D = $secondwindcrate
 
 # Daftar tipe power-up sesuai tabel Anda
 enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND, ADMIRAL}
@@ -15,24 +16,29 @@ func _ready():
 		Type.SHIELD:
 			modulate = Color.CYAN # Biru Muda
 			krakencrate.hide()
+			secondwind.hide()
 		Type.MULTISHOT:
 			modulate = Color.YELLOW # Kuning
 			krakencrate.hide()
+			secondwind.hide()
 		Type.ARTILLERY:
 			modulate = Color.RED # Merah
 			krakencrate.hide()
+			secondwind.hide()
 		Type.SPEED:
 			modulate = Color.GREEN # Hijau
 			krakencrate.hide()
+			secondwind.hide()
 		Type.KRAKEN:
 			krakencrate.show()
-			 # Ungu untuk Laser
+			secondwind.hide()
 		Type.SECOND_WIND:
-			modulate = Color.WHITE # Putih suci untuk Revive
 			krakencrate.hide()
+			secondwind.show()
 		Type.ADMIRAL:
-			modulate = Color(1, 0.8, 0, 1) # Warna Emas / Oranye Petir
+			modulate = Color.WHITE # Putih 
 			krakencrate.hide()
+			secondwind.hide()
 
 func _process(delta):
 	position.y += 150 * delta # Kecepatan jatuh

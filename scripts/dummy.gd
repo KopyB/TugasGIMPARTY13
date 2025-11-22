@@ -176,7 +176,7 @@ func die():
 	queue_free()
 
 func spawn_powerup_chance():
-	if randf() <= 0.25: 
+	if randf() <= 0.75: 
 		var powerup = powerup_scene.instantiate()
 		powerup.global_position = global_position
 		

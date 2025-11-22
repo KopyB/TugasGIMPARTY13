@@ -19,6 +19,7 @@ var active_laser_node = null
 
 var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 @onready var shoot_timer = $Timer
+var tex_artillery = preload("res://assets/art/ArtilleryBurstProjectile.png")
 
 #animation
 @onready var _animation_player = $AnimatedSprite2D
@@ -231,6 +232,17 @@ func spawn_bullet(angle_in_degrees):
 	# Set rotasi peluru (konversi derajat ke radian karena Godot pakai radian)
 	bullet.rotation_degrees = rotation_degrees + angle_in_degrees
 	
+	# Ganti texture
+	if is_artillery_active:
+		# Kita cari node Sprite2D di dalam scene peluru
+		# NOTE: Pastikan nama node sprite di scene bulletplayer.tscn adalah "Sprite2D"
+		var sprite = bullet.get_node_or_null("Sprite2D")
+		
+		if sprite:
+			sprite.texture = tex_artillery
+			# Opsional: Ubah skala jika gambar artillery terlalu besar/kecil
+			# sprite.scale = Vector2(1.5, 1.5)
+			
 	# Tambahkan ke Main Scene
 	get_parent().add_child(bullet)
 	
