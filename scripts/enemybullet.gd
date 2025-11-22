@@ -3,6 +3,9 @@ extends Area2D
 var speed = 800
 var direction = Vector2.ZERO # Variabel untuk menyimpan arah
 
+func _ready():
+	add_to_group("enemy_projectiles")
+	
 func _process(delta):
 	# Bergerak sesuai arah yang sudah ditentukan (direction)
 	position += direction * speed * delta

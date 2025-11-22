@@ -3,6 +3,9 @@ extends Area2D
 var fall_speed = 150 #tadi beda sm fall speed power up - kaiser 
 var damage = 1
 
+func _ready():
+	add_to_group("enemy_projectiles")
+	
 func _process(delta):
 	position.y += fall_speed * delta
 
