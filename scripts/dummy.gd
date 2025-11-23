@@ -48,7 +48,7 @@ func _ready():
 	if enemy_type == Type.GUNBOAT:
 		enemyship.texture = gun_boat
 		enemyship.position.x = -5.0
-		enemyship.scale = Vector2(0.1, 0.1)
+		enemyship.scale = Vector2(0.06, 0.06)
 		cannon.show()
 		
 		collision_shape_2d.shape.extents = Vector2(284.0/2, 116.0/2)

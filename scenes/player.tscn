@@ -1,12 +1,18 @@
-[gd_scene load_steps=26 format=3 uid="uid://fujugshyvkm6"]
+[gd_scene load_steps=31 format=3 uid="uid://fujugshyvkm6"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_g2els"]
-[ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="2_dqkch"]
-[ext_resource type="Texture2D" uid="uid://bjmiy4v7rwka2" path="res://assets/art/player left.png" id="3_qlg0r"]
-[ext_resource type="Texture2D" uid="uid://cy3otfdh5lio3" path="res://assets/art/player right.png" id="4_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://cmc60vajq856e" path="res://assets/art/player boat.png" id="2_i4ail"]
+[ext_resource type="Texture2D" uid="uid://ccem3ihkhbvou" path="res://assets/art/player right boat.png" id="2_qfm1y"]
+[ext_resource type="Texture2D" uid="uid://ccda16nipmbpm" path="res://assets/art/player left boat.png" id="3_a38lo"]
+[ext_resource type="Texture2D" uid="uid://b4rxlcipy23q0" path="res://assets/art/player right stella.png" id="4_fulsm"]
 [ext_resource type="Texture2D" uid="uid://onxr1237yysf" path="res://assets/art/KSTurret.png" id="5_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://tw8ov10v3wsj" path="res://assets/art/player stella.png" id="6_4ni07"]
 [ext_resource type="Texture2D" uid="uid://cn8qtljvmi72d" path="res://assets/art/shield/shield 1.png" id="6_f1ej7"]
+[ext_resource type="Texture2D" uid="uid://bgnnwk0h73o4l" path="res://assets/art/player canon.png" id="6_i4ail"]
+[ext_resource type="Texture2D" uid="uid://beiwxrajusklo" path="res://assets/art/player left canon.png" id="7_a38lo"]
+[ext_resource type="Texture2D" uid="uid://iyqsbcmxht55" path="res://assets/art/player left stella.png" id="7_l71n6"]
 [ext_resource type="Texture2D" uid="uid://wqknly1g60jr" path="res://assets/art/shield/shield 2.png" id="7_oprun"]
+[ext_resource type="Texture2D" uid="uid://cd1glbkuada05" path="res://assets/art/player right canon.png" id="8_4ni07"]
 [ext_resource type="Texture2D" uid="uid://rwdcob452qa6" path="res://assets/art/shield/shield 3.png" id="8_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://cmsu5dio07qcd" path="res://assets/art/shield/shield 4.png" id="9_qfm1y"]
 [ext_resource type="Texture2D" uid="uid://d00en3en5aip3" path="res://assets/art/shield/shield 5.png" id="10_fulsm"]
@@ -23,23 +29,11 @@
 radius = 30.0
 height = 127.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
-atlas = ExtResource("2_dqkch")
-region = Rect2(250, 300, 2000, 2500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
-atlas = ExtResource("3_qlg0r")
-region = Rect2(180, 300, 2020, 2500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
-atlas = ExtResource("4_tuyoq")
-region = Rect2(240, 300, 2020, 2500)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_d2wvv"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_4r5pv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_smehm")
+"texture": ExtResource("2_i4ail")
 }],
 "loop": true,
 "name": &"idle",
@@ -47,7 +41,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ur7pv")
+"texture": ExtResource("3_a38lo")
 }],
 "loop": true,
 "name": &"left",
@@ -55,7 +49,61 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y4r1p")
+"texture": ExtResource("2_qfm1y")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l71n6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_i4ail")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_a38lo")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_4ni07")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d2wvv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_4ni07")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_l71n6")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_fulsm")
 }],
 "loop": true,
 "name": &"right",
@@ -118,18 +166,36 @@ animations = [{
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(-10, 0)
 collision_layer = 2
 script = ExtResource("1_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 7.5)
+position = Vector2(11, 5)
 shape = SubResource("CapsuleShape2D_fjrip")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="shipbase" type="AnimatedSprite2D" parent="."]
 position = Vector2(-2.9999995, 0.99999917)
+scale = Vector2(0.059999987, 0.059999987)
+sprite_frames = SubResource("SpriteFrames_4r5pv")
+animation = &"idle"
+
+[node name="KSturret" type="Sprite2D" parent="."]
+position = Vector2(11, -44)
+scale = Vector2(0.21999998, 0.21999998)
+texture = ExtResource("5_qlg0r")
+
+[node name="cannon" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3.9999998, 4.9999995)
 scale = Vector2(0.06, 0.06)
+sprite_frames = SubResource("SpriteFrames_l71n6")
+animation = &"idle"
+
+[node name="stellarist" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2.9999995, 0.99999917)
+scale = Vector2(0.059999995, 0.059999995)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
-animation = &"left"
+animation = &"idle"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
@@ -138,15 +204,11 @@ autostart = true
 [node name="FiringPosition" type="Marker2D" parent="."]
 position = Vector2(0, -82)
 
-[node name="KSturret" type="Sprite2D" parent="."]
-position = Vector2(0, -70)
-scale = Vector2(0.22, 0.22)
-texture = ExtResource("5_qlg0r")
-
 [node name="SkillDurationTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="shield_anim" type="AnimatedSprite2D" parent="."]
+visible = false
 scale = Vector2(0.08, 0.08)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"shieldup"
@@ -154,6 +216,8 @@ frame = 8
 frame_progress = 1.0
 
 [node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, 12)
 sprite_frames = SubResource("SpriteFrames_a38lo")
 animation = &"shocking"
 frame = 3
