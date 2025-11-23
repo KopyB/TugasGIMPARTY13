@@ -69,10 +69,14 @@ func _ready():
 		rotation_degrees = 90 # Putar agar menghadap ke KANAN
 		
 	elif enemy_type == Type.RBOMBER:
-		# $Sprite2D.texture = bomber_texture
-		shoot_interval = randf_range(2.5, 5.0) # Drop interval random range dari 2.5 - 5 detik (biar g gitu2 doang patternnya - kaiser)
-		speed = 150 # Kecepatan gerak ke samping
-		rotation_degrees = -90 # Putar agar menghadap ke KIRI
+		cannon.hide() 
+		enemyship.texture = bomber_barrel 
+		enemyship.scale = Vector2(0.15, -0.15)
+		enemyship.rotation = -PI/2 
+		
+		shoot_interval = randf_range(2.5, 5.0) 
+		speed = 150 
+		rotation_degrees = -90 # Menghadap Kiri
 	
 	elif enemy_type == Type.TORPEDO_SHARK:
 		health = 3 # Agak tebal sedikit
@@ -275,7 +279,6 @@ func die():
 		drop_barrel()
 		queue_free()
 	else:
-		spawn_powerup()
 		remove_from_group("parrots")
 		queue_free()
 	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
