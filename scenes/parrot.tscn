@@ -1,39 +1,40 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsdk2ko4rwh7x"]
+[gd_scene load_steps=6 format=3 uid="uid://bsdk2ko4rwh7x"]
 
 [ext_resource type="Script" uid="uid://dpmsywrp8ewwd" path="res://scripts/parrot.gd" id="1_w755j"]
 [ext_resource type="Texture2D" uid="uid://b5h3db1kpx3aw" path="res://assets/art/67dawg.jpg" id="2_i6g64"]
+[ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="2_vda7l"]
 
 [sub_resource type="Curve2D" id="Curve2D_w755j"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 2, 0, 2.42, -76.23, -2.42, 76.23, 3, 206, -25.410002, -102.850006, 25.410002, 102.850006, -2, 402, -90.13981, -0.27972317, 90.13981, 0.27972317, 263, 544, 7.1897354, 46.0186, -7.1897354, -46.0186, 421, 388, 148.2517, -18.951046, -148.2517, 18.951046, 212, 242, -45.98, -134.31001, 45.98, 134.31001, 23, 655, -87.12, -33.88, 87.12, 33.88, 225, 839, -119.99999, 90.90909, 119.99999, -90.90909, 755, 812, 70.90909, 56.363636, -70.90909, -56.363636, 729, 599, 8.181818, -115.454544, -8.181818, 115.454544, 447, 705, -111.570244, 23.96694, 111.570244, -23.96694, 812, 941, -22.314049, 45.454544, 22.314049, -45.454544, 1117, 791, 64, 57, -64, -57, 1169, 453, 53, -23, -53, 23, 948, 456, -75, -75, 75, 75, 882, 657, -72, 119, 72, -119, 1306, 631, 102.850006, 36.300003, -102.850006, -36.300003, 1335, 71, 60.5, -39.93, -60.5, 39.93, 1101, 107, -209.33, -22.990002, 209.33, 22.990002, 1204, 352, 12.418425, 100.58924, -12.418425, -100.58924, 1471, 96, 100, 20.90909, -100, -20.90909, 1318, -215, -4, -78, 4, 78, 1146, -99, -129.10701, 19.965002, 129.10701, -19.965002, 1347, -10, 97, 80, -97, -80, 1359, -290, 48, -90, -48, 90, 997, -358, -67, -53, 67, 53, 1035, -217, -8, 76, 8, -76, 1202, -278, 87, 12, -87, -12, 1062, -426, 48, -18, -48, 18, 701, -414, 5, -53, -5, 53, 553, -298, -104, 8, 104, -8, 684, -185, 14, 100, -14, -100, 841, -326, 0, 0, 0, 0, 588, -416, 80.16528, -16.528925, -80.16528, 16.528925, 244, -407, 3.305785, -43.80165, -3.305785, 43.80165, 161, -308, -81.81818, 7.438017, 81.81818, -7.438017, 304, -209, 7.040005, 78.28079, -7.040005, -78.28079, 406, -320, 74, -36, -74, 36, 111, -397, -3.3868432, -75.07503, 3.3868432, 75.07503, -28, -195, -47.810936, -10.928214, 47.810936, 10.928214, 87, -43, -17.758348, 67.618324, 17.758348, -67.618324, 203, -116, 94.255844, 17.075335, -94.255844, -17.075335, 114, -233, 7.272727, -51.81818, -7.272727, 51.81818, -4, -87, 0, 0, 0, 0, 5, 4)
+"points": PackedVector2Array(0, 0, 0, 0, -17, -15, -96.47371, -93.90792, 96.47371, 93.90792, 0, 567, -89.80265, 106.73687, 89.80265, -106.73687, 332, 562, 449.6292, -14.182667, -449.6292, 14.182667, 346, -15, -92.36845, -109.30266, 92.36845, 109.30266, 369, 565, -94.66566, 126.97219, 94.66566, -126.97219, 796, 559, 447.35162, 8.377457, -447.35162, -8.377457, 804, -25, -84.147255, -117.2051, 84.147255, 117.2051, 831, 564, -90.15777, 126.22088, 90.15777, -126.22088, 1246, 565, 423.74475, -1.5987381, -423.74475, 1.5987381, 1260, -20, -92.41171, -112.69721, 92.41171, 112.69721, 1290, 564, -81.278595, 106.55009, 81.278595, -106.55009, 1731, 561, 451.1704, -22.127914, -451.1704, 22.127914, 1740, -26, -84.69366, -109.28214, 84.69366, 109.28214, 1789, 561, -48.49395, 105.18406, 48.49395, -105.18406, 2028, 565, 0, 0, 0, 0, 2072, -26)
 }
-point_count = 45
+point_count = 16
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
-size = Vector2(269, 266)
+size = Vector2(108.24732, 76.94212)
 
-[node name="Dummy" type="Area2D" groups=["enemies"]]
-collision_mask = 2
-script = ExtResource("1_w755j")
-
-[node name="Path2D" type="Path2D" parent="."]
-position = Vector2(14.926077, -54.005962)
-scale = Vector2(0.5687885, 0.84034634)
+[node name="Dummy" type="Path2D" groups=["enemies"]]
+position = Vector2(-51, 47)
 curve = SubResource("Curve2D_w755j")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(5.0000005, 4)
-rotation = 1.177159
-progress = 12735.926
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(-17, -15)
+rotation = 1.732205
+scale = Vector2(0.8407294, 1.2780219)
+skew = 0.022742987
+cubic_interp = false
+loop = false
+script = ExtResource("1_w755j")
 
-[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D"]
+[node name="Area2D" type="Area2D" parent="PathFollow2D"]
+script = ExtResource("2_vda7l")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Area2D"]
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_xmspm")
-
-[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/Area2D"]
-scale = Vector2(0.5705869, 0.5671543)
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/Area2D"]
+position = Vector2(12.4498825, -2.2087498)
+scale = Vector2(0.22325826, 0.16248927)
 texture = ExtResource("2_i6g64")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Area2D"]
+position = Vector2(11.951813, -2.5671005)
+scale = Vector2(0.9999995, 0.99999964)
+shape = SubResource("RectangleShape2D_xmspm")

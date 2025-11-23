@@ -2,7 +2,7 @@ extends Marker2D
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
 var obstacle_scene = preload("res://scenes/Obstacle.tscn")
-
+var parrot_scene = preload("res://scenes/Parrot.tscn")
 @onready var spawn_timer = $SpawnTimer
 
 # --- SETTING DIFFICULTY ---
@@ -15,12 +15,14 @@ var difficulty_curve = 0.05  # Kecepatan kenaikan difficulty
 var is_spawning_paused = false 
 
 func _ready():
+	var viewport_rect = get_viewport_rect().size
 	randomize()
 	
 	# WAJIB: Daftar ke group agar bisa diperintah oleh MazeSpawner
 	add_to_group("spawner_utama") 
 	
 	spawn_timer.start(initial_spawn_rate)
+	spawn_parrot(viewport_rect)
 
 func _process(delta):
 	time_elapsed += delta
@@ -55,6 +57,7 @@ func _on_spawn_timer_timeout():
 	spawn_timer.start(new_wait_time)
 
 func spawn_logic():
+	var parrotcheck = get_tree().get_nodes_in_group("parrots").size()
 	var viewport_rect = get_viewport_rect().size
 	
 	# Randomizer Tipe Musuh (Persentase)
@@ -64,12 +67,14 @@ func spawn_logic():
 		# 40% Chance: Gunboat Group
 		spawn_gunboat_group(viewport_rect)
 		
-	elif chance <= 70: 
+	elif chance <= 30: 
 		# 30% Chance: Bomber
 		spawn_bomber(viewport_rect)
 		
-	else: 
+	elif chance <= 100 and parrotcheck == 0:
+		spawn_parrot(viewport_rect) 
 		# 30% Chance: Obstacle Satuan (Batu/Kapal Jatuh)
+	else:
 		spawn_single_obstacle(viewport_rect)
 
 # --- TIPE 1: OBSTACLE SATUAN ---
@@ -133,3 +138,15 @@ func spawn_bomber(viewport_rect):
 		
 		new_enemy.global_position = Vector2(spawn_x, spawn_y)
 		get_tree().current_scene.add_child(new_enemy)
+
+func spawn_parrot(viewport_rect):
+	var new_enemy = parrot_scene.instantiate()
+	new_enemy.get_child(0).get_child(0).enemy_type = 3
+	
+	var spawn_x = 0
+	var spawn_y = 0
+	
+	new_enemy.global_position = Vector2(spawn_x, spawn_y)
+	add_child(new_enemy)
+	new_enemy.get_child(0).get_child(0).add_to_group("parrots")
+	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())

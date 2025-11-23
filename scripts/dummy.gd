@@ -4,7 +4,7 @@ extends Area2D
 signal enemy_died
 
 # TIPE MUSUH
-enum Type {GUNBOAT, BOMBER,RBOMBER}
+enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT}
 @export var enemy_type = Type.GUNBOAT
 
 # STATISTIK
@@ -23,6 +23,8 @@ var player = null # Referensi
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	
+	print(speed)
+	
 	# Setup awal berdasarkan tipe
 	if enemy_type == Type.GUNBOAT:
 		# $Sprite2D.texture = gunboat_texture
@@ -40,6 +42,9 @@ func _ready():
 		shoot_interval = randf_range(2.5, 5.0) # Drop interval random range dari 2.5 - 5 detik (biar g gitu2 doang patternnya - kaiser)
 		speed = 150 # Kecepatan gerak ke samping
 		rotation_degrees = -90 # Putar agar menghadap ke KIRI
+		
+	elif enemy_type == Type.PARROT:
+		print("Parrot spawned")
 		
 func _process(delta):
 	if enemy_type == Type.GUNBOAT:
@@ -105,24 +110,41 @@ func _on_body_entered(body):
 
 # --- LOGIKA TERIMA DAMAGE & MATI ---
 func take_damage(amount):
-	health -= amount
-	if health <= 0:
-		die()
+	var parrotcheck = get_tree().get_nodes_in_group("parrots").size()
+	if not enemy_type == Type.PARROT:
+		if parrotcheck == 0:
+			health -= amount
+			if health <= 0:
+				die()
+	else:
+		health -= amount
+		if health <= 0:
+			die()
 
 func die():
-	spawn_powerup_chance()
-	enemy_died.emit()
-	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
-		drop_barrel()
-	queue_free()
+	if not enemy_type == Type.PARROT:
+		spawn_powerup_chance()
+		enemy_died.emit()
+		if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
+			drop_barrel()
+		queue_free()
+	else:
+		spawn_powerup()
+		remove_from_group("parrots")
+		queue_free()
+	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
 
 func spawn_powerup_chance():
-	if randf() <= 0.5: 
-		var powerup = powerup_scene.instantiate()
-		powerup.global_position = global_position
+	if randf() <= 0.5:
+		spawn_powerup()
+
 		
-		# Random angka acak 0 sampai 5 
-		var random_type = randi() % 6 
-		powerup.current_type = random_type
-		
-		get_tree().current_scene.call_deferred("add_child", powerup)
+func spawn_powerup():
+	var powerup = powerup_scene.instantiate()
+	powerup.global_position = global_position
+	
+	# Random angka acak 0 sampai 5 
+	var random_type = randi() % 6 
+	powerup.current_type = random_type
+	
+	get_tree().current_scene.call_deferred("add_child", powerup)
