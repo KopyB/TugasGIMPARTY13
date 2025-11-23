@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://fujugshyvkm6"]
+[gd_scene load_steps=47 format=3 uid="uid://fujugshyvkm6"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="2_dqkch"]
@@ -10,18 +10,58 @@
 [ext_resource type="Texture2D" uid="uid://rwdcob452qa6" path="res://assets/art/shield/shield 3.png" id="8_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://cmsu5dio07qcd" path="res://assets/art/shield/shield 4.png" id="9_qfm1y"]
 [ext_resource type="Texture2D" uid="uid://d00en3en5aip3" path="res://assets/art/shield/shield 5.png" id="10_fulsm"]
+[ext_resource type="Texture2D" uid="uid://ch0wfk6752xij" path="res://assets/art/secondwind_animations/Untitled1074_20251122093948.png" id="10_t4otl"]
 [ext_resource type="Texture2D" uid="uid://c4jafgebdluep" path="res://assets/art/shield/shield 6.png" id="11_4r5pv"]
+[ext_resource type="Texture2D" uid="uid://cbuqnh46qd3fc" path="res://assets/art/secondwind_animations/Untitled1074_20251122093954.png" id="11_j2b1d"]
 [ext_resource type="Texture2D" uid="uid://cdavh4673nb86" path="res://assets/art/shield/shield 7.png" id="12_60mlk"]
+[ext_resource type="Texture2D" uid="uid://xt3eytseo4q2" path="res://assets/art/secondwind_animations/Untitled1074_20251122094001.png" id="12_cs1tg"]
+[ext_resource type="Texture2D" uid="uid://j0mw26y73d1n" path="res://assets/art/secondwind_animations/Untitled1074_20251122094015.png" id="13_2dvfe"]
 [ext_resource type="Texture2D" uid="uid://cmaysr8lki2rf" path="res://assets/art/shield/shield 8.png" id="13_i4ail"]
 [ext_resource type="Texture2D" uid="uid://dvhfwe3stucie" path="res://assets/art/shield/shield 9.png" id="14_a38lo"]
+[ext_resource type="Texture2D" uid="uid://deo34qf7bos6x" path="res://assets/art/secondwind_animations/Untitled1074_20251122094019.png" id="14_giy8y"]
+[ext_resource type="Texture2D" uid="uid://xbepqyf1d5b" path="res://assets/art/secondwind_animations/Untitled1074_20251122094022.png" id="15_fdfoy"]
 [ext_resource type="Texture2D" uid="uid://c2nk63g2gjlr0" path="res://assets/art/shockwaves/SWFrame1.png" id="15_fulsm"]
 [ext_resource type="Texture2D" uid="uid://82elk2bthajh" path="res://assets/art/shockwaves/SWFrame2.png" id="16_4r5pv"]
+[ext_resource type="Texture2D" uid="uid://vnw7qgot14kw" path="res://assets/art/secondwind_animations/Untitled1074_20251122094026.png" id="16_hhpqf"]
 [ext_resource type="Texture2D" uid="uid://b6fjg06nidrb1" path="res://assets/art/shockwaves/SWFrame3.png" id="17_60mlk"]
+[ext_resource type="Texture2D" uid="uid://y21cm1bcs8wp" path="res://assets/art/secondwind_animations/Untitled1074_20251122094029.png" id="17_g5jhy"]
+[ext_resource type="Texture2D" uid="uid://6qbtvtlwbn45" path="res://assets/art/secondwind_animations/Untitled1074_20251122094033.png" id="18_holxr"]
 [ext_resource type="Texture2D" uid="uid://cg8r3t2yn6osi" path="res://assets/art/shockwaves/SWFrame4.png" id="18_i4ail"]
+[ext_resource type="Texture2D" uid="uid://c40k2ml40lbv8" path="res://assets/art/secondwind_animations/Untitled1074_20251122094036.png" id="19_mx1m4"]
+[ext_resource type="Texture2D" uid="uid://y7s3rqoon0d4" path="res://assets/art/secondwind_animations/Untitled1074_20251122094040.png" id="20_4gjji"]
+[ext_resource type="Texture2D" uid="uid://bvjcwhibp0cvj" path="res://assets/art/secondwind_animations/Untitled1074_20251122094042.png" id="21_u2ulf"]
+[ext_resource type="Texture2D" uid="uid://dvvu4pmnb2jw" path="res://assets/art/secondwind_animations/Untitled1074_20251122094045.png" id="22_6e8lb"]
+[ext_resource type="Texture2D" uid="uid://c7iby4as8bng4" path="res://assets/art/secondwind_animations/Untitled1074_20251122094048.png" id="23_2gdjj"]
+[ext_resource type="Texture2D" uid="uid://vv55eb1sikom" path="res://assets/art/secondwind_animations/Untitled1074_20251122094051.png" id="24_sc3ue"]
+[ext_resource type="Texture2D" uid="uid://mmjwwinckbw5" path="res://assets/art/secondwind_animations/Untitled1074_20251122094055.png" id="25_lxlsd"]
+[ext_resource type="Texture2D" uid="uid://dq5rprsxjelqj" path="res://assets/art/secondwind_animations/Untitled1074_20251122094059.png" id="26_ha2mi"]
+[ext_resource type="Texture2D" uid="uid://dfpjnrov72xqj" path="res://assets/art/secondwind_animations/Untitled1074_20251122094102.png" id="27_apa73"]
+[ext_resource type="Texture2D" uid="uid://dk21nk5vmlsb2" path="res://assets/art/secondwind_animations/Untitled1074_20251122094105.png" id="28_74r1k"]
+[ext_resource type="Texture2D" uid="uid://ceptjcdq4jvo" path="res://assets/art/secondwind_animations/Untitled1074_20251122094108.png" id="29_8svfe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjrip"]
 radius = 30.0
 height = 127.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a38lo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_fulsm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_4r5pv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_60mlk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_i4ail")
+}],
+"loop": false,
+"name": &"shocking",
+"speed": 12.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("2_dqkch")
@@ -62,6 +102,74 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_2a3c5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_t4otl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_j2b1d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_cs1tg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_2dvfe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_giy8y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_fdfoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_hhpqf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_g5jhy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_holxr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_mx1m4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_4gjji")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_u2ulf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_6e8lb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_2gdjj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_sc3ue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_lxlsd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_ha2mi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_apa73")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_74r1k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_8svfe")
+}],
+"loop": false,
+"name": &"PEAK",
+"speed": 12.0
+}]
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_qlg0r"]
 animations = [{
 "frames": [{
@@ -97,26 +205,6 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_a38lo"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("15_fulsm")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_4r5pv")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_60mlk")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_i4ail")
-}],
-"loop": false,
-"name": &"shocking",
-"speed": 12.0
-}]
-
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_g2els")
@@ -125,11 +213,17 @@ script = ExtResource("1_g2els")
 position = Vector2(0, 7.5)
 shape = SubResource("CapsuleShape2D_fjrip")
 
+[node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a38lo")
+animation = &"shocking"
+frame = 3
+frame_progress = 1.0
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-2.9999995, 0.99999917)
 scale = Vector2(0.06, 0.06)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
-animation = &"left"
+animation = &"idle"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
@@ -146,17 +240,19 @@ texture = ExtResource("5_qlg0r")
 [node name="SkillDurationTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="secondwind_anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -7.0000005)
+scale = Vector2(0.66, 0.66)
+sprite_frames = SubResource("SpriteFrames_2a3c5")
+animation = &"PEAK"
+frame = 19
+frame_progress = 1.0
+
 [node name="shield_anim" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.08, 0.08)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"shieldup"
 frame = 8
-frame_progress = 1.0
-
-[node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_a38lo")
-animation = &"shocking"
-frame = 3
 frame_progress = 1.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

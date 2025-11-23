@@ -27,6 +27,7 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 @onready var k_sturret: Sprite2D = $KSturret
 @onready var shield_anim: AnimatedSprite2D = $shield_anim
 @onready var shockwaves_anim: AnimatedSprite2D = $shockwaves_anim
+@onready var secondwind_anim: AnimatedSprite2D = $secondwind_anim
 
 @onready var skill_timer = $SkillDurationTimer
 
@@ -37,6 +38,7 @@ func _ready():
 	k_sturret.hide()
 	shield_anim.hide()
 	shockwaves_anim.hide()
+	secondwind_anim.hide()
 # --- FUNGSI MENERIMA DAMAGE & MATI ---
 # Pastikan logika mati Anda ada di fungsi ini
 func take_damage_player():
@@ -54,11 +56,18 @@ func take_damage_player():
 	if has_second_wind:
 		trigger_shockwave() # Ledakkan semua musuh
 		has_second_wind = false # Pakai nyawa cadangannya
+		_animation_player.hide()
+		secondwind_anim.show()
+		secondwind_anim.play("PEAK")
+		await  secondwind_anim.animation_finished
+		secondwind_anim.hide()
+		_animation_player.show()
 		print("SECOND WIND ACTIVATED! Player bangkit kembali!")
 		return 
 
 	# Jika tidak ada shield & tidak ada second wind -> MATI
-	die()
+	if not has_second_wind and not has_shield:
+		die()
 
 func die():
 	is_dead = true
@@ -203,6 +212,7 @@ func trigger_shockwave():
 	get_tree().call_group("enemies", "take_damage", 9999)
 	await shockwaves_anim.animation_finished
 	shockwaves_anim.hide()
+	
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
 	if direction:
