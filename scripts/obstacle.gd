@@ -6,13 +6,14 @@ var hp = 3
 var speed = 150 
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
-var tex_bones = preload("res://assets/art/bonepile.png")
+var tex_bones = preload("res://assets/art/fih fossil.png")
 var tex_shipwreck = preload("res://assets/art/shipwreck.png")
 
 # --- FIX: Tambahkan variabel ini ---
 var is_maze_obstacle = false 
 
 func setup_obstacle(type):
+	add_to_group("obstacles")
 	current_type = type
 	var sprite = $Sprite2D
 	

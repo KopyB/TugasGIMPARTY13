@@ -1,13 +1,115 @@
-[gd_scene load_steps=7 format=3 uid="uid://cof2nk7b0xan"]
+[gd_scene load_steps=28 format=3 uid="uid://cof2nk7b0xan"]
 
 [ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="1_k5f3b"]
 [ext_resource type="Texture2D" uid="uid://fl8kxpc0x1xl" path="res://assets/art/pirate gunboat base.png" id="2_k5f3b"]
 [ext_resource type="Texture2D" uid="uid://d4d666wk0gap2" path="res://assets/art/pirate gunboat canon.png" id="3_6m2ry"]
 [ext_resource type="Script" uid="uid://bt3qgbp0e66fr" path="res://scripts/enemycannon.gd" id="4_w4gkx"]
 [ext_resource type="AudioStream" uid="uid://bpe72y1ibwily" path="res://assets/audio/parrot_taunt.mp3" id="5_fva3d"]
+[ext_resource type="Texture2D" uid="uid://dl06js2gnj4we" path="res://assets/art/sharkscout/torpedo shak1s.png" id="5_5rvqu"]
+[ext_resource type="Texture2D" uid="uid://wfjdw73t3dev" path="res://assets/art/sharkscout/torpedo shak2s.png" id="6_1cxxm"]
+[ext_resource type="Texture2D" uid="uid://dyfyh0fbgnpc7" path="res://assets/art/sharkscout/torpedo shak3s.png" id="7_pv6po"]
+[ext_resource type="Texture2D" uid="uid://csaoxjosfwvge" path="res://assets/art/sharkscout/torpedo shak4s.png" id="8_2bup3"]
+[ext_resource type="Texture2D" uid="uid://lu3es1lainbl" path="res://assets/art/sharkscout/torpedo shak5s.png" id="9_7wx0u"]
+[ext_resource type="Texture2D" uid="uid://1va4g53bchbo" path="res://assets/art/sharkscout/torpedo shak6s.png" id="10_4ms10"]
+[ext_resource type="Texture2D" uid="uid://bc3w0vq3rwwe6" path="res://assets/art/sharkswim/torpedo swimming1.png" id="11_qsl8f"]
+[ext_resource type="Texture2D" uid="uid://dqbmf16mdthw6" path="res://assets/art/sharkswim/torpedo swimming2.png" id="12_x165n"]
+[ext_resource type="Texture2D" uid="uid://clukwdefmbxqn" path="res://assets/art/sharkswim/torpedo swimming3.png" id="13_qqfk8"]
+[ext_resource type="Texture2D" uid="uid://c0rqpdurwt5hr" path="res://assets/art/sharkswim/torpedo swimming4.png" id="14_wcfci"]
+[ext_resource type="Texture2D" uid="uid://biofbj8xbseue" path="res://assets/art/sharkswim/torpedo swimming5.png" id="15_dkth0"]
+[ext_resource type="Texture2D" uid="uid://cgs18nwp8kaf6" path="res://assets/art/sharkswim/torpedo swimming6.png" id="16_nqqnp"]
+[ext_resource type="Texture2D" uid="uid://n3g646f8xph2" path="res://assets/art/sharktrans/torpedo shak1s.png" id="17_26psq"]
+[ext_resource type="Texture2D" uid="uid://cb14h5a6igufr" path="res://assets/art/sharktrans/torpedo shak2s.png" id="18_dgtoy"]
+[ext_resource type="Texture2D" uid="uid://b7sgqdbk0bhd3" path="res://assets/art/sharktrans/torpedo shak3s.png" id="19_f8wvb"]
+[ext_resource type="Texture2D" uid="uid://dn0gbeknj1sv1" path="res://assets/art/sharktrans/torpedo shak4s.png" id="20_ypsu6"]
+[ext_resource type="Texture2D" uid="uid://cruq16n0rorxv" path="res://assets/art/sharktrans/torpedo shak5s.png" id="21_y8s1v"]
+[ext_resource type="Texture2D" uid="uid://68ijjirrjai5" path="res://assets/art/sharktrans/torpedo shak6s.png" id="22_62ek7"]
+[ext_resource type="Texture2D" uid="uid://cj2ec1bp3i545" path="res://assets/art/sharktrans/torpedo shak7s.png" id="23_camdv"]
+[ext_resource type="Texture2D" uid="uid://bhhbq2i33gvyp" path="res://assets/art/sharktrans/torpedo shak8s.png" id="24_6qha2"]
+[ext_resource type="Texture2D" uid="uid://qrrlj4mpiwa8" path="res://assets/art/sharktrans/torpedo shak9s.png" id="25_phbbe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
 size = Vector2(62, 115)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w4gkx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_5rvqu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_1cxxm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_pv6po")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2bup3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_7wx0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4ms10")
+}],
+"loop": false,
+"name": &"scout",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_qsl8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_x165n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_qqfk8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_wcfci")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_dkth0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_nqqnp")
+}],
+"loop": true,
+"name": &"swimming",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_26psq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_dgtoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_f8wvb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ypsu6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_y8s1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_62ek7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_camdv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_6qha2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_phbbe")
+}],
+"loop": false,
+"name": &"transition",
+"speed": 12.0
+}]
 
 [node name="Dummy" type="Area2D" groups=["enemies"]]
 collision_mask = 2
@@ -34,4 +136,11 @@ shape = SubResource("RectangleShape2D_xmspm")
 stream = ExtResource("5_fva3d")
 volume_db = 1.0
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="torpedoshark" type="AnimatedSprite2D" parent="."]
+position = Vector2(-8, -15.999998)
+rotation = -1.5707964
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_w4gkx")
+animation = &"scout"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

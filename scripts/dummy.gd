@@ -24,6 +24,7 @@ var shark_lock_duration = 5.0 # Locks on 5 sec
 var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
 var shark_charge_speed = 1000.0 
+@onready var torpedoshark: AnimatedSprite2D = $torpedoshark
 
 # --- SIREN VARIABLE ---
 var is_diving = false
@@ -44,65 +45,109 @@ var siren = preload("res://assets/art/siren(temp).png")
 var player = null # Referensi
 
 func _ready():
+	# 1. Setup Group & Player
+	add_to_group("enemies") # Wajib untuk skill Admiral/Shockwave
 	player = get_tree().get_first_node_in_group("player")
-	collision_shape_2d.disabled = false
+	torpedoshark.hide()
 	# Setup awal berdasarkan tipe
+	area_entered.connect(_on_area_entered)
+	
+	# 2. FIX HITBOX MENULAR (Wajib duplicate agar ukuran tiap musuh independen)
+	if collision_shape_2d and collision_shape_2d.shape:
+		collision_shape_2d.shape = collision_shape_2d.shape.duplicate()
+	
+	# 3. Aktifkan Collision (Aman dari null)
+	if collision_shape_2d:
+		collision_shape_2d.disabled = false
+		
+	# --- SETUP VISUAL & LOGIKA PER TIPE ---
+	
+	# TIPE 0: GUNBOAT (Musuh Standar)
 	if enemy_type == Type.GUNBOAT:
-		enemyship.texture = gun_boat
-		enemyship.position.x = -5.0
-		enemyship.scale = Vector2(0.06, 0.06)
-		cannon.show()
+		if enemyship:
+			enemyship.texture = gun_boat
+			enemyship.position.x = -5.0
+			enemyship.scale = Vector2(0.06, 0.06)
 		
-		collision_shape_2d.shape.extents = Vector2(284.0/2, 116.0/2)
+		if cannon:
+			cannon.show()
 		
-		shoot_interval = 2.0 # Tembak tiap 2 detik
-		rotation_degrees = 180 # Hadap bawah (visual)
+		# Set Hitbox Gunboat (Ukuran Penuh)
+		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
+			collision_shape_2d.shape.size = Vector2(284.0, 116.0)
 		
+		shoot_interval = 2.0 
+		rotation_degrees = 180 # Hadap Bawah
+		
+	# TIPE 1: BOMBER (Kapal Tong)
 	elif enemy_type == Type.BOMBER:
-		cannon.hide()
-		enemyship.texture = bomber_barrel
-		enemyship.rotation = -PI/2
-		enemyship.scale = Vector2(0.15, 0.15)
+		if cannon: cannon.hide()
 		
-		collision_shape_2d.shape.extents = Vector2(280.0/2, 145.0/2)
+		if enemyship:
+			enemyship.texture = bomber_barrel
+			enemyship.rotation = -PI/2
+			enemyship.scale = Vector2(0.15, 0.15)
+		
+		# Set Hitbox Bomber (Lebih Besar)
+		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
+			collision_shape_2d.shape.size = Vector2(280.0, 145.0) 
 
-		shoot_interval = randf_range(2.5, 5.0) # Drop interval random range dari 2.5 - 5 detik (biar g gitu2 doang patternnya - kaiser)
-		speed = 150 # Kecepatan gerak ke samping
-		rotation_degrees = 90 # Putar agar menghadap ke KANAN
-		
-	elif enemy_type == Type.RBOMBER:
-		cannon.hide() 
-		enemyship.texture = bomber_barrel 
-		enemyship.scale = Vector2(0.15, -0.15)
-		enemyship.rotation = -PI/2 
-		
 		shoot_interval = randf_range(2.5, 5.0) 
 		speed = 150 
-		rotation_degrees = -90 # Menghadap Kiri
-	
-	elif enemy_type == Type.TORPEDO_SHARK:
-		health = 3 # Agak tebal sedikit
-		speed = 50 # Gerak pelan saat fase aiming
-	
+		rotation_degrees = 90 # Hadap Kanan
 		
-	elif enemy_type == Type.SIREN:
+	# TIPE 2: RBOMBER (Bomber dari Kanan)
+	elif enemy_type == Type.RBOMBER:
+		if cannon: cannon.hide()
+		
+		if enemyship:
+			enemyship.texture = bomber_barrel
+			enemyship.rotation = -PI/2 
+			# FIX MIRROR: Scale Y negatif agar tidak terbalik saat rotasi parent -90
+			enemyship.scale = Vector2(0.15, -0.15) 
+			
+		# Set Hitbox RBomber (Sama kayak Bomber)
+		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
+			collision_shape_2d.shape.size = Vector2(280.0, 145.0)
+			
+		shoot_interval = randf_range(2.5, 5.0) 
+		speed = 150 
+		rotation_degrees = -90 # Hadap Kiri (Mundur)
+
+	# TIPE 3: PARROT (Burung)
+	elif enemy_type == Type.PARROT:
+		add_to_group("parrots")
+		# Parrot biasanya tidak punya collision fisik yang sama, jadi kita skip setup hitbox
+		print("Parrot spawned")
+
+	# TIPE 4: TORPEDO SHARK (Hiu Penabrak)
+	elif enemy_type == Type.TORPEDO_SHARK:
+		health = 5
+		speed = 50 # Speed awal (aiming phase)
+		# Hitbox Shark (bisa pakai default atau diatur khusus)
+		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
+			collision_shape_2d.shape.size = Vector2(100.0, 50.0)
 		cannon.hide()
-		enemyship.texture = siren
-		enemyship.scale = Vector2(0.2, 0.2)
+		enemyship.hide()
+		torpedoshark.show()
+
+	# TIPE 5: SIREN (Putri Duyung Kiri)
+	elif enemy_type == Type.SIREN:
+		if cannon: cannon.hide()
+		if enemyship:
+			enemyship.texture = siren
+			enemyship.scale = Vector2(0.2, 0.2)
 		rotation_degrees = -90
 		speed = 120
 	
+	# TIPE 6: RSIREN (Putri Duyung Kanan)
 	elif enemy_type == Type.RSIREN:
-		cannon.hide()
-		enemyship.texture = siren
-		enemyship.scale = Vector2(0.2, 0.2)
+		if cannon: cannon.hide()
+		if enemyship:
+			enemyship.texture = siren
+			enemyship.scale = Vector2(0.2, 0.2)
 		rotation_degrees = 90
 		speed = 120
-		
-
-		
-	elif enemy_type == Type.PARROT:
-		print("Parrot spawned")
 		
 func _process(delta):
 	if is_paralyzed:
@@ -180,8 +225,8 @@ func fire_gunboat():
 	if is_instance_valid(player):
 		
 		# Jika Y Musuh > Y Player, artinya Musuh ada DI BAWAH (di belakang) Player.
-		# Beri toleransi sedikit (10 pixel)
-		if global_position.y >= player.global_position.y - 10:
+		# Beri toleransi sedikit (50 pixel)
+		if global_position.y >= player.global_position.y - 50:
 			return 
 			
 		var bullet = bullet_scene.instantiate()
@@ -220,20 +265,29 @@ func handle_shark_behavior(delta):
 		# Bergerak maju pelan-pelan 
 		position += Vector2.RIGHT.rotated(rotation) * speed * delta
 		
+		#animation
+		torpedoshark.play("swimming")
+		
 		# Cek waktu lock habis
 		if shark_timer >= shark_lock_duration:
+			torpedoshark.play_backwards("transition")
+			await torpedoshark.animation_finished
+			torpedoshark.play("scout")
+			await torpedoshark.animation_finished
+			torpedoshark.play("transition")
+			await torpedoshark.animation_finished
 			start_shark_charge()
 	else:
 		# FASE 2: CHARGING (Lurus terus)
+		torpedoshark.play("swimming")
 		position += shark_charge_direction * shark_charge_speed * delta
 
 func start_shark_charge():
 	is_shark_charging = true
 	# Kunci arah saat ini (berdasarkan rotasi terakhir ke player)
 	shark_charge_direction = Vector2.RIGHT.rotated(rotation)
-	
+	torpedoshark.play("swimming")
 	# Visual Feedback: Ubah warna jadi Merah (Tanda bahaya & Kebal)
-	modulate = Color(10, 0, 0, 1) # Merah menyala
 	print("SHARK CHARGING! IMMUNE ACTIVATED!")
 
 func trigger_siren_scream():
@@ -290,6 +344,19 @@ func die():
 		spawn_powerup()
 		queue_free()
 	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("obstacles"):
+		print("Musuh menabrak Obstacle!")
+		
+		# 1. Musuh Mati
+		die()
+		
+		# 2. Obstacle juga menerima damage (Aksi-Reaksi)
+		# Pastikan obstacle punya fungsi take_damage
+		if area.has_method("take_damage"):
+			# Beri damage besar (misal 10) biar obstacle langsung hancur juga
+			area.take_damage(10)
 
 func spawn_powerup_chance():
 	if randf() <= 0.25: 
