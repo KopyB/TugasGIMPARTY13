@@ -39,10 +39,9 @@ func _on_exit_pressed() -> void:
 
 func _on_start_pressed() -> void:
 	#animation stella zooming
+	buttonclick.play()
 	animation_player.play("nyoom")
 	await animation_player.animation_finished
-	
-	buttonclick.play()
 	
 	#fade in transition
 	Transition.load_scene("res://scenes/main.tscn")
