@@ -10,3 +10,4 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if is_instance_valid(player):
 		look_at(player.global_position)
+		rotation_degrees -= 90
