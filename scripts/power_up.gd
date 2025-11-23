@@ -10,12 +10,12 @@ var current_type = Type.MULTISHOT
 
 # variabel texture crates 
 var shieldcrate = preload("res://assets/art/shield/1shield box.png")
-var multishotcrate
-var artilcrate
-var speedcrate
+var multishotcrate = preload("res://assets/art/multi_box.png")
+var artilcrate = preload("res://assets/art/burst_box.png")
+var speedcrate = preload("res://assets/art/speed_box.png")
 var krakencrate = preload("res://assets/art/KrakenSlayerCrate.png")
 var secondwindcrate = preload("res://assets/art/secondwindcrate.png")
-var admiralcrate
+var admiralcrate = preload("res://assets/art/will_box.png")
 
 func _ready():
 	# Ubah warna bola berdasarkan tipe agar pemain tahu
@@ -25,20 +25,20 @@ func _ready():
 			crate.texture = shieldcrate
 			
 		Type.MULTISHOT:
-			modulate = Color.YELLOW # Kuning
+			crate.texture = multishotcrate
 			
 		Type.ARTILLERY:
-			modulate = Color.RED # Merah
+			crate.texture = artilcrate
 			
 		Type.SPEED:
-			modulate = Color.GREEN # Hijau
+			crate.texture = speedcrate
 			
 		Type.KRAKEN:
 			crate.texture = krakencrate
 		Type.SECOND_WIND:
 			crate.texture = secondwindcrate
 		Type.ADMIRAL:
-			modulate = Color.WHITE # Putih 
+			crate.texture = admiralcrate
 
 func _process(delta):
 	position.y += 150 * delta # Kecepatan jatuh

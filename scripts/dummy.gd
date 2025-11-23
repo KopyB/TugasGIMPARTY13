@@ -39,6 +39,8 @@ var bomber_barrel = preload("res://assets/art/BomberWithBarrel.png")
 var bomber_noBarrel = preload("res://assets/art/BomberNoBarrel.png")
 var gun_boat = preload("res://assets/art/pirate gunboat base.png")
 var siren = preload("res://assets/art/siren(temp).png")
+@onready var taunt = $parrot_taunt
+@onready var pdeath = $parrot_spawn
 
 var player = null # Referensi
 
@@ -314,6 +316,9 @@ func take_damage(amount):
 			health -= amount
 			if health <= 0:
 				die()
+		else:
+			taunt.play()
+			
 		
 		if enemy_type == Type.SIREN or enemy_type == Type.RSIREN:
 			trigger_siren_scream()
@@ -321,6 +326,7 @@ func take_damage(amount):
 	else:
 		health -= amount
 		if health <= 0:
+			pdeath.play()
 			die()
 
 func die():
@@ -335,6 +341,7 @@ func die():
 		queue_free()
 	else:
 		remove_from_group("parrots")
+		spawn_powerup()
 		queue_free()
 	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
 

@@ -1,8 +1,8 @@
 extends Marker2D
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
-var obstacle_scene = preload("res://scenes/Obstacle.tscn")
-var parrot_scene = preload("res://scenes/Parrot.tscn")
+var obstacle_scene = preload("res://scenes/obstacle.tscn")
+var parrot_scene = preload("res://scenes/parrot.tscn")
 @onready var spawn_timer = $SpawnTimer
 
 # --- SETTING DIFFICULTY ---
@@ -74,7 +74,7 @@ func spawn_logic():
 		else:
 			spawn_rbomber(viewport_rect)
 
-	elif chance <= 10 and parrotcheck == 0:
+	elif chance <= 25 and parrotcheck == 0:
 		spawn_parrot(viewport_rect) 
 
 	elif chance <= 80:
