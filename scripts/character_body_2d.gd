@@ -25,7 +25,9 @@ var tex_artillery = preload("res://assets/art/ArtilleryBurstProjectile.png")
 
 var explosion_scene = preload("res://scenes/explosion.tscn")
 #animation
-@onready var _animation_player = $AnimatedSprite2D
+@onready var anim_shipbase = $shipbase
+@onready var anim_cannon = $cannon
+@onready var anim_stella = $stellarist
 @onready var k_sturret: Sprite2D = $KSturret
 @onready var shield_anim: AnimatedSprite2D = $shield_anim
 @onready var shockwaves_anim: AnimatedSprite2D = $shockwaves_anim
@@ -34,6 +36,11 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 
 func _ready():
 	add_to_group("player")
+	anim_shipbase.add_to_group("player_anims")
+	anim_cannon.add_to_group("player_anims")
+	anim_stella.add_to_group("player_anims")
+	for node in get_tree().get_nodes_in_group("player_anims"):
+		node.show()
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	k_sturret.hide()
@@ -68,7 +75,8 @@ func die():
 	reset_all_skills()
 	get_tree().call_group("enemy_projectiles", "queue_free")
 	# Matikan visual kapal agar terlihat 'hancur'
-	_animation_player.visible = false 
+	for node in get_tree().get_nodes_in_group("player_anims"):
+		node.visible = false
 	set_physics_process(false) # Matikan pergerakan
 	
 	# Panggil UI Manager lewat Group
@@ -140,6 +148,7 @@ func activate_speed():
 func activate_kraken():
 	print("KRAKEN RELEASED!")
 	is_kraken_active = true 
+	anim_cannon.hide()
 	
 	# Spawn Laser
 	# Kita tunggu sebentar (animasi charge) pakai timer juga
@@ -166,6 +175,7 @@ func activate_kraken():
 		k_sturret.hide()
 	
 	is_kraken_active = false
+	anim_cannon.show()
 	
 # --- LOGIKA BARU: SECOND WIND (REVIVE) ---
 func activate_second_wind():
@@ -243,13 +253,16 @@ func _physics_process(delta: float) -> void:
 			rotation = lerp(rotation, 0.0, delta * 1.0)
 	#animation
 	if direction < 0:
-		_animation_player.play("left")
+		for node in get_tree().get_nodes_in_group("player_anims"):
+				node.play("left")
 		k_sturret.position.x = -15.0
 	elif direction > 0:
-		_animation_player.play("right")
-		k_sturret.position.x = -15.0
+		for node in get_tree().get_nodes_in_group("player_anims"):
+				node.play("right")
+		k_sturret.position.x = +15.0
 	else:
-		_animation_player.play("idle")
+		for node in get_tree().get_nodes_in_group("player_anims"):
+				node.play("idle")
 
 
 	# if is_dizzy == true:

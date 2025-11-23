@@ -115,7 +115,7 @@ func spawn_gunboat_group(viewport_rect):
 		var enemyshape = new_enemy.get_node("enemyship")
 		
 		# Atur formasi berjejer (jarak antar kapal random dari 60 sampai lebar viewport - ukuran sprite/2)
-		var viewport_width = get_viewport().get_visible_rect().size.x - enemyshape.get_rect().size.x/2
+		var viewport_width = get_viewport().get_visible_rect().size.x - enemyshape.get_rect().size.x*0.06/2
 		#aku ganti logika spacingnya biar g fix 60 -kaiser
 		var min_spacing = 60 #minimal 60 kyk kode awal
 		var max_spacing = viewport_width / float(group_count - 1) #ngitung spacing paling jauh berdasarkan lebar viewport sm jumlah kapal

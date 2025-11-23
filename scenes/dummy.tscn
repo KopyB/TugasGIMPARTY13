@@ -6,25 +6,27 @@
 [ext_resource type="Script" uid="uid://bt3qgbp0e66fr" path="res://scripts/enemycannon.gd" id="4_w4gkx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
-size = Vector2(116, 284)
+size = Vector2(62, 115)
 
 [node name="Dummy" type="Area2D" groups=["enemies"]]
 collision_mask = 2
 script = ExtResource("1_k5f3b")
 
 [node name="enemyship" type="Sprite2D" parent="."]
+position = Vector2(-6.9999924, 1.9073486e-06)
 rotation = 3.1415927
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.06, 0.06)
 texture = ExtResource("2_k5f3b")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, -11.5)
-shape = SubResource("RectangleShape2D_xmspm")
-
 [node name="cannon" type="Sprite2D" parent="."]
-rotation = -3.1415927
-scale = Vector2(0.13, 0.13)
+position = Vector2(-1.9999999, -13.999999)
+rotation = -6.2831855
+scale = Vector2(0.06, 0.06)
 texture = ExtResource("3_6m2ry")
 script = ExtResource("4_w4gkx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 6.5)
+shape = SubResource("RectangleShape2D_xmspm")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
