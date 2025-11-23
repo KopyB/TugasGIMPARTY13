@@ -263,6 +263,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		for node in get_tree().get_nodes_in_group("player_anims"):
 				node.play("idle")
+		k_sturret.position.x = 0
 
 
 	# if is_dizzy == true:

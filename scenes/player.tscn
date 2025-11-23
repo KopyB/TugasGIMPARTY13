@@ -166,11 +166,12 @@ animations = [{
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(-10, 0)
 collision_layer = 2
 script = ExtResource("1_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 7.5)
+position = Vector2(11, 5)
 shape = SubResource("CapsuleShape2D_fjrip")
 
 [node name="shipbase" type="AnimatedSprite2D" parent="."]
@@ -180,7 +181,7 @@ sprite_frames = SubResource("SpriteFrames_4r5pv")
 animation = &"idle"
 
 [node name="KSturret" type="Sprite2D" parent="."]
-position = Vector2(3.9999995, -45.999992)
+position = Vector2(11, -44)
 scale = Vector2(0.21999998, 0.21999998)
 texture = ExtResource("5_qlg0r")
 
@@ -194,7 +195,7 @@ animation = &"idle"
 position = Vector2(-2.9999995, 0.99999917)
 scale = Vector2(0.059999995, 0.059999995)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
-animation = &"right"
+animation = &"idle"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
