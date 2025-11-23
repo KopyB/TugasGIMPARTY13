@@ -24,6 +24,7 @@ var shark_lock_duration = 5.0 # Locks on 5 sec
 var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
 var shark_charge_speed = 1000.0 
+@onready var torpedoshark: AnimatedSprite2D = $torpedoshark
 
 # --- SIREN VARIABLE ---
 var is_diving = false
@@ -44,6 +45,7 @@ var player = null # Referensi
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	collision_shape_2d.disabled = false
+	torpedoshark.hide()
 	# Setup awal berdasarkan tipe
 	if enemy_type == Type.GUNBOAT:
 		enemyship.texture = gun_boat
@@ -81,7 +83,12 @@ func _ready():
 	elif enemy_type == Type.TORPEDO_SHARK:
 		health = 3 # Agak tebal sedikit
 		speed = 50 # Gerak pelan saat fase aiming
-
+		
+		cannon.hide()
+		enemyship.hide()
+		torpedoshark.show()
+		collision_shape_2d.shape.extents = Vector2(116.0/2, 148.0/2)
+		
 	elif enemy_type == Type.SIREN:
 		cannon.hide()
 		enemyship.texture = siren
@@ -177,8 +184,8 @@ func fire_gunboat():
 	if is_instance_valid(player):
 		
 		# Jika Y Musuh > Y Player, artinya Musuh ada DI BAWAH (di belakang) Player.
-		# Beri toleransi sedikit (10 pixel)
-		if global_position.y >= player.global_position.y - 10:
+		# Beri toleransi sedikit (50 pixel)
+		if global_position.y >= player.global_position.y - 50:
 			return 
 			
 		var bullet = bullet_scene.instantiate()
@@ -217,20 +224,29 @@ func handle_shark_behavior(delta):
 		# Bergerak maju pelan-pelan 
 		position += Vector2.RIGHT.rotated(rotation) * speed * delta
 		
+		#animation
+		torpedoshark.play("swimming")
+		
 		# Cek waktu lock habis
 		if shark_timer >= shark_lock_duration:
+			torpedoshark.play_backwards("transition")
+			await torpedoshark.animation_finished
+			torpedoshark.play("scout")
+			await torpedoshark.animation_finished
+			torpedoshark.play("transition")
+			await torpedoshark.animation_finished
 			start_shark_charge()
 	else:
 		# FASE 2: CHARGING (Lurus terus)
+		torpedoshark.play("swimming")
 		position += shark_charge_direction * shark_charge_speed * delta
 
 func start_shark_charge():
 	is_shark_charging = true
 	# Kunci arah saat ini (berdasarkan rotasi terakhir ke player)
 	shark_charge_direction = Vector2.RIGHT.rotated(rotation)
-	
+	torpedoshark.play("swimming")
 	# Visual Feedback: Ubah warna jadi Merah (Tanda bahaya & Kebal)
-	modulate = Color(10, 0, 0, 1) # Merah menyala
 	print("SHARK CHARGING! IMMUNE ACTIVATED!")
 
 func trigger_siren_scream():

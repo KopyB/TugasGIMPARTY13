@@ -60,7 +60,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjrip"]
 radius = 30.0
-height = 127.0
+height = 108.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a38lo"]
 animations = [{
@@ -331,7 +331,7 @@ collision_layer = 2
 script = ExtResource("1_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(11, 5)
+position = Vector2(10, 17)
 shape = SubResource("CapsuleShape2D_fjrip")
 
 [node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
@@ -353,6 +353,7 @@ sprite_frames = SubResource("SpriteFrames_l71n6")
 animation = &"idle"
 
 [node name="KSturret" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(11, -44)
 scale = Vector2(0.21999998, 0.21999998)
 texture = ExtResource("5_qlg0r")
@@ -380,6 +381,7 @@ position = Vector2(0, -82)
 one_shot = true
 
 [node name="secondwind_anim" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(8.999999, -4)
 scale = Vector2(0.66, 0.66)
 sprite_frames = SubResource("SpriteFrames_2a3c5")
