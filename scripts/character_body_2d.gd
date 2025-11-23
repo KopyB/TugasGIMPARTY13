@@ -69,13 +69,15 @@ func take_damage_player():
 	if has_second_wind:
 		trigger_shockwave() # Ledakkan semua musuh
 		has_second_wind = false # Pakai nyawa cadangannya
-		_animation_player.hide()
+		for node in get_tree().get_nodes_in_group("player_anims"):
+			node.visible = false
 		secondwind_anim.show()
 		_2_ndwind_sfx.play()
 		secondwind_anim.play("PEAK")
 		await  secondwind_anim.animation_finished
 		secondwind_anim.hide()
-		_animation_player.show()
+		for node in get_tree().get_nodes_in_group("player_anims"):
+			node.visible = true
 		print("SECOND WIND ACTIVATED! Player bangkit kembali!")
 		return 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://fujugshyvkm6"]
+[gd_scene load_steps=66 format=3 uid="uid://fujugshyvkm6"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://cmc60vajq856e" path="res://assets/art/player boat.png" id="2_i4ail"]
@@ -82,19 +82,7 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
-atlas = ExtResource("2_dqkch")
-region = Rect2(250, 300, 2000, 2500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
-atlas = ExtResource("3_qlg0r")
-region = Rect2(180, 300, 2020, 2500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
-atlas = ExtResource("4_tuyoq")
-region = Rect2(240, 300, 2020, 2500)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_d2wvv"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_4r5pv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -146,6 +134,65 @@ animations = [{
 "loop": true,
 "name": &"right",
 "speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h7ic4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("30_u2ulf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_6e8lb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_2gdjj")
+}],
+"loop": true,
+"name": &"beaming it",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("33_6e8lb")
+}],
+"loop": true,
+"name": &"end",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("33_sc3ue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_lxlsd")
+}],
+"loop": false,
+"name": &"start beam",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("35_ha2mi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_apa73")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_74r1k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_8svfe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_2a3c5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_42b1b")
+}],
+"loop": false,
+"name": &"winding_up",
+"speed": 12.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_d2wvv"]
@@ -243,65 +290,6 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_h7ic4"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("30_u2ulf")
-}, {
-"duration": 1.0,
-"texture": ExtResource("31_6e8lb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("32_2gdjj")
-}],
-"loop": true,
-"name": &"beaming it",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("33_6e8lb")
-}],
-"loop": true,
-"name": &"end",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("33_sc3ue")
-}, {
-"duration": 1.0,
-"texture": ExtResource("34_lxlsd")
-}],
-"loop": false,
-"name": &"start beam",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("35_ha2mi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("36_apa73")
-}, {
-"duration": 1.0,
-"texture": ExtResource("37_74r1k")
-}, {
-"duration": 1.0,
-"texture": ExtResource("38_8svfe")
-}, {
-"duration": 1.0,
-"texture": ExtResource("39_2a3c5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("40_42b1b")
-}],
-"loop": false,
-"name": &"winding_up",
-"speed": 12.0
-}]
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_qlg0r"]
 animations = [{
 "frames": [{
@@ -352,10 +340,16 @@ animation = &"shocking"
 frame = 3
 frame_progress = 1.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="shipbase" type="AnimatedSprite2D" parent="."]
 position = Vector2(-2.9999995, 0.99999917)
 scale = Vector2(0.059999987, 0.059999987)
 sprite_frames = SubResource("SpriteFrames_4r5pv")
+animation = &"idle"
+
+[node name="cannon" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3.9999998, 4.9999995)
+scale = Vector2(0.06, 0.06)
+sprite_frames = SubResource("SpriteFrames_l71n6")
 animation = &"idle"
 
 [node name="KSturret" type="Sprite2D" parent="."]
@@ -363,11 +357,11 @@ position = Vector2(11, -44)
 scale = Vector2(0.21999998, 0.21999998)
 texture = ExtResource("5_qlg0r")
 
-[node name="cannon" type="AnimatedSprite2D" parent="."]
-position = Vector2(-3.9999998, 4.9999995)
-scale = Vector2(0.06, 0.06)
-sprite_frames = SubResource("SpriteFrames_l71n6")
-animation = &"idle"
+[node name="lazer" type="AnimatedSprite2D" parent="KSturret"]
+position = Vector2(0, -150)
+sprite_frames = SubResource("SpriteFrames_h7ic4")
+animation = &"beaming it"
+offset = Vector2(0, -30)
 
 [node name="stellarist" type="AnimatedSprite2D" parent="."]
 position = Vector2(-2.9999995, 0.99999917)
@@ -386,7 +380,7 @@ position = Vector2(0, -82)
 one_shot = true
 
 [node name="secondwind_anim" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, -7.0000005)
+position = Vector2(8.999999, -4)
 scale = Vector2(0.66, 0.66)
 sprite_frames = SubResource("SpriteFrames_2a3c5")
 animation = &"PEAK"
@@ -397,18 +391,6 @@ frame_progress = 1.0
 stream = ExtResource("29_2gdjj")
 bus = &"SFX"
 
-[node name="KSturret" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -70)
-scale = Vector2(0.22, 0.22)
-texture = ExtResource("5_qlg0r")
-
-[node name="lazer" type="AnimatedSprite2D" parent="KSturret"]
-position = Vector2(0, -150)
-sprite_frames = SubResource("SpriteFrames_h7ic4")
-animation = &"beaming it"
-offset = Vector2(0, -30)
-
 [node name="shield_anim" type="AnimatedSprite2D" parent="."]
 visible = false
 self_modulate = Color(1, 1, 1, 0.32941177)
@@ -416,14 +398,6 @@ scale = Vector2(0.05, 0.05)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"shieldup"
 frame = 8
-frame_progress = 1.0
-
-[node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
-visible = false
-position = Vector2(0, 12)
-sprite_frames = SubResource("SpriteFrames_a38lo")
-animation = &"shocking"
-frame = 3
 frame_progress = 1.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
