@@ -1,8 +1,8 @@
 extends Marker2D
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
-var obstacle_scene = preload("res://scenes/Obstacle.tscn")
-var parrot_scene = preload("res://scenes/Parrot.tscn")
+var obstacle_scene = preload("res://scenes/obstacle.tscn")
+var parrot_scene = preload("res://scenes/parrot.tscn")
 @onready var spawn_timer = $SpawnTimer
 
 # --- SETTING DIFFICULTY ---
