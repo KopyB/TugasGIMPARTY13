@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://cyxqkt025og7s"]
 
 [ext_resource type="Script" uid="uid://bab4yc7salbno" path="res://scripts/bulletplayer.gd" id="1_7xqyn"]
-[ext_resource type="Texture2D" uid="uid://d4e1nbisj852g" path="res://assets/art/PlayerProjectile.png" id="2_7xqyn"]
+[ext_resource type="Texture2D" uid="uid://d28bmkxcqnd3i" path="res://assets/art/PirateProjectile.png" id="2_7xqyn"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7xqyn"]
-size = Vector2(18.25, 20)
+[sub_resource type="CircleShape2D" id="CircleShape2D_fro4i"]
+radius = 16.004395
 
 [node name="PLBullet" type="Area2D" groups=["player_bullet"]]
 z_index = 10
@@ -15,14 +15,15 @@ script = ExtResource("1_7xqyn")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1.1920929e-07, 4.7683716e-07)
 rotation = -1.5706083
-scale = Vector2(0.07344617, 0.07146562)
+scale = Vector2(0.13, 0.13)
 texture = ExtResource("2_7xqyn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.125, 0)
-shape = SubResource("RectangleShape2D_7xqyn")
+position = Vector2(0, -0.375)
+shape = SubResource("CircleShape2D_fro4i")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-12, -10, 24, 20)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
