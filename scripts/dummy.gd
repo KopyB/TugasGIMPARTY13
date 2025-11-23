@@ -281,7 +281,7 @@ func die():
 	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
 
 func spawn_powerup_chance():
-	if randf() <= 0.75: 
+	if randf() <= 0.25: 
 		spawn_powerup()
 
 func spawn_powerup():
