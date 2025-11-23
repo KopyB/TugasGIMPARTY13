@@ -173,10 +173,10 @@ func spawn_shark(viewport_rect):
 		spawn_pos.y = -50
 	elif spawn_side == 1: # Kiri
 		spawn_pos.x = -50
-		spawn_pos.y = randf_range(50, viewport_rect.y / 2)
+		spawn_pos.y = randf_range(50, viewport_rect.y / 4)
 	else: # Kanan
 		spawn_pos.x = viewport_rect.x + 50
-		spawn_pos.y = randf_range(50, viewport_rect.y / 2)
+		spawn_pos.y = randf_range(50, viewport_rect.y / 4)
 		
 	new_enemy.global_position = spawn_pos
 	get_tree().current_scene.add_child(new_enemy)

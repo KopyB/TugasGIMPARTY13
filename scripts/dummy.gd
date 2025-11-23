@@ -79,10 +79,13 @@ func _ready():
 		
 func _process(delta):
 	if is_paralyzed:
+		if enemy_type == Type.GUNBOAT:
+			position.y += speed/2 * delta
+		elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
+			position.y += speed * delta
 		return
 		
 	if enemy_type == Type.GUNBOAT:
-		
 		position.y += speed * delta
 		
 	elif enemy_type == Type.BOMBER:
