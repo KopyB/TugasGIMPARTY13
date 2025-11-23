@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cof2nk7b0xan"]
+[gd_scene load_steps=7 format=3 uid="uid://cof2nk7b0xan"]
 
 [ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="1_k5f3b"]
 [ext_resource type="Texture2D" uid="uid://fl8kxpc0x1xl" path="res://assets/art/pirate gunboat base.png" id="2_k5f3b"]
 [ext_resource type="Texture2D" uid="uid://d4d666wk0gap2" path="res://assets/art/pirate gunboat canon.png" id="3_6m2ry"]
 [ext_resource type="Script" uid="uid://bt3qgbp0e66fr" path="res://scripts/enemycannon.gd" id="4_w4gkx"]
+[ext_resource type="AudioStream" uid="uid://bpe72y1ibwily" path="res://assets/audio/parrot_taunt.mp3" id="5_fva3d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
 size = Vector2(62, 115)
@@ -28,5 +29,9 @@ script = ExtResource("4_w4gkx")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3, 6.5)
 shape = SubResource("RectangleShape2D_xmspm")
+
+[node name="parrot_taunt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_fva3d")
+volume_db = 1.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

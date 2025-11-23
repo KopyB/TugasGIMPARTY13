@@ -44,6 +44,9 @@ func _ready():
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	k_sturret.hide()
+	$multiturret.hide()
+	$multiburst.hide()
+	$burst_turret.hide()
 	shield_anim.hide()
 	shockwaves_anim.hide()
 # --- FUNGSI MENERIMA DAMAGE & MATI ---
@@ -115,22 +118,42 @@ func activate_shield():
 # --- LOGIKA 2: MULTISHOT (Sudah Anda punya) ---
 func activate_multishot():
 	is_multishot_active = true
+	if is_artillery_active:
+		$multiburst.show()
+	else:
+		$multiturret.show()
+	anim_cannon.hide()
+	
 	
 	# Ganti create_timer dengan skill_timer
 	skill_timer.start(7.0)
 	await skill_timer.timeout
 	
 	is_multishot_active = false
+	if not is_artillery_active:
+		$multiburst.hide()
+	$multiturret.show()
+	anim_cannon.show()
 
 # --- LOGIKA 3: ARTILLERY (Burst/Fast Fire) ---
 func activate_artillery():
 	is_artillery_active = true
+	if is_multishot_active:
+		$multiburst.show()
+	else:
+		$burst_turret.show()
+	anim_cannon.hide()
+	
 	shoot_timer.wait_time = 0.1 # Tembak jadi ngebut banget (0.1 detik)
 	
 	skill_timer.start(5.0)
 	await skill_timer.timeout # Durasi 5 detik
 	
 	is_artillery_active = false
+	if not is_multishot_active:
+		$multiburst.hide()
+	$burst_turret.hide()
+	anim_cannon.show()
 	shoot_timer.wait_time = 0.2 # Balikin ke speed tembak normal (sesuaikan angka ini)
 
 # --- LOGIKA 4: SPEED (Movement) ---
@@ -256,14 +279,20 @@ func _physics_process(delta: float) -> void:
 		for node in get_tree().get_nodes_in_group("player_anims"):
 				node.play("left")
 		k_sturret.position.x = -15.0
+		$multiturret.position.x = -15.0
+		$burst_turret.position.x = -15.0
 	elif direction > 0:
 		for node in get_tree().get_nodes_in_group("player_anims"):
 				node.play("right")
-		k_sturret.position.x = +15.0
+		k_sturret.position.x = 15.0
+		$multiturret.position.x = 15.0
+		$burst_turret.position.x = 15.0
 	else:
 		for node in get_tree().get_nodes_in_group("player_anims"):
 				node.play("idle")
 		k_sturret.position.x = 0
+		$multiturret.position.x = 0
+		$burst_turret.position.x = 0
 
 
 	# if is_dizzy == true:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://fujugshyvkm6"]
+[gd_scene load_steps=34 format=3 uid="uid://fujugshyvkm6"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://cmc60vajq856e" path="res://assets/art/player boat.png" id="2_i4ail"]
@@ -15,8 +15,11 @@
 [ext_resource type="Texture2D" uid="uid://cd1glbkuada05" path="res://assets/art/player right canon.png" id="8_4ni07"]
 [ext_resource type="Texture2D" uid="uid://rwdcob452qa6" path="res://assets/art/shield/shield 3.png" id="8_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://cmsu5dio07qcd" path="res://assets/art/shield/shield 4.png" id="9_qfm1y"]
+[ext_resource type="Texture2D" uid="uid://dpr5w15dsk2ja" path="res://assets/art/burst_turret.png" id="9_ujl30"]
+[ext_resource type="Texture2D" uid="uid://dfv8a6bi5k41t" path="res://assets/art/multi_turret.png" id="10_31cv2"]
 [ext_resource type="Texture2D" uid="uid://d00en3en5aip3" path="res://assets/art/shield/shield 5.png" id="10_fulsm"]
 [ext_resource type="Texture2D" uid="uid://c4jafgebdluep" path="res://assets/art/shield/shield 6.png" id="11_4r5pv"]
+[ext_resource type="Texture2D" uid="uid://cq3cdgy6sgal7" path="res://assets/art/MultiArtilleryBurst.png" id="11_31cv2"]
 [ext_resource type="Texture2D" uid="uid://cdavh4673nb86" path="res://assets/art/shield/shield 7.png" id="12_60mlk"]
 [ext_resource type="Texture2D" uid="uid://cmaysr8lki2rf" path="res://assets/art/shield/shield 8.png" id="13_i4ail"]
 [ext_resource type="Texture2D" uid="uid://dvhfwe3stucie" path="res://assets/art/shield/shield 9.png" id="14_a38lo"]
@@ -191,8 +194,23 @@ scale = Vector2(0.06, 0.06)
 sprite_frames = SubResource("SpriteFrames_l71n6")
 animation = &"idle"
 
+[node name="burst_turret" type="Sprite2D" parent="."]
+position = Vector2(8.999999, -45.000004)
+scale = Vector2(0.098, 0.098)
+texture = ExtResource("9_ujl30")
+
+[node name="multiturret" type="Sprite2D" parent="."]
+position = Vector2(8.999999, -51.999996)
+scale = Vector2(0.098, 0.098)
+texture = ExtResource("10_31cv2")
+
+[node name="multiburst" type="Sprite2D" parent="."]
+position = Vector2(8.999999, -43.999996)
+scale = Vector2(0.098, 0.098)
+texture = ExtResource("11_31cv2")
+
 [node name="stellarist" type="AnimatedSprite2D" parent="."]
-position = Vector2(-2.9999995, 0.99999917)
+position = Vector2(-3, 0.99999917)
 scale = Vector2(0.059999995, 0.059999995)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
 animation = &"idle"

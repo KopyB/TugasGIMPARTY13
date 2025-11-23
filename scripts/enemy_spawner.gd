@@ -74,7 +74,7 @@ func spawn_logic():
 		else:
 			spawn_rbomber(viewport_rect)
 
-	elif chance <= 10 and parrotcheck == 0:
+	elif chance <= 25 and parrotcheck == 0:
 		spawn_parrot(viewport_rect) 
 
 	elif chance <= 80:
