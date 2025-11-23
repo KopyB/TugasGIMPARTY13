@@ -184,11 +184,11 @@ func start_shark_charge():
 	
 # --- LOGIKA TERIMA DAMAGE & MATI ---
 func take_damage(amount):
-  var parrotcheck = get_tree().get_nodes_in_group("parrots").size()
+	var parrotcheck = get_tree().get_nodes_in_group("parrots").size()
 	if not enemy_type == Type.PARROT:
 		if parrotcheck == 0:
-      if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
-		    return # NO DAMAGE
+			if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
+				return # NO DAMAGE
 			health -= amount
 			if health <= 0:
 				die()
@@ -198,15 +198,15 @@ func take_damage(amount):
 			die()
 
 func die():
-  if not enemy_type == Type.PARROT:
-    enemyship.hide()
-    collision_shape_2d.disabled = true
-    exploded()
-    spawn_powerup_chance()
-    enemy_died.emit()
-    if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
-      drop_barrel()
-    queue_free()
+	if not enemy_type == Type.PARROT:
+		enemyship.hide()
+		collision_shape_2d.disabled = true
+		exploded()
+		spawn_powerup_chance()
+		enemy_died.emit()
+	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
+		drop_barrel()
+		queue_free()
 	else:
 		spawn_powerup()
 		remove_from_group("parrots")
@@ -215,15 +215,18 @@ func die():
 
 func spawn_powerup_chance():
 	if randf() <= 0.75: 
-		var powerup = powerup_scene.instantiate()
-		powerup.global_position = global_position
-		
-		# Random angka acak 0 sampai 6
-		var random_type = randi() % 7 
-		powerup.current_type = random_type
-		
-		get_tree().current_scene.call_deferred("add_child", powerup)
+		spawn_powerup()
 
+func spawn_powerup():
+	var powerup = powerup_scene.instantiate()
+	powerup.global_position = global_position
+	
+	# Random angka acak 0 sampai 6
+	var random_type = randi() % 7 
+	powerup.current_type = random_type
+	
+	get_tree().current_scene.call_deferred("add_child", powerup)
+		
 func exploded():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position

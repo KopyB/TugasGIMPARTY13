@@ -126,10 +126,9 @@ func spawn_gunboat_group(viewport_rect):
 
 # --- TIPE 3A: BOMBER DARI KIRI (DEFAULT) ---
 func spawn_bomber(viewport_rect):
-	if randi() % 2 == 0:
-		# --- LBOMBER (Spawn Sendiri dari Kiri) ---
-		var new_enemy = enemy_scene.instantiate()
-		new_enemy.enemy_type = 1 # LBomber
+	# --- LBOMBER (Spawn Sendiri dari Kiri) ---
+	var new_enemy = enemy_scene.instantiate()
+	new_enemy.enemy_type = 1 # LBomber
 		
 	var spawn_x = -60 # Di luar layar kiri
 	var spawn_y = randf_range(50, viewport_rect.y / 2) 
