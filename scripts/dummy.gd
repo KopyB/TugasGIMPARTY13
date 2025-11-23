@@ -43,70 +43,109 @@ var siren = preload("res://assets/art/siren(temp).png")
 var player = null # Referensi
 
 func _ready():
+	# 1. Setup Group & Player
+	add_to_group("enemies") # Wajib untuk skill Admiral/Shockwave
 	player = get_tree().get_first_node_in_group("player")
-	collision_shape_2d.disabled = false
 	torpedoshark.hide()
 	# Setup awal berdasarkan tipe
+	area_entered.connect(_on_area_entered)
+	
+	# 2. FIX HITBOX MENULAR (Wajib duplicate agar ukuran tiap musuh independen)
+	if collision_shape_2d and collision_shape_2d.shape:
+		collision_shape_2d.shape = collision_shape_2d.shape.duplicate()
+	
+	# 3. Aktifkan Collision (Aman dari null)
+	if collision_shape_2d:
+		collision_shape_2d.disabled = false
+		
+	# --- SETUP VISUAL & LOGIKA PER TIPE ---
+	
+	# TIPE 0: GUNBOAT (Musuh Standar)
 	if enemy_type == Type.GUNBOAT:
-		enemyship.texture = gun_boat
-		enemyship.position.x = -5.0
-		enemyship.scale = Vector2(0.06, 0.06)
-		cannon.show()
+		if enemyship:
+			enemyship.texture = gun_boat
+			enemyship.position.x = -5.0
+			enemyship.scale = Vector2(0.06, 0.06)
 		
-		collision_shape_2d.shape.extents = Vector2(284.0/2, 116.0/2)
+		if cannon:
+			cannon.show()
 		
-		shoot_interval = 2.0 # Tembak tiap 2 detik
-		rotation_degrees = 180 # Hadap bawah (visual)
+		# Set Hitbox Gunboat (Ukuran Penuh)
+		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
+			collision_shape_2d.shape.size = Vector2(284.0, 116.0)
 		
+		shoot_interval = 2.0 
+		rotation_degrees = 180 # Hadap Bawah
+		
+	# TIPE 1: BOMBER (Kapal Tong)
 	elif enemy_type == Type.BOMBER:
-		cannon.hide()
-		enemyship.texture = bomber_barrel
-		enemyship.rotation = -PI/2
-		enemyship.scale = Vector2(0.15, 0.15)
+		if cannon: cannon.hide()
 		
-		collision_shape_2d.shape.extents = Vector2(280.0/2, 145.0/2)
+		if enemyship:
+			enemyship.texture = bomber_barrel
+			enemyship.rotation = -PI/2
+			enemyship.scale = Vector2(0.15, 0.15)
+		
+		# Set Hitbox Bomber (Lebih Besar)
+		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
+			collision_shape_2d.shape.size = Vector2(280.0, 145.0) 
 
-		shoot_interval = randf_range(2.5, 5.0) # Drop interval random range dari 2.5 - 5 detik (biar g gitu2 doang patternnya - kaiser)
-		speed = 150 # Kecepatan gerak ke samping
-		rotation_degrees = 90 # Putar agar menghadap ke KANAN
-		
-	elif enemy_type == Type.RBOMBER:
-		cannon.hide() 
-		enemyship.texture = bomber_barrel 
-		enemyship.scale = Vector2(0.15, -0.15)
-		enemyship.rotation = -PI/2 
-		
 		shoot_interval = randf_range(2.5, 5.0) 
 		speed = 150 
-		rotation_degrees = -90 # Menghadap Kiri
-	
-	elif enemy_type == Type.TORPEDO_SHARK:
-		health = 3 # Agak tebal sedikit
-		speed = 50 # Gerak pelan saat fase aiming
+		rotation_degrees = 90 # Hadap Kanan
 		
+	# TIPE 2: RBOMBER (Bomber dari Kanan)
+	elif enemy_type == Type.RBOMBER:
+		if cannon: cannon.hide()
+		
+		if enemyship:
+			enemyship.texture = bomber_barrel
+			enemyship.rotation = -PI/2 
+			# FIX MIRROR: Scale Y negatif agar tidak terbalik saat rotasi parent -90
+			enemyship.scale = Vector2(0.15, -0.15) 
+			
+		# Set Hitbox RBomber (Sama kayak Bomber)
+		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
+			collision_shape_2d.shape.size = Vector2(280.0, 145.0)
+			
+		shoot_interval = randf_range(2.5, 5.0) 
+		speed = 150 
+		rotation_degrees = -90 # Hadap Kiri (Mundur)
+
+	# TIPE 3: PARROT (Burung)
+	elif enemy_type == Type.PARROT:
+		add_to_group("parrots")
+		# Parrot biasanya tidak punya collision fisik yang sama, jadi kita skip setup hitbox
+		print("Parrot spawned")
+
+	# TIPE 4: TORPEDO SHARK (Hiu Penabrak)
+	elif enemy_type == Type.TORPEDO_SHARK:
+		health = 5
+		speed = 50 # Speed awal (aiming phase)
+		# Hitbox Shark (bisa pakai default atau diatur khusus)
+		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
+			collision_shape_2d.shape.size = Vector2(100.0, 50.0)
 		cannon.hide()
 		enemyship.hide()
 		torpedoshark.show()
-		collision_shape_2d.shape.extents = Vector2(116.0/2, 148.0/2)
-		
+
+	# TIPE 5: SIREN (Putri Duyung Kiri)
 	elif enemy_type == Type.SIREN:
-		cannon.hide()
-		enemyship.texture = siren
-		enemyship.scale = Vector2(0.2, 0.2)
+		if cannon: cannon.hide()
+		if enemyship:
+			enemyship.texture = siren
+			enemyship.scale = Vector2(0.2, 0.2)
 		rotation_degrees = -90
 		speed = 120
 	
+	# TIPE 6: RSIREN (Putri Duyung Kanan)
 	elif enemy_type == Type.RSIREN:
-		cannon.hide()
-		enemyship.texture = siren
-		enemyship.scale = Vector2(0.2, 0.2)
+		if cannon: cannon.hide()
+		if enemyship:
+			enemyship.texture = siren
+			enemyship.scale = Vector2(0.2, 0.2)
 		rotation_degrees = 90
 		speed = 120
-		
-
-		
-	elif enemy_type == Type.PARROT:
-		print("Parrot spawned")
 		
 func _process(delta):
 	if is_paralyzed:
@@ -298,6 +337,19 @@ func die():
 		remove_from_group("parrots")
 		queue_free()
 	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("obstacles"):
+		print("Musuh menabrak Obstacle!")
+		
+		# 1. Musuh Mati
+		die()
+		
+		# 2. Obstacle juga menerima damage (Aksi-Reaksi)
+		# Pastikan obstacle punya fungsi take_damage
+		if area.has_method("take_damage"):
+			# Beri damage besar (misal 10) biar obstacle langsung hancur juga
+			area.take_damage(10)
 
 func spawn_powerup_chance():
 	if randf() <= 0.25: 
