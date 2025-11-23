@@ -7,6 +7,8 @@ var rotation_direction = 0
 var normal_speed = 300.0
 var current_speed = normal_speed
 var is_dead = false
+var is_dizzy = false
+var dizzy_timer = 0.0
 
 # VARIABEL STATUS POWER-UP
 var has_shield = false
@@ -200,6 +202,15 @@ func activate_admiral():
 	print("Admiral's Will berakhir.")
 	get_tree().call_group("enemies", "set_paralyzed", false)
 
+func apply_dizziness(duration):
+	if is_dead:
+		return
+	
+	print("PLAYER KENA MENTAL! PUSING!")
+	is_dizzy = true
+	dizzy_timer = duration
+
+
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
@@ -214,7 +225,18 @@ func trigger_shockwave():
 	shockwaves_anim.hide()
 	
 func _physics_process(delta: float) -> void:
+	if is_dizzy:
+		dizzy_timer -= delta
+		if dizzy_timer <= 0:
+			is_dizzy = false
+			modulate = Color.WHITE
+			print("GA PUSING LAGI")
+	
 	var direction := Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
+	
+	if is_dizzy:
+		direction = -direction
+	
 	if direction:
 		velocity.x = direction * current_speed
 		move_and_slide()
@@ -229,17 +251,41 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 			rotation = lerp(rotation, 0.0, delta * 1.0)
 	#animation
-	if Input.is_action_pressed("Left"):
+	if direction < 0:
 		_animation_player.play("left")
 		k_sturret.position.x = -15.0
-	elif Input.is_action_pressed("Right"):
+	elif direction > 0:
 		_animation_player.play("right")
-		k_sturret.position.x = 15.0
+		k_sturret.position.x = -15.0
 	else:
 		_animation_player.play("idle")
+
+
+	# if is_dizzy == true:
+	# 	if Input.is_action_pressed("Left"):
+	# 		_animation_player.play("left")
+	# 		k_sturret.position.x = 15.0
+	# 	elif Input.is_action_pressed("Right"):
+	# 		_animation_player.play("right")
+	# 		k_sturret.position.x = -15.0
+	# 	else:
+	# 		_animation_player.play("idle")
+	# elif is_dizzy == false:
+	# 	if Input.is_action_pressed("Left"):
+	# 		_animation_player.play("left")
+	# 		k_sturret.position.x = -15.0
+	# 	elif Input.is_action_pressed("Right"):
+	# 		_animation_player.play("right")
+	# 		k_sturret.position.x = 15.0
+	# 	else:
+	# 		_animation_player.play("idle")
 	
 	# rotasi kapal
 	rotation_direction = Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
+	
+	if is_dizzy:
+		rotation_direction = -rotation_direction
+	
 	var rot = rotation
 	if velocity.x != 0:
 		rot += rotation_direction * rotation_speed * delta
@@ -294,6 +340,8 @@ func reset_all_skills():
 		active_laser_node.queue_free()
 		active_laser_node = null
 
+	is_dizzy = false
+	dizzy_timer = 0.0
 	modulate = Color.WHITE
 
 	get_tree().call_group("enemies", "set_paralyzed", false)

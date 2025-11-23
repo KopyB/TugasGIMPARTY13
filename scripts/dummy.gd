@@ -7,7 +7,7 @@ signal enemy_died
 @onready var cannon: Sprite2D = $cannon
 
 # TIPE MUSUH
-enum Type {GUNBOAT, BOMBER,RBOMBER, TORPEDO_SHARK}
+enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
 @export var enemy_type = Type.GUNBOAT
 
 # STATISTIK
@@ -25,15 +25,19 @@ var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
 var shark_charge_speed = 1000.0 
 
+# --- SIREN VARIABLE ---
+var is_diving = false
+var is_screaming = false
+
 # LOAD ASSET 
 var powerup_scene = preload("res://scenes/power_up.tscn")
 var bullet_scene = preload("res://scenes/bulletenemy.tscn")
 var barrel_scene = preload("res://scenes/barrelbomb.tscn")
 var explosion_scene = preload("res://scenes/explosion.tscn")
-
 var bomber_barrel = preload("res://assets/art/BomberWithBarrel.png")
 var bomber_noBarrel = preload("res://assets/art/BomberNoBarrel.png")
 var gun_boat = preload("res://assets/art/pirate gunboat base.png")
+var siren = preload("res://assets/art/siren(temp).png")
 
 var player = null # Referensi
 
@@ -73,13 +77,35 @@ func _ready():
 	elif enemy_type == Type.TORPEDO_SHARK:
 		health = 3 # Agak tebal sedikit
 		speed = 50 # Gerak pelan saat fase aiming
+
+	elif enemy_type == Type.SIREN:
+		cannon.hide()
+		enemyship.texture = siren
+		enemyship.scale = Vector2(0.2, 0.2)
+		rotation_degrees = -90
+		speed = 120
+	
+	elif enemy_type == Type.RSIREN:
+		cannon.hide()
+		enemyship.texture = siren
+		enemyship.scale = Vector2(0.2, 0.2)
+		rotation_degrees = 90
+		speed = 120
+		
+
+		
+	elif enemy_type == Type.PARROT:
+		print("Parrot spawned")
 		
 func _process(delta):
 	if is_paralyzed:
+		if enemy_type == Type.GUNBOAT:
+			position.y += speed/2 * delta
+		elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
+			position.y += speed * delta
 		return
 		
 	if enemy_type == Type.GUNBOAT:
-		
 		position.y += speed * delta
 		
 	elif enemy_type == Type.BOMBER:
@@ -90,18 +116,42 @@ func _process(delta):
 	
 	elif enemy_type == Type.TORPEDO_SHARK:
 		handle_shark_behavior(delta)
+
+	elif enemy_type == Type.SIREN:
+		if not is_screaming:	
+			position.x += speed * delta
+		handle_diving(delta)
 	
-	if enemy_type != Type.TORPEDO_SHARK:
+	elif enemy_type == Type.RSIREN:
+		if not is_screaming:
+			position.x -= speed * delta
+		handle_diving(delta)
+	
+	if enemy_type != Type.TORPEDO_SHARK and enemy_type != Type.SIREN and enemy_type != Type.RSIREN:
 		shoot_timer += delta
 		if shoot_timer >= shoot_interval:
 			shoot_timer = 0
 			perform_attack()
 			
-	# Angka 1500 dan 900 ini harus lebih besar dari ukuran layar Anda
-	if (position.x > 1940 or position.y > 1080) and not enemy_type == Type.RBOMBER: 
+	check_despawn()
+
+# --- FUNGSI DESPAWN ---
+func check_despawn():
+	var viewport_width = get_viewport_rect().size.x
+	var viewport_height = get_viewport_rect().size.y
+
+	if (position.x > viewport_width + 20 or position.y > viewport_height + 100) and not (enemy_type == Type.RBOMBER or enemy_type == Type.RSIREN):
 		queue_free()
-	elif enemy_type == Type.RBOMBER: #supaya RBOMBER tidak langsung despawn -kaiser
-		if position.x < -20 or position.y > 1080:
+
+	elif enemy_type == Type.RBOMBER or enemy_type == Type.RSIREN:
+		if position.x < -20 or position.y > viewport_height + 100:
+			queue_free()
+
+# --- FUNGSI DIVING (SIREN) ---
+func handle_diving(delta):
+	if is_diving:
+		modulate.a -= 2.0 * delta
+		if modulate.a <= 0:
 			queue_free()
 
 # --- FUNGSI PARALYZED ---
@@ -178,37 +228,72 @@ func start_shark_charge():
 	# Visual Feedback: Ubah warna jadi Merah (Tanda bahaya & Kebal)
 	modulate = Color(10, 0, 0, 1) # Merah menyala
 	print("SHARK CHARGING! IMMUNE ACTIVATED!")
+
+func trigger_siren_scream():
+	if is_screaming:
+		return
+	if is_diving:
+		return
 	
+	is_screaming = true
+	modulate = Color(1, 0, 1, 1)
+	print("SIREN SCREAM! PLAYER DIZZYY!")
+
+	if is_instance_valid(player) and player.has_method("apply_dizziness"):
+		player.apply_dizziness(4.0)
+
+	await get_tree().create_timer(1.5).timeout
+	is_diving = true
+
 # --- LOGIKA TERIMA DAMAGE & MATI ---
 func take_damage(amount):
-	if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
-		return # NO DAMAGE
+	var parrotcheck = get_tree().get_nodes_in_group("parrots").size()
+	if not enemy_type == Type.PARROT:
+		if parrotcheck == 0:
+			if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
+				return # NO DAMAGE
+			health -= amount
+			if health <= 0:
+				die()
 		
-	health -= amount
-	if health <= 0:
-		die()
+		if enemy_type == Type.SIREN or enemy_type == Type.RSIREN:
+			trigger_siren_scream()
+			return
+	else:
+		health -= amount
+		if health <= 0:
+			die()
 
 func die():
-	enemyship.hide()
-	collision_shape_2d.disabled = true
-	exploded()
-	spawn_powerup_chance()
-	enemy_died.emit()
+	if not enemy_type == Type.PARROT:
+		enemyship.hide()
+		collision_shape_2d.disabled = true
+		exploded()
+		spawn_powerup_chance()
+		enemy_died.emit()
 	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
-	queue_free()
+		queue_free()
+	else:
+		spawn_powerup()
+		remove_from_group("parrots")
+		queue_free()
+	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
 
 func spawn_powerup_chance():
 	if randf() <= 0.75: 
-		var powerup = powerup_scene.instantiate()
-		powerup.global_position = global_position
-		
-		# Random angka acak 0 sampai 6
-		var random_type = randi() % 7 
-		powerup.current_type = random_type
-		
-		get_tree().current_scene.call_deferred("add_child", powerup)
+		spawn_powerup()
 
+func spawn_powerup():
+	var powerup = powerup_scene.instantiate()
+	powerup.global_position = global_position
+	
+	# Random angka acak 0 sampai 6
+	var random_type = randi() % 7 
+	powerup.current_type = random_type
+	
+	get_tree().current_scene.call_deferred("add_child", powerup)
+		
 func exploded():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position

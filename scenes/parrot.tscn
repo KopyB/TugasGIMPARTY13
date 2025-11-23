@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsdk2ko4rwh7x"]
+
+[ext_resource type="Script" uid="uid://dpmsywrp8ewwd" path="res://scripts/parrot.gd" id="1_w755j"]
+[ext_resource type="Texture2D" uid="uid://b5h3db1kpx3aw" path="res://assets/art/67dawg.jpg" id="2_i6g64"]
+[ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="2_vda7l"]
+
+[sub_resource type="Curve2D" id="Curve2D_w755j"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -17, -15, -96.47371, -93.90792, 96.47371, 93.90792, 0, 567, -89.80265, 106.73687, 89.80265, -106.73687, 332, 562, 449.6292, -14.182667, -449.6292, 14.182667, 346, -15, -92.36845, -109.30266, 92.36845, 109.30266, 369, 565, -94.66566, 126.97219, 94.66566, -126.97219, 796, 559, 447.35162, 8.377457, -447.35162, -8.377457, 804, -25, -84.147255, -117.2051, 84.147255, 117.2051, 831, 564, -90.15777, 126.22088, 90.15777, -126.22088, 1246, 565, 423.74475, -1.5987381, -423.74475, 1.5987381, 1260, -20, -92.41171, -112.69721, 92.41171, 112.69721, 1290, 564, -81.278595, 106.55009, 81.278595, -106.55009, 1731, 561, 451.1704, -22.127914, -451.1704, 22.127914, 1740, -26, -84.69366, -109.28214, 84.69366, 109.28214, 1789, 561, -48.49395, 105.18406, 48.49395, -105.18406, 2028, 565, 0, 0, 0, 0, 2072, -26)
+}
+point_count = 16
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
+size = Vector2(108.24732, 76.94212)
+
+[node name="Dummy" type="Path2D" groups=["enemies"]]
+position = Vector2(-51, 47)
+curve = SubResource("Curve2D_w755j")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(-17, -15)
+rotation = 1.732205
+scale = Vector2(0.8407294, 1.2780219)
+skew = 0.022742987
+cubic_interp = false
+loop = false
+script = ExtResource("1_w755j")
+
+[node name="Area2D" type="Area2D" parent="PathFollow2D"]
+script = ExtResource("2_vda7l")
+
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/Area2D"]
+position = Vector2(12.4498825, -2.2087498)
+scale = Vector2(0.22325826, 0.16248927)
+texture = ExtResource("2_i6g64")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Area2D"]
+position = Vector2(11.951813, -2.5671005)
+scale = Vector2(0.9999995, 0.99999964)
+shape = SubResource("RectangleShape2D_xmspm")
