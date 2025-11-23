@@ -1,6 +1,11 @@
 extends Area2D
 
-var fall_speed = 150 #tadi beda sm fall speed power up - kaiser 
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var barrel: Sprite2D = $barrel
+
+var explosion_scene = preload("res://scenes/explosion.tscn")
+
+var fall_speed = 150 
 var damage = 1
 
 func _ready():
@@ -19,8 +24,15 @@ func take_damage(amount):
 	meledak()
 
 func meledak():
-	# Spawn efek ledakan disini nanti
+	barrel.hide()
+	collision_shape_2d.disabled = true
+	exploded()
 	queue_free()
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
+
+func exploded():
+	var explosion = explosion_scene.instantiate()
+	explosion.global_position = global_position
+	get_tree().current_scene.add_child(explosion)

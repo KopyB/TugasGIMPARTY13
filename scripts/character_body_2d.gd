@@ -19,9 +19,14 @@ var active_laser_node = null
 
 var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 @onready var shoot_timer = $Timer
+var tex_artillery = preload("res://assets/art/ArtilleryBurstProjectile.png")
 
+var explosion_scene = preload("res://scenes/explosion.tscn")
 #animation
 @onready var _animation_player = $AnimatedSprite2D
+@onready var k_sturret: Sprite2D = $KSturret
+@onready var shield_anim: AnimatedSprite2D = $shield_anim
+@onready var shockwaves_anim: AnimatedSprite2D = $shockwaves_anim
 
 @onready var skill_timer = $SkillDurationTimer
 
@@ -29,14 +34,19 @@ func _ready():
 	add_to_group("player")
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	
+	k_sturret.hide()
+	shield_anim.hide()
+	shockwaves_anim.hide()
 # --- FUNGSI MENERIMA DAMAGE & MATI ---
 # Pastikan logika mati Anda ada di fungsi ini
 func take_damage_player():
 	# --- LOGIKA SHIELD DI SINI ---
 	if has_shield:
 		has_shield = false
-		modulate = Color(1, 1, 1, 1)
+		shield_anim.show()
+		shield_anim.play_backwards()
+		await shield_anim.animation_finished
+		shield_anim.hide()
 		print("Shield Pecah!")
 		return 
 	
@@ -83,11 +93,13 @@ func apply_powerup(type):
 			activate_kraken()      
 		5: # SECOND WIND
 			activate_second_wind() 
+		6: # ADMIRAL WILL
+			activate_admiral()
 
 # --- LOGIKA 1: SHIELD ---
 func activate_shield():
 	has_shield = true
-	modulate = Color(0.5, 0.5, 1, 1) # Ubah warna player jadi kebiruan (visual)
+	shield_anim.play("shieldup")
 	print("Shield Aktif!")
 
 # --- LOGIKA 2: MULTISHOT (Sudah Anda punya) ---
@@ -136,6 +148,7 @@ func activate_kraken():
 		active_laser_node = laser_scene.instantiate()
 		call_deferred("add_child", active_laser_node)
 		active_laser_node.position = Vector2(0, -50) 
+		k_sturret.show()
 	
 	# --- PERBAIKAN DURASI ---
 	# Gunakan Node Timer, bukan get_tree().create_timer
@@ -148,24 +161,48 @@ func activate_kraken():
 		active_laser_node.queue_free()
 		active_laser_node = null
 		print("Kraken selesai.")
+		k_sturret.hide()
 	
 	is_kraken_active = false
+	
 # --- LOGIKA BARU: SECOND WIND (REVIVE) ---
 func activate_second_wind():
 	has_second_wind = true
 	print("Second Wind Ready! (Nyawa cadangan aktif)")
 	# Opsional: Tambahkan visual effect (misal aura putih)
+
+func activate_admiral():
+	print("ADMIRAL'S WILL ACTIVATED! Musuh Terhenti!")
 	
+	# 1. Efek Visual: Flash Layar Kuning
+	modulate = Color(3, 3, 0, 1) # Terang banget (Kuning)
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color.WHITE, 0.5)
+	
+	# 2. Panggil grup "enemies" untuk stop bergerak
+	# Pastikan di dummy.gd sudah ada add_to_group("enemies")
+	get_tree().call_group("enemies", "set_paralyzed", true)
+	
+	# 3. Tunggu 5 Detik
+	skill_timer.start(5.0)
+	await skill_timer.timeout
+	
+	# 4. Kembalikan musuh jadi normal
+	print("Admiral's Will berakhir.")
+	get_tree().call_group("enemies", "set_paralyzed", false)
+
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
+	shockwaves_anim.play("shocking")
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5) # Fade balik ke normal
 	
 	# LOGIKA MEMBUNUH SEMUA MUSUH
 	# Kita panggil grup "enemies" yang sudah kita buat di Langkah 1
 	get_tree().call_group("enemies", "take_damage", 9999)
-	
+	await shockwaves_anim.animation_finished
+	shockwaves_anim.hide()
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
 	if direction:
@@ -182,10 +219,12 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 			rotation = lerp(rotation, 0.0, delta * 1.0)
 	#animation
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("Left"):
 		_animation_player.play("left")
-	elif Input.is_action_pressed("ui_right"):
+		k_sturret.position.x = -15.0
+	elif Input.is_action_pressed("Right"):
 		_animation_player.play("right")
+		k_sturret.position.x = 15.0
 	else:
 		_animation_player.play("idle")
 	
@@ -208,39 +247,46 @@ func spawn_bullet(angle_in_degrees):
 	# Set rotasi peluru (konversi derajat ke radian karena Godot pakai radian)
 	bullet.rotation_degrees = rotation_degrees + angle_in_degrees
 	
+	# Ganti texture
+	if is_artillery_active:
+		# Kita cari node Sprite2D di dalam scene peluru
+		# NOTE: Pastikan nama node sprite di scene bulletplayer.tscn adalah "Sprite2D"
+		var sprite = bullet.get_node_or_null("Sprite2D")
+		
+		if sprite:
+			sprite.texture = tex_artillery
+			# Opsional: Ubah skala jika gambar artillery terlalu besar/kecil
+			# sprite.scale = Vector2(1.5, 1.5)
+			
 	# Tambahkan ke Main Scene
 	get_parent().add_child(bullet)
+	
 func reset_all_skills():
 	print("Membersihkan semua skill aktif...")
-
-	# 1. Matikan semua status skill (Boolean)
+	
+	# ... (Reset skill lain yg sudah ada) ...
 	is_kraken_active = false
 	is_multishot_active = false
 	is_artillery_active = false
-
 	has_shield = false
 	has_second_wind = false
-
-	# 2. Hentikan Timer Skill (Agar durasi tidak lanjut)
-	# Pastikan node Timer ini ada (SkillDurationTimer yang kita buat sebelumnya)
+	
 	if has_node("SkillDurationTimer"):
 		$SkillDurationTimer.stop()
 
-	# 3. Reset Kecepatan Tembak (Artillery)
 	if shoot_timer:
-		shoot_timer.wait_time = 0.2 # Kembalikan ke default (sesuaikan angka ini jika default Anda beda)
+		shoot_timer.wait_time = 0.2 
 	
-	# 4. Reset Kecepatan Gerak & Rotasi (Speed Boost)
 	current_speed = normal_speed
-	rotation_speed = 2 # Kembalikan ke default
+	rotation_speed = 2 
 
-	# 5. Hapus Laser (Kraken Slayer)
 	if active_laser_node != null and is_instance_valid(active_laser_node):
 		active_laser_node.queue_free()
 		active_laser_node = null
 
-	# 6. Reset Warna Player (Shield/Visual Effect)
-	modulate = Color(1, 1, 1, 1) # Putih normal
+	modulate = Color.WHITE
+
+	get_tree().call_group("enemies", "set_paralyzed", false)
 
 func _on_timer_timeout() -> void: # Timer
 	# Pasang gatekeeping peluru
@@ -259,4 +305,9 @@ func _on_timer_timeout() -> void: # Timer
 		# Tembak 1 peluru normal
 		spawn_bullet(0)
 		
+	
+func exploded():
+	var explosion = explosion_scene.instantiate()
+	explosion.global_position = global_position
+	get_tree().current_scene.add_child(explosion)
 	

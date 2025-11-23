@@ -1,35 +1,44 @@
 extends Area2D
 
-@onready var krakencrate: Sprite2D = $krakencrate
+@onready var crate: Sprite2D = $crate
 
 # Daftar tipe power-up sesuai tabel Anda
-enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND}
+enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND, ADMIRAL}
 
 # Variabel untuk menyimpan tipe bola ini (Default Multishot)
 var current_type = Type.MULTISHOT
 
+# variabel texture crates 
+var shieldcrate = preload("res://assets/art/shield/1shield box.png")
+var multishotcrate
+var artilcrate
+var speedcrate
+var krakencrate = preload("res://assets/art/KrakenSlayerCrate.png")
+var secondwindcrate = preload("res://assets/art/secondwindcrate.png")
+var admiralcrate
+
 func _ready():
 	# Ubah warna bola berdasarkan tipe agar pemain tahu
-	krakencrate.hide()
+
 	match current_type:
 		Type.SHIELD:
-			modulate = Color.CYAN # Biru Muda
-			krakencrate.hide()
+			crate.texture = shieldcrate
+			
 		Type.MULTISHOT:
 			modulate = Color.YELLOW # Kuning
-			krakencrate.hide()
+			
 		Type.ARTILLERY:
 			modulate = Color.RED # Merah
-			krakencrate.hide()
+			
 		Type.SPEED:
 			modulate = Color.GREEN # Hijau
-			krakencrate.hide()
+			
 		Type.KRAKEN:
-			krakencrate.show()
-			 # Ungu untuk Laser
+			crate.texture = krakencrate
 		Type.SECOND_WIND:
-			modulate = Color.WHITE # Putih suci untuk Revive
-			krakencrate.hide()
+			crate.texture = secondwindcrate
+		Type.ADMIRAL:
+			modulate = Color.WHITE # Putih 
 
 func _process(delta):
 	position.y += 150 * delta # Kecepatan jatuh

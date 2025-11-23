@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://bflqfhpxjcctn"]
 
-[ext_resource type="Script" uid="uid://b8cellechwxw0" path="res://scripts/enemybullet.gd" id="1_dw73b"]
-[ext_resource type="Texture2D" uid="uid://drxqwc74gefam" path="res://assets/art/bullet-png.png" id="1_p872y"]
+[ext_resource type="Script" path="res://scripts/enemybullet.gd" id="1_dw73b"]
+[ext_resource type="Texture2D" uid="uid://d4e1nbisj852g" path="res://assets/art/PlayerProjectile.png" id="2_dw73b"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dw73b"]
-size = Vector2(51, 11)
+[sub_resource type="CircleShape2D" id="CircleShape2D_jp7y0"]
+radius = 14.0
 
 [node name="EMBullet" type="Area2D"]
 z_index = 10
@@ -13,17 +13,16 @@ collision_mask = 2
 script = ExtResource("1_dw73b")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = -0.008476734
-scale = Vector2(0.16764231, 0.14264302)
-texture = ExtResource("1_p872y")
+rotation = -1.5591586
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("2_dw73b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, -0.5)
-shape = SubResource("RectangleShape2D_dw73b")
+shape = SubResource("CircleShape2D_jp7y0")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-5, -4)
-rect = Rect2(-10, -10, 29, 29)
+rect = Rect2(-6, -5, 22, 19)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

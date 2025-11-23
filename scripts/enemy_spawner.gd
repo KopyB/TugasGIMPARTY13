@@ -60,21 +60,29 @@ func spawn_logic():
 	var parrotcheck = get_tree().get_nodes_in_group("parrots").size()
 	var viewport_rect = get_viewport_rect().size
 	
-	# Randomizer Tipe Musuh (Persentase)
+	# Randomizer Tipe Musuh (Total 100%)
 	var chance = randi() % 100
 	
 	if chance <= 40: 
 		# 40% Chance: Gunboat Group
 		spawn_gunboat_group(viewport_rect)
 		
-	elif chance <= 30: 
-		# 30% Chance: Bomber
-		spawn_bomber(viewport_rect)
-		
-	elif chance <= 100 and parrotcheck == 0:
+	elif chance <= 65: 
+		# 25% Chance: Bomber (Kiri/Kanan)
+		if randf() > 0.5:
+			spawn_bomber(viewport_rect)
+		else:
+			spawn_rbomber(viewport_rect)
+
+	elif chance <= 10 and parrotcheck == 0:
 		spawn_parrot(viewport_rect) 
-		# 30% Chance: Obstacle Satuan (Batu/Kapal Jatuh)
-	else:
+
+	elif chance <= 80:
+		# 15% Chance: TORPEDO SHARK (BARU)
+		spawn_shark(viewport_rect)
+		
+	else: 
+		# 20% Chance: Obstacle Satuan
 		spawn_single_obstacle(viewport_rect)
 
 # --- TIPE 1: OBSTACLE SATUAN ---
@@ -116,33 +124,37 @@ func spawn_gunboat_group(viewport_rect):
 		new_enemy.global_position = Vector2(center_x + offset_x, -60)
 		get_tree().current_scene.add_child(new_enemy)
 
-# --- TIPE 3: BOMBER DARI SAMPING ---
+# --- TIPE 3A: BOMBER DARI KIRI (DEFAULT) ---
 func spawn_bomber(viewport_rect):
 	if randi() % 2 == 0:
 		# --- LBOMBER (Spawn Sendiri dari Kiri) ---
 		var new_enemy = enemy_scene.instantiate()
 		new_enemy.enemy_type = 1 # LBomber
 		
-		var spawn_x = -60
-		var spawn_y = randf_range(50, viewport_rect.y / 2)
-		
-		new_enemy.global_position = Vector2(spawn_x, spawn_y)
-		get_tree().current_scene.add_child(new_enemy)
-	else:
-		# --- RBOMBER (Spawn Sendiri dari Kanan) ---
-		var new_enemy = enemy_scene.instantiate()
-		new_enemy.enemy_type = 2 # RBomber
-		
-		var spawn_x = viewport_rect.x + 60
-		var spawn_y = randf_range(50, viewport_rect.y / 2)
-		
-		new_enemy.global_position = Vector2(spawn_x, spawn_y)
-		get_tree().current_scene.add_child(new_enemy)
+	var spawn_x = -60 # Di luar layar kiri
+	var spawn_y = randf_range(50, viewport_rect.y / 2) 
+	
+	new_enemy.global_position = Vector2(spawn_x, spawn_y)
+	get_tree().current_scene.add_child(new_enemy)
 
+
+# --- TIPE 3B: RBOMBER DARI KANAN (BARU) ---
+func spawn_rbomber(viewport_rect):
+	var new_enemy = enemy_scene.instantiate()
+	new_enemy.enemy_type = 2 # RBOMBER (Sesuai Enum di dummy.gd)
+	
+	# Spawn di luar layar KANAN
+	var spawn_x = viewport_rect.x + 60 
+	# Y acak (setengah atas layar)
+	var spawn_y = randf_range(50, viewport_rect.y / 2) 
+	
+	new_enemy.global_position = Vector2(spawn_x, spawn_y)
+	get_tree().current_scene.add_child(new_enemy)
+  
 func spawn_parrot(viewport_rect):
 	var new_enemy = parrot_scene.instantiate()
 	new_enemy.get_child(0).get_child(0).enemy_type = 3
-	
+  
 	var spawn_x = 0
 	var spawn_y = 0
 	
@@ -150,3 +162,24 @@ func spawn_parrot(viewport_rect):
 	add_child(new_enemy)
 	new_enemy.get_child(0).get_child(0).add_to_group("parrots")
 	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
+
+func spawn_shark(viewport_rect):
+	var new_enemy = enemy_scene.instantiate()
+	new_enemy.enemy_type = 4 # Tipe 4 = TORPEDO SHARK (Sesuai Enum)
+	
+	# Spawn di sembarang tempat di atas layar atau samping
+	var spawn_side = randi() % 3 # 0=Atas, 1=Kiri, 2=Kanan
+	var spawn_pos = Vector2.ZERO
+	
+	if spawn_side == 0: # Atas
+		spawn_pos.x = randf_range(50, viewport_rect.x - 50)
+		spawn_pos.y = -50
+	elif spawn_side == 1: # Kiri
+		spawn_pos.x = -50
+		spawn_pos.y = randf_range(50, viewport_rect.y / 2)
+	else: # Kanan
+		spawn_pos.x = viewport_rect.x + 50
+		spawn_pos.y = randf_range(50, viewport_rect.y / 2)
+		
+	new_enemy.global_position = spawn_pos
+	get_tree().current_scene.add_child(new_enemy)
