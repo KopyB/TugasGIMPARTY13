@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsdk2ko4rwh7x"]
+
+[ext_resource type="Script" uid="uid://dpmsywrp8ewwd" path="res://scripts/parrot.gd" id="1_w755j"]
+[ext_resource type="Texture2D" uid="uid://b5h3db1kpx3aw" path="res://assets/art/67dawg.jpg" id="2_i6g64"]
+
+[sub_resource type="Curve2D" id="Curve2D_w755j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
+size = Vector2(269, 266)
+
+[node name="Dummy" type="Path2D" groups=["enemies"]]
+curve = SubResource("Curve2D_w755j")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(37.348213, -54.006016)
+rotation = 1.5307295
+scale = Vector2(0.8407294, 1.2780219)
+skew = 0.022742987
+script = ExtResource("1_w755j")
+
+[node name="Area2D" type="Area2D" parent="PathFollow2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Area2D"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_xmspm")
+
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/Area2D"]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_i6g64")
