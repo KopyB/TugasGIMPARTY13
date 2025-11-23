@@ -22,7 +22,6 @@ func _ready():
 	add_to_group("spawner_utama") 
 	
 	spawn_timer.start(initial_spawn_rate)
-	spawn_parrot(viewport_rect)
 
 func _process(delta):
 	time_elapsed += delta
@@ -62,6 +61,7 @@ func spawn_logic():
 	
 	# Randomizer Tipe Musuh (Total 100%)
 	var chance = randi() % 100
+	print(chance)
 	
 	if chance <= 40: 
 		# 40% Chance: Gunboat Group
@@ -80,7 +80,14 @@ func spawn_logic():
 	elif chance <= 80:
 		# 15% Chance: TORPEDO SHARK (BARU)
 		spawn_shark(viewport_rect)
-		
+	
+	elif chance <= 90:
+		# 10% Chance: SIREN (BARU NEW)
+		if randf() > 0.5:
+			spawn_siren(viewport_rect)
+		else:
+			spawn_rsiren(viewport_rect)
+
 	else: 
 		# 20% Chance: Obstacle Satuan
 		spawn_single_obstacle(viewport_rect)
@@ -105,7 +112,7 @@ func spawn_gunboat_group(viewport_rect):
 	for i in range(group_count):
 		var new_enemy = enemy_scene.instantiate()
 		new_enemy.enemy_type = 0 # Gunboat
-		var enemyshape = new_enemy.get_node("Sprite2D")
+		var enemyshape = new_enemy.get_node("enemyship")
 		
 		# Atur formasi berjejer (jarak antar kapal random dari 60 sampai lebar viewport - ukuran sprite/2)
 		var viewport_width = get_viewport().get_visible_rect().size.x - enemyshape.get_rect().size.x/2
@@ -174,10 +181,28 @@ func spawn_shark(viewport_rect):
 		spawn_pos.y = -50
 	elif spawn_side == 1: # Kiri
 		spawn_pos.x = -50
-		spawn_pos.y = randf_range(50, viewport_rect.y / 2)
+		spawn_pos.y = randf_range(50, viewport_rect.y / 4)
 	else: # Kanan
 		spawn_pos.x = viewport_rect.x + 50
-		spawn_pos.y = randf_range(50, viewport_rect.y / 2)
+		spawn_pos.y = randf_range(50, viewport_rect.y / 4)
 		
 	new_enemy.global_position = spawn_pos
+	get_tree().current_scene.add_child(new_enemy)
+
+func spawn_siren(viewport_rect):
+	var new_enemy = enemy_scene.instantiate()
+	new_enemy.enemy_type = 4 # 4 = SIREN
+
+	var spawn_x = -60
+	var spawn_y = randf_range(50, viewport_rect.y / 2)
+	new_enemy.global_position = Vector2(spawn_x,spawn_y)
+	get_tree().current_scene.add_child(new_enemy)
+
+func spawn_rsiren(viewport_rect):
+	var new_enemy = enemy_scene.instantiate()
+	new_enemy.enemy_type = 5 # 5 = RSIREN
+
+	var spawn_x = viewport_rect.x + 60
+	var spawn_y = randf_range(50, viewport_rect.y / 2)
+	new_enemy.global_position = Vector2(spawn_x,spawn_y)
 	get_tree().current_scene.add_child(new_enemy)
