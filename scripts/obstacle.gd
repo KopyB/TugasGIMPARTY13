@@ -13,6 +13,7 @@ var tex_shipwreck = preload("res://assets/art/shipwreck.png")
 var is_maze_obstacle = false 
 
 func setup_obstacle(type):
+	add_to_group("obstacles")
 	current_type = type
 	var sprite = $Sprite2D
 	

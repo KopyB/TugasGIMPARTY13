@@ -45,6 +45,7 @@ func _ready():
 	# 1. Setup Group & Player
 	add_to_group("enemies") # Wajib untuk skill Admiral/Shockwave
 	player = get_tree().get_first_node_in_group("player")
+	area_entered.connect(_on_area_entered)
 	
 	# 2. FIX HITBOX MENULAR (Wajib duplicate agar ukuran tiap musuh independen)
 	if collision_shape_2d and collision_shape_2d.shape:
@@ -321,6 +322,19 @@ func die():
 		remove_from_group("parrots")
 		queue_free()
 	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("obstacles"):
+		print("Musuh menabrak Obstacle!")
+		
+		# 1. Musuh Mati
+		die()
+		
+		# 2. Obstacle juga menerima damage (Aksi-Reaksi)
+		# Pastikan obstacle punya fungsi take_damage
+		if area.has_method("take_damage"):
+			# Beri damage besar (misal 10) biar obstacle langsung hancur juga
+			area.take_damage(10)
 
 func spawn_powerup_chance():
 	if randf() <= 0.25: 
