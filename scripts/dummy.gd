@@ -7,7 +7,7 @@ signal enemy_died
 @onready var cannon: Sprite2D = $cannon
 
 # TIPE MUSUH
-enum Type {GUNBOAT, BOMBER, RBOMBER, TORPEDO_SHARK, SIREN, RSIREN}
+enum Type {GUNBOAT, BOMBER,RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
 @export var enemy_type = Type.GUNBOAT
 
 # STATISTIK
@@ -93,6 +93,9 @@ func _ready():
 		speed = 120
 		
 
+		
+	elif enemy_type == Type.PARROT:
+		print("Parrot spawned")
 		
 func _process(delta):
 	if is_paralyzed:
@@ -241,38 +244,53 @@ func trigger_siren_scream():
 
 # --- LOGIKA TERIMA DAMAGE & MATI ---
 func take_damage(amount):
-	if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
-		return # NO DAMAGE
-		
-	if enemy_type == Type.SIREN or enemy_type == Type.RSIREN:
-		trigger_siren_scream()
-		return
-
-	health -= amount
-	if health <= 0:
-		die()
+	var parrotcheck = get_tree().get_nodes_in_group("parrots").size()
+	if not enemy_type == Type.PARROT:
+		if parrotcheck == 0:
+			if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
+				return # NO DAMAGE
+			if enemy_type == Type.SIREN or enemy_type == Type.RSIREN:
+				trigger_siren_scream()
+				return
+			
+			health -= amount
+			if health <= 0:
+				die()
+	else:
+		health -= amount
+		if health <= 0:
+			die()
 
 func die():
-	enemyship.hide()
-	collision_shape_2d.disabled = true
-	exploded()
-	spawn_powerup_chance()
-	enemy_died.emit()
+	if not enemy_type == Type.PARROT:
+		enemyship.hide()
+		collision_shape_2d.disabled = true
+		exploded()
+		spawn_powerup_chance()
+		enemy_died.emit()
 	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
-	queue_free()
+		queue_free()
+	else:
+		spawn_powerup()
+		remove_from_group("parrots")
+		queue_free()
+	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
 
 func spawn_powerup_chance():
 	if randf() <= 0.75: 
-		var powerup = powerup_scene.instantiate()
-		powerup.global_position = global_position
-		
-		# Random angka acak 0 sampai 6
-		var random_type = randi() % 7 
-		powerup.current_type = random_type
-		
-		get_tree().current_scene.call_deferred("add_child", powerup)
+		spawn_powerup()
 
+func spawn_powerup():
+	var powerup = powerup_scene.instantiate()
+	powerup.global_position = global_position
+	
+	# Random angka acak 0 sampai 6
+	var random_type = randi() % 7 
+	powerup.current_type = random_type
+	
+	get_tree().current_scene.call_deferred("add_child", powerup)
+		
 func exploded():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position
