@@ -191,7 +191,7 @@ func spawn_shark(viewport_rect):
 
 func spawn_siren(viewport_rect):
 	var new_enemy = enemy_scene.instantiate()
-	new_enemy.enemy_type = 4 # 4 = SIREN
+	new_enemy.enemy_type = 5 # 4 = SIREN
 
 	var spawn_x = -60
 	var spawn_y = randf_range(50, viewport_rect.y / 2)
@@ -200,7 +200,7 @@ func spawn_siren(viewport_rect):
 
 func spawn_rsiren(viewport_rect):
 	var new_enemy = enemy_scene.instantiate()
-	new_enemy.enemy_type = 5 # 5 = RSIREN
+	new_enemy.enemy_type = 6 # 5 = RSIREN
 
 	var spawn_x = viewport_rect.x + 60
 	var spawn_y = randf_range(50, viewport_rect.y / 2)
