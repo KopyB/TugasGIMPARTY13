@@ -22,7 +22,6 @@ func _ready():
 	add_to_group("spawner_utama") 
 	
 	spawn_timer.start(initial_spawn_rate)
-	spawn_parrot(viewport_rect)
 
 func _process(delta):
 	time_elapsed += delta
@@ -105,7 +104,7 @@ func spawn_gunboat_group(viewport_rect):
 	for i in range(group_count):
 		var new_enemy = enemy_scene.instantiate()
 		new_enemy.enemy_type = 0 # Gunboat
-		var enemyshape = new_enemy.get_node("Sprite2D")
+		var enemyshape = new_enemy.get_node("enemyship")
 		
 		# Atur formasi berjejer (jarak antar kapal random dari 60 sampai lebar viewport - ukuran sprite/2)
 		var viewport_width = get_viewport().get_visible_rect().size.x - enemyshape.get_rect().size.x/2
