@@ -49,7 +49,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
 size = Vector2(68.28235, 45.87509)
 
-[node name="Dummy" type="Path2D" groups=["enemies"]]
+[node name="Dummy2" type="Path2D" groups=["enemies"]]
 position = Vector2(-51, 47)
 curve = SubResource("Curve2D_w755j")
 

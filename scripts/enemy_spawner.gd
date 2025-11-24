@@ -22,7 +22,6 @@ func _ready():
 	add_to_group("spawner_utama") 
 	
 	spawn_timer.start(initial_spawn_rate)
-	spawn_parrot(viewport_rect)
 
 func _process(delta):
 	time_elapsed += delta
@@ -64,35 +63,38 @@ func spawn_logic():
 	var chance = randi() % 100
 	print(chance)
 	
-	if chance <= 40: 
-		# 40% Chance: Gunboat Group
+	# --- SUSUNAN PROBABILITAS BARU (Total 100%) ---
+	# TOTAL HARUS 100%. SELALU FOLLOW SUSUNAN LIKE BELOW -nigga
+	# 1. PARROT (Sangat Jarang: 5%)
+	if chance < 5 and parrotcheck == 0: 
+		spawn_parrot(viewport_rect)
+
+	# 2. GUNBOAT (40%) -> Range 5 sampai 39
+	elif chance < 40: 
 		spawn_gunboat_group(viewport_rect)
 		
-	elif chance <= 65: 
-		# 25% Chance: Bomber (Kiri/Kanan)
+	# 3. BOMBER (25%) -> Range 40 sampai 64
+	elif chance < 65: 
 		if randf() > 0.5:
 			spawn_bomber(viewport_rect)
 		else:
 			spawn_rbomber(viewport_rect)
 
-	elif chance <= 25 and parrotcheck == 0:
-		spawn_parrot(viewport_rect) 
-
-	elif chance <= 80:
-		# 15% Chance: TORPEDO SHARK (BARU)
+	# 4. SHARK (15%) -> Range 65 sampai 79
+	elif chance < 80:
 		spawn_shark(viewport_rect)
 	
-	elif chance <= 90:
-		# 10% Chance: SIREN (BARU NEW)
+	# 5. SIREN (10%) -> Range 85 sampai 89
+	elif chance < 90:
 		if randf() > 0.5:
 			spawn_siren(viewport_rect)
 		else:
 			spawn_rsiren(viewport_rect)
 
+	# 6. OBSTACLE (Sisanya 10%) -> Range 90 sampai 99
 	else: 
-		# 20% Chance: Obstacle Satuan
 		spawn_single_obstacle(viewport_rect)
-
+		
 # --- TIPE 1: OBSTACLE SATUAN ---
 func spawn_single_obstacle(viewport_rect):
 	var obs = obstacle_scene.instantiate()
