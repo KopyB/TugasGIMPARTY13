@@ -70,8 +70,12 @@ func _ready():
 		pdeath = $parrot_spawn
 		
 	# Setup awal berdasarkan tipe
-	area_entered.connect(_on_area_entered)
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
 	
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
+		
 	# 2. FIX HITBOX MENULAR (Wajib duplicate agar ukuran tiap musuh independen)
 	if collision_shape_2d and collision_shape_2d.shape:
 		collision_shape_2d.shape = collision_shape_2d.shape.duplicate()
@@ -289,21 +293,27 @@ func handle_shark_behavior(delta):
 		position += Vector2.RIGHT.rotated(rotation) * speed * delta
 		
 		#animation
-		#torpedoshark.play("swimming")
+		if torpedoshark:
+			torpedoshark.play("scout")
 		
 		# Cek waktu lock habis
 		if shark_timer >= shark_lock_duration:
-			torpedoshark.play_backwards("transition")
-			await torpedoshark.animation_finished
-			torpedoshark.play("scout")
+			#torpedoshark.play_backwards("transition")
+			#await torpedoshark.animation_finished
 			await torpedoshark.animation_finished
 			torpedoshark.play("transition")
 			await torpedoshark.animation_finished
 			start_shark_charge()
 	else:
 		# FASE 2: CHARGING (Lurus terus)
-		torpedoshark.play("swimming")
+		if torpedoshark:
+			torpedoshark.play("swimming")
 		position += shark_charge_direction * shark_charge_speed * delta
+		
+		if has_overlapping_bodies():
+			for body in get_overlapping_bodies():
+				if body.is_in_group("player"):
+					_on_body_entered(body) # Panggil fungsi paksa
 
 func start_shark_charge():
 	is_shark_charging = true

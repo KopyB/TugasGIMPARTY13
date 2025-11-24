@@ -74,7 +74,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("16_nqqnp")
 }],
-"loop": true,
+"loop": false,
 "name": &"swimming",
 "speed": 12.0
 }, {
@@ -142,6 +142,6 @@ position = Vector2(-8, -15.999998)
 rotation = -1.5707964
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_w4gkx")
-animation = &"scout"
+animation = &"swimming"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
