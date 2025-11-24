@@ -270,7 +270,7 @@ func drop_barrel():
 	var barrel = barrel_scene.instantiate()
 	barrel.global_position = global_position
 	get_tree().current_scene.call_deferred("add_child", barrel)
-	
+	$splashsfx.play()
 	# Opsional: Ubah sprite musuh jadi "kosong" sebentar (Visual Direction)
 	# $Sprite2D.texture = load("res://assets/bomber_empty.png")
 

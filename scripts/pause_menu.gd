@@ -43,9 +43,6 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("escape") and get_tree().paused:
 		resume()
 
-func health(health_value: int) -> void:
-	pass # nanti masukin fungsinya, hasilnya buat ngubah toggled_handler typenya jadi 0
-
 func toggled_handler(type: int) -> void:
 	state.text = MAP_TYPE_STRING[type]
 	if type == 0:
