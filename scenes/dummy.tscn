@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cof2nk7b0xan"]
+[gd_scene load_steps=31 format=3 uid="uid://cof2nk7b0xan"]
 
 [ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="1_k5f3b"]
 [ext_resource type="Texture2D" uid="uid://fl8kxpc0x1xl" path="res://assets/art/pirate gunboat base.png" id="2_k5f3b"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dl06js2gnj4we" path="res://assets/art/sharkscout/torpedo shak1s.png" id="5_5rvqu"]
 [ext_resource type="AudioStream" uid="uid://bpe72y1ibwily" path="res://assets/audio/parrot_taunt.mp3" id="5_fva3d"]
 [ext_resource type="Texture2D" uid="uid://wfjdw73t3dev" path="res://assets/art/sharkscout/torpedo shak2s.png" id="6_1cxxm"]
+[ext_resource type="AudioStream" uid="uid://dvx1gljnlq1no" path="res://assets/audio/parrot_hurt.mp3" id="6_2bup3"]
 [ext_resource type="Texture2D" uid="uid://dyfyh0fbgnpc7" path="res://assets/art/sharkscout/torpedo shak3s.png" id="7_pv6po"]
 [ext_resource type="Texture2D" uid="uid://csaoxjosfwvge" path="res://assets/art/sharkscout/torpedo shak4s.png" id="8_2bup3"]
 [ext_resource type="Texture2D" uid="uid://lu3es1lainbl" path="res://assets/art/sharkscout/torpedo shak5s.png" id="9_7wx0u"]
@@ -135,6 +136,11 @@ shape = SubResource("RectangleShape2D_xmspm")
 
 [node name="parrot_taunt" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_fva3d")
+volume_db = 5.0
+bus = &"SFX"
+
+[node name="parrot_hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_2bup3")
 volume_db = 5.0
 bus = &"SFX"
 
