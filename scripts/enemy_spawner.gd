@@ -22,6 +22,7 @@ func _ready():
 	add_to_group("spawner_utama") 
 	
 	spawn_timer.start(initial_spawn_rate)
+	spawn_parrot(viewport_rect)
 
 func _process(delta):
 	time_elapsed += delta
