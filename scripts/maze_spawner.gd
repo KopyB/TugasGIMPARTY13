@@ -20,7 +20,7 @@ func _ready():
 	var screen_width = get_viewport_rect().size.x
 	block_size = screen_width / columns
 	randomize()
-	next_event_time = randf_range(40.0, 50.0)
+	next_event_time = randf_range(45.0, 60.0)
 
 func _process(delta):
 	# LOGIKA STATE MACHINE DIPERBAIKI
