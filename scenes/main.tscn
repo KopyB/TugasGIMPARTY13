@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=11 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://c8e0e01ye6ulh" path="res://assets/audio/Rogue Waves.ogg" id="6_tipki"]
 [ext_resource type="Script" path="res://scripts/musiclooper.gd" id="7_85g3d"]
 [ext_resource type="Script" uid="uid://dlp03cxd8mca3" path="res://scripts/maze_spawner.gd" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://ierkg61h23va" path="res://scenes/powerupview.tscn" id="9_85g3d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20, 1079.5)
