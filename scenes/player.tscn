@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://fujugshyvkm6"]
+[gd_scene load_steps=71 format=3 uid="uid://fujugshyvkm6"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://cmc60vajq856e" path="res://assets/art/player boat.png" id="2_i4ail"]
@@ -60,6 +60,8 @@
 [ext_resource type="Texture2D" uid="uid://bismunaeh5mas" path="res://assets/art/KSFrameStart4.png" id="38_8svfe"]
 [ext_resource type="Texture2D" uid="uid://jb3k3fjqqih8" path="res://assets/art/KSFrameStart5.png" id="39_2a3c5"]
 [ext_resource type="Texture2D" uid="uid://doj3kah5u4i80" path="res://assets/art/KSFrameStart6.png" id="40_42b1b"]
+[ext_resource type="AudioStream" uid="uid://cujnqaoo07dmx" path="res://assets/audio/Shockwave 2.mp3" id="61_au7lq"]
+[ext_resource type="AudioStream" uid="uid://bal8cla8pofj2" path="res://assets/audio/Splash Barrel.mp3" id="62_nubpm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjrip"]
 radius = 30.0
@@ -369,6 +371,7 @@ texture = ExtResource("10_31cv2")
 position = Vector2(8.999999, -43.999996)
 scale = Vector2(0.098, 0.098)
 texture = ExtResource("11_31cv2")
+
 [node name="KSturret" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(11, -44)
@@ -418,5 +421,13 @@ sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"shieldup"
 frame = 8
 frame_progress = 1.0
+
+[node name="admiralsfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("61_au7lq")
+bus = &"SFX"
+
+[node name="shocksfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("62_nubpm")
+bus = &"SFX"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

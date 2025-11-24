@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cof2nk7b0xan"]
+[gd_scene load_steps=30 format=3 uid="uid://cof2nk7b0xan"]
 
 [ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="1_k5f3b"]
 [ext_resource type="Texture2D" uid="uid://fl8kxpc0x1xl" path="res://assets/art/pirate gunboat base.png" id="2_k5f3b"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://cj2ec1bp3i545" path="res://assets/art/sharktrans/torpedo shak7s.png" id="23_camdv"]
 [ext_resource type="Texture2D" uid="uid://bhhbq2i33gvyp" path="res://assets/art/sharktrans/torpedo shak8s.png" id="24_6qha2"]
 [ext_resource type="Texture2D" uid="uid://qrrlj4mpiwa8" path="res://assets/art/sharktrans/torpedo shak9s.png" id="25_phbbe"]
+[ext_resource type="AudioStream" uid="uid://bal8cla8pofj2" path="res://assets/audio/Splash Barrel.mp3" id="27_pv6po"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
 size = Vector2(62, 115)
@@ -143,5 +144,9 @@ rotation = -1.5707964
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_w4gkx")
 animation = &"scout"
+
+[node name="splashsfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("27_pv6po")
+bus = &"SFX"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
