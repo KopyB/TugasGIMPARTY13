@@ -25,20 +25,36 @@ var tex_artillery = preload("res://assets/art/ArtilleryBurstProjectile.png")
 
 var explosion_scene = preload("res://scenes/explosion.tscn")
 #animation
-@onready var _animation_player = $AnimatedSprite2D
+@onready var anim_shipbase = $shipbase
+@onready var anim_cannon = $cannon
+@onready var anim_stella = $stellarist
 @onready var k_sturret: Sprite2D = $KSturret
 @onready var shield_anim: AnimatedSprite2D = $shield_anim
 @onready var shockwaves_anim: AnimatedSprite2D = $shockwaves_anim
+@onready var secondwind_anim: AnimatedSprite2D = $secondwind_anim
+@onready var lazer: AnimatedSprite2D = $KSturret/lazer
+
+#audio
+@onready var _2_ndwind_sfx: AudioStreamPlayer2D = $"secondwind_anim/2ndwind_sfx"
 
 @onready var skill_timer = $SkillDurationTimer
 
 func _ready():
 	add_to_group("player")
+	anim_shipbase.add_to_group("player_anims")
+	anim_cannon.add_to_group("player_anims")
+	anim_stella.add_to_group("player_anims")
+	for node in get_tree().get_nodes_in_group("player_anims"):
+		node.show()
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	k_sturret.hide()
+	$multiturret.hide()
+	$multiburst.hide()
+	$burst_turret.hide()
 	shield_anim.hide()
 	shockwaves_anim.hide()
+	secondwind_anim.hide()
 # --- FUNGSI MENERIMA DAMAGE & MATI ---
 # Pastikan logika mati Anda ada di fungsi ini
 func take_damage_player():
@@ -56,11 +72,21 @@ func take_damage_player():
 	if has_second_wind:
 		trigger_shockwave() # Ledakkan semua musuh
 		has_second_wind = false # Pakai nyawa cadangannya
+		for node in get_tree().get_nodes_in_group("player_anims"):
+			node.visible = false
+		secondwind_anim.show()
+		_2_ndwind_sfx.play()
+		secondwind_anim.play("PEAK")
+		await  secondwind_anim.animation_finished
+		secondwind_anim.hide()
+		for node in get_tree().get_nodes_in_group("player_anims"):
+			node.visible = true
 		print("SECOND WIND ACTIVATED! Player bangkit kembali!")
 		return 
 
 	# Jika tidak ada shield & tidak ada second wind -> MATI
-	die()
+	if not has_second_wind and not has_shield:
+		die()
 
 func die():
 	is_dead = true
@@ -68,7 +94,8 @@ func die():
 	reset_all_skills()
 	get_tree().call_group("enemy_projectiles", "queue_free")
 	# Matikan visual kapal agar terlihat 'hancur'
-	_animation_player.visible = false 
+	for node in get_tree().get_nodes_in_group("player_anims"):
+		node.visible = false
 	set_physics_process(false) # Matikan pergerakan
 	
 	# Panggil UI Manager lewat Group
@@ -101,28 +128,49 @@ func apply_powerup(type):
 # --- LOGIKA 1: SHIELD ---
 func activate_shield():
 	has_shield = true
+	shield_anim.show()
 	shield_anim.play("shieldup")
 	print("Shield Aktif!")
 
 # --- LOGIKA 2: MULTISHOT (Sudah Anda punya) ---
 func activate_multishot():
 	is_multishot_active = true
+	if is_artillery_active:
+		$multiburst.show()
+	else:
+		$multiturret.show()
+	anim_cannon.hide()
+	
 	
 	# Ganti create_timer dengan skill_timer
 	skill_timer.start(7.0)
 	await skill_timer.timeout
 	
 	is_multishot_active = false
+	if not is_artillery_active:
+		$multiburst.hide()
+	$multiturret.show()
+	anim_cannon.show()
 
 # --- LOGIKA 3: ARTILLERY (Burst/Fast Fire) ---
 func activate_artillery():
 	is_artillery_active = true
+	if is_multishot_active:
+		$multiburst.show()
+	else:
+		$burst_turret.show()
+	anim_cannon.hide()
+	
 	shoot_timer.wait_time = 0.1 # Tembak jadi ngebut banget (0.1 detik)
 	
 	skill_timer.start(5.0)
 	await skill_timer.timeout # Durasi 5 detik
 	
 	is_artillery_active = false
+	if not is_multishot_active:
+		$multiburst.hide()
+	$burst_turret.hide()
+	anim_cannon.show()
 	shoot_timer.wait_time = 0.2 # Balikin ke speed tembak normal (sesuaikan angka ini)
 
 # --- LOGIKA 4: SPEED (Movement) ---
@@ -140,32 +188,55 @@ func activate_speed():
 func activate_kraken():
 	print("KRAKEN RELEASED!")
 	is_kraken_active = true 
+	anim_cannon.hide()
 	
 	# Spawn Laser
 	# Kita tunggu sebentar (animasi charge) pakai timer juga
-	skill_timer.start(0.5)
-	await skill_timer.timeout 
+	#skill_timer.start(0.5)
+	#await skill_timer.timeout 
 	
 	if active_laser_node == null:
 		active_laser_node = laser_scene.instantiate()
+		
+		#animation
+		k_sturret.show()
+		lazer.show()
+		lazer.scale = Vector2(2.0,2.0)
+		lazer.play("winding_up")
+		await lazer.animation_finished
+		lazer.scale = Vector2(3.0,5.0)
+		lazer.position.y = -3250.0
+		lazer.play("start beam")
+		await lazer.animation_finished
+		lazer.play("beaming it")
+		
 		call_deferred("add_child", active_laser_node)
 		active_laser_node.position = Vector2(0, -50) 
-		k_sturret.show()
+
 	
 	# --- PERBAIKAN DURASI ---
 	# Gunakan Node Timer, bukan get_tree().create_timer
 	# Saat game dipause, timer ini akan berhenti menghitung.
-	skill_timer.start(6.0) # Durasi Laser 6 detik
+	skill_timer.start(4.5) # Durasi Laser 4.5 detik
 	await skill_timer.timeout
 	
 	# Clear Laser
 	if active_laser_node != null:
 		active_laser_node.queue_free()
-		active_laser_node = null
-		print("Kraken selesai.")
+		lazer.stop()
+		lazer.play_backwards("start beam")
+		await lazer.animation_finished
+		lazer.scale = Vector2(2.0,2.0)
+		lazer.position.y = -150.0
+		lazer.play("end")
+		#await lazer.animation_finished
 		k_sturret.hide()
+		lazer.hide()
+		print("Kraken selesai.")
+		active_laser_node = null
 	
 	is_kraken_active = false
+	anim_cannon.show()
 	
 # --- LOGIKA BARU: SECOND WIND (REVIVE) ---
 func activate_second_wind():
@@ -205,6 +276,7 @@ func apply_dizziness(duration):
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
+	shockwaves_anim.show()
 	shockwaves_anim.play("shocking")
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5) # Fade balik ke normal
@@ -214,7 +286,7 @@ func trigger_shockwave():
 	get_tree().call_group("enemies", "take_damage", 9999)
 	await shockwaves_anim.animation_finished
 	shockwaves_anim.hide()
-
+	
 func _physics_process(delta: float) -> void:
 	if is_dizzy:
 		dizzy_timer -= delta
@@ -243,13 +315,23 @@ func _physics_process(delta: float) -> void:
 			rotation = lerp(rotation, 0.0, delta * 1.0)
 	#animation
 	if direction < 0:
-		_animation_player.play("left")
+		for node in get_tree().get_nodes_in_group("player_anims"):
+				node.play("left")
 		k_sturret.position.x = -15.0
+		$multiturret.position.x = -15.0
+		$burst_turret.position.x = -15.0
 	elif direction > 0:
-		_animation_player.play("right")
-		k_sturret.position.x = -15.0
+		for node in get_tree().get_nodes_in_group("player_anims"):
+				node.play("right")
+		k_sturret.position.x = 15.0
+		$multiturret.position.x = 15.0
+		$burst_turret.position.x = 15.0
 	else:
-		_animation_player.play("idle")
+		for node in get_tree().get_nodes_in_group("player_anims"):
+				node.play("idle")
+		k_sturret.position.x = 0
+		$multiturret.position.x = 0
+		$burst_turret.position.x = 0
 
 
 	# if is_dizzy == true:

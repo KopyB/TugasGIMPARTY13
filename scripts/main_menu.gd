@@ -9,6 +9,7 @@ extends Control
 
 var fstoggle
 var volume
+var sfx
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,6 +27,9 @@ func _ready() -> void:
 		volume = config.get_value("audio", "volume")
 		$Settings/VBoxContainer/Labelmusic/MusicControl._on_value_changed(volume)
 		$Settings/VBoxContainer/Labelmusic/MusicControl.value = volume
+		sfx = config.get_value("audio", "sfx")
+		$Settings/VBoxContainer/labelSFX/SFXControl._on_value_changed(sfx)
+		$Settings/VBoxContainer/labelSFX/SFXControl.value = sfx
 	else:
 		print("No config found. Using default settings.")
 	
@@ -39,10 +43,9 @@ func _on_exit_pressed() -> void:
 
 func _on_start_pressed() -> void:
 	#animation stella zooming
+	buttonclick.play()
 	animation_player.play("nyoom")
 	await animation_player.animation_finished
-	
-	buttonclick.play()
 	
 	#fade in transition
 	Transition.load_scene("res://scenes/main.tscn")
@@ -70,10 +73,15 @@ func _on_apply_pressed() -> void:
 	volume = $Settings/VBoxContainer/Labelmusic/MusicControl.value
 	$Settings/VBoxContainer/Labelmusic/MusicControl._on_value_changed(volume)
 	print(volume)
+	
+	sfx = $Settings/VBoxContainer/labelSFX/SFXControl.value
+	$Settings/VBoxContainer/labelSFX/SFXControl._on_value_changed(sfx)
+	print(sfx)
 
 	# Example settings—replace with your own controls
 	config.set_value("video", "fullscreen", fstoggle)
 	config.set_value("audio", "volume", volume)
+	config.set_value("audio", "sfx", sfx)
 
 	# Save file
 	var err = config.save("user://settings.cfg")

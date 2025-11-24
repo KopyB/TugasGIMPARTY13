@@ -1,8 +1,8 @@
 extends Marker2D
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
-var obstacle_scene = preload("res://scenes/Obstacle.tscn")
-var parrot_scene = preload("res://scenes/Parrot.tscn")
+var obstacle_scene = preload("res://scenes/obstacle.tscn")
+var parrot_scene = preload("res://scenes/parrot.tscn")
 @onready var spawn_timer = $SpawnTimer
 
 # --- SETTING DIFFICULTY ---
@@ -75,7 +75,7 @@ func spawn_logic():
 		else:
 			spawn_rbomber(viewport_rect)
 
-	elif chance <= 10 and parrotcheck == 0:
+	elif chance <= 25 and parrotcheck == 0:
 		spawn_parrot(viewport_rect) 
 
 	elif chance <= 80:
@@ -113,10 +113,10 @@ func spawn_gunboat_group(viewport_rect):
 	for i in range(group_count):
 		var new_enemy = enemy_scene.instantiate()
 		new_enemy.enemy_type = 0 # Gunboat
-		var enemyshape = new_enemy.get_node("Sprite2D")
+		var enemyshape = new_enemy.get_node("enemyship")
 		
 		# Atur formasi berjejer (jarak antar kapal random dari 60 sampai lebar viewport - ukuran sprite/2)
-		var viewport_width = get_viewport().get_visible_rect().size.x - enemyshape.get_rect().size.x/2
+		var viewport_width = get_viewport().get_visible_rect().size.x - enemyshape.get_rect().size.x*0.06/2
 		#aku ganti logika spacingnya biar g fix 60 -kaiser
 		var min_spacing = 60 #minimal 60 kyk kode awal
 		var max_spacing = viewport_width / float(group_count - 1) #ngitung spacing paling jauh berdasarkan lebar viewport sm jumlah kapal
@@ -182,10 +182,10 @@ func spawn_shark(viewport_rect):
 		spawn_pos.y = -50
 	elif spawn_side == 1: # Kiri
 		spawn_pos.x = -50
-		spawn_pos.y = randf_range(50, viewport_rect.y / 2)
+		spawn_pos.y = randf_range(50, viewport_rect.y / 4)
 	else: # Kanan
 		spawn_pos.x = viewport_rect.x + 50
-		spawn_pos.y = randf_range(50, viewport_rect.y / 2)
+		spawn_pos.y = randf_range(50, viewport_rect.y / 4)
 		
 	new_enemy.global_position = spawn_pos
 	get_tree().current_scene.add_child(new_enemy)

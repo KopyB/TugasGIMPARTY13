@@ -1,8 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bsdk2ko4rwh7x"]
+[gd_scene load_steps=14 format=3 uid="uid://bsdk2ko4rwh7x"]
 
 [ext_resource type="Script" uid="uid://dpmsywrp8ewwd" path="res://scripts/parrot.gd" id="1_w755j"]
-[ext_resource type="Texture2D" uid="uid://b5h3db1kpx3aw" path="res://assets/art/67dawg.jpg" id="2_i6g64"]
 [ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="2_vda7l"]
+[ext_resource type="Texture2D" uid="uid://c0luknvdydmau" path="res://assets/art/parrot/frame1.png" id="3_5q3sm"]
+[ext_resource type="Texture2D" uid="uid://c4r5440syhqws" path="res://assets/art/parrot/frame2.png" id="4_wdbrf"]
+[ext_resource type="Texture2D" uid="uid://b0w8siaongom5" path="res://assets/art/parrot/frame3.png" id="5_yn6nm"]
+[ext_resource type="Texture2D" uid="uid://btt7kq85xw2va" path="res://assets/art/parrot/frame4.png" id="6_40jo0"]
+[ext_resource type="Texture2D" uid="uid://psr2khy6j7ly" path="res://assets/art/parrot/frame5.png" id="7_v4y78"]
+[ext_resource type="Texture2D" uid="uid://b87yy2f7hweqf" path="res://assets/art/parrot/frame6.png" id="8_hv8ck"]
+[ext_resource type="Texture2D" uid="uid://fxo5s4pc8brc" path="res://assets/art/parrot/frame7.png" id="9_0gn53"]
+[ext_resource type="AudioStream" uid="uid://dvx1gljnlq1no" path="res://assets/audio/parrot_hurt.mp3" id="10_wdbrf"]
 
 [sub_resource type="Curve2D" id="Curve2D_w755j"]
 _data = {
@@ -10,8 +17,37 @@ _data = {
 }
 point_count = 16
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_y6tx6"]
+animations = [{
+"frames": [{
+"duration": 2.01,
+"texture": ExtResource("3_5q3sm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wdbrf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yn6nm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_40jo0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_v4y78")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hv8ck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0gn53")
+}],
+"loop": true,
+"name": &"parrot",
+"speed": 12.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
-size = Vector2(108.24732, 76.94212)
+size = Vector2(68.28235, 45.87509)
 
 [node name="Dummy" type="Path2D" groups=["enemies"]]
 position = Vector2(-51, 47)
@@ -29,12 +65,20 @@ script = ExtResource("1_w755j")
 [node name="Area2D" type="Area2D" parent="PathFollow2D"]
 script = ExtResource("2_vda7l")
 
-[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/Area2D"]
-position = Vector2(12.4498825, -2.2087498)
-scale = Vector2(0.22325826, 0.16248927)
-texture = ExtResource("2_i6g64")
+[node name="ParrotAnim" type="AnimatedSprite2D" parent="PathFollow2D/Area2D"]
+position = Vector2(9.357071, -1.0062447)
+rotation = -1.6179202
+scale = Vector2(0.1863939, 0.28711092)
+sprite_frames = SubResource("SpriteFrames_y6tx6")
+animation = &"parrot"
+frame_progress = 0.5233161
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Area2D"]
-position = Vector2(11.951813, -2.5671005)
+position = Vector2(16.157026, -2.5334167)
 scale = Vector2(0.9999995, 0.99999964)
 shape = SubResource("RectangleShape2D_xmspm")
+
+[node name="parrot_hurt" type="AudioStreamPlayer2D" parent="PathFollow2D/Area2D"]
+stream = ExtResource("10_wdbrf")
+volume_db = 1.0
+bus = &"SFX"

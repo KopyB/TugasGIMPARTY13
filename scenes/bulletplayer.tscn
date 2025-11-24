@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cyxqkt025og7s"]
 
 [ext_resource type="Script" uid="uid://bab4yc7salbno" path="res://scripts/bulletplayer.gd" id="1_7xqyn"]
-[ext_resource type="Texture2D" uid="uid://d28bmkxcqnd3i" path="res://assets/art/PirateProjectile.png" id="2_7xqyn"]
+[ext_resource type="Texture2D" uid="uid://d4e1nbisj852g" path="res://assets/art/PlayerProjectile.png" id="2_7xqyn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fro4i"]
 radius = 16.004395
