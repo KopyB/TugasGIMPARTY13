@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bsdk2ko4rwh7x"]
+[gd_scene load_steps=14 format=3 uid="uid://bsdk2ko4rwh7x"]
 
 [ext_resource type="Script" uid="uid://dpmsywrp8ewwd" path="res://scripts/parrot.gd" id="1_w755j"]
 [ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="2_vda7l"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://psr2khy6j7ly" path="res://assets/art/parrot/frame5.png" id="7_v4y78"]
 [ext_resource type="Texture2D" uid="uid://b87yy2f7hweqf" path="res://assets/art/parrot/frame6.png" id="8_hv8ck"]
 [ext_resource type="Texture2D" uid="uid://fxo5s4pc8brc" path="res://assets/art/parrot/frame7.png" id="9_0gn53"]
+[ext_resource type="AudioStream" uid="uid://dvx1gljnlq1no" path="res://assets/audio/parrot_hurt.mp3" id="10_wdbrf"]
 
 [sub_resource type="Curve2D" id="Curve2D_w755j"]
 _data = {
@@ -76,3 +77,8 @@ frame_progress = 0.5233161
 position = Vector2(16.157026, -2.5334167)
 scale = Vector2(0.9999995, 0.99999964)
 shape = SubResource("RectangleShape2D_xmspm")
+
+[node name="parrot_hurt" type="AudioStreamPlayer2D" parent="PathFollow2D/Area2D"]
+stream = ExtResource("10_wdbrf")
+volume_db = 1.0
+bus = &"SFX"
