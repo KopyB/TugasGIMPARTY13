@@ -289,7 +289,7 @@ func handle_shark_behavior(delta):
 		position += Vector2.RIGHT.rotated(rotation) * speed * delta
 		
 		#animation
-		torpedoshark.play("swimming")
+		#torpedoshark.play("swimming")
 		
 		# Cek waktu lock habis
 		if shark_timer >= shark_lock_duration:
