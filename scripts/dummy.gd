@@ -40,8 +40,8 @@ var bomber_barrel = preload("res://assets/art/BomberWithBarrel.png")
 var bomber_noBarrel = preload("res://assets/art/BomberNoBarrel.png")
 var gun_boat = preload("res://assets/art/pirate gunboat base.png")
 var siren = preload("res://assets/art/siren(temp).png")
-var taunt: AudioStreamPlayer2D = null
-var pdeath: AudioStreamPlayer2D = null
+@onready var taunt: AudioStreamPlayer2D = $parrot_taunt
+@onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
 
 var player = null # Referensi
 
