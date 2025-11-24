@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=10 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
@@ -70,7 +70,5 @@ script = ExtResource("7_85g3d")
 
 [node name="MazeSpawner" type="Node2D" parent="."]
 script = ExtResource("8_tipki")
-
-[node name="POWERUPVIEW" parent="." instance=ExtResource("9_85g3d")]
 
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]
