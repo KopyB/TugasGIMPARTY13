@@ -331,19 +331,29 @@ func take_damage(amount):
 
 func die():
 	if not enemy_type == Type.PARROT:
-		enemyship.hide()
-		collision_shape_2d.disabled = true
+		# FIX CRASH: Cek validitas node enemyship sebelum hide
+		if enemyship and is_instance_valid(enemyship):
+			enemyship.hide()
+			
+		# FIX: Cek validitas collision shape juga (praktik aman)
+		if collision_shape_2d and is_instance_valid(collision_shape_2d):
+			collision_shape_2d.disabled = true
 		exploded()
 		spawn_powerup_chance()
 		enemy_died.emit()
+		
 	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
 		queue_free()
-	else:
+		
+	elif enemy_type == Type.PARROT:
 		remove_from_group("parrots")
 		spawn_powerup()
+		
+		print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
 		queue_free()
-	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
+	else:
+		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("obstacles"):
