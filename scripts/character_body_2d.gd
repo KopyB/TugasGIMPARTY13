@@ -76,7 +76,6 @@ func take_damage_player():
 	
 	# --- LOGIKA REVIVE DI SINI ---
 	if has_second_wind:
-		trigger_shockwave() # Ledakkan semua musuh
 		has_second_wind = false # Pakai nyawa cadangannya
 		activate_iframes(1.5) # Invicible 1.5 sec
 		for node in get_tree().get_nodes_in_group("player_anims"):
@@ -84,8 +83,9 @@ func take_damage_player():
 		secondwind_anim.show()
 		_2_ndwind_sfx.play()
 		secondwind_anim.play("PEAK")
-		await  secondwind_anim.animation_finished
+		await secondwind_anim.animation_finished
 		secondwind_anim.hide()
+		trigger_shockwave() # Ledakkan semua musuh
 		for node in get_tree().get_nodes_in_group("player_anims"):
 			node.visible = true
 		print("SECOND WIND ACTIVATED! Player bangkit kembali!")
@@ -277,8 +277,13 @@ func activate_admiral():
 	
 	# 2. Panggil grup "enemies" untuk stop bergerak
 	# Pastikan di dummy.gd sudah ada add_to_group("enemies")
+	shockwaves_anim.show()
+	shockwaves_anim.modulate = Color(3, 3, 0, 1)
+	$admiralsfx.play()
+	shockwaves_anim.play("shocking")
 	get_tree().call_group("enemies", "set_paralyzed", true)
-	
+	await shockwaves_anim.animation_finished
+	shockwaves_anim.hide()
 	# 3. Tunggu 5 Detik
 	skill_timer.start(5.0)
 	await skill_timer.timeout
@@ -290,7 +295,7 @@ func activate_admiral():
 func apply_dizziness(duration):
 	if is_dead:
 		return
-	
+	modulate = Color(0.832, 0.381, 0.83, 0.851)
 	print("PLAYER KENA MENTAL! PUSING!")
 	is_dizzy = true
 	dizzy_timer = duration
@@ -300,6 +305,7 @@ func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
 	shockwaves_anim.show()
+	$shocksfx.play()
 	shockwaves_anim.play("shocking")
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5) # Fade balik ke normal

@@ -100,7 +100,7 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(284.0, 116.0)
 		
-		shoot_interval = 2.0 
+		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
 		
 	# TIPE 1: BOMBER (Kapal Tong)
@@ -270,7 +270,7 @@ func drop_barrel():
 	var barrel = barrel_scene.instantiate()
 	barrel.global_position = global_position
 	get_tree().current_scene.call_deferred("add_child", barrel)
-	
+	$splashsfx.play()
 	# Opsional: Ubah sprite musuh jadi "kosong" sebentar (Visual Direction)
 	# $Sprite2D.texture = load("res://assets/bomber_empty.png")
 
