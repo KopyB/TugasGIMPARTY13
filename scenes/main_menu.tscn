@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ynu4bos33vch"]
+[gd_scene load_steps=20 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="3_tbmy8"]
@@ -7,7 +7,8 @@
 [ext_resource type="FontFile" uid="uid://c50nkpgytghe1" path="res://assets/BiskiTrial-Regular.otf" id="4_tbmy8"]
 [ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="4_wu84c"]
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_rtw2f"]
-[ext_resource type="AudioStream" uid="uid://b4yg8q076dfhv" path="res://assets/audio/Calm Waters.mp3" id="5_tbmy8"]
+[ext_resource type="AudioStream" uid="uid://dik1asa4k5rqs" path="res://assets/audio/Calm Waters.ogg" id="6_lgwnu"]
+[ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_flqon"]
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="8_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://cp6l6ms5o5es8" path="res://assets/audio/Click.mp3" id="11_lgwnu"]
@@ -180,11 +181,11 @@ text = "EXIT"
 expand_icon = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_tbmy8")
-volume_db = 6.0
-autoplay = true
+stream = ExtResource("6_lgwnu")
+volume_db = 3.0
 bus = &"Music"
 parameters/looping = true
+script = ExtResource("7_flqon")
 
 [node name="Settings" type="Panel" parent="."]
 layout_mode = 1
