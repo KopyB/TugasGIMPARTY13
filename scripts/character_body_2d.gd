@@ -172,7 +172,7 @@ func activate_multishot():
 	is_multishot_active = false
 	if not is_artillery_active:
 		$multiburst.hide()
-	$multiturret.show()
+	$multiturret.hide()
 	anim_cannon.show()
 
 # --- LOGIKA 3: ARTILLERY (Burst/Fast Fire) ---

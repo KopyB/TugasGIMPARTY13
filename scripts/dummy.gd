@@ -374,9 +374,8 @@ func die():
 		exploded()
 		spawn_powerup_chance()
 		enemy_died.emit()
-		
-	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
-		drop_barrel()
+		if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
+			drop_barrel()
 		queue_free()
 		
 	elif enemy_type == Type.PARROT:
