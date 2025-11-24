@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://c8e0e01ye6ulh" path="res://assets/audio/Rogue Waves.ogg" id="6_tipki"]
-[ext_resource type="Script" path="res://scripts/musiclooper.gd" id="7_85g3d"]
+[ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_85g3d"]
 [ext_resource type="Script" uid="uid://dlp03cxd8mca3" path="res://scripts/maze_spawner.gd" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://ierkg61h23va" path="res://scenes/powerupview.tscn" id="9_85g3d"]
 
@@ -71,5 +71,7 @@ script = ExtResource("7_85g3d")
 
 [node name="MazeSpawner" type="Node2D" parent="."]
 script = ExtResource("8_tipki")
+
+[node name="POWERUPVIEW" parent="." instance=ExtResource("9_85g3d")]
 
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]
