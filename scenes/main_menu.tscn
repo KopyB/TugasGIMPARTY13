@@ -184,6 +184,7 @@ stream = ExtResource("5_tbmy8")
 volume_db = 6.0
 autoplay = true
 bus = &"Music"
+playback_type = 1
 parameters/looping = true
 
 [node name="Settings" type="Panel" parent="."]
@@ -420,7 +421,7 @@ viane, Comrade Blin, Fadhil, Raes
 
 miwa
 
-kopyb, CuzYTFnot
+kopyb, CuzYTFnot, Kaze
 
 Rayyis, Fuja, Comrade Blin
 

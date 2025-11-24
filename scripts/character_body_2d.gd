@@ -18,6 +18,7 @@ var is_kraken_active = false
 var has_second_wind = false
 var laser_scene = preload("res://scenes/LaserBeam.tscn")
 var active_laser_node = null
+var is_invincible = false
 
 var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 @onready var shoot_timer = $Timer
@@ -55,14 +56,19 @@ func _ready():
 	shield_anim.hide()
 	shockwaves_anim.hide()
 	secondwind_anim.hide()
+	
 # --- FUNGSI MENERIMA DAMAGE & MATI ---
-# Pastikan logika mati Anda ada di fungsi ini
 func take_damage_player():
+	# --- CEK MATI ATAU INVICIBLE --- 
+	if is_invincible or is_dead:
+		return
+	
 	# --- LOGIKA SHIELD DI SINI ---
 	if has_shield:
 		has_shield = false
 		shield_anim.show()
 		shield_anim.play_backwards()
+		activate_iframes(0.8) # Invicible 0.8 sec
 		await shield_anim.animation_finished
 		shield_anim.hide()
 		print("Shield Pecah!")
@@ -71,6 +77,7 @@ func take_damage_player():
 	# --- LOGIKA REVIVE DI SINI ---
 	if has_second_wind:
 		has_second_wind = false # Pakai nyawa cadangannya
+		activate_iframes(1.5) # Invicible 1.5 sec
 		for node in get_tree().get_nodes_in_group("player_anims"):
 			node.visible = false
 		secondwind_anim.show()
@@ -87,7 +94,26 @@ func take_damage_player():
 	# Jika tidak ada shield & tidak ada second wind -> MATI
 	if not has_second_wind and not has_shield:
 		die()
+		
+func activate_iframes(duration):
+	is_invincible = true
+	print("Player Invincible untuk ", duration, " detik")
+	
+	# Efek  kedip-kedip (tween)
+	var tween = create_tween()
+	# Loop kedip 
+	tween.set_loops(int(duration * 10)) # Kedip cepat
+	tween.tween_property(self, "modulate:a", 0.2, 0.05)
+	tween.tween_property(self, "modulate:a", 1.0, 0.05)
+	
+	
+	await get_tree().create_timer(duration).timeout
+	
 
+	is_invincible = false
+	modulate.a = 1.0 
+	print("Invincibility berakhir")
+	
 func die():
 	is_dead = true
 	print("Player Mati - Memulai Sequence Game Over")
@@ -98,15 +124,12 @@ func die():
 		node.visible = false
 	set_physics_process(false) # Matikan pergerakan
 	
-	# Panggil UI Manager lewat Group
-	# Angka 0 artinya tipe "YOU DIED!" (sesuai dictionary di pause_menu.gd)
+
+	# Angka 0 artinya tipe "YOU DIED!" 
 	get_tree().call_group("ui_manager", "toggled_handler", 0)
 	
 # Fungsi utama yang dipanggil oleh bola PowerUp
 func apply_powerup(type):
-	# PowerUp.gd harus bisa diakses, atau kita pakai angka integer 0-3
-	# 0: SHIELD, 1: MULTISHOT, 2: ARTILLERY, 3: SPEED
-	
 	print("Dapat PowerUp Tipe: ", type)
 	
 	match type:
@@ -149,7 +172,7 @@ func activate_multishot():
 	is_multishot_active = false
 	if not is_artillery_active:
 		$multiburst.hide()
-	$multiturret.show()
+	$multiturret.hide()
 	anim_cannon.show()
 
 # --- LOGIKA 3: ARTILLERY (Burst/Fast Fire) ---
