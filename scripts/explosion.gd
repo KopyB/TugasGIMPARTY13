@@ -13,4 +13,5 @@ func exploded():
 	explosion.play("boom")
 	await explosion.animation_finished
 	explosion.hide()
+	await boomsfx.finished
 	queue_free()
