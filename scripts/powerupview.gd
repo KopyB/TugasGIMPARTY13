@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 @onready var scorepoint: Label = $score/scorepoint
-@onready var timer: Timer = $Timer
+@onready var timer: Timer = $scoretimer
 
 var score: int = 0
 
@@ -9,7 +9,7 @@ func _ready():
 	# Connect the Timer's timeout signal to our function
 	timer.timeout.connect(_on_score_timer_timeout)
 	# If Autostart is false, you can start the timer here:
-	# score_timer.start() 
+	timer.start() 
 	update_score_display()
 
 func _on_score_timer_timeout():

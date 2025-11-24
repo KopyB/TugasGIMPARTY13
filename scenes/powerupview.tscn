@@ -1,10 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://ierkg61h23va"]
+[gd_scene load_steps=4 format=3 uid="uid://ierkg61h23va"]
+
+[ext_resource type="Script" uid="uid://bp1rnjahcwc4y" path="res://scripts/powerupview.gd" id="1_bpq5q"]
+[ext_resource type="FontFile" uid="uid://c50nkpgytghe1" path="res://assets/BiskiTrial-Regular.otf" id="2_k2xsa"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v73b6"]
 bg_color = Color(0.22352941, 0.22352941, 0.22352941, 0.5294118)
 corner_radius_top_right = 8
 
 [node name="POWERUPVIEW" type="CanvasLayer"]
+script = ExtResource("1_bpq5q")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 2
@@ -14,3 +18,33 @@ offset_top = -100.0
 offset_right = 100.0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_v73b6")
+
+[node name="score" type="Panel" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -92.0
+offset_right = 92.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="scorepoint" type="Label" parent="score"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_k2xsa")
+theme_override_font_sizes/font_size = 25
+text = "[SCORE:   ]"
+
+[node name="scoretimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="scoretimer" to="." method="_on_score_timer_timeout"]
