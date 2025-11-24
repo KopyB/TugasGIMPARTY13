@@ -7,7 +7,7 @@ var parrot_scene = preload("res://scenes/parrot.tscn")
 
 # --- SETTING DIFFICULTY (WAVE SYSTEM) ---
 var time_elapsed = 0.0
-var wave_duration = 20.0
+var wave_duration = 30.0
 
 # 1. Setting Kecepatan Spawn (Sumbu Y)
 var spawn_time_slow = 7.0  # Paling santai (Lembah gelombang)
@@ -16,7 +16,7 @@ var peak_difficulty_final = 0.5     # Puncak Gelombang 10++ (0.5 detik - Cepat)
 var current_peak = peak_difficulty_start # Variable dinamis yang akan berubah
 
 var wave_counter = 0                # Menghitung sudah berapa kali "Jeda" terjadi
-var target_waves_to_max = 10.0      # Butuh 10 jeda untuk sampai max difficulty
+var target_waves_to_max = 8.0      # Butuh 8 jeda untuk sampai max difficulty
 
 var is_spawning_paused = false
 
