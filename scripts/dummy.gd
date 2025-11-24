@@ -40,7 +40,7 @@ var bomber_noBarrel = preload("res://assets/art/BomberNoBarrel.png")
 var gun_boat = preload("res://assets/art/pirate gunboat base.png")
 var siren = preload("res://assets/art/siren(temp).png")
 @onready var taunt = $parrot_taunt
-@onready var pdeath = $parrot_spawn
+@onready var pdeath = $parrot_hurt
 
 var player = null # Referensi
 
@@ -48,7 +48,8 @@ func _ready():
 	# 1. Setup Group & Player
 	add_to_group("enemies") # Wajib untuk skill Admiral/Shockwave
 	player = get_tree().get_first_node_in_group("player")
-	torpedoshark.hide()
+	if torpedoshark:
+		torpedoshark.hide()
 	# Setup awal berdasarkan tipe
 	area_entered.connect(_on_area_entered)
 	
