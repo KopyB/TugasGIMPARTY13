@@ -46,17 +46,17 @@ func resume_spawning():
 	
 	is_spawning_paused = false 
 	
-	# 1. Tambah Counter Wave
+	# Tambah Counter Wave
 	wave_counter += 1
 	
-	# 2. Hitung Kesulitan Puncak yang Baru
+	# Hitung Kesulitan Puncak yang Baru
 	# Rumus: (Wave Sekarang / Target 10) -> Hasilnya 0.0 sampai 1.0
 	var progress_ratio = float(wave_counter) / target_waves_to_max
 	
 	# Clamp agar tidak melebihi 1.0 (Supaya tidak makin cepat dari 0.5)
 	progress_ratio = clamp(progress_ratio, 0.0, 1.0)
 	
-	# 3. Update Current Peak menggunakan Lerp
+	# Update Current Peak menggunakan Lerp
 	# Jika ratio 0 (Awal) -> 4.0 detik
 	# Jika ratio 0.5 (Wave 5) -> Sekitar 2.25 detik
 	# Jika ratio 1.0 (Wave 10) -> 0.5 detik

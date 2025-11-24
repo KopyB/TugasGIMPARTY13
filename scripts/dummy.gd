@@ -140,6 +140,7 @@ func _ready():
 
 	# TIPE 3: PARROT (Burung)
 	elif enemy_type == Type.PARROT:
+		health = 2
 		add_to_group("parrots")
 		# Parrot biasanya tidak punya collision fisik yang sama, jadi kita skip setup hitbox
 		print("Parrot spawned")
@@ -388,17 +389,19 @@ func die():
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
+	if not is_instance_valid(area) or area == self:
+		return
+		
+	# --- KASUS 1: MENABRAK OBSTACLE ---
 	if area.is_in_group("obstacles"):
-		print("Musuh menabrak Obstacle!")
+		print("💥 Tabrakan: Musuh vs Obstacle")
 		
-		# 1. Musuh Mati
-		die()
-		
-		# 2. Obstacle juga menerima damage (Aksi-Reaksi)
-		# Pastikan obstacle punya fungsi take_damage
+		# 1. Obstacle menerima damage (hancur)
 		if area.has_method("take_damage"):
-			# Beri damage besar (misal 10) biar obstacle langsung hancur juga
-			area.take_damage(10)
+			area.take_damage(10) # Angka besar biar langsung hancur
+			
+		# 2. Musuh ini mati
+		die()
 
 func spawn_powerup_chance():
 	if randf() <= 0.25: 
