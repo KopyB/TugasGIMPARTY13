@@ -2,9 +2,10 @@ extends Area2D
 
 #Beri signal saat musuh mati (BOSS EXCLUSIVE)
 signal enemy_died
-@onready var enemyship: Sprite2D = $enemyship
-@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-@onready var cannon: Sprite2D = $cannon
+
+var enemyship: Sprite2D = null
+var collision_shape_2d: CollisionShape2D = null
+var cannon: Sprite2D = null
 
 # TIPE MUSUH
 enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
@@ -24,7 +25,7 @@ var shark_lock_duration = 5.0 # Locks on 5 sec
 var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
 var shark_charge_speed = 1000.0 
-@onready var torpedoshark: AnimatedSprite2D = $torpedoshark
+var torpedoshark: AnimatedSprite2D = null
 
 # --- SIREN VARIABLE ---
 var is_diving = false
@@ -39,8 +40,8 @@ var bomber_barrel = preload("res://assets/art/BomberWithBarrel.png")
 var bomber_noBarrel = preload("res://assets/art/BomberNoBarrel.png")
 var gun_boat = preload("res://assets/art/pirate gunboat base.png")
 var siren = preload("res://assets/art/siren(temp).png")
-@onready var taunt = $parrot_taunt
-@onready var pdeath = $parrot_hurt
+@onready var taunt: AudioStreamPlayer2D = $parrot_taunt
+@onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
 
 var player = null # Referensi
 
@@ -48,8 +49,26 @@ func _ready():
 	# 1. Setup Group & Player
 	add_to_group("enemies") # Wajib untuk skill Admiral/Shockwave
 	player = get_tree().get_first_node_in_group("player")
-	if torpedoshark:
-		torpedoshark.hide()
+	
+	if has_node("enemyship"):
+		enemyship = $enemyship
+		
+	if has_node("CollisionShape2D"):
+		collision_shape_2d = $CollisionShape2D
+		
+	if has_node("cannon"):
+		cannon = $cannon
+		
+	if has_node("torpedoshark"):
+		torpedoshark = $torpedoshark
+		torpedoshark.hide() # Aman, karena sudah dicek ada atau tidak
+		
+	if has_node("parrot_taunt"):
+		taunt = $parrot_taunt
+		
+	if has_node("parrot_spawn"):
+		pdeath = $parrot_spawn
+		
 	# Setup awal berdasarkan tipe
 	area_entered.connect(_on_area_entered)
 	
@@ -128,9 +147,12 @@ func _ready():
 		# Hitbox Shark (bisa pakai default atau diatur khusus)
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(100.0, 50.0)
-		cannon.hide()
-		enemyship.hide()
-		torpedoshark.show()
+		if cannon:
+			cannon.hide()
+		if enemyship:
+			enemyship.hide()
+		if torpedoshark:
+			torpedoshark.show()
 
 	# TIPE 5: SIREN (Putri Duyung Kiri)
 	elif enemy_type == Type.SIREN:
@@ -267,7 +289,7 @@ func handle_shark_behavior(delta):
 		position += Vector2.RIGHT.rotated(rotation) * speed * delta
 		
 		#animation
-		torpedoshark.play("swimming")
+		#torpedoshark.play("swimming")
 		
 		# Cek waktu lock habis
 		if shark_timer >= shark_lock_duration:
@@ -332,19 +354,28 @@ func take_damage(amount):
 
 func die():
 	if not enemy_type == Type.PARROT:
-		enemyship.hide()
-		collision_shape_2d.disabled = true
+		# FIX CRASH: Cek validitas node enemyship sebelum hide
+		if enemyship and is_instance_valid(enemyship):
+			enemyship.hide()
+			
+		# FIX: Cek validitas collision shape juga (praktik aman)
+		if collision_shape_2d and is_instance_valid(collision_shape_2d):
+			collision_shape_2d.disabled = true
 		exploded()
 		spawn_powerup_chance()
 		enemy_died.emit()
 		if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 			drop_barrel()
 		queue_free()
-	else:
+		
+	elif enemy_type == Type.PARROT:
 		remove_from_group("parrots")
 		spawn_powerup()
+		
+		print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
 		queue_free()
-	print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
+	else:
+		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("obstacles"):
