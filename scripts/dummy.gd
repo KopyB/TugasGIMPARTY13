@@ -100,7 +100,7 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(284.0, 116.0)
 		
-		shoot_interval = 2.0 
+		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
 		
 	# TIPE 1: BOMBER (Kapal Tong)
