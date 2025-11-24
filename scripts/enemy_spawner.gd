@@ -5,14 +5,20 @@ var obstacle_scene = preload("res://scenes/obstacle.tscn")
 var parrot_scene = preload("res://scenes/parrot.tscn")
 @onready var spawn_timer = $SpawnTimer
 
-# --- SETTING DIFFICULTY ---
+# --- SETTING DIFFICULTY (WAVE SYSTEM) ---
 var time_elapsed = 0.0
-var initial_spawn_rate = 7.0 # Spawn awal tiap 7 detik
-var min_spawn_rate = 0.5     # Paling ngebut tiap 0.8 detik
-var difficulty_curve = 0.05  # Kecepatan kenaikan difficulty
+var wave_duration = 20.0
 
-# Flag manual untuk status pause (Pengganti is_stopped yang nge-bug)
-var is_spawning_paused = false 
+# 1. Setting Kecepatan Spawn (Sumbu Y)
+var spawn_time_slow = 7.0  # Paling santai (Lembah gelombang)
+var peak_difficulty_start = 4.0     # Puncak Gelombang 1 (4 detik - Santai)
+var peak_difficulty_final = 0.5     # Puncak Gelombang 10++ (0.5 detik - Cepat)
+var current_peak = peak_difficulty_start # Variable dinamis yang akan berubah
+
+var wave_counter = 0                # Menghitung sudah berapa kali "Jeda" terjadi
+var target_waves_to_max = 10.0      # Butuh 10 jeda untuk sampai max difficulty
+
+var is_spawning_paused = false
 
 func _ready():
 	var viewport_rect = get_viewport_rect().size
@@ -21,37 +27,68 @@ func _ready():
 	# WAJIB: Daftar ke group agar bisa diperintah oleh MazeSpawner
 	add_to_group("spawner_utama") 
 	
-	spawn_timer.start(initial_spawn_rate)
+	spawn_timer.start(spawn_time_slow)
 
 func _process(delta):
-	time_elapsed += delta
+	if not is_spawning_paused:
+		time_elapsed += delta # biar ga lompat ke puncak
 
 # --- FUNGSI KONTROL (Dipanggil oleh MazeSpawner) ---
 func pause_spawning():
 	print(">>> SYSTEM: Musuh Biasa PAUSED (Maze Mulai) <<<")
 	is_spawning_paused = true # Set flag pause
 	spawn_timer.stop()        # Matikan timer fisik
-
+	
 func resume_spawning():
 	print(">>> SYSTEM: Musuh Biasa RESUMED (Maze Selesai) <<<")
-	is_spawning_paused = false # Lepas flag pause
-	# Mulai lagi dengan delay 1 detik agar player tidak kaget
-	spawn_timer.start(1.0)
+	# FUNGSI INI DIPANGGIL SAAT MAZE SELESAI
+	# Artinya kita masuk ke Wave berikutnya
+	
+	is_spawning_paused = false 
+	
+	# Tambah Counter Wave
+	wave_counter += 1
+	
+	# Hitung Kesulitan Puncak yang Baru
+	# Rumus: (Wave Sekarang / Target 10) -> Hasilnya 0.0 sampai 1.0
+	var progress_ratio = float(wave_counter) / target_waves_to_max
+	
+	# Clamp agar tidak melebihi 1.0 (Supaya tidak makin cepat dari 0.5)
+	progress_ratio = clamp(progress_ratio, 0.0, 1.0)
+	
+	# Update Current Peak menggunakan Lerp
+	# Jika ratio 0 (Awal) -> 4.0 detik
+	# Jika ratio 0.5 (Wave 5) -> Sekitar 2.25 detik
+	# Jika ratio 1.0 (Wave 10) -> 0.5 detik
+	current_peak = lerp(peak_difficulty_start, peak_difficulty_final, progress_ratio)
+	
+	print(">>> Wave ke-%d Dimulai! Peak Speed sekarang: %.2f detik <<<" % [wave_counter, current_peak])
+	
+	# Reset posisi gelombang ke awal (Lembah/Slow) agar player napas dulu
+	time_elapsed = 0.0 
+	spawn_timer.start(spawn_time_slow)
 
 func _on_spawn_timer_timeout():
-	# Jika sedang dipause oleh Maze, jangan lanjut spawn.
 	if is_spawning_paused:
 		return
 
 	spawn_logic()
 	
-	# --- DIFFICULTY CALCULATION ---
-	# Rumus: Waktu Awal - (Waktu Main x Faktor Kesulitan)
-	var new_wait_time = initial_spawn_rate - (time_elapsed * difficulty_curve)
+	# --- IMPLEMENTASI GELOMBANG SINUS ---
+	var frequency = (2.0 * PI) / wave_duration
 	
-	# Cap di min_spawn_rate
-	if new_wait_time < min_spawn_rate:
-		new_wait_time = min_spawn_rate
+	# Phase shift -PI/2 agar mulai dari lembah
+	var sine_value = sin((time_elapsed * frequency) - (PI / 2.0))
+	
+	# Normalisasi (-1 s/d 1) jadi (0.0 s/d 1.0)
+	var difficulty_factor = (sine_value + 1.0) / 2.0
+	
+	# --- LOGIKA LERP YANG DIUBAH ---
+	# Dulu: lerp(7.0, 0.5, factor)
+	# Sekarang: lerp(7.0, current_peak, factor)
+	# current_peak ini yang nilainya berubah tiap habis maze
+	
+	var new_wait_time = lerp(spawn_time_slow, current_peak, difficulty_factor)
 	
 	spawn_timer.start(new_wait_time)
 

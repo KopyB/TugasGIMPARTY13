@@ -184,6 +184,7 @@ expand_icon = true
 stream = ExtResource("6_lgwnu")
 volume_db = 3.0
 bus = &"Music"
+playback_type = 1
 parameters/looping = true
 script = ExtResource("7_flqon")
 

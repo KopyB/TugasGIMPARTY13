@@ -70,8 +70,12 @@ func _ready():
 		pdeath = $parrot_spawn
 		
 	# Setup awal berdasarkan tipe
-	area_entered.connect(_on_area_entered)
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
 	
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
+		
 	# 2. FIX HITBOX MENULAR (Wajib duplicate agar ukuran tiap musuh independen)
 	if collision_shape_2d and collision_shape_2d.shape:
 		collision_shape_2d.shape = collision_shape_2d.shape.duplicate()
@@ -136,6 +140,7 @@ func _ready():
 
 	# TIPE 3: PARROT (Burung)
 	elif enemy_type == Type.PARROT:
+		health = 2
 		add_to_group("parrots")
 		# Parrot biasanya tidak punya collision fisik yang sama, jadi kita skip setup hitbox
 		print("Parrot spawned")
@@ -289,21 +294,27 @@ func handle_shark_behavior(delta):
 		position += Vector2.RIGHT.rotated(rotation) * speed * delta
 		
 		#animation
-		#torpedoshark.play("swimming")
+		if torpedoshark:
+			torpedoshark.play("scout")
 		
 		# Cek waktu lock habis
 		if shark_timer >= shark_lock_duration:
-			torpedoshark.play_backwards("transition")
-			await torpedoshark.animation_finished
-			torpedoshark.play("scout")
+			#torpedoshark.play_backwards("transition")
+			#await torpedoshark.animation_finished
 			await torpedoshark.animation_finished
 			torpedoshark.play("transition")
 			await torpedoshark.animation_finished
 			start_shark_charge()
 	else:
 		# FASE 2: CHARGING (Lurus terus)
-		torpedoshark.play("swimming")
+		if torpedoshark:
+			torpedoshark.play("swimming")
 		position += shark_charge_direction * shark_charge_speed * delta
+		
+		if has_overlapping_bodies():
+			for body in get_overlapping_bodies():
+				if body.is_in_group("player"):
+					_on_body_entered(body) # Panggil fungsi paksa
 
 func start_shark_charge():
 	is_shark_charging = true
@@ -378,17 +389,19 @@ func die():
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
+	if not is_instance_valid(area) or area == self:
+		return
+		
+	# --- KASUS 1: MENABRAK OBSTACLE ---
 	if area.is_in_group("obstacles"):
-		print("Musuh menabrak Obstacle!")
+		print("💥 Tabrakan: Musuh vs Obstacle")
 		
-		# 1. Musuh Mati
-		die()
-		
-		# 2. Obstacle juga menerima damage (Aksi-Reaksi)
-		# Pastikan obstacle punya fungsi take_damage
+		# 1. Obstacle menerima damage (hancur)
 		if area.has_method("take_damage"):
-			# Beri damage besar (misal 10) biar obstacle langsung hancur juga
-			area.take_damage(10)
+			area.take_damage(10) # Angka besar biar langsung hancur
+			
+		# 2. Musuh ini mati
+		die()
 
 func spawn_powerup_chance():
 	if randf() <= 0.25: 
