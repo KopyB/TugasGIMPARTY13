@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxjrjo3e73gyv"
 path.bptc="res://.godot/imported/will_box.png-cdf73b460dc41834afb25d12bf5b729c.bptc.ctex"
+path.astc="res://.godot/imported/will_box.png-cdf73b460dc41834afb25d12bf5b729c.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/will_box.png"
-dest_files=["res://.godot/imported/will_box.png-cdf73b460dc41834afb25d12bf5b729c.bptc.ctex"]
+dest_files=["res://.godot/imported/will_box.png-cdf73b460dc41834afb25d12bf5b729c.bptc.ctex", "res://.godot/imported/will_box.png-cdf73b460dc41834afb25d12bf5b729c.astc.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dpr5w15dsk2ja"
 path.bptc="res://.godot/imported/burst_turret.png-bb4fc3686aeed42a61e5cb623ccb8aec.bptc.ctex"
+path.astc="res://.godot/imported/burst_turret.png-bb4fc3686aeed42a61e5cb623ccb8aec.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/burst_turret.png"
-dest_files=["res://.godot/imported/burst_turret.png-bb4fc3686aeed42a61e5cb623ccb8aec.bptc.ctex"]
+dest_files=["res://.godot/imported/burst_turret.png-bb4fc3686aeed42a61e5cb623ccb8aec.bptc.ctex", "res://.godot/imported/burst_turret.png-bb4fc3686aeed42a61e5cb623ccb8aec.astc.ctex"]
 
 [params]
 
