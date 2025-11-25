@@ -116,8 +116,8 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0) 
 
-		shoot_interval = randf_range(2.5, 5.0) 
-		speed = 150 
+		shoot_interval = randf_range(1.5, 2.0) 
+		speed = randf_range(160, 200)
 		rotation_degrees = 90 # Hadap Kanan
 		
 	# TIPE 2: RBOMBER (Bomber dari Kanan)
@@ -134,8 +134,8 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0)
 			
-		shoot_interval = randf_range(2.5, 5.0) 
-		speed = 150 
+		shoot_interval = randf_range(1.5, 2.0) 
+		speed = randf_range(160, 200) 
 		rotation_degrees = -90 # Hadap Kiri (Mundur)
 
 	# TIPE 3: PARROT (Burung)
@@ -148,7 +148,7 @@ func _ready():
 	# TIPE 4: TORPEDO SHARK (Hiu Penabrak)
 	elif enemy_type == Type.TORPEDO_SHARK:
 		health = 3
-		speed = 50 # Speed awal (aiming phase)
+		speed = 60 # Speed awal (aiming phase)
 		# Hitbox Shark (bisa pakai default atau diatur khusus)
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(100.0, 50.0)
@@ -166,7 +166,7 @@ func _ready():
 			enemyship.texture = siren
 			enemyship.scale = Vector2(0.2, 0.2)
 		rotation_degrees = -90
-		speed = 120
+		speed = randi_range(120, 150)
 	
 	# TIPE 6: RSIREN (Putri Duyung Kanan)
 	elif enemy_type == Type.RSIREN:
@@ -175,7 +175,7 @@ func _ready():
 			enemyship.texture = siren
 			enemyship.scale = Vector2(0.2, 0.2)
 		rotation_degrees = 90
-		speed = 120
+		speed = randi_range(120, 150)
 		
 func _process(delta):
 	if is_paralyzed:

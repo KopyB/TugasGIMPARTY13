@@ -16,7 +16,7 @@ var peak_difficulty_final = 0.5     # Puncak Gelombang 10++ (0.5 detik - Cepat)
 var current_peak = peak_difficulty_start # Variable dinamis yang akan berubah
 
 var wave_counter = 0                # Menghitung sudah berapa kali "Jeda" terjadi
-var target_waves_to_max = 5.0      # Butuh 8 jeda untuk sampai max difficulty
+var target_waves_to_max = 8.0      # Butuh 8 jeda untuk sampai max difficulty
 
 var is_spawning_paused = false
 
