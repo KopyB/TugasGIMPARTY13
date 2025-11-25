@@ -77,7 +77,7 @@ func start_shark_event():
 	# 1. Pause Musuh Biasa
 	get_tree().call_group("spawner_utama", "pause_spawning")
 	
-	# 2. Tampilkan Warning (Opsional: Bisa tambah UI/Sound disini)
+	# 2. Tampilkan Warning 
 	# Beri jeda 2 detik agar player siap
 	await get_tree().create_timer(2.0).timeout
 	
