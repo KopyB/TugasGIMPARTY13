@@ -183,7 +183,7 @@ animations = [{
 "speed": 12.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.01,
 "texture": ExtResource("35_ha2mi")
 }, {
 "duration": 1.0,
@@ -195,7 +195,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("38_8svfe")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": ExtResource("39_2a3c5")
 }, {
 "duration": 1.0,
