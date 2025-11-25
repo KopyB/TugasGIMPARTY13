@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d28bmkxcqnd3i"
 path.bptc="res://.godot/imported/PirateProjectile.png-42b3040c37afd5894d331989b5b97c4e.bptc.ctex"
+path.astc="res://.godot/imported/PirateProjectile.png-42b3040c37afd5894d331989b5b97c4e.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/PirateProjectile.png"
-dest_files=["res://.godot/imported/PirateProjectile.png-42b3040c37afd5894d331989b5b97c4e.bptc.ctex"]
+dest_files=["res://.godot/imported/PirateProjectile.png-42b3040c37afd5894d331989b5b97c4e.bptc.ctex", "res://.godot/imported/PirateProjectile.png-42b3040c37afd5894d331989b5b97c4e.astc.ctex"]
 
 [params]
 

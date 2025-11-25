@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfmu0if8qw8tt"
 path.bptc="res://.godot/imported/BomberNoBarrel.png-b087ea5f14f2e7c75cde6f447c01e754.bptc.ctex"
+path.astc="res://.godot/imported/BomberNoBarrel.png-b087ea5f14f2e7c75cde6f447c01e754.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/BomberNoBarrel.png"
-dest_files=["res://.godot/imported/BomberNoBarrel.png-b087ea5f14f2e7c75cde6f447c01e754.bptc.ctex"]
+dest_files=["res://.godot/imported/BomberNoBarrel.png-b087ea5f14f2e7c75cde6f447c01e754.bptc.ctex", "res://.godot/imported/BomberNoBarrel.png-b087ea5f14f2e7c75cde6f447c01e754.astc.ctex"]
 
 [params]
 
