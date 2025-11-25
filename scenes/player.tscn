@@ -347,13 +347,13 @@ frame_progress = 1.0
 
 [node name="shipbase" type="AnimatedSprite2D" parent="."]
 position = Vector2(-2.9999995, 0.99999917)
-scale = Vector2(0.059999987, 0.059999987)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_4r5pv")
 animation = &"idle"
 
 [node name="cannon" type="AnimatedSprite2D" parent="."]
 position = Vector2(-3.9999998, 4.9999995)
-scale = Vector2(0.06, 0.06)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_l71n6")
 animation = &"idle"
 
@@ -386,7 +386,7 @@ offset = Vector2(0, -30)
 
 [node name="stellarist" type="AnimatedSprite2D" parent="."]
 position = Vector2(-3, 0.99999917)
-scale = Vector2(0.059999995, 0.059999995)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
 animation = &"idle"
 
