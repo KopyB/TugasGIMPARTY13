@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dn57gmdffrpva"
 path.bptc="res://.godot/imported/speed_box.png-30bd3530330471edce64bee7b89b23d4.bptc.ctex"
-path.astc="res://.godot/imported/speed_box.png-30bd3530330471edce64bee7b89b23d4.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/speed_box.png"
-dest_files=["res://.godot/imported/speed_box.png-30bd3530330471edce64bee7b89b23d4.bptc.ctex", "res://.godot/imported/speed_box.png-30bd3530330471edce64bee7b89b23d4.astc.ctex"]
+dest_files=["res://.godot/imported/speed_box.png-30bd3530330471edce64bee7b89b23d4.bptc.ctex"]
 
 [params]
 

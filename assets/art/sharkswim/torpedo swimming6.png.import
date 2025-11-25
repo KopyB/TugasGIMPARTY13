@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cgs18nwp8kaf6"
 path.bptc="res://.godot/imported/torpedo swimming6.png-b43e98bbb31299b03835e981e4ffdef4.bptc.ctex"
-path.astc="res://.godot/imported/torpedo swimming6.png-b43e98bbb31299b03835e981e4ffdef4.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/sharkswim/torpedo swimming6.png"
-dest_files=["res://.godot/imported/torpedo swimming6.png-b43e98bbb31299b03835e981e4ffdef4.bptc.ctex", "res://.godot/imported/torpedo swimming6.png-b43e98bbb31299b03835e981e4ffdef4.astc.ctex"]
+dest_files=["res://.godot/imported/torpedo swimming6.png-b43e98bbb31299b03835e981e4ffdef4.bptc.ctex"]
 
 [params]
 

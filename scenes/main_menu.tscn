@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="4_wu84c"]
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_rtw2f"]
 [ext_resource type="AudioStream" uid="uid://dik1asa4k5rqs" path="res://assets/audio/Calm Waters.ogg" id="6_lgwnu"]
-[ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_flqon"]
+[ext_resource type="Script" path="res://scripts/musiclooper.gd" id="7_flqon"]
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="8_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://cp6l6ms5o5es8" path="res://assets/audio/Click.mp3" id="11_lgwnu"]

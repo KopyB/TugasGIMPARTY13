@@ -11,7 +11,7 @@ var cannon: Sprite2D = null
 enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
 @export var enemy_type = Type.GUNBOAT
 
-# STATISTIK
+# STATISTIK MUSUH NORMAL
 var speed = 100
 var health = 3
 var shoot_timer = 0.0
@@ -21,10 +21,10 @@ var is_paralyzed = false
 
 # --- SHARK VARIABLE ---
 var shark_timer = 0.0
-var shark_lock_duration = 5.0 # Locks on 5 sec
+var shark_lock_duration = randf_range(4.5, 6.0) # Locks on randomly
 var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
-var shark_charge_speed = 1000.0 
+var shark_charge_speed = randf_range(900.0, 1250.0)
 var torpedoshark: AnimatedSprite2D = null
 
 # --- SIREN VARIABLE ---
@@ -100,7 +100,7 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(284.0, 116.0)
 		
-		shoot_interval = 2.0 
+		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
 		
 	# TIPE 1: BOMBER (Kapal Tong)
@@ -116,8 +116,8 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0) 
 
-		shoot_interval = randf_range(2.5, 5.0) 
-		speed = 150 
+		shoot_interval = randf_range(1.5, 2.0) 
+		speed = randf_range(160, 200)
 		rotation_degrees = 90 # Hadap Kanan
 		
 	# TIPE 2: RBOMBER (Bomber dari Kanan)
@@ -134,8 +134,8 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0)
 			
-		shoot_interval = randf_range(2.5, 5.0) 
-		speed = 150 
+		shoot_interval = randf_range(1.5, 2.0) 
+		speed = randf_range(160, 200) 
 		rotation_degrees = -90 # Hadap Kiri (Mundur)
 
 	# TIPE 3: PARROT (Burung)
@@ -147,8 +147,8 @@ func _ready():
 
 	# TIPE 4: TORPEDO SHARK (Hiu Penabrak)
 	elif enemy_type == Type.TORPEDO_SHARK:
-		health = 5
-		speed = 50 # Speed awal (aiming phase)
+		health = 3
+		speed = 60 # Speed awal (aiming phase)
 		# Hitbox Shark (bisa pakai default atau diatur khusus)
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(100.0, 50.0)
@@ -166,7 +166,7 @@ func _ready():
 			enemyship.texture = siren
 			enemyship.scale = Vector2(0.2, 0.2)
 		rotation_degrees = -90
-		speed = 120
+		speed = randi_range(120, 150)
 	
 	# TIPE 6: RSIREN (Putri Duyung Kanan)
 	elif enemy_type == Type.RSIREN:
@@ -175,7 +175,7 @@ func _ready():
 			enemyship.texture = siren
 			enemyship.scale = Vector2(0.2, 0.2)
 		rotation_degrees = 90
-		speed = 120
+		speed = randi_range(120, 150)
 		
 func _process(delta):
 	if is_paralyzed:
