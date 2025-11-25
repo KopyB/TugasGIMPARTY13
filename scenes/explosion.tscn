@@ -32,12 +32,11 @@ animations = [{
 }]
 
 [node name="explosion" type="AnimatedSprite2D"]
-scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_v8gpv")
 animation = &"boom"
 script = ExtResource("6_xfoey")
 
 [node name="boomsfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_v8gpv")
-volume_db = 6.0
+volume_db = 10.0
 bus = &"SFX"

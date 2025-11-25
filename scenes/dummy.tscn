@@ -120,13 +120,13 @@ script = ExtResource("1_k5f3b")
 [node name="enemyship" type="Sprite2D" parent="."]
 position = Vector2(-6.9999924, 1.9073486e-06)
 rotation = 3.1415927
-scale = Vector2(0.06, 0.06)
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_k5f3b")
 
 [node name="cannon" type="Sprite2D" parent="."]
 position = Vector2(-1.9999999, -13.999999)
 rotation = -6.2831855
-scale = Vector2(0.06, 0.06)
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("3_6m2ry")
 script = ExtResource("4_w4gkx")
 
@@ -145,11 +145,11 @@ volume_db = 5.0
 bus = &"SFX"
 
 [node name="torpedoshark" type="AnimatedSprite2D" parent="."]
-position = Vector2(-8, -15.999998)
+position = Vector2(-9, -2.000001)
 rotation = -1.5707964
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_w4gkx")
-animation = &"swimming"
+animation = &"scout"
 
 [node name="splashsfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("27_pv6po")

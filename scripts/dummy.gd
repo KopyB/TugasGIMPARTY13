@@ -66,8 +66,8 @@ func _ready():
 	if has_node("parrot_taunt"):
 		taunt = $parrot_taunt
 		
-	if has_node("parrot_spawn"):
-		pdeath = $parrot_spawn
+	if has_node("parrot_hurt"):
+		pdeath = $parrot_hurt
 		
 	# Setup awal berdasarkan tipe
 	if not area_entered.is_connected(_on_area_entered):
@@ -91,7 +91,7 @@ func _ready():
 		if enemyship:
 			enemyship.texture = gun_boat
 			enemyship.position.x = -5.0
-			enemyship.scale = Vector2(0.06, 0.06)
+			enemyship.scale = Vector2(0.6, 0.6)
 		
 		if cannon:
 			cannon.show()
