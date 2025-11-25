@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgnnwk0h73o4l"
 path.bptc="res://.godot/imported/player canon.png-c089da4027b235cf557deca7897c92e5.bptc.ctex"
-path.astc="res://.godot/imported/player canon.png-c089da4027b235cf557deca7897c92e5.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/player canon.png"
-dest_files=["res://.godot/imported/player canon.png-c089da4027b235cf557deca7897c92e5.bptc.ctex", "res://.godot/imported/player canon.png-c089da4027b235cf557deca7897c92e5.astc.ctex"]
+dest_files=["res://.godot/imported/player canon.png-c089da4027b235cf557deca7897c92e5.bptc.ctex"]
 
 [params]
 

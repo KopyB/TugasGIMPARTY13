@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://koia3hescmt7"
 path.bptc="res://.godot/imported/ArtilleryBurstProjectile.png-b2162404bfc06afdad19c0442c86b887.bptc.ctex"
-path.astc="res://.godot/imported/ArtilleryBurstProjectile.png-b2162404bfc06afdad19c0442c86b887.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/ArtilleryBurstProjectile.png"
-dest_files=["res://.godot/imported/ArtilleryBurstProjectile.png-b2162404bfc06afdad19c0442c86b887.bptc.ctex", "res://.godot/imported/ArtilleryBurstProjectile.png-b2162404bfc06afdad19c0442c86b887.astc.ctex"]
+dest_files=["res://.godot/imported/ArtilleryBurstProjectile.png-b2162404bfc06afdad19c0442c86b887.bptc.ctex"]
 
 [params]
 

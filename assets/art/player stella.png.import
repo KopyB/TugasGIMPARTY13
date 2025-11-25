@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://tw8ov10v3wsj"
 path.bptc="res://.godot/imported/player stella.png-6f6608d90394a8078eb4f9671f088e45.bptc.ctex"
-path.astc="res://.godot/imported/player stella.png-6f6608d90394a8078eb4f9671f088e45.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/player stella.png"
-dest_files=["res://.godot/imported/player stella.png-6f6608d90394a8078eb4f9671f088e45.bptc.ctex", "res://.godot/imported/player stella.png-6f6608d90394a8078eb4f9671f088e45.astc.ctex"]
+dest_files=["res://.godot/imported/player stella.png-6f6608d90394a8078eb4f9671f088e45.bptc.ctex"]
 
 [params]
 

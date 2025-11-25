@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cmsu5dio07qcd"
 path.bptc="res://.godot/imported/shield 4.png-2a3e52e20c5410d199fc785f4db2d183.bptc.ctex"
-path.astc="res://.godot/imported/shield 4.png-2a3e52e20c5410d199fc785f4db2d183.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/shield/shield 4.png"
-dest_files=["res://.godot/imported/shield 4.png-2a3e52e20c5410d199fc785f4db2d183.bptc.ctex", "res://.godot/imported/shield 4.png-2a3e52e20c5410d199fc785f4db2d183.astc.ctex"]
+dest_files=["res://.godot/imported/shield 4.png-2a3e52e20c5410d199fc785f4db2d183.bptc.ctex"]
 
 [params]
 

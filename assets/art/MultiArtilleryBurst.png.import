@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cq3cdgy6sgal7"
 path.bptc="res://.godot/imported/MultiArtilleryBurst.png-53f4fc4a630bc5b33f5b021e7e3f9b24.bptc.ctex"
-path.astc="res://.godot/imported/MultiArtilleryBurst.png-53f4fc4a630bc5b33f5b021e7e3f9b24.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/MultiArtilleryBurst.png"
-dest_files=["res://.godot/imported/MultiArtilleryBurst.png-53f4fc4a630bc5b33f5b021e7e3f9b24.bptc.ctex", "res://.godot/imported/MultiArtilleryBurst.png-53f4fc4a630bc5b33f5b021e7e3f9b24.astc.ctex"]
+dest_files=["res://.godot/imported/MultiArtilleryBurst.png-53f4fc4a630bc5b33f5b021e7e3f9b24.bptc.ctex"]
 
 [params]
 
