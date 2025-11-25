@@ -438,12 +438,6 @@ frame_progress = 0.0
 position = Vector2(21, 67)
 texture = ExtResource("3_ry8ed")
 
-[node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_a38lo")
-animation = &"shocking"
-frame = 3
-frame_progress = 1.0
-
 [node name="shipbase" type="AnimatedSprite2D" parent="."]
 position = Vector2(-4.000001, 0.9999962)
 scale = Vector2(0.24999999, 0.24999999)
@@ -545,7 +539,6 @@ frame = 8
 frame_progress = 1.0
 
 [node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
-position = Vector2(22, -3)
 sprite_frames = SubResource("SpriteFrames_a38lo")
 animation = &"shocking"
 frame = 3
