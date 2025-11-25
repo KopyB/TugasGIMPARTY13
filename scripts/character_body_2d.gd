@@ -67,6 +67,7 @@ func take_damage_player():
 	if has_shield:
 		has_shield = false
 		shield_anim.show()
+		$shieldsfx2.play()
 		shield_anim.play_backwards()
 		activate_iframes(0.8) # Invicible 0.8 sec
 		await shield_anim.animation_finished
@@ -152,12 +153,14 @@ func apply_powerup(type):
 func activate_shield():
 	has_shield = true
 	shield_anim.show()
+	$shieldsfx.play()
 	shield_anim.play("shieldup")
 	print("Shield Aktif!")
 
 # --- LOGIKA 2: MULTISHOT (Sudah Anda punya) ---
 func activate_multishot():
 	is_multishot_active = true
+	$upgradesfx.play()
 	if is_artillery_active:
 		$multiburst.show()
 	else:
@@ -178,6 +181,7 @@ func activate_multishot():
 # --- LOGIKA 3: ARTILLERY (Burst/Fast Fire) ---
 func activate_artillery():
 	is_artillery_active = true
+	$upgradesfx.play()
 	if is_multishot_active:
 		$multiburst.show()
 	else:
@@ -200,7 +204,7 @@ func activate_artillery():
 func activate_speed():
 	current_speed = 800.0 
 	rotation_speed = 6
-	
+	$speedysfx.play()
 	skill_timer.start(5.0)
 	await skill_timer.timeout # Durasi 5 detik
 	
@@ -225,6 +229,7 @@ func activate_kraken():
 		k_sturret.show()
 		lazer.show()
 		lazer.scale = Vector2(2.0,2.0)
+		$KSturret/lazersfx.play()
 		lazer.play("winding_up")
 		await lazer.animation_finished
 		lazer.scale = Vector2(3.0,5.0)
@@ -418,7 +423,7 @@ func spawn_bullet(angle_in_degrees):
 			
 	# Tambahkan ke Main Scene
 	get_parent().add_child(bullet)
-	
+	$cannon/cannonsfx.play()
 func reset_all_skills():
 	print("Membersihkan semua skill aktif...")
 	

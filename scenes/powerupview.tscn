@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ierkg61h23va"]
 
 [ext_resource type="Script" uid="uid://bp1rnjahcwc4y" path="res://scripts/powerupview.gd" id="1_bpq5q"]
-[ext_resource type="FontFile" uid="uid://c50nkpgytghe1" path="res://assets/BiskiTrial-Regular.otf" id="2_k2xsa"]
+[ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="2_bpq5q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v73b6"]
 bg_color = Color(0.22352941, 0.22352941, 0.22352941, 0.5294118)
@@ -41,7 +41,7 @@ offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_k2xsa")
+theme_override_fonts/font = ExtResource("2_bpq5q")
 theme_override_font_sizes/font_size = 25
 text = "[SCORE:   ]"
 
