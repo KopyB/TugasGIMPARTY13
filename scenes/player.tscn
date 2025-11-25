@@ -1,9 +1,11 @@
-[gd_scene load_steps=77 format=3 uid="uid://fujugshyvkm6"]
+[gd_scene load_steps=97 format=3 uid="uid://fujugshyvkm6"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://cmc60vajq856e" path="res://assets/art/player boat.png" id="2_i4ail"]
+[ext_resource type="PackedScene" uid="uid://5qcrvjj2gsij" path="res://scenes/trails.tscn" id="2_lw0jh"]
 [ext_resource type="Texture2D" uid="uid://ccem3ihkhbvou" path="res://assets/art/player right boat.png" id="2_qfm1y"]
 [ext_resource type="Texture2D" uid="uid://ccda16nipmbpm" path="res://assets/art/player left boat.png" id="3_a38lo"]
+[ext_resource type="Texture2D" uid="uid://na056csvsao2" path="res://assets/art/shadow_oval.png" id="3_ry8ed"]
 [ext_resource type="Texture2D" uid="uid://b4rxlcipy23q0" path="res://assets/art/player right stella.png" id="4_fulsm"]
 [ext_resource type="Texture2D" uid="uid://onxr1237yysf" path="res://assets/art/KSTurret.png" id="5_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://tw8ov10v3wsj" path="res://assets/art/player stella.png" id="6_4ni07"]
@@ -68,6 +70,23 @@
 [ext_resource type="AudioStream" uid="uid://hcpi6mgaoff2" path="res://assets/audio/Power down.mp3" id="66_fuw3a"]
 [ext_resource type="AudioStream" uid="uid://clxnb1bm3xgbe" path="res://assets/audio/speedboost.mp3" id="67_2w11d"]
 [ext_resource type="AudioStream" uid="uid://b1gp8cphi23ho" path="res://assets/audio/Upgrade.mp3" id="68_770dr"]
+[ext_resource type="Texture2D" uid="uid://l43xguadw48k" path="res://assets/art/speed/looping/L1.png" id="69_vx63k"]
+[ext_resource type="Texture2D" uid="uid://l58k3wcq68mx" path="res://assets/art/speed/looping/L2.png" id="70_lw0jh"]
+[ext_resource type="Texture2D" uid="uid://ch1vobqdmwlhk" path="res://assets/art/speed/looping/L3.png" id="71_ry8ed"]
+[ext_resource type="Texture2D" uid="uid://duv78rppqrbvl" path="res://assets/art/speed/looping/L4.png" id="72_au8ao"]
+[ext_resource type="Texture2D" uid="uid://dckauy10tcouq" path="res://assets/art/speed/looping/L5.png" id="73_w5j5w"]
+[ext_resource type="Texture2D" uid="uid://c2e554b5lr5x2" path="res://assets/art/speed/looping/L6.png" id="74_cbf1i"]
+[ext_resource type="Texture2D" uid="uid://dqnymgdowtgsr" path="res://assets/art/speed/looping/L7.png" id="75_4vfid"]
+[ext_resource type="Texture2D" uid="uid://cwx5wf32uo7ae" path="res://assets/art/speed/start/1.png" id="76_ljgr3"]
+[ext_resource type="Texture2D" uid="uid://dwxvt5wllylgn" path="res://assets/art/speed/start/2.png" id="77_fr8ja"]
+[ext_resource type="Texture2D" uid="uid://c0oub5j8vm2al" path="res://assets/art/speed/start/3.png" id="78_gvmy4"]
+[ext_resource type="Texture2D" uid="uid://d2asoyf84vw0e" path="res://assets/art/speed/start/4.png" id="79_fcu33"]
+[ext_resource type="Texture2D" uid="uid://ckf2strbpnxuf" path="res://assets/art/speed/start/5.png" id="80_qmsq4"]
+[ext_resource type="Texture2D" uid="uid://c5wbsj12ierlx" path="res://assets/art/speed/start/6.png" id="81_5vs2b"]
+[ext_resource type="Texture2D" uid="uid://cfg67gxgt76w8" path="res://assets/art/speed/start/7.png" id="82_a7i4v"]
+[ext_resource type="Texture2D" uid="uid://b1whheiwjtoah" path="res://assets/art/speed/start/8.png" id="83_b5l0c"]
+[ext_resource type="Texture2D" uid="uid://bkjleo8qqnx3h" path="res://assets/art/speed/start/9.png" id="84_2a33p"]
+[ext_resource type="Texture2D" uid="uid://b01h2w2q8iw81" path="res://assets/art/speed/start/10.png" id="85_reqs7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjrip"]
 radius = 30.0
@@ -301,6 +320,70 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_2yjfb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("69_vx63k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_lw0jh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_ry8ed")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_au8ao")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_w5j5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_cbf1i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_4vfid")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("76_ljgr3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_fr8ja")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_gvmy4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_fcu33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_qmsq4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_5vs2b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_a7i4v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_b5l0c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_2a33p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_reqs7")
+}],
+"loop": false,
+"name": &"start",
+"speed": 12.0
+}]
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_qlg0r"]
 animations = [{
 "frames": [{
@@ -344,6 +427,16 @@ script = ExtResource("1_g2els")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(10, 17)
 shape = SubResource("CapsuleShape2D_fjrip")
+
+[node name="trails" parent="." instance=ExtResource("2_lw0jh")]
+position = Vector2(12, 33)
+scale = Vector2(0.32, 0.32)
+animation = &"trailvert_up"
+frame_progress = 0.0
+
+[node name="shadow" type="Sprite2D" parent="."]
+position = Vector2(21, 67)
+texture = ExtResource("3_ry8ed")
 
 [node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a38lo")
@@ -430,6 +523,17 @@ frame_progress = 1.0
 stream = ExtResource("29_2gdjj")
 bus = &"SFX"
 
+[node name="speed_anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(8, 56)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_2yjfb")
+animation = &"loop"
+
+[node name="speedysfx" type="AudioStreamPlayer2D" parent="speed_anim"]
+position = Vector2(-16, -112)
+scale = Vector2(2, 2)
+stream = ExtResource("67_2w11d")
+
 [node name="shield_anim" type="AnimatedSprite2D" parent="."]
 visible = false
 self_modulate = Color(1, 1, 1, 0.32941177)
@@ -453,9 +557,6 @@ stream = ExtResource("65_tk41t")
 
 [node name="shieldsfx2" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("66_fuw3a")
-
-[node name="speedysfx" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("67_2w11d")
 
 [node name="upgradesfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("68_770dr")

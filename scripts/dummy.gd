@@ -43,6 +43,7 @@ var siren = preload("res://assets/art/siren(temp).png")
 @onready var taunt: AudioStreamPlayer2D = $parrot_taunt
 @onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
 @onready var cannonsfx: AudioStreamPlayer2D = $cannon/cannonsfx
+@onready var trails: AnimatedSprite2D = $trails
 
 var player = null # Referensi
 
@@ -63,6 +64,7 @@ func _ready():
 	if has_node("torpedoshark"):
 		torpedoshark = $torpedoshark
 		torpedoshark.hide() # Aman, karena sudah dicek ada atau tidak
+		$trails.hide()
 		
 	if has_node("parrot_taunt"):
 		taunt = $parrot_taunt
@@ -93,7 +95,11 @@ func _ready():
 			enemyship.texture = gun_boat
 			enemyship.position.x = -5.0
 			enemyship.scale = Vector2(0.6, 0.6)
-		
+			$trails.show()
+			$trails.position = Vector2(1.0, 21.0)
+			$trails.scale = Vector2(0.3,0.3)
+			$trails.play("trailvert_up")
+			
 		if cannon:
 			cannon.show()
 		
@@ -112,6 +118,11 @@ func _ready():
 			enemyship.texture = bomber_barrel
 			enemyship.rotation = -PI/2
 			enemyship.scale = Vector2(0.15, 0.15)
+			$trails.show()
+			$trails.position = Vector2(9.0, -16.0)
+			$trails.rotation = PI/2
+			$trails.scale = Vector2(0.33,0.33)
+			$trails.play("trailhorz_left")
 		
 		# Set Hitbox Bomber (Lebih Besar)
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
@@ -130,6 +141,11 @@ func _ready():
 			enemyship.rotation = -PI/2 
 			# FIX MIRROR: Scale Y negatif agar tidak terbalik saat rotasi parent -90
 			enemyship.scale = Vector2(0.15, -0.15) 
+			$trails.show()
+			$trails.position = Vector2(-9.0, -16.0)
+			$trails.rotation = PI/2
+			$trails.scale = Vector2(0.33,0.33)
+			$trails.play("trailhorz_left")
 			
 		# Set Hitbox RBomber (Sama kayak Bomber)
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
