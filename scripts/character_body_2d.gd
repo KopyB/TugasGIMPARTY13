@@ -329,18 +329,23 @@ func _physics_process(delta: float) -> void:
 			modulate = Color.WHITE
 			print("GA PUSING LAGI")
 	
-	var direction := Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
+	var direction := Vector2( 
+	Input.get_axis("Left", "Right"), 
+	Input.get_axis("Up", "dummynp") 
+	).normalized()# (kuganti biar bisa WASD - kaiser)
 	
 	if is_dizzy:
 		direction = -direction
 	
 	if direction:
-		velocity.x = direction * current_speed
+		velocity.x = direction.x * current_speed
+		velocity.y = direction.y * current_speed
 		move_and_slide()
 	else:
 		var direction_to_center = (target_position - global_position).normalized()
 		if global_position.distance_to(target_position) > 0.05: # Check if not at center
 			velocity.x = lerp(velocity.x, direction_to_center.x * 300, delta * 0.9) #slowly make itsw way to the centerr
+			velocity.y = lerp(velocity.y, direction_to_center.y * 400, delta) #slowly make itsw way to the centerr
 			rotation = lerp(rotation, direction_to_center.x * 2.5, delta * 0.2) #slowly adjust its rotation
 			move_and_slide()
 		else: #sudah di center
@@ -348,13 +353,13 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 			rotation = lerp(rotation, 0.0, delta * 1.0)
 	#animation
-	if direction < 0:
+	if direction.x < 0:
 		for node in get_tree().get_nodes_in_group("player_anims"):
 				node.play("left")
 		k_sturret.position.x = -15.0
 		$multiturret.position.x = -15.0
 		$burst_turret.position.x = -15.0
-	elif direction > 0:
+	elif direction.x > 0:
 		for node in get_tree().get_nodes_in_group("player_anims"):
 				node.play("right")
 		k_sturret.position.x = 15.0
@@ -367,7 +372,9 @@ func _physics_process(delta: float) -> void:
 		$multiturret.position.x = 0
 		$burst_turret.position.x = 0
 
-
+	var mid_y := get_viewport().get_visible_rect().size.y / 2
+	global_position.y = clamp(global_position.y, mid_y, INF)
+	
 	# if is_dizzy == true:
 	# 	if Input.is_action_pressed("Left"):
 	# 		_animation_player.play("left")
