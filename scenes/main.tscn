@@ -6,12 +6,12 @@
 [ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://c8e0e01ye6ulh" path="res://assets/audio/Rogue Waves.ogg" id="6_tipki"]
-[ext_resource type="Script" path="res://scripts/musiclooper.gd" id="7_85g3d"]
+[ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_85g3d"]
 [ext_resource type="Script" uid="uid://dlp03cxd8mca3" path="res://scripts/maze_spawner.gd" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://ierkg61h23va" path="res://scenes/powerupview.tscn" id="9_85g3d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
-size = Vector2(20, 1079.5)
+size = Vector2(20.000061, 2024)
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -32,6 +32,22 @@ position = Vector2(1160, 331)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BorderRight"]
 position = Vector2(770, 211)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="BorderDown" type="StaticBody2D" parent="."]
+position = Vector2(1160, 331)
+rotation = 1.5707964
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BorderDown"]
+position = Vector2(762.00006, 209.99994)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="BorderUp" type="StaticBody2D" parent="."]
+position = Vector2(1160, 331)
+rotation = 1.5707964
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BorderUp"]
+position = Vector2(-339.99994, 212.99998)
 shape = SubResource("RectangleShape2D_h2yge")
 
 [node name="BGMPlayer" type="AudioStreamPlayer2D" parent="."]
