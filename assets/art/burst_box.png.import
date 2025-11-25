@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b5v6b66m7sps5"
 path.bptc="res://.godot/imported/burst_box.png-4ff57eb0b96bec32f781ce2afc4c66ba.bptc.ctex"
+path.astc="res://.godot/imported/burst_box.png-4ff57eb0b96bec32f781ce2afc4c66ba.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/burst_box.png"
-dest_files=["res://.godot/imported/burst_box.png-4ff57eb0b96bec32f781ce2afc4c66ba.bptc.ctex"]
+dest_files=["res://.godot/imported/burst_box.png-4ff57eb0b96bec32f781ce2afc4c66ba.bptc.ctex", "res://.godot/imported/burst_box.png-4ff57eb0b96bec32f781ce2afc4c66ba.astc.ctex"]
 
 [params]
 
