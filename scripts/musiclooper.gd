@@ -1,6 +1,6 @@
 extends AudioStreamPlayer
 
-@export var fade_duration := 0.6
+@export var fade_duration := 0.75
 @export var start_volume_db := -30.0
 var has_faded_in := false
 

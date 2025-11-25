@@ -157,7 +157,7 @@ func activate_shield():
 	shield_anim.play("shieldup")
 	print("Shield Aktif!")
 
-# --- LOGIKA 2: MULTISHOT (Sudah Anda punya) ---
+# --- LOGIKA 2: MULTISHOT  ---
 func activate_multishot():
 	is_multishot_active = true
 	$upgradesfx.play()
@@ -198,7 +198,7 @@ func activate_artillery():
 		$multiburst.hide()
 	$burst_turret.hide()
 	anim_cannon.show()
-	shoot_timer.wait_time = 0.2 # Balikin ke speed tembak normal (sesuaikan angka ini)
+	shoot_timer.wait_time = 0.4 # Balikin ke speed tembak normal (sesuaikan angka ini)
 
 # --- LOGIKA 4: SPEED (Movement) ---
 func activate_speed():
