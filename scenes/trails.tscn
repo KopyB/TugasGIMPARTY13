@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://5qcrvjj2gsij"]
+
+[ext_resource type="Texture2D" uid="uid://b6qttp8kcktq1" path="res://assets/art/trails/vertical/ShipWakeUp1.png" id="1_2dly2"]
+[ext_resource type="Texture2D" uid="uid://gjg7dt4mpjon" path="res://assets/art/trails/horizontal/ShipWakeLeft1.png" id="1_k8iy3"]
+[ext_resource type="Texture2D" uid="uid://c8me7veuot4bv" path="res://assets/art/trails/vertical/ShipWakeUp2.png" id="2_i7uke"]
+[ext_resource type="Texture2D" uid="uid://c65o1sgndrfhh" path="res://assets/art/trails/horizontal/ShipWakeLeft2.png" id="2_s1kne"]
+[ext_resource type="Texture2D" uid="uid://4y4fcodqjdbe" path="res://assets/art/trails/vertical/ShipWakeUp3.png" id="3_h0uuu"]
+[ext_resource type="Texture2D" uid="uid://mos6trlyv82o" path="res://assets/art/trails/horizontal/ShipWakeLeft3.png" id="3_tp62a"]
+[ext_resource type="Texture2D" uid="uid://b5ut3vm7x70ch" path="res://assets/art/trails/horizontal/ShipWakeLeft4.png" id="4_6cwi2"]
+[ext_resource type="Texture2D" uid="uid://c7cwr5t8v25pl" path="res://assets/art/trails/vertical/ShipWakeUp4.png" id="4_tpmel"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k8iy3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_k8iy3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_s1kne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tp62a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6cwi2")
+}],
+"loop": true,
+"name": &"trailhorz_left",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2dly2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_i7uke")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_h0uuu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tpmel")
+}],
+"loop": true,
+"name": &"trailvert_up",
+"speed": 12.0
+}]
+
+[node name="trails" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_k8iy3")
+animation = &"trailhorz_left"
+frame_progress = 0.71686727
