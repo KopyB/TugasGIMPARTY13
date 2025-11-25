@@ -108,7 +108,7 @@ func spawn_single_obstacle(viewport_rect):
 	get_tree().current_scene.add_child(obs)
 
 # --- TIPE 2: GUNBOAT BERKELOMPOK ---
-func spawn_gunboat_group(viewport_rect):
+func spawn_gunboat_group(_viewport_rect):
 	var group_count = randi_range(1, 3) # 1 sampai 3 kapal
 	for i in range(group_count):
 		var new_enemy = enemy_scene.instantiate()
@@ -157,7 +157,7 @@ func spawn_rbomber(viewport_rect):
 	new_enemy.global_position = Vector2(spawn_x, spawn_y)
 	get_tree().current_scene.add_child(new_enemy)
   
-func spawn_parrot(viewport_rect):
+func spawn_parrot(_viewport_rect):
 	var new_enemy = parrot_scene.instantiate()
 	new_enemy.get_child(0).get_child(0).enemy_type = 3
   

@@ -20,7 +20,7 @@ func _on_body_entered(body):
 		meledak()
 
 # Logika Kena Tembak 
-func take_damage(amount):
+func take_damage(_amount):
 	meledak()
 
 func meledak():
