@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://y2vak2ke27xr"
 path.bptc="res://.godot/imported/gimming beledug 1.png-a7b323a922e8310fa23c21bc1b0c0edd.bptc.ctex"
+path.astc="res://.godot/imported/gimming beledug 1.png-a7b323a922e8310fa23c21bc1b0c0edd.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/gimming beledug 1.png"
-dest_files=["res://.godot/imported/gimming beledug 1.png-a7b323a922e8310fa23c21bc1b0c0edd.bptc.ctex"]
+dest_files=["res://.godot/imported/gimming beledug 1.png-a7b323a922e8310fa23c21bc1b0c0edd.bptc.ctex", "res://.godot/imported/gimming beledug 1.png-a7b323a922e8310fa23c21bc1b0c0edd.astc.ctex"]
 
 [params]
 
@@ -24,7 +25,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

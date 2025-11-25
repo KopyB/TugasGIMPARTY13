@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d4d666wk0gap2"
 path.bptc="res://.godot/imported/pirate gunboat canon.png-24ab39adbe84aaf1d9c3e7346a9f5f7d.bptc.ctex"
+path.astc="res://.godot/imported/pirate gunboat canon.png-24ab39adbe84aaf1d9c3e7346a9f5f7d.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/pirate gunboat canon.png"
-dest_files=["res://.godot/imported/pirate gunboat canon.png-24ab39adbe84aaf1d9c3e7346a9f5f7d.bptc.ctex"]
+dest_files=["res://.godot/imported/pirate gunboat canon.png-24ab39adbe84aaf1d9c3e7346a9f5f7d.bptc.ctex", "res://.godot/imported/pirate gunboat canon.png-24ab39adbe84aaf1d9c3e7346a9f5f7d.astc.ctex"]
 
 [params]
 
