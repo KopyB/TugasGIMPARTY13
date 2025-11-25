@@ -24,7 +24,7 @@ var shark_timer = 0.0
 var shark_lock_duration = 5.0 # Locks on 5 sec
 var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
-var shark_charge_speed = 1000.0 
+var shark_charge_speed = randf_range(900.0, 1250.0)
 var torpedoshark: AnimatedSprite2D = null
 
 # --- SIREN VARIABLE ---
@@ -100,7 +100,7 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(284.0, 116.0)
 		
-		shoot_interval = 2.0 
+		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
 		
 	# TIPE 1: BOMBER (Kapal Tong)
