@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://doj3kah5u4i80" path="res://assets/art/KSFrameStart6.png" id="12_wx00j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1nnux"]
-size = Vector2(254, 2637)
+size = Vector2(182, 2636)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tuomb"]
 animations = [{
@@ -81,7 +81,7 @@ offset_bottom = -111.0
 color = Color(0.63411003, 0.1311, 0.69, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1430.5)
+position = Vector2(7, -1431)
 shape = SubResource("RectangleShape2D_1nnux")
 
 [node name="lazer" type="AnimatedSprite2D" parent="."]

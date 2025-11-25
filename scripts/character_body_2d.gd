@@ -228,18 +228,19 @@ func activate_kraken():
 		#animation
 		k_sturret.show()
 		lazer.show()
+		lazer.position.x = -10
 		lazer.scale = Vector2(2.0,2.0)
 		$KSturret/lazersfx.play()
 		lazer.play("winding_up")
 		await lazer.animation_finished
 		lazer.scale = Vector2(3.0,5.0)
-		lazer.position.y = -3250.0
+		lazer.position.y = -3230.0
 		lazer.play("start beam")
 		await lazer.animation_finished
 		lazer.play("beaming it")
 		
 		call_deferred("add_child", active_laser_node)
-		active_laser_node.position = Vector2(0, -50) 
+		active_laser_node.position = Vector2(0, 50) 
 
 	
 	# --- PERBAIKAN DURASI ---
@@ -331,7 +332,7 @@ func _physics_process(delta: float) -> void:
 	
 	var direction := Vector2( 
 	Input.get_axis("Left", "Right"), 
-	Input.get_axis("Up", "dummynp") 
+	Input.get_axis("Up", "Down") 
 	).normalized()# (kuganti biar bisa WASD - kaiser)
 	
 	if is_dizzy:
@@ -368,7 +369,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		for node in get_tree().get_nodes_in_group("player_anims"):
 				node.play("idle")
-		k_sturret.position.x = 0
+		k_sturret.position.x = 8
 		$multiturret.position.x = 0
 		$burst_turret.position.x = 0
 
