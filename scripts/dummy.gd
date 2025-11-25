@@ -11,7 +11,7 @@ var cannon: Sprite2D = null
 enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
 @export var enemy_type = Type.GUNBOAT
 
-# STATISTIK
+# STATISTIK MUSUH NORMAL
 var speed = 100
 var health = 3
 var shoot_timer = 0.0
@@ -21,7 +21,7 @@ var is_paralyzed = false
 
 # --- SHARK VARIABLE ---
 var shark_timer = 0.0
-var shark_lock_duration = 5.0 # Locks on 5 sec
+var shark_lock_duration = randf_range(4.5, 6.0) # Locks on randomly
 var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
 var shark_charge_speed = randf_range(900.0, 1250.0)
@@ -147,7 +147,7 @@ func _ready():
 
 	# TIPE 4: TORPEDO SHARK (Hiu Penabrak)
 	elif enemy_type == Type.TORPEDO_SHARK:
-		health = 5
+		health = 3
 		speed = 50 # Speed awal (aiming phase)
 		# Hitbox Shark (bisa pakai default atau diatur khusus)
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
