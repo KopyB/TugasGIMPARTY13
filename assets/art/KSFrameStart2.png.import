@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://kto437in2pqd"
 path.bptc="res://.godot/imported/KSFrameStart2.png-b4a4c943e2bded20a40ab453a8c924f1.bptc.ctex"
+path.astc="res://.godot/imported/KSFrameStart2.png-b4a4c943e2bded20a40ab453a8c924f1.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/KSFrameStart2.png"
-dest_files=["res://.godot/imported/KSFrameStart2.png-b4a4c943e2bded20a40ab453a8c924f1.bptc.ctex"]
+dest_files=["res://.godot/imported/KSFrameStart2.png-b4a4c943e2bded20a40ab453a8c924f1.bptc.ctex", "res://.godot/imported/KSFrameStart2.png-b4a4c943e2bded20a40ab453a8c924f1.astc.ctex"]
 
 [params]
 

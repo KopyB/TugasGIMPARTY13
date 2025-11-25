@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c4r5440syhqws"
 path.bptc="res://.godot/imported/frame2.png-d3c9bc3f73d93eaf7d77fefff3d6ed12.bptc.ctex"
+path.astc="res://.godot/imported/frame2.png-d3c9bc3f73d93eaf7d77fefff3d6ed12.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/parrot/frame2.png"
-dest_files=["res://.godot/imported/frame2.png-d3c9bc3f73d93eaf7d77fefff3d6ed12.bptc.ctex"]
+dest_files=["res://.godot/imported/frame2.png-d3c9bc3f73d93eaf7d77fefff3d6ed12.bptc.ctex", "res://.godot/imported/frame2.png-d3c9bc3f73d93eaf7d77fefff3d6ed12.astc.ctex"]
 
 [params]
 

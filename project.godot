@@ -43,7 +43,7 @@ texture={
 "compress/rdo_quality_loss": 0.0,
 "compress/uastc_level": 0,
 "detect_3d/compress_to": 1,
-"mipmaps/generate": true,
+"mipmaps/generate": false,
 "mipmaps/limit": -1,
 "process/channel_remap/alpha": 3,
 "process/channel_remap/blue": 2,
@@ -82,3 +82,4 @@ Right={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=2
+textures/vram_compression/import_etc2_astc=true
