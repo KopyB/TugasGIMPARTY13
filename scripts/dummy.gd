@@ -141,14 +141,14 @@ func _ready():
 
 	# TIPE 3: PARROT (Burung)
 	elif enemy_type == Type.PARROT:
-		health = 2
+		health = 1
 		add_to_group("parrots")
 		# Parrot biasanya tidak punya collision fisik yang sama, jadi kita skip setup hitbox
 		print("Parrot spawned")
 
 	# TIPE 4: TORPEDO SHARK (Hiu Penabrak)
 	elif enemy_type == Type.TORPEDO_SHARK:
-		health = 3
+		health = 2
 		speed = 60 # Speed awal (aiming phase)
 		# Hitbox Shark (bisa pakai default atau diatur khusus)
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:

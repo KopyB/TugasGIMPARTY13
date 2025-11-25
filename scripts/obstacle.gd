@@ -2,7 +2,7 @@ extends Area2D
 
 enum Type {BONES, SHIPWRECK}
 var current_type = Type.BONES
-var hp = 3
+var hp = 2
 var speed = 150 
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
