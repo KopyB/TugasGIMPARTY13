@@ -77,7 +77,7 @@ func start_shark_event():
 	# 1. Pause Musuh Biasa
 	get_tree().call_group("spawner_utama", "pause_spawning")
 	
-	# 2. Tampilkan Warning (Opsional: Bisa tambah UI/Sound disini)
+	# 2. Tampilkan Warning 
 	# Beri jeda 2 detik agar player siap
 	await get_tree().create_timer(2.0).timeout
 	
@@ -86,20 +86,20 @@ func start_shark_event():
 
 func spawn_shark_waves():
 	# Konfigurasi wave spawn:
-	var total_waves = randi_range(3, 5)      # Ada 3-5 gelombang serangan
+	var total_waves = randi_range(2, 4)      # Ada 3-5 gelombang serangan
 	
 	for i in range(total_waves):
 		# Cek jika scene sudah ganti/game over, hentikan loop
 		if not is_inside_tree(): return 
 		
-		var sharks_this_wave = randi_range(2, 4)
+		var sharks_this_wave = randi_range(5, 10)
 		print(">>> Wave %d/%d: Spawning %d Sharks" % [i + 1, total_waves, sharks_this_wave])
 		
 		# Spawn Hiu dalam wave ini
 		for j in range(sharks_this_wave):
 			spawn_single_shark()
 			# Jeda kecil antar hiu dalam satu wave (biar ga numpuk)
-			await get_tree().create_timer(randf_range(0.5, 1.5)).timeout
+			await get_tree().create_timer(randf_range(0.25, 1.0)).timeout
 		
 		if i < total_waves - 1: # Rest
 			await get_tree().create_timer(randf_range(4.0, 6.0)).timeout
