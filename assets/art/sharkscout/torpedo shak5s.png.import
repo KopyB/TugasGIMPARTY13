@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://lu3es1lainbl"
 path.bptc="res://.godot/imported/torpedo shak5s.png-ae733bb097d0116e66ac60b8b969f506.bptc.ctex"
-path.astc="res://.godot/imported/torpedo shak5s.png-ae733bb097d0116e66ac60b8b969f506.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/sharkscout/torpedo shak5s.png"
-dest_files=["res://.godot/imported/torpedo shak5s.png-ae733bb097d0116e66ac60b8b969f506.bptc.ctex", "res://.godot/imported/torpedo shak5s.png-ae733bb097d0116e66ac60b8b969f506.astc.ctex"]
+dest_files=["res://.godot/imported/torpedo shak5s.png-ae733bb097d0116e66ac60b8b969f506.bptc.ctex"]
 
 [params]
 

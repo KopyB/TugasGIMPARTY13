@@ -7,10 +7,10 @@ var parrot_scene = preload("res://scenes/parrot.tscn")
 
 # --- SETTING DIFFICULTY (WAVE SYSTEM) ---
 var time_elapsed = 0.0
-var wave_duration = 30.0
+var wave_duration = 60.0
 
 # 1. Setting Kecepatan Spawn (Sumbu Y)
-var spawn_time_slow = 7.0  # Paling santai (Lembah gelombang)
+var spawn_time_slow = 6.5  # Paling santai (Lembah gelombang)
 var peak_difficulty_start = 4.0     # Puncak Gelombang 1 (4 detik - Santai)
 var peak_difficulty_final = 0.5     # Puncak Gelombang 10++ (0.5 detik - Cepat)
 var current_peak = peak_difficulty_start # Variable dinamis yang akan berubah

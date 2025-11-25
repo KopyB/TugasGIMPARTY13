@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://beiwxrajusklo"
 path.bptc="res://.godot/imported/player left canon.png-fa4f1600b2438cf2cbcbcee11dc640ee.bptc.ctex"
-path.astc="res://.godot/imported/player left canon.png-fa4f1600b2438cf2cbcbcee11dc640ee.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/player left canon.png"
-dest_files=["res://.godot/imported/player left canon.png-fa4f1600b2438cf2cbcbcee11dc640ee.bptc.ctex", "res://.godot/imported/player left canon.png-fa4f1600b2438cf2cbcbcee11dc640ee.astc.ctex"]
+dest_files=["res://.godot/imported/player left canon.png-fa4f1600b2438cf2cbcbcee11dc640ee.bptc.ctex"]
 
 [params]
 
