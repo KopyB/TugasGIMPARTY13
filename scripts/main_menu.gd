@@ -25,11 +25,11 @@ func _ready() -> void:
 		$Settings/VBoxContainer/fulltoggle._on_toggled(fstoggle)
 		$Settings/VBoxContainer/fulltoggle.button_pressed = fstoggle
 		volume = config.get_value("audio", "volume")
-		$Settings/VBoxContainer/Labelmusic/MusicControl._on_value_changed(volume)
-		$Settings/VBoxContainer/Labelmusic/MusicControl.value = volume
+		$Settings/VBoxContainer/MusicControl._on_value_changed(volume)
+		$Settings/VBoxContainer/MusicControl.value = volume
 		sfx = config.get_value("audio", "sfx")
-		$Settings/VBoxContainer/labelSFX/SFXControl._on_value_changed(sfx)
-		$Settings/VBoxContainer/labelSFX/SFXControl.value = sfx
+		$Settings/VBoxContainer/SFXControl._on_value_changed(sfx)
+		$Settings/VBoxContainer/SFXControl.value = sfx
 	else:
 		print("No config found. Using default settings.")
 	
@@ -70,12 +70,12 @@ func _on_apply_pressed() -> void:
 	$Settings/VBoxContainer/fulltoggle._on_toggled(fstoggle)
 	print(fstoggle)
 	
-	volume = $Settings/VBoxContainer/Labelmusic/MusicControl.value
-	$Settings/VBoxContainer/Labelmusic/MusicControl._on_value_changed(volume)
+	volume = $Settings/VBoxContainer/MusicControl.value
+	$Settings/VBoxContainer/MusicControl._on_value_changed(volume)
 	print(volume)
 	
-	sfx = $Settings/VBoxContainer/labelSFX/SFXControl.value
-	$Settings/VBoxContainer/labelSFX/SFXControl._on_value_changed(sfx)
+	sfx = $Settings/VBoxContainer/SFXControl.value
+	$Settings/VBoxContainer/SFXControl._on_value_changed(sfx)
 	print(sfx)
 
 	# Example settings—replace with your own controls

@@ -236,7 +236,7 @@ theme_override_fonts/font = ExtResource("4_tbmy8")
 theme_override_font_sizes/font_size = 30
 text = " Music"
 
-[node name="MusicControl" type="HSlider" parent="Settings/VBoxContainer/Labelmusic"]
+[node name="MusicControl" type="HSlider" parent="Settings/VBoxContainer"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -263,7 +263,7 @@ theme_override_fonts/font = ExtResource("4_tbmy8")
 theme_override_font_sizes/font_size = 30
 text = "SFX"
 
-[node name="SFXControl" type="HSlider" parent="Settings/VBoxContainer/labelSFX"]
+[node name="SFXControl" type="HSlider" parent="Settings/VBoxContainer"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -359,6 +359,7 @@ text = "APPLY"
 expand_icon = true
 
 [node name="Credits" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -420,7 +421,7 @@ viane, Comrade Blin, Fadhil, Raes
 
 miwa
 
-kopyb, CuzYTFnot
+kopyb, CuzYTFnot, kazee
 
 Rayyis, Fuja, Comrade Blin
 
@@ -463,8 +464,8 @@ bus = &"SFX"
 [connection signal="pressed" from="mainbuttons/SETTINGS" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="mainbuttons/CREDITS" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="mainbuttons/Exit" to="." method="_on_exit_pressed"]
-[connection signal="value_changed" from="Settings/VBoxContainer/Labelmusic/MusicControl" to="Settings/VBoxContainer/Labelmusic/MusicControl" method="_on_value_changed"]
-[connection signal="value_changed" from="Settings/VBoxContainer/labelSFX/SFXControl" to="Settings/VBoxContainer/labelSFX/SFXControl" method="_on_value_changed"]
+[connection signal="value_changed" from="Settings/VBoxContainer/MusicControl" to="Settings/VBoxContainer/MusicControl" method="_on_value_changed"]
+[connection signal="value_changed" from="Settings/VBoxContainer/SFXControl" to="Settings/VBoxContainer/SFXControl" method="_on_value_changed"]
 [connection signal="toggled" from="Settings/VBoxContainer/fulltoggle" to="Settings/VBoxContainer/fulltoggle" method="_on_toggled"]
 [connection signal="pressed" from="Settings/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Settings/Apply" to="." method="_on_apply_pressed"]
