@@ -13,7 +13,7 @@ enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
 
 # STATISTIK MUSUH NORMAL
 var speed = 100
-var health = 3
+var health = 2
 var shoot_timer = 0.0
 var shoot_interval = 2.0 # Default Gunboat (2 detik)
 
@@ -300,12 +300,13 @@ func handle_shark_behavior(delta):
 			torpedoshark.play("scout")
 		
 		# Cek waktu lock habis
-		if shark_timer >= shark_lock_duration:
+		if shark_timer >= shark_lock_duration and not is_shark_charging:
+			is_shark_charging = true
 			#torpedoshark.play_backwards("transition")
 			#await torpedoshark.animation_finished
 			await torpedoshark.animation_finished
 			torpedoshark.play("transition")
-			await torpedoshark.animation_finished
+			#await torpedoshark.animation_finished
 			start_shark_charge()
 	else:
 		# FASE 2: CHARGING (Lurus terus)
