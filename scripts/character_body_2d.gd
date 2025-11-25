@@ -20,6 +20,11 @@ var laser_scene = preload("res://scenes/LaserBeam.tscn")
 var active_laser_node = null
 var is_invincible = false
 
+# --- ??? ---
+var input_buffer: String = ""      
+var some_code: String = "SOMETHING" 
+var is_something_mode: bool = false      
+
 var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 @onready var shoot_timer = $Timer
 var tex_artillery = preload("res://assets/art/ArtilleryBurstProjectile.png")
@@ -56,9 +61,34 @@ func _ready():
 	shield_anim.hide()
 	shockwaves_anim.hide()
 	secondwind_anim.hide()
+
+# IGNORE (DEBUG MODE)
+func _input(event):
+	if event is InputEventKey and event.pressed and not event.echo:
+		var key_typed = OS.get_keycode_string(event.physical_keycode).to_upper()
+		if key_typed.length() == 1 and key_typed >= "A" and key_typed <= "Z":
+			input_buffer += key_typed
+			if input_buffer.length() > 20:
+				input_buffer = input_buffer.substr(input_buffer.length() - 20)
+			if input_buffer.ends_with(some_code):
+				toggle_something_mode()
+				input_buffer = "" 
+
+func toggle_something_mode():
+	is_something_mode = not is_something_mode
 	
+	if is_something_mode:
+		print(">>> SOMETHING??? <<<")
+	else:
+		print(">>> ITS GONE <<<")
+
+		
 # --- FUNGSI MENERIMA DAMAGE & MATI ---
 func take_damage_player():
+	# --- CEK ??? STATUS ---
+	if is_something_mode:
+		return
+		
 	# --- CEK MATI ATAU INVICIBLE --- 
 	if is_invincible or is_dead:
 		return
