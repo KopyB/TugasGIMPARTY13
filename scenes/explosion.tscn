@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dwewy1ubfu32w" path="res://assets/art/gimming beledug 4.png" id="4_cun36"]
 [ext_resource type="Texture2D" uid="uid://b1w02alub2fqs" path="res://assets/art/gimming beledug 5.png" id="5_vk406"]
 [ext_resource type="Script" uid="uid://6cnq78i1nljq" path="res://scripts/explosion.gd" id="6_xfoey"]
-[ext_resource type="AudioStream" uid="uid://xy1t7y3tpdlf" path="res://assets/audio/EXPLODE.mp3" id="7_v8gpv"]
+[ext_resource type="AudioStream" uid="uid://i4sr746apvw5" path="res://assets/audio/EXPLODE.ogg" id="7_v8gpv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v8gpv"]
 animations = [{
@@ -38,5 +38,5 @@ script = ExtResource("6_xfoey")
 
 [node name="boomsfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_v8gpv")
-volume_db = 10.0
+volume_db = 3.0
 bus = &"SFX"
