@@ -42,6 +42,7 @@ var gun_boat = preload("res://assets/art/pirate gunboat base.png")
 var siren = preload("res://assets/art/siren(temp).png")
 @onready var taunt: AudioStreamPlayer2D = $parrot_taunt
 @onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
+@onready var cannonsfx: AudioStreamPlayer2D = $cannon/cannonsfx
 
 var player = null # Referensi
 
@@ -265,7 +266,8 @@ func fire_gunboat():
 		bullet.look_at(player.global_position)
 		
 		get_tree().current_scene.add_child(bullet)
-		
+		cannonsfx.play()
+		await cannonsfx.finished
 func drop_barrel():
 	var barrel = barrel_scene.instantiate()
 	barrel.global_position = global_position
@@ -320,6 +322,7 @@ func start_shark_charge():
 	is_shark_charging = true
 	# Kunci arah saat ini (berdasarkan rotasi terakhir ke player)
 	shark_charge_direction = Vector2.RIGHT.rotated(rotation)
+	$torpedoshark/sharkcharge.play()
 	torpedoshark.play("swimming")
 	# Visual Feedback: Ubah warna jadi Merah (Tanda bahaya & Kebal)
 	print("SHARK CHARGING! IMMUNE ACTIVATED!")
