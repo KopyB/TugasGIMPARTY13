@@ -48,8 +48,8 @@
 [ext_resource type="Texture2D" uid="uid://dfpjnrov72xqj" path="res://assets/art/secondwind_animations/Untitled1074_20251122094102.png" id="27_apa73"]
 [ext_resource type="Texture2D" uid="uid://dk21nk5vmlsb2" path="res://assets/art/secondwind_animations/Untitled1074_20251122094105.png" id="28_74r1k"]
 [ext_resource type="AudioStream" uid="uid://unulr6s4hvqj" path="res://assets/audio/revivify.mp3" id="29_2gdjj"]
+[ext_resource type="AudioStream" uid="uid://clhu6r3y80rrx" path="res://assets/audio/krakenslayer.ogg" id="29_2w11d"]
 [ext_resource type="Texture2D" uid="uid://ceptjcdq4jvo" path="res://assets/art/secondwind_animations/Untitled1074_20251122094108.png" id="29_8svfe"]
-[ext_resource type="AudioStream" uid="uid://bkjtinnvyhugc" path="res://assets/audio/krakenslayer.mp3" id="29_tk41t"]
 [ext_resource type="Texture2D" uid="uid://3i4mlr3hc3r" path="res://assets/art/KSFrameBlast1.png" id="30_u2ulf"]
 [ext_resource type="Texture2D" uid="uid://bqaynxvm25akj" path="res://assets/art/KSFrameBlast2.png" id="31_6e8lb"]
 [ext_resource type="Texture2D" uid="uid://dyx2n2xktebuv" path="res://assets/art/KSFrameBlast3.png" id="32_2gdjj"]
@@ -72,26 +72,6 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjrip"]
 radius = 30.0
 height = 108.0
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_a38lo"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("15_fulsm")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_4r5pv")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_60mlk")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_i4ail")
-}],
-"loop": false,
-"name": &"shocking",
-"speed": 12.0
-}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4r5pv"]
 animations = [{
@@ -195,7 +175,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("38_8svfe")
 }, {
-"duration": 2.0,
+"duration": 1.0,
 "texture": ExtResource("39_2a3c5")
 }, {
 "duration": 1.0,
@@ -336,6 +316,26 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_a38lo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_fulsm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_4r5pv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_60mlk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_i4ail")
+}],
+"loop": false,
+"name": &"shocking",
+"speed": 12.0
+}]
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 position = Vector2(-10, 0)
 collision_layer = 2
@@ -345,15 +345,9 @@ script = ExtResource("1_g2els")
 position = Vector2(10, 17)
 shape = SubResource("CapsuleShape2D_fjrip")
 
-[node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_a38lo")
-animation = &"shocking"
-frame = 3
-frame_progress = 1.0
-
 [node name="shipbase" type="AnimatedSprite2D" parent="."]
-position = Vector2(-2.9999995, 0.99999917)
-scale = Vector2(0.25, 0.25)
+position = Vector2(-4.000001, 0.9999962)
+scale = Vector2(0.24999999, 0.24999999)
 sprite_frames = SubResource("SpriteFrames_4r5pv")
 animation = &"idle"
 
@@ -387,22 +381,22 @@ texture = ExtResource("11_31cv2")
 
 [node name="KSturret" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(11, -44)
+position = Vector2(10, -44)
 scale = Vector2(0.21999998, 0.21999998)
 texture = ExtResource("5_qlg0r")
 
 [node name="lazer" type="AnimatedSprite2D" parent="KSturret"]
 position = Vector2(0, -150)
 sprite_frames = SubResource("SpriteFrames_h7ic4")
-animation = &"winding_up"
+animation = &"end"
 offset = Vector2(0, -30)
 
 [node name="lazersfx" type="AudioStreamPlayer2D" parent="KSturret"]
-stream = ExtResource("29_tk41t")
+stream = ExtResource("29_2w11d")
 bus = &"SFX"
 
 [node name="stellarist" type="AnimatedSprite2D" parent="."]
-position = Vector2(-3, 0.99999917)
+position = Vector2(-5, 1)
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
 animation = &"idle"
@@ -412,7 +406,7 @@ wait_time = 0.4
 autostart = true
 
 [node name="FiringPosition" type="Marker2D" parent="."]
-position = Vector2(0, -82)
+position = Vector2(10, -82)
 
 [node name="SkillDurationTimer" type="Timer" parent="."]
 one_shot = true
@@ -440,16 +434,23 @@ animation = &"shieldup"
 frame = 8
 frame_progress = 1.0
 
+[node name="shockwaves_anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(22, -3)
+sprite_frames = SubResource("SpriteFrames_a38lo")
+animation = &"shocking"
+frame = 3
+frame_progress = 1.0
+
 [node name="admiralsfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("61_au7lq")
 bus = &"SFX"
 
+[node name="shieldsfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("65_tk41t")
+
 [node name="shocksfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("62_nubpm")
 bus = &"SFX"
-
-[node name="shieldsfx" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("65_tk41t")
 
 [node name="shieldsfx2" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("66_fuw3a")
