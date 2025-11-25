@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dyx2n2xktebuv"
 path.bptc="res://.godot/imported/KSFrameBlast3.png-30258fa88624dbe2adc22f5a6d69a94c.bptc.ctex"
+path.astc="res://.godot/imported/KSFrameBlast3.png-30258fa88624dbe2adc22f5a6d69a94c.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/KSFrameBlast3.png"
-dest_files=["res://.godot/imported/KSFrameBlast3.png-30258fa88624dbe2adc22f5a6d69a94c.bptc.ctex"]
+dest_files=["res://.godot/imported/KSFrameBlast3.png-30258fa88624dbe2adc22f5a6d69a94c.bptc.ctex", "res://.godot/imported/KSFrameBlast3.png-30258fa88624dbe2adc22f5a6d69a94c.astc.ctex"]
 
 [params]
 

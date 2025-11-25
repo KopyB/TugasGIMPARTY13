@@ -353,13 +353,13 @@ frame_progress = 1.0
 
 [node name="shipbase" type="AnimatedSprite2D" parent="."]
 position = Vector2(-2.9999995, 0.99999917)
-scale = Vector2(0.059999987, 0.059999987)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_4r5pv")
 animation = &"idle"
 
 [node name="cannon" type="AnimatedSprite2D" parent="."]
 position = Vector2(-3.9999998, 4.9999995)
-scale = Vector2(0.06, 0.06)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_l71n6")
 animation = &"idle"
 
@@ -394,7 +394,7 @@ texture = ExtResource("5_qlg0r")
 [node name="lazer" type="AnimatedSprite2D" parent="KSturret"]
 position = Vector2(0, -150)
 sprite_frames = SubResource("SpriteFrames_h7ic4")
-animation = &"beaming it"
+animation = &"winding_up"
 offset = Vector2(0, -30)
 
 [node name="lazersfx" type="AudioStreamPlayer2D" parent="KSturret"]
@@ -403,12 +403,12 @@ bus = &"SFX"
 
 [node name="stellarist" type="AnimatedSprite2D" parent="."]
 position = Vector2(-3, 0.99999917)
-scale = Vector2(0.059999995, 0.059999995)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
 animation = &"idle"
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.4
 autostart = true
 
 [node name="FiringPosition" type="Marker2D" parent="."]
@@ -433,7 +433,8 @@ bus = &"SFX"
 [node name="shield_anim" type="AnimatedSprite2D" parent="."]
 visible = false
 self_modulate = Color(1, 1, 1, 0.32941177)
-scale = Vector2(0.05, 0.05)
+position = Vector2(9, 10)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"shieldup"
 frame = 8
@@ -458,7 +459,7 @@ stream = ExtResource("67_2w11d")
 
 [node name="upgradesfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("68_770dr")
-volume_db = 6.0
+volume_db = -6.0
 bus = &"SFX"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

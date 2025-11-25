@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://onxr1237yysf"
 path.bptc="res://.godot/imported/KSTurret.png-47a5e7c6ff6e2e44e6f7958b427dc911.bptc.ctex"
+path.astc="res://.godot/imported/KSTurret.png-47a5e7c6ff6e2e44e6f7958b427dc911.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/art/KSTurret.png"
-dest_files=["res://.godot/imported/KSTurret.png-47a5e7c6ff6e2e44e6f7958b427dc911.bptc.ctex"]
+dest_files=["res://.godot/imported/KSTurret.png-47a5e7c6ff6e2e44e6f7958b427dc911.bptc.ctex", "res://.godot/imported/KSTurret.png-47a5e7c6ff6e2e44e6f7958b427dc911.astc.ctex"]
 
 [params]
 

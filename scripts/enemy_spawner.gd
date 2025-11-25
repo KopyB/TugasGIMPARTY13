@@ -103,7 +103,7 @@ func spawn_logic():
 	# --- SUSUNAN PROBABILITAS BARU (Total 100%) ---
 	# TOTAL HARUS 100%. SELALU FOLLOW SUSUNAN LIKE BELOW -nigga
 	# 1. PARROT (Sangat Jarang: 5%)
-	if chance < 5 and parrotcheck == 0: 
+	if chance < 5 and parrotcheck == 0 and get_tree().get_nodes_in_group("enemies").size() >= 1: 
 		spawn_parrot(viewport_rect)
 
 	# 2. GUNBOAT (40%) -> Range 5 sampai 39
