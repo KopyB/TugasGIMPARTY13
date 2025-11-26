@@ -194,7 +194,7 @@ func start_chaos_shark_mode():
 	get_tree().call_group("spawner_utama", "pause_spawning")
 	
 	# Beri peringatan visual/delay sedikit
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	
 	spawn_chaos_waves()
 
@@ -213,10 +213,10 @@ func spawn_chaos_waves():
 			spawn_single_shark()
 			if randf() <= 0.20:
 				spawn_safe_parrot()
-			await get_tree().create_timer(randf_range(0.10, 0.50)).timeout
+			await get_tree().create_timer(randf_range(0.10, 0.50), false).timeout
 	
 		if i < total_waves - 1:
-			await get_tree().create_timer(3.0).timeout
+			await get_tree().create_timer(3.0, false).timeout
 			
 	end_shark_event() 
 
