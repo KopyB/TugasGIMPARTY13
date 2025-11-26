@@ -55,8 +55,6 @@ var gun_boat = preload("res://assets/art/pirate gunboat base.png")
 var player = null # Referensi
 
 func _ready():
-	print(pathfollow)
-	spawn_powerup()
 	# 1. Setup Group & Player
 	add_to_group("enemies") # Wajib untuk skill Admiral/Shockwave
 	player = get_tree().get_first_node_in_group("player")
