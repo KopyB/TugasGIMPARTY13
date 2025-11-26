@@ -19,6 +19,7 @@ config/icon="uid://xli8bl2lqfi3"
 
 Transition="*res://scenes/transition.tscn"
 cameraeffects="*res://scripts/camera_effects.gd"
+Powerupview="*res://scenes/powerupview.tscn"
 
 [debug]
 

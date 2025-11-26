@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=14 format=3 uid="uid://c3fmrec3ntaaj"]
 
+[ext_resource type="Script" uid="uid://68ok3weuksdj" path="res://scripts/main.gd" id="1_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="4_tbgi4"]
@@ -18,6 +19,7 @@ size = Vector2(20.000061, 2024)
 [node name="main" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_eb6dy")
 
 [node name="CharacterBody2D" parent="." groups=["player"] instance=ExtResource("1_jyhfs")]
 position = Vector2(971, 944)

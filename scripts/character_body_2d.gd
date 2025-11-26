@@ -176,22 +176,28 @@ func die():
 # Fungsi utama yang dipanggil oleh bola PowerUp
 func apply_powerup(type):
 	print("Dapat PowerUp Tipe: ", type)
-	
 	match type:
 		0: # SHIELD
 			activate_shield()
+			Powerupview.show_desc("insert power up here")
 		1: # MULTISHOT
 			activate_multishot()
+			Powerupview.show_desc("insert power up here")
 		2: # ARTILLERY BURST
 			activate_artillery()
+			Powerupview.show_desc("insert power up here")
 		3: # SPEED
 			activate_speed()
+			Powerupview.show_desc("insert power up here")
 		4: # KRAKEN SLAYER
 			activate_kraken()      
+			Powerupview.show_desc("Kraken Slayer")
 		5: # SECOND WIND
 			activate_second_wind() 
+			Powerupview.show_desc("Second Wind")
 		6: # ADMIRAL WILL
 			activate_admiral()
+			Powerupview.show_desc("insert power up here")
 
 # --- LOGIKA 1: SHIELD ---
 func activate_shield():
@@ -199,6 +205,7 @@ func activate_shield():
 	shield_anim.show()
 	$shieldsfx.play()
 	shield_anim.play("shieldup")
+	Powerupview.show_icons("Shield", 2.5)
 	print("Shield Aktif!")
 
 # --- LOGIKA 2: MULTISHOT  ---
@@ -210,7 +217,7 @@ func activate_multishot():
 	else:
 		$multiturret.show()
 	anim_cannon.hide()
-	
+	Powerupview.show_icons("Multishot", 7.0)
 	
 	# Ganti create_timer dengan skill_timer
 	skill_timer.start(7.0)
@@ -231,7 +238,7 @@ func activate_artillery():
 	else:
 		$burst_turret.show()
 	anim_cannon.hide()
-	
+	Powerupview.show_icons("Artillery", 5.0)
 	shoot_timer.wait_time = 0.1 # Tembak jadi ngebut banget (0.1 detik)
 	
 	skill_timer.start(5.0)
@@ -248,6 +255,7 @@ func activate_artillery():
 func activate_speed():
 	current_speed = 800.0 
 	rotation_speed = 6
+	Powerupview.show_icons("SPEED IS KEY", 5.0)
 	$speed_anim.show()
 	$speed_anim/speedysfx.play()
 	$speed_anim.play("start")
@@ -279,6 +287,7 @@ func activate_kraken():
 		lazer.show()
 		lazer.position.x = -10
 		lazer.scale = Vector2(2.0,2.0)
+		Powerupview.show_icons("Kraken Slayer", 5.0)
 		$KSturret/lazersfx.play()
 		lazer.play("winding_up")
 		await lazer.animation_finished
@@ -325,6 +334,7 @@ func activate_kraken():
 func activate_second_wind():
 	has_second_wind = true
 	print("Second Wind Ready! (Nyawa cadangan aktif)")
+	Powerupview.show_icons("Second Wind", 10.0)
 	# Opsional: Tambahkan visual effect (misal aura putih)
 
 func activate_admiral():
@@ -340,6 +350,7 @@ func activate_admiral():
 	shockwaves_anim.show()
 	cameraeffects.shake(8.0, 0.25)
 	shockwaves_anim.modulate = Color(3, 3, 0, 1)
+	Powerupview.show_icons("Admiral's Will", 5.0)
 	$admiralsfx.play()
 	shockwaves_anim.play("shocking")
 	get_tree().call_group("enemies", "set_paralyzed", true)
