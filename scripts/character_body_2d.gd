@@ -391,6 +391,15 @@ func _physics_process(delta: float) -> void:
 	Input.get_axis("Up", "Down") 
 	).normalized()# (kuganti biar bisa WASD - kaiser)
 	
+	var x_mult = 1.0
+
+	if Input.is_action_pressed("Down"):
+		x_mult = 2
+	elif Input.is_action_pressed("Up"):
+		x_mult = 0.5
+	else:
+		x_mult = 1.0
+		
 	if is_dizzy:
 		direction = -direction
 	
@@ -456,11 +465,15 @@ func _physics_process(delta: float) -> void:
 	
 	if is_dizzy:
 		rotation_direction = -rotation_direction
+		if Input.is_action_pressed("Up"):
+			x_mult = 2
+		elif Input.is_action_pressed("Down"):
+			x_mult = 0.5
 	
 	var rot = rotation
 	if velocity.x != 0:
-		rot += rotation_direction * rotation_speed * delta
-		var rotation_minmax = clamp(rot, -PI/8, PI/8) #max dan min rotasi
+		rot += rotation_direction * rotation_speed * delta * x_mult
+		var rotation_minmax = clamp(rot, -PI/8 * x_mult, PI/8 * x_mult) #max dan min rotasi
 		rotation = rotation_minmax
 
 	#move_and_slide()

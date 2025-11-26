@@ -197,7 +197,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("38_4rb0i")
 }, {
-"duration": 36.0,
+"duration": 29.0,
 "texture": ExtResource("39_wtk84")
 }],
 "loop": false,
@@ -296,7 +296,7 @@ bus = &"SFX"
 position = Vector2(1, -1.7881393e-07)
 scale = Vector2(0.3527344, 0.3527344)
 sprite_frames = SubResource("SpriteFrames_3knlp")
-animation = &"diveback"
+animation = &"shot"
 
 [node name="scream" type="AudioStreamPlayer2D" parent="siren"]
 stream = ExtResource("56_ogbvw")

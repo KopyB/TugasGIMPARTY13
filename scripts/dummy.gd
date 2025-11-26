@@ -388,7 +388,7 @@ func trigger_siren_scream():
 	if is_instance_valid(player) and player.has_method("apply_dizziness"):
 		player.apply_dizziness(4.0)
 
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(3.0).timeout
 	siren.play("diveback")
 	if not is_inside_tree(): 
 		return
