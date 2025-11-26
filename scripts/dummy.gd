@@ -121,7 +121,6 @@ func _ready():
 		
 		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
-		
 	# TIPE 1: BOMBER (Kapal Tong)
 	elif enemy_type == Type.BOMBER:
 		if cannon: cannon.hide()
@@ -212,7 +211,7 @@ func _ready():
 			
 		rotation_degrees = 0
 		speed = randi_range(120, 150)
-		
+	
 func _process(delta):
 	if is_paralyzed:
 		if enemy_type == Type.GUNBOAT:
@@ -387,6 +386,8 @@ func trigger_siren_scream():
 
 	if is_instance_valid(player) and player.has_method("apply_dizziness"):
 		player.apply_dizziness(4.0)
+		cameraeffects.zoom(Vector2(1.05, 1.05), 4.0)
+		cameraeffects.flash_darken(0.5, 4.0)
 
 	await get_tree().create_timer(3.0).timeout
 	siren.play("diveback")

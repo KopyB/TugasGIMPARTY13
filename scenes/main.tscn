@@ -63,6 +63,7 @@ autoplay = true
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_tbgi4")]
 
 [node name="BackgroundAtmosphere" type="ParallaxBackground" parent="."]
+scroll_ignore_camera_zoom = true
 script = ExtResource("4_tefeu")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="BackgroundAtmosphere"]
@@ -96,6 +97,16 @@ script = ExtResource("8_tipki")
 
 [node name="Camera2D" parent="." instance=ExtResource("10_choun")]
 position = Vector2(959, 541)
+
+[node name="darken" type="CanvasLayer" parent="Camera2D"]
+
+[node name="darkencolor" type="ColorRect" parent="Camera2D/darken"]
+offset_left = -100.0
+offset_top = -68.0
+offset_right = 2020.0
+offset_bottom = 1165.0
+mouse_filter = 2
+color = Color(0.6392651, 0.4967953, 1, 0)
 
 [node name="wavesbg" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_ya4ey")
