@@ -10,6 +10,11 @@ var cannon: Sprite2D = null
 # TIPE MUSUH
 enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
 @export var enemy_type = Type.GUNBOAT
+@onready var pathfollow := get_parent() as PathFollow2D
+@onready var dummy_root = get_parent().get_parent()
+@onready var shadow_path = dummy_root.get_node("shadowpath/parrotshadowpath")
+
+
 
 # STATISTIK MUSUH NORMAL
 var speed = 100
@@ -49,6 +54,8 @@ var siren = preload("res://assets/art/siren(temp).png")
 var player = null # Referensi
 
 func _ready():
+	print(pathfollow)
+	spawn_powerup()
 	# 1. Setup Group & Player
 	add_to_group("enemies") # Wajib untuk skill Admiral/Shockwave
 	player = get_tree().get_first_node_in_group("player")
@@ -116,7 +123,6 @@ func _ready():
 		if cannon: cannon.hide()
 		
 		if enemyship:
-			enemyship.texture = bomber_barrel
 			enemyship.rotation = -PI/2
 			enemyship.scale = Vector2(0.15, 0.15)
 			$trails.show()
@@ -208,6 +214,10 @@ func _process(delta):
 		
 	elif enemy_type == Type.BOMBER:
 		position.x += speed * delta
+		if shoot_timer >= shoot_interval/2:
+			enemyship.texture = bomber_barrel
+		else:
+			enemyship.texture = bomber_noBarrel
 	
 	elif enemy_type == Type.RBOMBER:
 		position.x -= speed * delta
@@ -255,6 +265,9 @@ func handle_diving(delta):
 # --- FUNGSI PARALYZED ---
 func set_paralyzed(status):
 	is_paralyzed = status
+	if enemy_type == Type.PARROT:
+		pathfollow.is_paralyzed = status
+		shadow_path.is_paralyzed = status
 	if is_paralyzed:
 		modulate = Color(0.5, 0.5, 0.5, 1) 
 	else:
