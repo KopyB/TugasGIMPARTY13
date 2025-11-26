@@ -30,6 +30,7 @@ var torpedoshark: AnimatedSprite2D = null
 # --- SIREN VARIABLE ---
 var is_diving = false
 var is_screaming = false
+var siren: AnimatedSprite2D = null
 
 # LOAD ASSET 
 var powerup_scene = preload("res://scenes/power_up.tscn")
@@ -39,7 +40,7 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 var bomber_barrel = preload("res://assets/art/BomberWithBarrel.png")
 var bomber_noBarrel = preload("res://assets/art/BomberNoBarrel.png")
 var gun_boat = preload("res://assets/art/pirate gunboat base.png")
-var siren = preload("res://assets/art/siren(temp).png")
+
 @onready var taunt: AudioStreamPlayer2D = $parrot_taunt
 @onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
 @onready var cannonsfx: AudioStreamPlayer2D = $cannon/cannonsfx
@@ -71,6 +72,10 @@ func _ready():
 		
 	if has_node("parrot_hurt"):
 		pdeath = $parrot_hurt
+	
+	if has_node("siren"):
+		siren = $siren
+		siren.hide()
 		
 	# Setup awal berdasarkan tipe
 	if not area_entered.is_connected(_on_area_entered):
@@ -180,18 +185,26 @@ func _ready():
 	elif enemy_type == Type.SIREN:
 		if cannon: cannon.hide()
 		if enemyship:
-			enemyship.texture = siren
-			enemyship.scale = Vector2(0.2, 0.2)
-		rotation_degrees = -90
+			enemyship.hide()
+		if siren:
+			siren.show()
+			siren.play("swim")
+			siren.flip_h = false
+			
+		rotation_degrees = 0
 		speed = randi_range(120, 150)
 	
 	# TIPE 6: RSIREN (Putri Duyung Kanan)
 	elif enemy_type == Type.RSIREN:
 		if cannon: cannon.hide()
 		if enemyship:
-			enemyship.texture = siren
-			enemyship.scale = Vector2(0.2, 0.2)
-		rotation_degrees = 90
+			enemyship.hide()
+		if siren:
+			siren.show()
+			siren.play("swim")
+			siren.flip_h = true
+			
+		rotation_degrees = 0
 		speed = randi_range(120, 150)
 		
 func _process(delta):
@@ -284,6 +297,7 @@ func fire_gunboat():
 		get_tree().current_scene.add_child(bullet)
 		cannonsfx.play()
 		await cannonsfx.finished
+		
 func drop_barrel():
 	var barrel = barrel_scene.instantiate()
 	barrel.global_position = global_position
@@ -351,13 +365,14 @@ func trigger_siren_scream():
 		return
 	
 	is_screaming = true
-	modulate = Color(1, 0, 1, 1)
+	if siren:
+		siren.play("shot")
 	print("SIREN SCREAM! PLAYER DIZZYY!")
 
 	if is_instance_valid(player) and player.has_method("apply_dizziness"):
 		player.apply_dizziness(4.0)
 
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(6.0).timeout
 	is_diving = true
 
 # --- LOGIKA TERIMA DAMAGE & MATI ---
