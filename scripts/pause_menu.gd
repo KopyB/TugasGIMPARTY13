@@ -48,11 +48,29 @@ func toggled_handler(type: int) -> void:
 	if type == 0:
 		resume_button.hide()
 		scorelabel.show()
+		check_and_save_highscore(score)
 	else:
 		resume_button.show()
 		scorelabel.hide()
 	paused()
-  
+	
+func check_and_save_highscore(current_score: int):
+	var save_config = ConfigFile.new()
+	var err = save_config.load("user://savegame.cfg")
+	var old_highscore = 0
+	
+	if err == OK:
+		old_highscore = save_config.get_value("game", "highscore", 0)
+
+	if current_score > old_highscore:
+		print("NEW HIGH SCORE! Saving...")
+		save_config.set_value("game", "highscore", current_score)
+		save_config.save("user://savegame.cfg")
+		
+		# Change text if high score
+		scorelabel.text = "NEW HIGH SCORE: " + str(current_score)
+		scorelabel.modulate = Color(1, 0.84, 0) # Warna Emas
+		 
 func _on_score_timer_timeout():
 	score += 1
 	update_score_display()

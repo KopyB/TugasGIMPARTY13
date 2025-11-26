@@ -15,7 +15,8 @@ var logo = preload("res://assets/art/Untitled1063_20251117223413.png")
 var score: int = 0
 
 func _ready() -> void:
-	stop_timer_score()
+	add_to_group("ui_manager")
+	start_timer_score()
 
 func start_timer_score():
 	$score.show()
@@ -29,8 +30,7 @@ func stop_timer_score():
 	score = 0
 
 func _on_score_timer_timeout():
-	score += 1
-	update_score_display()
+	increase_score(1)
 
 func update_score_display():
 	scorepoint.text = "Score: " + str(score)

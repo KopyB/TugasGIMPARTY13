@@ -57,7 +57,7 @@ var player = null # Referensi
 
 func _ready():
 	# 1. Setup Group & Player
-	add_to_group("enemies") # Wajib untuk skill Admiral/Shockwave
+	add_to_group("enemies") 
 	player = get_tree().get_first_node_in_group("player")
 	
 	if has_node("enemyship"):
@@ -430,6 +430,20 @@ func take_damage(amount):
 			die()
 
 func die():
+	var add_points = 0
+	match enemy_type:
+		Type.GUNBOAT:
+			add_points = 3
+		Type.BOMBER, Type.RBOMBER:
+			add_points = 3
+		Type.SIREN, Type.RSIREN:   
+			add_points = 4
+		Type.PARROT:
+			add_points = 5
+		Type.TORPEDO_SHARK:
+			add_points = 8
+	get_tree().call_group("ui_manager", "increase_score", add_points)
+	
 	if not enemy_type == Type.PARROT:
 		# FIX CRASH: Cek validitas node enemyship sebelum hide
 		if enemyship and is_instance_valid(enemyship):

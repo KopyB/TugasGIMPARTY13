@@ -6,7 +6,7 @@ extends Control
 @onready var config = ConfigFile.new()
 @onready var animation_player: AnimationPlayer = $animationstella/AnimationPlayer
 @onready var buttonclick: AudioStreamPlayer = $buttonclick
-
+@onready var high_score_label: Label = $HighScoreLabel
 
 var fstoggle
 var shake_setting
@@ -39,12 +39,25 @@ func _ready() -> void:
 	else:
 		print("No config found. Using default settings.")
 		cameraeffects.is_screenshake_enabled = true
-	
+	high_score_label.show()
+	load_highscore()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 	#pass
-
+	
+func load_highscore():
+	var save_config = ConfigFile.new()
+	var err = save_config.load("user://savegame.cfg")
+	
+	var best_score = 0
+	
+	if err == OK:
+		best_score = save_config.get_value("game", "highscore", 0)
+	
+	if high_score_label:
+		high_score_label.text = "HIGH SCORE: " + str(best_score)
+		
 func _on_exit_pressed() -> void:
 	get_tree().quit()
 
@@ -62,11 +75,12 @@ func _on_settings_pressed() -> void:
 	mainbuttons.visible = false
 	settings.visible = true
 	buttonclick.play()
-	
+	high_score_label.hide()
 func _on_credits_pressed() -> void:
 	mainbuttons.visible = false
 	credits.visible = true
 	buttonclick.play()
+	high_score_label.hide()
 	
 func _on_back_pressed() -> void:
 	_ready()

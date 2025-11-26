@@ -57,6 +57,7 @@ animations = [{
 }]
 
 [node name="explosion" type="AnimatedSprite2D"]
+z_index = 20
 sprite_frames = SubResource("SpriteFrames_v8gpv")
 animation = &"boombone"
 script = ExtResource("6_xfoey")

@@ -141,6 +141,19 @@ position = Vector2(975.00006, 180.00002)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("4_jk1qb")
 
+[node name="HighScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 858.0
+offset_top = 394.0
+offset_right = 1084.0
+offset_bottom = 439.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 32
+text = "HIGH SCORE: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="mainbuttons" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -335,8 +348,7 @@ text = " Controls
  Down
  Left
  Right
- Up
- Down"
+ "
 
 [node name="Label2" type="Label" parent="Settings/VBoxContainer/Label"]
 layout_mode = 1
