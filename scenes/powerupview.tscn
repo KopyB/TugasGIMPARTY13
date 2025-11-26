@@ -1,23 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://ierkg61h23va"]
+[gd_scene load_steps=3 format=3 uid="uid://ierkg61h23va"]
 
 [ext_resource type="Script" uid="uid://bp1rnjahcwc4y" path="res://scripts/powerupview.gd" id="1_bpq5q"]
 [ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="2_bpq5q"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v73b6"]
-bg_color = Color(0.22352941, 0.22352941, 0.22352941, 0.5294118)
-corner_radius_top_right = 8
-
 [node name="POWERUPVIEW" type="CanvasLayer"]
 script = ExtResource("1_bpq5q")
-
-[node name="Panel" type="Panel" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -100.0
-offset_right = 100.0
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_v73b6")
+debug = true
 
 [node name="score" type="Panel" parent="."]
 anchors_preset = 5
@@ -46,5 +34,23 @@ theme_override_font_sizes/font_size = 25
 text = "[SCORE:   ]"
 
 [node name="scoretimer" type="Timer" parent="."]
+
+[node name="icons" type="HBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -104.0
+offset_right = 374.0
+grow_vertical = 0
+
+[node name="desc" type="VBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -206.0
+offset_right = 279.0
+offset_bottom = -120.0
+grow_vertical = 0
+alignment = 2
 
 [connection signal="timeout" from="scoretimer" to="." method="_on_score_timer_timeout"]
