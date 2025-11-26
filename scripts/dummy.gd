@@ -48,6 +48,7 @@ var gun_boat = preload("res://assets/art/pirate gunboat base.png")
 
 @onready var taunt: AudioStreamPlayer2D = $parrot_taunt
 @onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
+@onready var skrem : AudioStreamPlayer2D = $siren/scream
 @onready var cannonsfx: AudioStreamPlayer2D = $cannon/cannonsfx
 @onready var trails: AnimatedSprite2D = $trails
 @onready var parrot_whistle: AudioStreamPlayer2D = $parrot_whistle
@@ -382,6 +383,7 @@ func trigger_siren_scream():
 	is_screaming = true
 	siren.play("shot")
 	print("SIREN SCREAM! PLAYER DIZZYY!")
+	skrem.play()
 
 	if is_instance_valid(player) and player.has_method("apply_dizziness"):
 		player.apply_dizziness(4.0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://cof2nk7b0xan"]
+[gd_scene load_steps=60 format=3 uid="uid://cof2nk7b0xan"]
 
 [ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="1_k5f3b"]
 [ext_resource type="Texture2D" uid="uid://fl8kxpc0x1xl" path="res://assets/art/pirate gunboat base.png" id="2_k5f3b"]
@@ -55,6 +55,7 @@
 [ext_resource type="Texture2D" uid="uid://cldv8kaq3typj" path="res://assets/art/sirenswim/Untitled1083_20251126065154.png" id="52_tt8da"]
 [ext_resource type="Texture2D" uid="uid://c0y8knsfu1i4y" path="res://assets/art/sirenswim/Untitled1083_20251126065156.png" id="53_fl1vp"]
 [ext_resource type="Texture2D" uid="uid://by2u4m8lr7n2b" path="res://assets/art/sirenswim/Untitled1083_20251126065200.png" id="54_ateh0"]
+[ext_resource type="AudioStream" uid="uid://cufu5id6f3r8" path="res://assets/audio/siren.mp3" id="56_ogbvw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
 size = Vector2(62, 115)
@@ -296,5 +297,9 @@ position = Vector2(1, -1.7881393e-07)
 scale = Vector2(0.3527344, 0.3527344)
 sprite_frames = SubResource("SpriteFrames_3knlp")
 animation = &"diveback"
+
+[node name="scream" type="AudioStreamPlayer2D" parent="siren"]
+stream = ExtResource("56_ogbvw")
+volume_db = 2.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
