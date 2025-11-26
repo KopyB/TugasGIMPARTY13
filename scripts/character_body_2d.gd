@@ -330,6 +330,7 @@ func activate_admiral():
 	# 2. Panggil grup "enemies" untuk stop bergerak
 	# Pastikan di dummy.gd sudah ada add_to_group("enemies")
 	shockwaves_anim.show()
+	cameraeffects.shake(8.0, 0.25)
 	shockwaves_anim.modulate = Color(3, 3, 0, 1)
 	$admiralsfx.play()
 	shockwaves_anim.play("shocking")
@@ -357,6 +358,7 @@ func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
 	shockwaves_anim.show()
+	cameraeffects.shake(8.0, 0.25)
 	$shocksfx.play()
 	shockwaves_anim.play("shocking")
 	var tween = create_tween()
