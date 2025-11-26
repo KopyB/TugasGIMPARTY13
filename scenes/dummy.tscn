@@ -143,30 +143,6 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("32_e6wnd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("33_4da06")
-}, {
-"duration": 1.0,
-"texture": ExtResource("34_ogbvw")
-}, {
-"duration": 1.0,
-"texture": ExtResource("35_ndpeq")
-}, {
-"duration": 1.0,
-"texture": ExtResource("36_ff3ue")
-}, {
-"duration": 1.0,
-"texture": ExtResource("37_a0880")
-}, {
-"duration": 1.0,
-"texture": ExtResource("38_4rb0i")
-}, {
-"duration": 36.0,
-"texture": ExtResource("39_wtk84")
-}, {
-"duration": 1.0,
 "texture": ExtResource("40_pyn87")
 }, {
 "duration": 1.0,
@@ -194,6 +170,35 @@ animations = [{
 "texture": ExtResource("48_wjglb")
 }],
 "loop": false,
+"name": &"diveback",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("32_e6wnd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_4da06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_ogbvw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_ndpeq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_ff3ue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_a0880")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_4rb0i")
+}, {
+"duration": 36.0,
+"texture": ExtResource("39_wtk84")
+}],
+"loop": false,
 "name": &"shot",
 "speed": 9.0
 }, {
@@ -218,7 +223,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"swim",
-"speed": 8.0
+"speed": 9.0
 }]
 
 [node name="Dummy" type="Area2D" groups=["enemies"]]
@@ -285,8 +290,6 @@ bus = &"SFX"
 position = Vector2(1, -1.7881393e-07)
 scale = Vector2(0.3527344, 0.3527344)
 sprite_frames = SubResource("SpriteFrames_3knlp")
-animation = &"shot"
-frame = 16
-frame_progress = 1.0
+animation = &"diveback"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

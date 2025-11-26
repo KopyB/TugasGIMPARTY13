@@ -230,12 +230,10 @@ func _process(delta):
 	elif enemy_type == Type.SIREN:
 		if not is_screaming:	
 			position.x += speed * delta
-		handle_diving(delta)
-	
+		
 	elif enemy_type == Type.RSIREN:
 		if not is_screaming:
 			position.x -= speed * delta
-		handle_diving(delta)
 	
 	if enemy_type != Type.TORPEDO_SHARK and enemy_type != Type.SIREN and enemy_type != Type.RSIREN:
 		shoot_timer += delta
@@ -255,13 +253,6 @@ func check_despawn():
 
 	elif enemy_type == Type.RBOMBER or enemy_type == Type.RSIREN:
 		if position.x < -20 or position.y > viewport_height + 100:
-			queue_free()
-
-# --- FUNGSI DIVING (SIREN) ---
-func handle_diving(delta):
-	if is_diving:
-		modulate.a -= 2.0 * delta
-		if modulate.a <= 0:
 			queue_free()
 
 # --- FUNGSI PARALYZED ---
@@ -361,19 +352,18 @@ func start_shark_charge():
 func trigger_siren_scream():
 	if is_screaming:
 		return
-	if is_diving:
-		return
 	
 	is_screaming = true
-	if siren:
-		siren.play("shot")
+	siren.play("shot")
 	print("SIREN SCREAM! PLAYER DIZZYY!")
 
 	if is_instance_valid(player) and player.has_method("apply_dizziness"):
 		player.apply_dizziness(4.0)
 
-	await get_tree().create_timer(6.0).timeout
-	is_diving = true
+	await get_tree().create_timer(5.0).timeout
+	siren.play("diveback")
+	await get_tree().create_timer(1.0).timeout
+	queue_free()
 
 # --- LOGIKA TERIMA DAMAGE & MATI ---
 func take_damage(amount):
