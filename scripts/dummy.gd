@@ -257,18 +257,32 @@ func check_despawn():
 
 # --- FUNGSI PARALYZED ---
 func set_paralyzed(status):
+	if enemy_type == Type.TORPEDO_SHARK and is_shark_charging and status == true:
+		return
 	is_paralyzed = status
 	if is_paralyzed:
 		modulate = Color(0.5, 0.5, 0.5, 1) 
+		if enemy_type == Type.TORPEDO_SHARK and torpedoshark:
+			torpedoshark.pause()
+		elif (enemy_type == Type.SIREN or enemy_type == Type.RSIREN) and siren:
+			siren.pause()
 	else:
 		modulate = Color.WHITE
-		
+		# Resume Animasi Hiu
+		if enemy_type == Type.TORPEDO_SHARK and torpedoshark:
+			torpedoshark.play() # Lanjut mainkan animasi terakhir
+			
+		# Resume Animasi Siren
+		elif (enemy_type == Type.SIREN or enemy_type == Type.RSIREN) and siren:
+			siren.play() 
+			
 # --- FUNGSI SERANGAN ---
 func perform_attack():
 	if enemy_type == Type.GUNBOAT:
 		fire_gunboat()
 	elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
 		drop_barrel()
+		
 
 func fire_gunboat():
 	if is_instance_valid(player):
@@ -362,7 +376,10 @@ func trigger_siren_scream():
 
 	await get_tree().create_timer(5.0).timeout
 	siren.play("diveback")
-	await get_tree().create_timer(1.0).timeout
+	if not is_inside_tree(): 
+		return
+	siren.play("diveback")	
+	await get_tree().create_timer(1.0, false).timeout
 	queue_free()
 
 # --- LOGIKA TERIMA DAMAGE & MATI ---
@@ -372,16 +389,24 @@ func take_damage(amount):
 		if parrotcheck == 0:
 			if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
 				return # NO DAMAGE
+			
+			if enemy_type == Type.SIREN or enemy_type == Type.RSIREN:
+				if is_paralyzed:
+					health -= amount
+					if health <= 0:
+						die()
+					return 
+				else:
+					trigger_siren_scream()
+					health -= amount
+					if health <= 0:
+						die()
+					return 
 			health -= amount
 			if health <= 0:
 				die()
 		else:
 			taunt.play()
-			
-		
-		if enemy_type == Type.SIREN or enemy_type == Type.RSIREN:
-			trigger_siren_scream()
-			return
 	else:
 		health -= amount
 		if health <= 0:

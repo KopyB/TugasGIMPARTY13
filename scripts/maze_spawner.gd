@@ -26,6 +26,7 @@ var next_maze_time = 45.0
 var current_gap_index = 4  
 
 func _ready():
+	add_to_group("event_manager")
 	var screen_width = get_viewport_rect().size.x
 	block_size = screen_width / columns
 	randomize()
@@ -54,6 +55,8 @@ func _process(delta):
 		if shark_timer >= next_shark_time:
 			start_shark_event()
 			
+		if randi() % 1000000 == 0:
+			start_chaos_shark_mode()
 	else:
 		# --- FASE EVENT SEDANG JALAN ---
 		
@@ -176,6 +179,56 @@ func spawn_parrot_event():
 	
 	get_tree().current_scene.call_deferred("add_child", new_parrot)
 	
+# =========================================
+#      LOGIKA SHARK ATTACK (HARD/CHAOS MODE)
+# =========================================
+func start_chaos_shark_mode():
+	if is_shark_event_active or is_maze_active:
+		return
+
+	print("if that's what you want, okay...")
+	is_shark_event_active = true
+	shark_timer = 0.0
+	
+	# Pause musuh biasa
+	get_tree().call_group("spawner_utama", "pause_spawning")
+	
+	# Beri peringatan visual/delay sedikit
+	await get_tree().create_timer(1.0).timeout
+	
+	spawn_chaos_waves()
+
+func spawn_chaos_waves():
+	var total_waves = randi_range(6, 8)  # 6 sampai 8 Wave
+	var sharks_per_wave = randi_range(40, 60)             # 40 Hiu per Wave
+	
+	print(">>> START CHAOS EVENT: %d Waves <<<" % total_waves)
+	
+	for i in range(total_waves):
+		if not is_inside_tree(): return 
+		
+		print(">>> CHAOS WAVE %d/%d: RELEASE THE SWARM!" % [i + 1, total_waves])
+		
+		for j in range(sharks_per_wave):
+			spawn_single_shark()
+			if randf() <= 0.20:
+				spawn_safe_parrot()
+			await get_tree().create_timer(randf_range(0.10, 0.50)).timeout
+	
+		if i < total_waves - 1:
+			await get_tree().create_timer(3.0).timeout
+			
+	end_shark_event() 
+
+func spawn_safe_parrot():
+	var new_parrot = parrot_scene.instantiate()
+	var parrot_logic = new_parrot.get_child(0).get_child(0)
+	
+	parrot_logic.enemy_type = 3 # Tipe 3 = PARROT
+	
+	new_parrot.global_position = Vector2.ZERO
+	get_tree().current_scene.call_deferred("add_child", new_parrot)
+
 # =========================================
 #           LOGIKA MAZE (EXISTING)
 # =========================================

@@ -80,13 +80,7 @@ func _on_spawn_timer_timeout():
 	# Phase shift -PI/2 agar mulai dari lembah
 	var sine_value = sin((time_elapsed * frequency) - (PI / 2.0))
 	
-	# Normalisasi (-1 s/d 1) jadi (0.0 s/d 1.0)
 	var difficulty_factor = (sine_value + 1.0) / 2.0
-	
-	# --- LOGIKA LERP YANG DIUBAH ---
-	# Dulu: lerp(7.0, 0.5, factor)
-	# Sekarang: lerp(7.0, current_peak, factor)
-	# current_peak ini yang nilainya berubah tiap habis maze
 	
 	var new_wait_time = lerp(spawn_time_slow, current_peak, difficulty_factor)
 	
