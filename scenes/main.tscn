@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=12 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_85g3d"]
 [ext_resource type="Script" uid="uid://dlp03cxd8mca3" path="res://scripts/maze_spawner.gd" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://ierkg61h23va" path="res://scenes/powerupview.tscn" id="9_85g3d"]
+[ext_resource type="PackedScene" uid="uid://ceelts6yey11c" path="res://scenes/screenshake.tscn" id="10_choun"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20.000061, 2024)
@@ -17,7 +18,7 @@ size = Vector2(20.000061, 2024)
 layout_mode = 3
 anchors_preset = 0
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("1_jyhfs")]
+[node name="CharacterBody2D" parent="." groups=["player"] instance=ExtResource("1_jyhfs")]
 position = Vector2(971, 944)
 
 [node name="BorderLeft" type="StaticBody2D" parent="."]
@@ -89,5 +90,8 @@ script = ExtResource("7_85g3d")
 script = ExtResource("8_tipki")
 
 [node name="POWERUPVIEW" parent="." instance=ExtResource("9_85g3d")]
+
+[node name="Camera2D" parent="." instance=ExtResource("10_choun")]
+position = Vector2(959, 541)
 
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]

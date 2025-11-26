@@ -18,6 +18,7 @@ config/icon="uid://xli8bl2lqfi3"
 [autoload]
 
 Transition="*res://scenes/transition.tscn"
+cameraeffects="*res://scripts/camera_effects.gd"
 
 [debug]
 
@@ -30,6 +31,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[global_group]
+
+player=""
 
 [importer_defaults]
 

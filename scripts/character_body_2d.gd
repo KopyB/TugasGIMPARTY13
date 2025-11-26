@@ -274,6 +274,10 @@ func activate_kraken():
 		$KSturret/lazersfx.play()
 		lazer.play("winding_up")
 		await lazer.animation_finished
+		print("SHAKE NOW")
+		cameraeffects.shake(20.0, 0.05)
+		cameraeffects.start_loop_shake(8.0, 0.08)
+		print("SHAKE CALLED")
 		lazer.scale = Vector2(3.0,5.0)
 		lazer.position.y = -3230.0
 		lazer.play("start beam")
@@ -295,6 +299,7 @@ func activate_kraken():
 		active_laser_node.queue_free()
 		lazer.stop()
 		lazer.play_backwards("start beam")
+		cameraeffects.stop_loop_shake()
 		await lazer.animation_finished
 		lazer.scale = Vector2(2.0,2.0)
 		lazer.position.y = -150.0
