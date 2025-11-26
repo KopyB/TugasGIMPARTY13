@@ -7,6 +7,7 @@ func _ready() -> void:
 	color_rect.visible = false
 
 func load_scene(target_scene: String):
+	$wavestransition.play()
 	animation_player.play("fade")
 	await animation_player.animation_finished
 	get_tree().change_scene_to_file(target_scene)

@@ -28,7 +28,7 @@ func _ready():
 	add_to_group("spawner_utama") 
 	
 	spawn_timer.start(spawn_time_slow)
-
+	spawn_parrot(viewport_rect)
 func _process(delta):
 	if not is_spawning_paused:
 		time_elapsed += delta # biar ga lompat ke puncak
@@ -193,7 +193,6 @@ func spawn_rbomber(viewport_rect):
 func spawn_parrot(viewport_rect):
 	var new_enemy = parrot_scene.instantiate()
 	new_enemy.get_child(0).get_child(0).enemy_type = 3
-  
 	var spawn_x = 0
 	var spawn_y = 0
 	

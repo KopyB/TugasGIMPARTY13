@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bsdk2ko4rwh7x"]
+[gd_scene load_steps=16 format=3 uid="uid://bsdk2ko4rwh7x"]
 
 [ext_resource type="Script" uid="uid://dpmsywrp8ewwd" path="res://scripts/parrot.gd" id="1_w755j"]
 [ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="2_vda7l"]
@@ -9,7 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://psr2khy6j7ly" path="res://assets/art/parrot/frame5.png" id="7_v4y78"]
 [ext_resource type="Texture2D" uid="uid://b87yy2f7hweqf" path="res://assets/art/parrot/frame6.png" id="8_hv8ck"]
 [ext_resource type="Texture2D" uid="uid://fxo5s4pc8brc" path="res://assets/art/parrot/frame7.png" id="9_0gn53"]
+[ext_resource type="Texture2D" uid="uid://cvavuq2tmgnui" path="res://assets/art/shadow_circle.png" id="10_40jo0"]
 [ext_resource type="AudioStream" uid="uid://dvx1gljnlq1no" path="res://assets/audio/parrot_hurt.mp3" id="10_wdbrf"]
+[ext_resource type="Script" uid="uid://b5qqf3ac4limk" path="res://scripts/parrotshadowpath.gd" id="12_v4y78"]
 
 [sub_resource type="Curve2D" id="Curve2D_w755j"]
 _data = {
@@ -82,3 +84,22 @@ shape = SubResource("RectangleShape2D_xmspm")
 stream = ExtResource("10_wdbrf")
 volume_db = 1.0
 bus = &"SFX"
+
+[node name="shadowpath" type="Path2D" parent="."]
+position = Vector2(-32, 143.99998)
+scale = Vector2(1.0000001, 1)
+curve = SubResource("Curve2D_w755j")
+
+[node name="parrotshadowpath" type="PathFollow2D" parent="shadowpath"]
+position = Vector2(-17, -15)
+rotation = 1.732205
+scale = Vector2(0.8407294, 1.2780223)
+skew = 0.022742867
+cubic_interp = false
+loop = false
+script = ExtResource("12_v4y78")
+
+[node name="Sprite2D" type="Sprite2D" parent="shadowpath/parrotshadowpath"]
+position = Vector2(6.4214554, 5.676796)
+scale = Vector2(0.50220686, 0.31462336)
+texture = ExtResource("10_40jo0")

@@ -45,6 +45,7 @@ var gun_boat = preload("res://assets/art/pirate gunboat base.png")
 @onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
 @onready var cannonsfx: AudioStreamPlayer2D = $cannon/cannonsfx
 @onready var trails: AnimatedSprite2D = $trails
+@onready var parrot_whistle: AudioStreamPlayer2D = $parrot_whistle
 
 var player = null # Referensi
 
@@ -411,6 +412,7 @@ func take_damage(amount):
 		health -= amount
 		if health <= 0:
 			pdeath.play()
+			await pdeath.finished
 			die()
 
 func die():
@@ -432,7 +434,6 @@ func die():
 	elif enemy_type == Type.PARROT:
 		remove_from_group("parrots")
 		spawn_powerup()
-		
 		print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
 		queue_free()
 	else:
@@ -470,6 +471,5 @@ func spawn_powerup():
 func exploded():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position
-	cameraeffects.shake(8.0, 0.25)
 	get_tree().current_scene.add_child(explosion)
 	

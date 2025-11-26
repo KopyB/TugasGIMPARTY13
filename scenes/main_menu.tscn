@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ynu4bos33vch"]
+[gd_scene load_steps=23 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="3_tbmy8"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="8_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://cp6l6ms5o5es8" path="res://assets/audio/Click.mp3" id="11_lgwnu"]
+[ext_resource type="AudioStream" uid="uid://xwrj606v054p" path="res://assets/audio/Waves Background.ogg" id="13_rcqid"]
 
 [sub_resource type="GDScript" id="GDScript_oa1go"]
 script/source = "extends ParallaxBackground
@@ -333,7 +334,9 @@ text = " Controls
  Up
  Down
  Left
- Right"
+ Right
+ Up
+ Down"
 
 [node name="Label2" type="Label" parent="Settings/VBoxContainer/Label"]
 layout_mode = 1
@@ -501,6 +504,12 @@ texture = ExtResource("4_wu84c")
 stream = ExtResource("11_lgwnu")
 volume_db = -6.0
 bus = &"SFX"
+
+[node name="wavesbg" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_rcqid")
+autoplay = true
+bus = &"SFX"
+parameters/looping = true
 
 [connection signal="pressed" from="mainbuttons/START" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="mainbuttons/SETTINGS" to="." method="_on_settings_pressed"]
