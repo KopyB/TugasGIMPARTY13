@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5d35swq6gshc"]
+
+[ext_resource type="Texture2D" uid="uid://h8guqlg8xg7" path="res://assets/art/KrakenSlayerIcon.png" id="1_bo8cm"]
+
+[node name="PanelContainer" type="PanelContainer"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_bo8cm")
+expand_mode = 3
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 2
+fill_mode = 2
