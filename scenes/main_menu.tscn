@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ynu4bos33vch"]
+[gd_scene load_steps=23 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="3_tbmy8"]
@@ -8,10 +8,11 @@
 [ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="5_rcqid"]
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_rtw2f"]
 [ext_resource type="AudioStream" uid="uid://dik1asa4k5rqs" path="res://assets/audio/Calm Waters.ogg" id="6_lgwnu"]
-[ext_resource type="Script" path="res://scripts/musiclooper.gd" id="7_flqon"]
+[ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_flqon"]
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="8_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://cp6l6ms5o5es8" path="res://assets/audio/Click.mp3" id="11_lgwnu"]
+[ext_resource type="AudioStream" uid="uid://xwrj606v054p" path="res://assets/audio/Waves Background.ogg" id="13_rcqid"]
 
 [sub_resource type="GDScript" id="GDScript_oa1go"]
 script/source = "extends ParallaxBackground
@@ -317,13 +318,25 @@ text = "Fullscreen"
 expand_icon = true
 script = ExtResource("5_rtw2f")
 
+[node name="ShakeToggle" type="CheckButton" parent="Settings/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 30
+text = "Screen Shake"
+expand_icon = true
+
 [node name="Label" type="Label" parent="Settings/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_rcqid")
 theme_override_font_sizes/font_size = 30
 text = " Controls
+ Up
+ Down
  Left
- Right"
+ Right
+ Up
+ Down"
 
 [node name="Label2" type="Label" parent="Settings/VBoxContainer/Label"]
 layout_mode = 1
@@ -332,8 +345,11 @@ offset_bottom = 132.0
 theme_override_fonts/font = ExtResource("5_rcqid")
 theme_override_font_sizes/font_size = 30
 text = "
+UpArrow or W
+DownArrow or S
 LeftArrow or A
-RightArrow or D"
+RightArrow or D
+"
 horizontal_alignment = 2
 
 [node name="Back" type="Button" parent="Settings"]
@@ -383,6 +399,7 @@ text = "APPLY"
 expand_icon = true
 
 [node name="Credits" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -487,6 +504,12 @@ texture = ExtResource("4_wu84c")
 stream = ExtResource("11_lgwnu")
 volume_db = -6.0
 bus = &"SFX"
+
+[node name="wavesbg" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_rcqid")
+autoplay = true
+bus = &"SFX"
+parameters/looping = true
 
 [connection signal="pressed" from="mainbuttons/START" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="mainbuttons/SETTINGS" to="." method="_on_settings_pressed"]

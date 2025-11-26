@@ -35,5 +35,4 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 func exploded():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position
-	cameraeffects.shake(8.0, 0.25)
 	get_tree().current_scene.add_child(explosion)
