@@ -7,7 +7,9 @@ extends Control
 @onready var animation_player: AnimationPlayer = $animationstella/AnimationPlayer
 @onready var buttonclick: AudioStreamPlayer = $buttonclick
 
+
 var fstoggle
+var shake_setting
 var volume
 var sfx
 
@@ -30,8 +32,12 @@ func _ready() -> void:
 		sfx = config.get_value("audio", "sfx")
 		$Settings/VBoxContainer/labelSFX/SFXControl._on_value_changed(sfx)
 		$Settings/VBoxContainer/labelSFX/SFXControl.value = sfx
+		shake_setting = config.get_value("video", "screenshake", true) 
+		$Settings/VBoxContainer/ShakeToggle.button_pressed = shake_setting
+		cameraeffects.is_screenshake_enabled = shake_setting	
 	else:
 		print("No config found. Using default settings.")
+		cameraeffects.is_screenshake_enabled = true
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -70,6 +76,10 @@ func _on_apply_pressed() -> void:
 	$Settings/VBoxContainer/fulltoggle._on_toggled(fstoggle)
 	print(fstoggle)
 	
+	shake_setting = $Settings/VBoxContainer/ShakeToggle.button_pressed
+	cameraeffects.is_screenshake_enabled = shake_setting
+	print(shake_setting)
+	
 	volume = $Settings/VBoxContainer/Labelmusic/MusicControl.value
 	$Settings/VBoxContainer/Labelmusic/MusicControl._on_value_changed(volume)
 	print(volume)
@@ -80,6 +90,7 @@ func _on_apply_pressed() -> void:
 
 	# Example settings—replace with your own controls
 	config.set_value("video", "fullscreen", fstoggle)
+	config.set_value("video", "screenshake", shake_setting)
 	config.set_value("audio", "volume", volume)
 	config.set_value("audio", "sfx", sfx)
 

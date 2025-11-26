@@ -2,12 +2,13 @@ extends Node
 
 var camera: Camera2D
 var loop_tween: Tween
+var is_screenshake_enabled: bool = true
 
 func register_camera(cam: Camera2D):
 	camera = cam
 
 func shake(intensity, duration): #shake pendek
-	if not camera:
+	if not camera or not is_screenshake_enabled:
 		return
 
 	var tween = camera.create_tween()
@@ -32,7 +33,7 @@ func shake(intensity, duration): #shake pendek
 	)
 
 func start_loop_shake(intensity := 6.0, speed := 0.1): #shake panjang (buat laser sm siren)
-	if not camera:
+	if not camera or not is_screenshake_enabled:
 		return
 
 	stop_loop_shake()
