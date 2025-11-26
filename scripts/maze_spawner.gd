@@ -2,6 +2,7 @@ extends Node2D
 
 var obstacle_scene = preload("res://scenes/obstacle.tscn")
 var enemy_scene = preload("res://scenes/dummy.tscn") # Load scene musuh untuk spawn Shark
+var parrot_scene = preload("res://scenes/parrot.tscn")
 
 # --- CONFIG MAZE ---
 var columns = 8          
@@ -16,6 +17,7 @@ var maze_timer = 0.0
 var is_shark_event_active = false
 var shark_timer = 0.0
 var next_shark_time = 0.0
+var shark_event_count = 0
 
 # --- GLOBAL STATE ---
 var is_maze_active = false # Ganti nama 'is_spawning' jadi lebih jelas
@@ -70,7 +72,9 @@ func _process(delta):
 # =========================================
 
 func start_shark_event():
-	print("!!! WARNING: SHARK ATTACK EVENT STARTED !!!")
+	shark_event_count += 1
+	print("!!! WARNING: SHARK ATTACK EVENT STARTED (Ke-%d) !!!" % shark_event_count)
+	
 	is_shark_event_active = true
 	shark_timer = 0.0 # Reset timer
 	
@@ -86,25 +90,39 @@ func start_shark_event():
 
 func spawn_shark_waves():
 	# Konfigurasi wave spawn:
-	var total_waves = randi_range(2, 4)      # Ada 3-5 gelombang serangan
+	var min_waves = 2
+	var max_waves = 4
+	var min_sharks = 5
+	var max_sharks = 10
+		# --- HARD MODE  ---
+	if shark_event_count >= 3:
+		min_waves += 1   
+		max_waves += 1   
+		
+		min_sharks += 3  
+		max_sharks += 5  
+
+	var total_waves = randi_range(min_waves, max_waves)
+	print(">>> START SHARK EVENT: Total %d Waves <<<" % total_waves)
 	
 	for i in range(total_waves):
-		# Cek jika scene sudah ganti/game over, hentikan loop
 		if not is_inside_tree(): return 
-		
-		var sharks_this_wave = randi_range(5, 10)
+		if shark_event_count >= 3 and randf() <= 0.10:	
+			# Delay 6 - 10 detik
+			var delay_time = randf_range(6.0, 10.0)
+			
+			get_tree().create_timer(delay_time).timeout.connect(spawn_parrot_event)
+			
+		var sharks_this_wave = randi_range(min_sharks, max_sharks)
 		print(">>> Wave %d/%d: Spawning %d Sharks" % [i + 1, total_waves, sharks_this_wave])
 		
-		# Spawn Hiu dalam wave ini
 		for j in range(sharks_this_wave):
 			spawn_single_shark()
-			# Jeda kecil antar hiu dalam satu wave (biar ga numpuk)
-			await get_tree().create_timer(randf_range(0.25, 1.0)).timeout
+			await get_tree().create_timer(randf_range(0.25, 1.25)).timeout
 		
-		if i < total_waves - 1: # Rest
+		if i < total_waves - 1: 
 			await get_tree().create_timer(randf_range(4.0, 6.0)).timeout
 	
-	# Selesai semua wave
 	end_shark_event()
 
 func spawn_single_shark():
@@ -142,7 +160,22 @@ func end_shark_event():
 	# Resume Musuh Biasa
 	get_tree().call_group("spawner_utama", "resume_spawning")
 
-
+func spawn_parrot_event():
+	var new_parrot = parrot_scene.instantiate()
+	
+	# Setup Data Parrot (Meniru cara enemy_spawner.gd Anda)
+	# Mengakses anak-anak node karena struktur scene Parrot Anda bertingkat
+	# Path2D -> PathFollow2D -> Area2D (Script dummy ada di sini)
+	var parrot_logic = new_parrot.get_child(0).get_child(0)
+	
+	parrot_logic.enemy_type = 3 # Tipe 3 = PARROT
+	parrot_logic.add_to_group("parrots") # Masukkan ke grup agar droprate 100% jalan
+	
+	# Posisi Spawn (Biasanya Parrot punya path sendiri, jadi kita taruh di 0,0 parentnya)
+	new_parrot.global_position = Vector2.ZERO
+	
+	get_tree().current_scene.call_deferred("add_child", new_parrot)
+	
 # =========================================
 #           LOGIKA MAZE (EXISTING)
 # =========================================
