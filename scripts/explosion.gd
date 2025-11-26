@@ -8,6 +8,7 @@ func _ready() -> void:
 	exploded()
 
 func exploded():
+	cameraeffects.shake(8.0, 0.25)
 	explosion.show()
 	boomsfx.play()
 	explosion.play("boom")

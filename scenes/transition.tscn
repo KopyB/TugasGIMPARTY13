@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cidj3qtt2dm01"]
+[gd_scene load_steps=6 format=3 uid="uid://cidj3qtt2dm01"]
 
 [ext_resource type="Script" uid="uid://cm5t3pfcf3pd8" path="res://scripts/transition.gd" id="1_rerct"]
+[ext_resource type="AudioStream" uid="uid://bvrdv4gonfpxj" path="res://assets/audio/Waves Transition.ogg" id="2_f0i4t"]
 
 [sub_resource type="Animation" id="Animation_rerct"]
 length = 0.5
@@ -78,3 +79,7 @@ color = Color(0, 0, 0, 0)
 libraries = {
 &"": SubResource("AnimationLibrary_f0i4t")
 }
+
+[node name="wavestransition" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_f0i4t")
+bus = &"SFX"

@@ -221,7 +221,9 @@ func spawn_obstacle_at_column(col_index):
 	obs.is_maze_obstacle = true 
 
 	var type_rng = randf()
-	if type_rng < 0.7: obs.setup_obstacle(0) 
-	else: obs.setup_obstacle(1) 
+	if type_rng < 0.3: obs.setup_obstacle(0) 
+	elif type_rng < 0.6 and type_rng >= 0.3: obs.setup_obstacle(1)
+	elif  type_rng < 0.8 and type_rng >= 0.6: obs.setup_obstacle(2) 
+	else: obs.setup_obstacle(3) 
 
 	add_child(obs)
