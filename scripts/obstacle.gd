@@ -70,6 +70,7 @@ func _process(delta):
 func take_damage(amount):
 	hp -= amount
 	if hp <= 0:
+		get_tree().call_group("ui_manager", "increase_score", 1)
 		explode()
 
 func _on_body_entered(body):

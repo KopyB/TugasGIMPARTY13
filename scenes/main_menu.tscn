@@ -335,8 +335,7 @@ text = " Controls
  Down
  Left
  Right
- Up
- Down"
+ "
 
 [node name="Label2" type="Label" parent="Settings/VBoxContainer/Label"]
 layout_mode = 1
