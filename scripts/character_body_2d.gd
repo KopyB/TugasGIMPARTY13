@@ -68,13 +68,21 @@ func _ready():
 func _input(event):
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key_typed = OS.get_keycode_string(event.physical_keycode).to_upper()
-		if key_typed.length() == 1 and key_typed >= "A" and key_typed <= "Z":
+	
+		if key_typed.length() == 1 and ((key_typed >= "A" and key_typed <= "Z") or (key_typed >= "0" and key_typed <= "9")):
 			input_buffer += key_typed
+			
+			# Limit buffer
 			if input_buffer.length() > 20:
 				input_buffer = input_buffer.substr(input_buffer.length() - 20)
-			if input_buffer.ends_with(some_code):
+			
+			if input_buffer.ends_with(some_code): 
 				toggle_something_mode()
-				input_buffer = "" 
+				input_buffer = ""
+			
+			elif input_buffer.ends_with("PLQA00"):
+				total_nigger_death()
+				input_buffer = ""
 
 func toggle_something_mode():
 	is_something_mode = not is_something_mode
@@ -478,6 +486,7 @@ func spawn_bullet(angle_in_degrees):
 	# Tambahkan ke Main Scene
 	get_parent().add_child(bullet)
 	$cannon/cannonsfx.play()
+	
 func reset_all_skills():
 	print("Membersihkan semua skill aktif...")
 	
@@ -506,7 +515,15 @@ func reset_all_skills():
 	modulate = Color.WHITE
 
 	get_tree().call_group("enemies", "set_paralyzed", false)
-
+	
+func total_nigger_death():
+	get_tree().call_group("event_manager", "start_chaos_shark_mode")
+	
+	# Visual Feedback (Flash Merah Darah)
+	var tween = create_tween()
+	modulate = Color(5, 0, 0, 1) # Merah Terang
+	tween.tween_property(self, "modulate", Color.WHITE, 1.0)
+	
 func _on_timer_timeout() -> void: # Timer
 	# Pasang gatekeeping peluru
 	if is_kraken_active:
