@@ -61,7 +61,9 @@ func _ready():
 	shield_anim.hide()
 	shockwaves_anim.hide()
 	secondwind_anim.hide()
-
+	$speed_anim.hide()
+	$trails.play("trailvert_up")
+	
 # IGNORE (DEBUG MODE)
 func _input(event):
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -154,7 +156,11 @@ func die():
 	for node in get_tree().get_nodes_in_group("player_anims"):
 		node.visible = false
 	set_physics_process(false) # Matikan pergerakan
-	
+	$trails.hide()
+	$KSturret.hide()
+	$multiturret.hide()
+	$burst_turret.hide()
+	$multiburst.hide()
 
 	# Angka 0 artinya tipe "YOU DIED!" 
 	get_tree().call_group("ui_manager", "toggled_handler", 0)
@@ -234,10 +240,15 @@ func activate_artillery():
 func activate_speed():
 	current_speed = 800.0 
 	rotation_speed = 6
-	$speedysfx.play()
+	$speed_anim.show()
+	$speed_anim/speedysfx.play()
+	$speed_anim.play("start")
+	await $speed_anim.animation_finished
+	$speed_anim.play("loop")
 	skill_timer.start(5.0)
 	await skill_timer.timeout # Durasi 5 detik
-	
+	$speed_anim.stop()
+	$speed_anim.hide()
 	current_speed = normal_speed # Balik normal
 	rotation_speed = 2
 	
