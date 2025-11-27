@@ -10,6 +10,11 @@ var cannon: Sprite2D = null
 # TIPE MUSUH
 enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
 @export var enemy_type = Type.GUNBOAT
+@onready var pathfollow := get_parent() as PathFollow2D
+@onready var dummy_root = get_parent().get_parent()
+@onready var shadow_path = dummy_root.get_node("shadowpath/parrotshadowpath")
+
+
 
 # STATISTIK MUSUH NORMAL
 var speed = 100
@@ -43,6 +48,7 @@ var gun_boat = preload("res://assets/art/pirate gunboat base.png")
 
 @onready var taunt: AudioStreamPlayer2D = $parrot_taunt
 @onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
+@onready var skrem : AudioStreamPlayer2D = $siren/scream
 @onready var cannonsfx: AudioStreamPlayer2D = $cannon/cannonsfx
 @onready var trails: AnimatedSprite2D = $trails
 @onready var parrot_whistle: AudioStreamPlayer2D = $parrot_whistle
@@ -115,13 +121,11 @@ func _ready():
 		
 		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
-		
 	# TIPE 1: BOMBER (Kapal Tong)
 	elif enemy_type == Type.BOMBER:
 		if cannon: cannon.hide()
 		
 		if enemyship:
-			enemyship.texture = bomber_barrel
 			enemyship.rotation = -PI/2
 			enemyship.scale = Vector2(0.15, 0.15)
 			$trails.show()
@@ -207,7 +211,7 @@ func _ready():
 			
 		rotation_degrees = 0
 		speed = randi_range(120, 150)
-		
+	
 func _process(delta):
 	if is_paralyzed:
 		if enemy_type == Type.GUNBOAT:
@@ -221,6 +225,10 @@ func _process(delta):
 		
 	elif enemy_type == Type.BOMBER:
 		position.x += speed * delta
+		if shoot_timer >= shoot_interval/2:
+			enemyship.texture = bomber_barrel
+		else:
+			enemyship.texture = bomber_noBarrel
 	
 	elif enemy_type == Type.RBOMBER:
 		position.x -= speed * delta
@@ -261,6 +269,9 @@ func set_paralyzed(status):
 	if enemy_type == Type.TORPEDO_SHARK and is_shark_charging and status == true:
 		return
 	is_paralyzed = status
+	if enemy_type == Type.PARROT:
+		pathfollow.is_paralyzed = status
+		shadow_path.is_paralyzed = status
 	if is_paralyzed:
 		modulate = Color(0.5, 0.5, 0.5, 1) 
 		if enemy_type == Type.TORPEDO_SHARK and torpedoshark:
@@ -371,11 +382,14 @@ func trigger_siren_scream():
 	is_screaming = true
 	siren.play("shot")
 	print("SIREN SCREAM! PLAYER DIZZYY!")
+	skrem.play()
 
 	if is_instance_valid(player) and player.has_method("apply_dizziness"):
 		player.apply_dizziness(4.0)
+		cameraeffects.zoom(Vector2(1.05, 1.05), 4.0)
+		cameraeffects.flash_darken(0.5, 4.0)
 
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(3.0).timeout
 	siren.play("diveback")
 	if not is_inside_tree(): 
 		return

@@ -348,6 +348,7 @@ func activate_admiral():
 	# 2. Panggil grup "enemies" untuk stop bergerak
 	# Pastikan di dummy.gd sudah ada add_to_group("enemies")
 	shockwaves_anim.show()
+	cameraeffects.shake(8.0, 0.25)
 	shockwaves_anim.modulate = Color(3, 3, 0, 1)
 	Powerupview.show_icons("Admiral's Will", 5.0)
 	$admiralsfx.play()
@@ -376,6 +377,7 @@ func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
 	shockwaves_anim.show()
+	cameraeffects.shake(8.0, 0.25)
 	$shocksfx.play()
 	shockwaves_anim.play("shocking")
 	var tween = create_tween()
@@ -400,6 +402,15 @@ func _physics_process(delta: float) -> void:
 	Input.get_axis("Up", "Down") 
 	).normalized()# (kuganti biar bisa WASD - kaiser)
 	
+	var x_mult = 1.0
+
+	if Input.is_action_pressed("Down"):
+		x_mult = 2
+	elif Input.is_action_pressed("Up"):
+		x_mult = 0.5
+	else:
+		x_mult = 1.0
+		
 	if is_dizzy:
 		direction = -direction
 	
@@ -465,11 +476,15 @@ func _physics_process(delta: float) -> void:
 	
 	if is_dizzy:
 		rotation_direction = -rotation_direction
+		if Input.is_action_pressed("Up"):
+			x_mult = 2
+		elif Input.is_action_pressed("Down"):
+			x_mult = 0.5
 	
 	var rot = rotation
 	if velocity.x != 0:
-		rot += rotation_direction * rotation_speed * delta
-		var rotation_minmax = clamp(rot, -PI/8, PI/8) #max dan min rotasi
+		rot += rotation_direction * rotation_speed * delta * x_mult
+		var rotation_minmax = clamp(rot, -PI/8 * x_mult, PI/8 * x_mult) #max dan min rotasi
 		rotation = rotation_minmax
 
 	#move_and_slide()

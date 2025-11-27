@@ -28,7 +28,7 @@ func _ready():
 	add_to_group("spawner_utama") 
 	
 	spawn_timer.start(spawn_time_slow)
-	spawn_parrot(viewport_rect)
+	
 func _process(delta):
 	if not is_spawning_paused:
 		time_elapsed += delta # biar ga lompat ke puncak

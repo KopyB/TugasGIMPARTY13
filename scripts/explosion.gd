@@ -16,3 +16,13 @@ func exploded():
 	explosion.hide()
 	await boomsfx.finished
 	queue_free()
+
+func exploded_bone():
+	cameraeffects.shake(8.0, 0.25)
+	explosion.show()
+	boomsfx.play()
+	explosion.play("boombone")
+	await explosion.animation_finished
+	explosion.hide()
+	await boomsfx.finished
+	queue_free()

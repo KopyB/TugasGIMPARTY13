@@ -58,3 +58,44 @@ func stop_loop_shake():
 		loop_tween.kill()
 	if camera:
 		camera.offset = Vector2.ZERO
+
+func zoom(target_zoom: Vector2, duration := 0.5):
+	if not camera:
+		return
+
+	var half := duration * 0.5
+	var orig_zoom := camera.zoom
+	var tween := camera.create_tween()
+
+	# Zoom in
+	tween.tween_property(camera, "zoom", target_zoom, half).set_trans(Tween.TRANS_SINE)
+
+	# Then zoom out
+	tween.tween_property(camera, "zoom", orig_zoom, half).set_trans(Tween.TRANS_SINE)
+	
+var overlay: ColorRect = null
+
+func register_overlay(node: ColorRect):
+	overlay = node
+
+func flash_darken(amount := 0.5, total_duration := 0.4):
+	if not overlay:
+		return
+
+	var tween = create_tween()
+	var c = overlay.color
+
+	# Fade to darkness
+	tween.tween_property(overlay, "color",
+		Color(c.r, c.g, c.b, amount),
+		total_duration * 0.3
+	).set_trans(Tween.TRANS_SINE)
+
+	# Hold briefly
+	tween.tween_interval(total_duration * 0.2)
+
+	# Fade back to clear
+	tween.tween_property(overlay, "color",
+		Color(c.r, c.g, c.b, 0.0),
+		total_duration * 0.5
+	).set_trans(Tween.TRANS_SINE)

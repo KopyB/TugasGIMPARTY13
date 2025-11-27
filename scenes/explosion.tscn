@@ -1,12 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0b17q68j2xqh"]
+[gd_scene load_steps=14 format=3 uid="uid://c0b17q68j2xqh"]
 
 [ext_resource type="Texture2D" uid="uid://y2vak2ke27xr" path="res://assets/art/gimming beledug 1.png" id="1_hbmxj"]
 [ext_resource type="Texture2D" uid="uid://bokn48o0vifr0" path="res://assets/art/gimming beledug 2.png" id="2_xfoey"]
 [ext_resource type="Texture2D" uid="uid://cyqhl25m2sq3o" path="res://assets/art/gimming beledug 3.png" id="3_v8gpv"]
 [ext_resource type="Texture2D" uid="uid://dwewy1ubfu32w" path="res://assets/art/gimming beledug 4.png" id="4_cun36"]
 [ext_resource type="Texture2D" uid="uid://b1w02alub2fqs" path="res://assets/art/gimming beledug 5.png" id="5_vk406"]
+[ext_resource type="Texture2D" uid="uid://dllea5kkp7rrn" path="res://assets/art/debu1.png" id="6_l208b"]
 [ext_resource type="Script" uid="uid://6cnq78i1nljq" path="res://scripts/explosion.gd" id="6_xfoey"]
+[ext_resource type="Texture2D" uid="uid://cjit4rxcb0xk" path="res://assets/art/debu2.png" id="7_dvsvq"]
 [ext_resource type="AudioStream" uid="uid://i4sr746apvw5" path="res://assets/audio/EXPLODE.ogg" id="7_v8gpv"]
+[ext_resource type="Texture2D" uid="uid://df3obhmui4o5l" path="res://assets/art/debu3.png" id="8_4hpr0"]
+[ext_resource type="Texture2D" uid="uid://bpytjscb3gf88" path="res://assets/art/debu4.png" id="9_dcqkm"]
+[ext_resource type="Texture2D" uid="uid://ijvtgoj2cbuc" path="res://assets/art/debu5.png" id="10_pw7mt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v8gpv"]
 animations = [{
@@ -29,12 +34,32 @@ animations = [{
 "loop": false,
 "name": &"boom",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_l208b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dvsvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4hpr0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_dcqkm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_pw7mt")
+}],
+"loop": true,
+"name": &"boombone",
+"speed": 5.0
 }]
 
 [node name="explosion" type="AnimatedSprite2D"]
 z_index = 20
 sprite_frames = SubResource("SpriteFrames_v8gpv")
-animation = &"boom"
+animation = &"boombone"
 script = ExtResource("6_xfoey")
 
 [node name="boomsfx" type="AudioStreamPlayer2D" parent="."]
