@@ -5,8 +5,10 @@ var current_type = Type.BONESA
 var hp = 2
 var speed = 150 
 
+
 var enemy_scene = preload("res://scenes/dummy.tscn")
 var explosion_scene = preload("res://scenes/explosion.tscn")
+var floating_text_scene = preload("res://scenes/FloatingText.tscn")
 
 # --- FIX: Tambahkan variabel ini ---
 var is_maze_obstacle = false 
@@ -84,6 +86,10 @@ func take_damage(amount):
 	hp -= amount
 	if hp <= 0:
 		get_tree().call_group("ui_manager", "increase_score", 1)
+		var txt = floating_text_scene.instantiate()
+		txt.global_position = global_position
+		get_tree().current_scene.add_child(txt)
+		txt.start_animation("+1 Object", Color(0.423, 0.541, 0.564, 1))
 		explode()
 
 func _on_body_entered(body):
@@ -94,9 +100,11 @@ func _on_body_entered(body):
 func explode():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position
-	if current_type == Type.BONESA or Type.BONESB or Type.BONESC:
-		explosion.explosion_type = "bone"
+	
+	if current_type == Type.BONESA or current_type == Type.BONESB or current_type == Type.BONESC:
+		explosion.is_bone = true
 	else:
-		explosion.explosion_type = "normal"
+		explosion.is_bone = false
+	
 	get_tree().current_scene.add_child(explosion)
 	queue_free()

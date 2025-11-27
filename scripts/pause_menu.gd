@@ -29,11 +29,15 @@ func _on_resume_pressed() -> void:
 	
 func _on_restart_pressed() -> void:
 	resume()
+	Powerupview.reset_desc()
+	Powerupview.reset_icon()
 	Transition.reload_scene()
 	#get_tree().reload_current_scene()
 
 func _on_exit_pressed() -> void:
 	resume()
+	Powerupview.reset_desc()
+	Powerupview.reset_icon()
 	Transition.load_scene("res://scenes/main_menu.tscn")
 	#get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	
@@ -70,6 +74,16 @@ func check_and_save_highscore(current_score: int):
 		# Change text if high score
 		scorelabel.text = "NEW HIGH SCORE: " + str(current_score)
 		scorelabel.modulate = Color(1, 0.84, 0) # Warna Emas
+		
+		var settings_config = ConfigFile.new()
+		var err_settings = settings_config.load("user://settings.cfg")
+		var uploader_name = "Captain" 
+		
+		if err_settings == OK:
+			uploader_name = settings_config.get_value("player", "name", "Captain")
+		
+		print("Uploading score as: ", uploader_name)
+		SilentWolf.Scores.save_score(uploader_name, current_score, "main")
 		 
 func _on_score_timer_timeout():
 	score += 1
