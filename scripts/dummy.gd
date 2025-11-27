@@ -46,6 +46,7 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 var bomber_barrel = preload("res://assets/art/BomberWithBarrel.png")
 var bomber_noBarrel = preload("res://assets/art/BomberNoBarrel.png")
 var gun_boat = preload("res://assets/art/pirate gunboat base.png")
+var floating_text_scene = preload("res://scenes/FloatingText.tscn")
 
 @onready var taunt: AudioStreamPlayer2D = $parrot_taunt
 @onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
@@ -450,18 +451,27 @@ func take_damage(amount):
 
 func die():
 	var add_points = 0
+	var enemy_name = ""
+	
 	match enemy_type:
 		Type.GUNBOAT:
 			add_points = 3
+			enemy_name = "Gunboat"
 		Type.BOMBER, Type.RBOMBER:
 			add_points = 3
+			enemy_name = "Bomber"
 		Type.SIREN, Type.RSIREN:   
 			add_points = 4
+			enemy_name = "Siren"
 		Type.PARROT:
 			add_points = 5
+			enemy_name = "Parrot"
 		Type.TORPEDO_SHARK:
 			add_points = 8
+			enemy_name = "Shark"
+			
 	get_tree().call_group("ui_manager", "increase_score", add_points)
+	spawn_floating_text(add_points, enemy_name)
 	
 	if not enemy_type == Type.PARROT:
 		# FIX CRASH: Cek validitas node enemyship sebelum hide
@@ -500,6 +510,22 @@ func _on_area_entered(area: Area2D) -> void:
 			
 		# 2. Musuh ini mati
 		die()
+
+func spawn_floating_text(points, e_name):
+	var text_instance = floating_text_scene.instantiate()
+	var display_text = "+" + str(points) + " " + e_name
+	
+	# Tentukan warna teks berdasarkan tipe (Opsional, biar keren)
+	var text_color = Color.WHITE
+	if points >= 8: text_color = Color(0.619, 0.149, 0.392, 1)       
+	elif points >= 5: text_color = Color(0.996, 0.909, 0.572, 1)    
+	else: text_color = Color(0.478, 0.937, 1, 1)              
+	
+	text_instance.global_position = global_position
+	text_instance.global_position.x += randf_range(-20, 20)
+	
+	get_tree().current_scene.add_child(text_instance)
+	text_instance.start_animation(display_text, text_color)
 
 func spawn_powerup_chance():
 	if randf() <= 0.25: 
