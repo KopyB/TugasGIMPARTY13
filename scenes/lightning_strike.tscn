@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://cu6412od1icg0"]
+
+[ext_resource type="Texture2D" uid="uid://bq7hgr5x5qe6w" path="res://assets/art/lightningstrike/AdmiralWillFrame1.png" id="1_3y42w"]
+[ext_resource type="Texture2D" uid="uid://dopxp8kjybvhn" path="res://assets/art/lightningstrike/AdmiralWillFrame2.png" id="2_4tmud"]
+[ext_resource type="Texture2D" uid="uid://bq18cky1bg3o7" path="res://assets/art/lightningstrike/AdmiralWillFrame3and6.png" id="3_5qego"]
+[ext_resource type="Texture2D" uid="uid://ddva3605b45hj" path="res://assets/art/lightningstrike/AdmiralWillFrame4.png" id="4_sslt4"]
+[ext_resource type="Texture2D" uid="uid://duoje3rbmcmvf" path="res://assets/art/lightningstrike/AdmiralWillFrame5.png" id="5_rgxb2"]
+[ext_resource type="Script" uid="uid://c1jl6qg5cfc21" path="res://scripts/lightning_strike.gd" id="6_8divd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_620jx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3y42w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_4tmud")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5qego")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sslt4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rgxb2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5qego")
+}],
+"loop": false,
+"name": &"strike",
+"speed": 10.0
+}]
+
+[node name="LightningStrike" type="AnimatedSprite2D"]
+position = Vector2(16, -69)
+scale = Vector2(0.3389375, 0.3389375)
+sprite_frames = SubResource("SpriteFrames_620jx")
+animation = &"strike"
+frame = 5
+frame_progress = 1.0
+script = ExtResource("6_8divd")

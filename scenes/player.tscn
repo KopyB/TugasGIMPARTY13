@@ -504,6 +504,8 @@ position = Vector2(10, -82)
 [node name="SkillDurationTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="LaserDurationTimer" type="Timer" parent="."]
+
 [node name="secondwind_anim" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(8.999999, -4)

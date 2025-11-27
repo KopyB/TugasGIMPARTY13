@@ -214,7 +214,8 @@ func _ready():
 	
 func _process(delta):
 	if is_paralyzed:
-		$trails.hide()
+		if trails and is_instance_valid(trails):
+			trails.hide()
 		if enemy_type == Type.GUNBOAT:
 			position.y += speed/2 * delta
 		elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER or enemy_type == Type.SIREN or enemy_type == Type.RSIREN or enemy_type == Type.TORPEDO_SHARK:
