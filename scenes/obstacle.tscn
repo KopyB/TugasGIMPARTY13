@@ -1,0 +1,180 @@
+[gd_scene load_steps=33 format=3 uid="uid://bxx0n2y6gomuc"]
+
+[ext_resource type="Script" uid="uid://cvx1imre4rdk" path="res://scripts/obstacle.gd" id="1_drdry"]
+[ext_resource type="Texture2D" uid="uid://biv33wjhvmeyy" path="res://assets/art/fih fossil.png" id="2_drdry"]
+[ext_resource type="Texture2D" uid="uid://dw5vndpb2iica" path="res://assets/art/kapalA/kapalkaramA1.png" id="3_tuo1b"]
+[ext_resource type="Texture2D" uid="uid://c1oxhd7dj8hdp" path="res://assets/art/kapalA/kapalkaramA2.png" id="4_6k2ap"]
+[ext_resource type="Texture2D" uid="uid://d4nju7rk0qvwp" path="res://assets/art/kapalA/kapalkaramA3.png" id="5_qbudt"]
+[ext_resource type="Texture2D" uid="uid://nxs22ta1ge1b" path="res://assets/art/kapalA/kapalkaramA4.png" id="6_u2cgk"]
+[ext_resource type="Texture2D" uid="uid://dfh3h8gn3i10r" path="res://assets/art/kapalA/kapalkaramA5.png" id="7_a6g20"]
+[ext_resource type="Texture2D" uid="uid://ctpunid157huc" path="res://assets/art/kapalA/kapalkaramA6.png" id="8_5yxnq"]
+[ext_resource type="Texture2D" uid="uid://c4jmbsrmcmlnn" path="res://assets/art/kapalB/kapal karam B1.png" id="9_ykrpf"]
+[ext_resource type="Texture2D" uid="uid://bgvvtbee2127n" path="res://assets/art/kapalB/kapal karam B2.png" id="10_bl8p2"]
+[ext_resource type="Texture2D" uid="uid://cuir8roqmx060" path="res://assets/art/kapalB/kapal karam B3.png" id="11_croka"]
+[ext_resource type="Texture2D" uid="uid://bcw8byjlnoyjr" path="res://assets/art/kapalB/kapal karam B4.png" id="12_6h5oe"]
+[ext_resource type="Texture2D" uid="uid://d0fdb8ea5t3j0" path="res://assets/art/kapalB/kapal karam B5.png" id="13_idbsq"]
+[ext_resource type="Texture2D" uid="uid://bf35eson0jcw8" path="res://assets/art/kapalC/kapal karam C1.png" id="14_nff2i"]
+[ext_resource type="Texture2D" uid="uid://cg2llv10vwub7" path="res://assets/art/kapalC/kapal karam C2.png" id="15_iafri"]
+[ext_resource type="Texture2D" uid="uid://7d6lb1576v3k" path="res://assets/art/kapalC/kapal karam C3.png" id="16_2ebg6"]
+[ext_resource type="Texture2D" uid="uid://bosg44xqx4sae" path="res://assets/art/kapalC/kapal karam C4.png" id="17_ux1bk"]
+[ext_resource type="Texture2D" uid="uid://quqgadv78bg7" path="res://assets/art/kapalC/kapal karam C5.png" id="18_psm4a"]
+[ext_resource type="Texture2D" uid="uid://bqolejc2fy8o0" path="res://assets/art/boneA/fih fossilA1.png" id="19_nff2i"]
+[ext_resource type="Texture2D" uid="uid://btfq3khhk36tt" path="res://assets/art/boneA/fih fossilA2.png" id="20_iafri"]
+[ext_resource type="Texture2D" uid="uid://dvogxg8uytlu8" path="res://assets/art/boneA/fih fossilA3.png" id="21_2ebg6"]
+[ext_resource type="Texture2D" uid="uid://dbaycoubnc1si" path="res://assets/art/boneB/fih fossilB1.png" id="22_ux1bk"]
+[ext_resource type="Texture2D" uid="uid://7j0qxfmkoyhc" path="res://assets/art/boneB/fih fossilB2.png" id="23_psm4a"]
+[ext_resource type="Texture2D" uid="uid://cmnklwb0l1h2c" path="res://assets/art/boneB/fih fossilB3.png" id="24_ecb7i"]
+[ext_resource type="Texture2D" uid="uid://b8x2qj55lypln" path="res://assets/art/boneB/fih fossilB4.png" id="25_qx32r"]
+[ext_resource type="Texture2D" uid="uid://b6t3bkmjdd0bk" path="res://assets/art/boneC/fih fossilC1.png" id="26_i2l0l"]
+[ext_resource type="Texture2D" uid="uid://iq1nnvs6f5b4" path="res://assets/art/boneC/fih fossilC2.png" id="27_msona"]
+[ext_resource type="Texture2D" uid="uid://bprbyyr123cu5" path="res://assets/art/boneC/fih fossilC3.png" id="28_72j8t"]
+[ext_resource type="Texture2D" uid="uid://3m6jtcu6c0fg" path="res://assets/art/boneC/fih fossilC4.png" id="29_m3k15"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qo2ef"]
+size = Vector2(207, 122)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ecb7i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_tuo1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6k2ap")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qbudt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_u2cgk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_a6g20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5yxnq")
+}],
+"loop": true,
+"name": &"shipA",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_ykrpf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_bl8p2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_croka")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_6h5oe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_idbsq")
+}],
+"loop": true,
+"name": &"shipB",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_nff2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_iafri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_2ebg6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ux1bk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_psm4a")
+}],
+"loop": true,
+"name": &"shipC",
+"speed": 12.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7iq0v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_nff2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_iafri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_2ebg6")
+}],
+"loop": true,
+"name": &"boneA",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_ux1bk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_psm4a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_ecb7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_qx32r")
+}],
+"loop": true,
+"name": &"boneB",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_i2l0l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_msona")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_72j8t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_m3k15")
+}],
+"loop": true,
+"name": &"boneC",
+"speed": 12.0
+}]
+
+[node name="Obstacle" type="Area2D" groups=["obstacles"]]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("1_drdry")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6.5, 30)
+shape = SubResource("RectangleShape2D_qo2ef")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-31.999996, 6.999994)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("2_drdry")
+metadata/_edit_group_ = true
+
+[node name="shipwreck" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ecb7i")
+animation = &"shipB"
+speed_scale = 0.5
+
+[node name="bone" type="AnimatedSprite2D" parent="."]
+position = Vector2(1.0000076, -7.6293945e-06)
+scale = Vector2(0.056825876, 0.056825876)
+sprite_frames = SubResource("SpriteFrames_7iq0v")
+animation = &"boneC"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

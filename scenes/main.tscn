@@ -1,0 +1,117 @@
+[gd_scene load_steps=14 format=3 uid="uid://c3fmrec3ntaaj"]
+
+[ext_resource type="Script" uid="uid://68ok3weuksdj" path="res://scripts/main.gd" id="1_eb6dy"]
+[ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="4_tbgi4"]
+[ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
+[ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
+[ext_resource type="AudioStream" uid="uid://c8e0e01ye6ulh" path="res://assets/audio/Rogue Waves.ogg" id="6_tipki"]
+[ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_85g3d"]
+[ext_resource type="Script" uid="uid://dlp03cxd8mca3" path="res://scripts/maze_spawner.gd" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://ierkg61h23va" path="res://scenes/powerupview.tscn" id="9_85g3d"]
+[ext_resource type="PackedScene" uid="uid://ceelts6yey11c" path="res://scenes/screenshake.tscn" id="10_choun"]
+[ext_resource type="AudioStream" uid="uid://xwrj606v054p" path="res://assets/audio/Waves Background.ogg" id="11_ya4ey"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(20.000061, 2024)
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_eb6dy")
+
+[node name="CharacterBody2D" parent="." groups=["player"] instance=ExtResource("1_jyhfs")]
+position = Vector2(971, 944)
+
+[node name="BorderLeft" type="StaticBody2D" parent="."]
+position = Vector2(0, 336)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderLeft"]
+position = Vector2(-10, 204)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="BorderRight" type="StaticBody2D" parent="."]
+position = Vector2(1160, 331)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BorderRight"]
+position = Vector2(770, 211)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="BorderDown" type="StaticBody2D" parent="."]
+position = Vector2(1160, 331)
+rotation = 1.5707964
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BorderDown"]
+position = Vector2(762.00006, 209.99994)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="BorderUp" type="StaticBody2D" parent="."]
+position = Vector2(1160, 331)
+rotation = 1.5707964
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BorderUp"]
+position = Vector2(-339.99994, 212.99998)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="."]
+visible = false
+autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_tbgi4")]
+
+[node name="BackgroundAtmosphere" type="ParallaxBackground" parent="."]
+scroll_ignore_camera_zoom = true
+script = ExtResource("4_tefeu")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="BackgroundAtmosphere"]
+motion_mirroring = Vector2(0, 1080)
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
+position = Vector2(-1662, -1346)
+scale = Vector2(2.0760417, 2.9935184)
+texture = ExtResource("4_tbgi4")
+centered = false
+
+[node name="EnemySpawner" type="Marker2D" parent="."]
+script = ExtResource("4_jyhfs")
+
+[node name="SpawnTimer" type="Timer" parent="EnemySpawner"]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_tipki")
+volume_db = -3.0
+autoplay = true
+bus = &"Music"
+script = ExtResource("7_85g3d")
+
+[node name="MazeSpawner" type="Node2D" parent="."]
+script = ExtResource("8_tipki")
+
+[node name="POWERUPVIEW" parent="." instance=ExtResource("9_85g3d")]
+
+[node name="Camera2D" parent="." instance=ExtResource("10_choun")]
+position = Vector2(959, 541)
+
+[node name="darken" type="CanvasLayer" parent="Camera2D"]
+
+[node name="darkencolor" type="ColorRect" parent="Camera2D/darken"]
+offset_left = -100.0
+offset_top = -68.0
+offset_right = 2020.0
+offset_bottom = 1165.0
+mouse_filter = 2
+color = Color(0.6392651, 0.4967953, 1, 0)
+
+[node name="wavesbg" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_ya4ey")
+autoplay = true
+bus = &"SFX"
+parameters/looping = true
+
+[connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]

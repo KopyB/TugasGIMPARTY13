@@ -1,0 +1,305 @@
+[gd_scene load_steps=60 format=3 uid="uid://cof2nk7b0xan"]
+
+[ext_resource type="Script" uid="uid://5isv4s0tgm3d" path="res://scripts/dummy.gd" id="1_k5f3b"]
+[ext_resource type="Texture2D" uid="uid://fl8kxpc0x1xl" path="res://assets/art/pirate gunboat base.png" id="2_k5f3b"]
+[ext_resource type="PackedScene" uid="uid://5qcrvjj2gsij" path="res://scenes/trails.tscn" id="2_qsl8f"]
+[ext_resource type="Texture2D" uid="uid://d4d666wk0gap2" path="res://assets/art/pirate gunboat canon.png" id="3_6m2ry"]
+[ext_resource type="Script" uid="uid://bt3qgbp0e66fr" path="res://scripts/enemycannon.gd" id="4_w4gkx"]
+[ext_resource type="Texture2D" uid="uid://dl06js2gnj4we" path="res://assets/art/sharkscout/torpedo shak1s.png" id="5_5rvqu"]
+[ext_resource type="AudioStream" uid="uid://v2vtt3of167c" path="res://assets/audio/Cannon.mp3" id="5_7wx0u"]
+[ext_resource type="AudioStream" uid="uid://bpe72y1ibwily" path="res://assets/audio/parrot_taunt.mp3" id="5_fva3d"]
+[ext_resource type="Texture2D" uid="uid://wfjdw73t3dev" path="res://assets/art/sharkscout/torpedo shak2s.png" id="6_1cxxm"]
+[ext_resource type="AudioStream" uid="uid://dvx1gljnlq1no" path="res://assets/audio/parrot_hurt.mp3" id="6_2bup3"]
+[ext_resource type="Texture2D" uid="uid://dyfyh0fbgnpc7" path="res://assets/art/sharkscout/torpedo shak3s.png" id="7_pv6po"]
+[ext_resource type="Texture2D" uid="uid://csaoxjosfwvge" path="res://assets/art/sharkscout/torpedo shak4s.png" id="8_2bup3"]
+[ext_resource type="Texture2D" uid="uid://lu3es1lainbl" path="res://assets/art/sharkscout/torpedo shak5s.png" id="9_7wx0u"]
+[ext_resource type="AudioStream" uid="uid://odid2bmm78tp" path="res://assets/audio/parrot_whistle.ogg" id="9_x165n"]
+[ext_resource type="Texture2D" uid="uid://1va4g53bchbo" path="res://assets/art/sharkscout/torpedo shak6s.png" id="10_4ms10"]
+[ext_resource type="Texture2D" uid="uid://bc3w0vq3rwwe6" path="res://assets/art/sharkswim/torpedo swimming1.png" id="11_qsl8f"]
+[ext_resource type="Texture2D" uid="uid://dqbmf16mdthw6" path="res://assets/art/sharkswim/torpedo swimming2.png" id="12_x165n"]
+[ext_resource type="Texture2D" uid="uid://clukwdefmbxqn" path="res://assets/art/sharkswim/torpedo swimming3.png" id="13_qqfk8"]
+[ext_resource type="Texture2D" uid="uid://c0rqpdurwt5hr" path="res://assets/art/sharkswim/torpedo swimming4.png" id="14_wcfci"]
+[ext_resource type="Texture2D" uid="uid://biofbj8xbseue" path="res://assets/art/sharkswim/torpedo swimming5.png" id="15_dkth0"]
+[ext_resource type="Texture2D" uid="uid://cgs18nwp8kaf6" path="res://assets/art/sharkswim/torpedo swimming6.png" id="16_nqqnp"]
+[ext_resource type="Texture2D" uid="uid://n3g646f8xph2" path="res://assets/art/sharktrans/torpedo shak1s.png" id="17_26psq"]
+[ext_resource type="Texture2D" uid="uid://cb14h5a6igufr" path="res://assets/art/sharktrans/torpedo shak2s.png" id="18_dgtoy"]
+[ext_resource type="Texture2D" uid="uid://b7sgqdbk0bhd3" path="res://assets/art/sharktrans/torpedo shak3s.png" id="19_f8wvb"]
+[ext_resource type="Texture2D" uid="uid://dn0gbeknj1sv1" path="res://assets/art/sharktrans/torpedo shak4s.png" id="20_ypsu6"]
+[ext_resource type="Texture2D" uid="uid://cruq16n0rorxv" path="res://assets/art/sharktrans/torpedo shak5s.png" id="21_y8s1v"]
+[ext_resource type="Texture2D" uid="uid://68ijjirrjai5" path="res://assets/art/sharktrans/torpedo shak6s.png" id="22_62ek7"]
+[ext_resource type="Texture2D" uid="uid://cj2ec1bp3i545" path="res://assets/art/sharktrans/torpedo shak7s.png" id="23_camdv"]
+[ext_resource type="Texture2D" uid="uid://bhhbq2i33gvyp" path="res://assets/art/sharktrans/torpedo shak8s.png" id="24_6qha2"]
+[ext_resource type="Texture2D" uid="uid://qrrlj4mpiwa8" path="res://assets/art/sharktrans/torpedo shak9s.png" id="25_phbbe"]
+[ext_resource type="AudioStream" uid="uid://bal8cla8pofj2" path="res://assets/audio/Splash Barrel.mp3" id="27_pv6po"]
+[ext_resource type="AudioStream" uid="uid://dwscjcq2xgj7u" path="res://assets/audio/sharko.mp3" id="29_4ms10"]
+[ext_resource type="Texture2D" uid="uid://dtakd53p8brq8" path="res://assets/art/sirenshot/1.png" id="32_e6wnd"]
+[ext_resource type="Texture2D" uid="uid://bew6di6rdtolw" path="res://assets/art/sirenshot/2.png" id="33_4da06"]
+[ext_resource type="Texture2D" uid="uid://c25j7wyly86ec" path="res://assets/art/sirenshot/3.png" id="34_ogbvw"]
+[ext_resource type="Texture2D" uid="uid://qeukms04r1me" path="res://assets/art/sirenshot/4.png" id="35_ndpeq"]
+[ext_resource type="Texture2D" uid="uid://cp0ohyr474ny6" path="res://assets/art/sirenshot/5.png" id="36_ff3ue"]
+[ext_resource type="Texture2D" uid="uid://b2vs34vouksqp" path="res://assets/art/sirenshot/6.png" id="37_a0880"]
+[ext_resource type="Texture2D" uid="uid://b8jxudgr1bcj" path="res://assets/art/sirenshot/7.png" id="38_4rb0i"]
+[ext_resource type="Texture2D" uid="uid://bl0fpxse4sf40" path="res://assets/art/sirenshot/8.png" id="39_wtk84"]
+[ext_resource type="Texture2D" uid="uid://n3xwluhm33a8" path="res://assets/art/sirenshot/9.png" id="40_pyn87"]
+[ext_resource type="Texture2D" uid="uid://r11dix7mot16" path="res://assets/art/sirenshot/10.png" id="41_mtlmk"]
+[ext_resource type="Texture2D" uid="uid://dssq76d0llj0h" path="res://assets/art/sirenshot/11.png" id="42_lr2kb"]
+[ext_resource type="Texture2D" uid="uid://di3hqivxpa2pc" path="res://assets/art/sirenshot/12.png" id="43_jjefy"]
+[ext_resource type="Texture2D" uid="uid://dpnucee433ghp" path="res://assets/art/sirenshot/13.png" id="44_uy1cr"]
+[ext_resource type="Texture2D" uid="uid://c7fcnig2e4mgi" path="res://assets/art/sirenshot/14.png" id="45_if32n"]
+[ext_resource type="Texture2D" uid="uid://cb8nr8uyf6dqa" path="res://assets/art/sirenshot/15.png" id="46_us8om"]
+[ext_resource type="Texture2D" uid="uid://dkocp5u3qb81v" path="res://assets/art/sirenshot/16.png" id="47_vv2ik"]
+[ext_resource type="Texture2D" uid="uid://duoyribr8ddx3" path="res://assets/art/sirenshot/17.png" id="48_wjglb"]
+[ext_resource type="Texture2D" uid="uid://dlwkj8r7m1s5f" path="res://assets/art/sirenswim/Untitled1083_20251126065046.png" id="49_i857r"]
+[ext_resource type="Texture2D" uid="uid://duap4au7o2j5a" path="res://assets/art/sirenswim/Untitled1083_20251126065053.png" id="50_g5va0"]
+[ext_resource type="Texture2D" uid="uid://41w60i8756g5" path="res://assets/art/sirenswim/Untitled1083_20251126065151.png" id="51_43y8i"]
+[ext_resource type="Texture2D" uid="uid://cldv8kaq3typj" path="res://assets/art/sirenswim/Untitled1083_20251126065154.png" id="52_tt8da"]
+[ext_resource type="Texture2D" uid="uid://c0y8knsfu1i4y" path="res://assets/art/sirenswim/Untitled1083_20251126065156.png" id="53_fl1vp"]
+[ext_resource type="Texture2D" uid="uid://by2u4m8lr7n2b" path="res://assets/art/sirenswim/Untitled1083_20251126065200.png" id="54_ateh0"]
+[ext_resource type="AudioStream" uid="uid://cufu5id6f3r8" path="res://assets/audio/siren.mp3" id="56_ogbvw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
+size = Vector2(62, 115)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w4gkx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_5rvqu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_1cxxm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_pv6po")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2bup3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_7wx0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4ms10")
+}],
+"loop": false,
+"name": &"scout",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_qsl8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_x165n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_qqfk8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_wcfci")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_dkth0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_nqqnp")
+}],
+"loop": false,
+"name": &"swimming",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_26psq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_dgtoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_f8wvb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ypsu6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_y8s1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_62ek7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_camdv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_6qha2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_phbbe")
+}],
+"loop": false,
+"name": &"transition",
+"speed": 12.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3knlp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("40_pyn87")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_mtlmk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_lr2kb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_jjefy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_uy1cr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_if32n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_us8om")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_vv2ik")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_wjglb")
+}],
+"loop": false,
+"name": &"diveback",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("32_e6wnd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_4da06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_ogbvw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_ndpeq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_ff3ue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_a0880")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_4rb0i")
+}, {
+"duration": 29.0,
+"texture": ExtResource("39_wtk84")
+}],
+"loop": false,
+"name": &"shot",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("49_i857r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_g5va0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_43y8i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_tt8da")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_fl1vp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_ateh0")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 9.0
+}]
+
+[node name="Dummy" type="Area2D" groups=["enemies"]]
+collision_mask = 10
+script = ExtResource("1_k5f3b")
+
+[node name="trails" parent="." instance=ExtResource("2_qsl8f")]
+position = Vector2(1.0000124, 21.000004)
+scale = Vector2(0.3, 0.3)
+animation = &"trailvert_up"
+frame_progress = 0.8998523
+
+[node name="enemyship" type="Sprite2D" parent="."]
+position = Vector2(-6.9999924, 1.9073486e-06)
+rotation = 3.1415927
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_k5f3b")
+
+[node name="cannon" type="Sprite2D" parent="."]
+position = Vector2(-1.9999999, -13.999999)
+rotation = -6.2831855
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("3_6m2ry")
+script = ExtResource("4_w4gkx")
+
+[node name="cannonsfx" type="AudioStreamPlayer2D" parent="cannon"]
+stream = ExtResource("5_7wx0u")
+volume_db = 6.0
+bus = &"SFX"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 6.5)
+shape = SubResource("RectangleShape2D_xmspm")
+
+[node name="parrot_taunt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_fva3d")
+volume_db = 5.0
+bus = &"SFX"
+
+[node name="parrot_hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_2bup3")
+volume_db = 5.0
+bus = &"SFX"
+
+[node name="parrot_whistle" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_x165n")
+bus = &"SFX"
+
+[node name="torpedoshark" type="AnimatedSprite2D" parent="."]
+position = Vector2(-9, -2.000001)
+rotation = -1.5707964
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_w4gkx")
+animation = &"scout"
+frame = 2
+frame_progress = 0.9696887
+
+[node name="sharkcharge" type="AudioStreamPlayer2D" parent="torpedoshark"]
+stream = ExtResource("29_4ms10")
+volume_db = 3.0
+bus = &"SFX"
+
+[node name="splashsfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("27_pv6po")
+bus = &"SFX"
+
+[node name="siren" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -1.7881393e-07)
+scale = Vector2(0.3527344, 0.3527344)
+sprite_frames = SubResource("SpriteFrames_3knlp")
+animation = &"shot"
+
+[node name="scream" type="AudioStreamPlayer2D" parent="siren"]
+stream = ExtResource("56_ogbvw")
+volume_db = 2.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

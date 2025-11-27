@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://butedeja3vug6"]
+
+[ext_resource type="Texture2D" uid="uid://h8guqlg8xg7" path="res://assets/art/KrakenSlayerIcon.png" id="1_c6al7"]
+[ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="2_4mbru"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mbru"]
+bg_color = Color(0, 0, 0, 0.21960784)
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[node name="HBoxContainer" type="HBoxContainer"]
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_c6al7")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4mbru")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_4mbru")
+text = "POWER UP"
+horizontal_alignment = 1
+vertical_alignment = 1
