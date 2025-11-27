@@ -5,6 +5,7 @@ var current_type = Type.BONES
 var hp = 2
 var speed = 150 
 
+
 var enemy_scene = preload("res://scenes/dummy.tscn")
 var tex_bones = preload("res://assets/art/fih fossil.png")
 
@@ -81,5 +82,11 @@ func _on_body_entered(body):
 func explode():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position
+	
+	if current_type == Type.BONES:
+		explosion.is_bone = true
+	else:
+		explosion.is_bone = false
+	
 	get_tree().current_scene.add_child(explosion)
 	queue_free()

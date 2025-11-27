@@ -51,9 +51,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_pw7mt")
 }],
-"loop": true,
+"loop": false,
 "name": &"boombone",
-"speed": 5.0
+"speed": 12.0
 }]
 
 [node name="explosion" type="AnimatedSprite2D"]
