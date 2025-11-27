@@ -21,7 +21,7 @@ expand_mode = 3
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_4mbru")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_4mbru")
 text = "POWER UP"
 horizontal_alignment = 1

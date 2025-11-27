@@ -89,25 +89,31 @@ func show_icons(message :String, duration : float):
 	var tween = icons.create_tween()
 	
 	if message == "Second Wind":
-		allicon.get_child(0).texture = secondwindlogo
+		allicon.get_child(1).texture = secondwindlogo
 	elif message == "Kraken Slayer":
-		allicon.get_child(0).texture = krakenlogo
+		allicon.get_child(1).texture = krakenlogo
+		allicon.get_child(0).start_countdown(duration)
 	elif message == "Artillery":
-		allicon.get_child(0).texture = artillerylogo
+		allicon.get_child(1).texture = artillerylogo
+		allicon.get_child(0).start_countdown(duration)
 	elif message == "Multishot":
-		allicon.get_child(0).texture = multishotlogo
+		allicon.get_child(1).texture = multishotlogo
+		allicon.get_child(0).start_countdown(duration)
 	elif message == "SPEED IS KEY":
-		allicon.get_child(0).texture = speedlogo
+		allicon.get_child(1).texture = speedlogo
+		allicon.get_child(0).start_countdown(duration)
 	elif message == "Shield":
-		allicon.get_child(0).texture = shieldlogo
+		allicon.get_child(1).texture = shieldlogo
 	elif message == "Admiral's Will":
-		allicon.get_child(0).texture = admirallogo
+		allicon.get_child(1).texture = admirallogo
+		allicon.get_child(0).start_countdown(duration)
 	elif message == "Dizziness":
-		allicon.get_child(0).texture = sirendebufflogo
+		allicon.get_child(1).texture = sirendebufflogo
+		allicon.get_child(0).start_countdown(duration)
 	else: # nanti tambahin yang lain lagi, ini placeholder
-		allicon.get_child(0).texture = logo
+		allicon.get_child(1).texture = logo
 	icons.add_child(allicon)
-	
+
 	tween.tween_interval(duration)
 	tween.tween_callback(allicon.queue_free)
 	#if is_reset:
