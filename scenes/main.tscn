@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=25 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="Script" uid="uid://68ok3weuksdj" path="res://scripts/main.gd" id="1_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://bv8c11vhkale6" path="res://assets/art/waterbg/WaterBGFrame6.png" id="10_jscy8"]
 [ext_resource type="AudioStream" uid="uid://xwrj606v054p" path="res://assets/audio/Waves Background.ogg" id="11_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="12_0ld40"]
+[ext_resource type="PackedScene" path="res://scenes/jumpscare_screen.tscn" id="13_trceg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20.000061, 2024)
@@ -28,8 +29,16 @@ shader = ExtResource("5_dp3eg")
 shader_parameter/wave_strength = 5.0
 shader_parameter/wave_speed = 2.0
 shader_parameter/wave_frequency = 10.0
+shader_parameter/paused = false
+shader_parameter/time_scale = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gqmmt"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yc10j"]
+shader = ExtResource("5_dp3eg")
+shader_parameter/wave_strength = 1.0
+shader_parameter/wave_speed = 0.25
+shader_parameter/wave_frequency = 25.0
+shader_parameter/paused = false
+shader_parameter/time_scale = 1.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_muem4"]
 animations = [{
@@ -108,7 +117,7 @@ rotation = 1.5707964
 position = Vector2(-339.99994, 212.99998)
 shape = SubResource("RectangleShape2D_h2yge")
 
-[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="." groups=["level_bgm"]]
 visible = false
 autoplay = true
 
@@ -124,18 +133,18 @@ script = ExtResource("4_tefeu")
 material = SubResource("ShaderMaterial_dp3eg")
 motion_mirroring = Vector2(0, 1080)
 
-[node name="Sprite2D3" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
+[node name="Sprite2D3" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer2" groups=["shaded"]]
+visible = false
+material = SubResource("ShaderMaterial_yc10j")
 position = Vector2(-1662, -1346)
-scale = Vector2(2.0760417, 2.9935184)
+scale = Vector2(2.1020834, 2.9861112)
 texture = ExtResource("12_0ld40")
 centered = false
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
-visible = false
-material = SubResource("ShaderMaterial_gqmmt")
 position = Vector2(0, -9.999878)
 sprite_frames = SubResource("SpriteFrames_muem4")
-frame_progress = 0.8614465
+frame_progress = 0.88227355
 centered = false
 
 [node name="EnemySpawner" type="Marker2D" parent="."]
@@ -176,5 +185,8 @@ stream = ExtResource("11_ya4ey")
 autoplay = true
 bus = &"SFX"
 parameters/looping = true
+
+[node name="JumpscareScreen" parent="." instance=ExtResource("13_trceg")]
+visible = false
 
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]

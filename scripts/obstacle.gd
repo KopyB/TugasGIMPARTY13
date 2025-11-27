@@ -8,6 +8,7 @@ var speed = 150
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
 var explosion_scene = preload("res://scenes/explosion.tscn")
+var floating_text_scene = preload("res://scenes/FloatingText.tscn")
 
 # --- FIX: Tambahkan variabel ini ---
 var is_maze_obstacle = false 
@@ -85,6 +86,10 @@ func take_damage(amount):
 	hp -= amount
 	if hp <= 0:
 		get_tree().call_group("ui_manager", "increase_score", 1)
+		var txt = floating_text_scene.instantiate()
+		txt.global_position = global_position
+		get_tree().current_scene.add_child(txt)
+		txt.start_animation("+1 Object", Color(0.423, 0.541, 0.564, 1))
 		explode()
 
 func _on_body_entered(body):
