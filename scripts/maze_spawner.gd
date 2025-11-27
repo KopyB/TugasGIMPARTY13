@@ -55,7 +55,7 @@ func _process(delta):
 		if shark_timer >= next_shark_time:
 			start_shark_event()
 			
-		if randi() % 1000000 == 0:
+		if randi() % 1000000000000000 == 0:
 			start_chaos_shark_mode()
 	else:
 		# --- FASE EVENT SEDANG JALAN ---

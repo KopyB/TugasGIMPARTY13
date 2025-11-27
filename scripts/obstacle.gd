@@ -1,13 +1,11 @@
 extends Area2D
 
-enum Type {BONES, SHIPWRECKA, SHIPWRECKB, SHIPWRECKC}
-var current_type = Type.BONES
+enum Type {BONESA, BONESB, BONESC, SHIPWRECKA, SHIPWRECKB, SHIPWRECKC}
+var current_type = Type.BONESA
 var hp = 2
 var speed = 150 
 
 var enemy_scene = preload("res://scenes/dummy.tscn")
-var tex_bones = preload("res://assets/art/fih fossil.png")
-
 var explosion_scene = preload("res://scenes/explosion.tscn")
 
 # --- FIX: Tambahkan variabel ini ---
@@ -16,43 +14,58 @@ var is_maze_obstacle = false
 func setup_obstacle(type):
 	add_to_group("obstacles")
 	current_type = type
-	var sprite = $Sprite2D
 	var shipwreck = $shipwreck
+	var bone = $bone
 	
-	if current_type == Type.BONES:
-		sprite.show()
+	if current_type == Type.BONESA:
 		shipwreck.hide()
-		sprite.texture = tex_bones 
+		bone.show()
+		bone.play("boneA")
 		hp = 3
 		
-		# --- FIX: Cek apakah ini bagian maze sebelum spawn minion ---
-		if not is_maze_obstacle and randf() <= 0.3:
-			call_deferred("spawn_minions", 1)
+	elif current_type == Type.BONESB:
+		shipwreck.hide()
+		bone.show()
+		bone.play("boneB")
+		hp = 3
+	
+	elif current_type == Type.BONESC:
+		shipwreck.hide()
+		bone.show()
+		bone.play("boneC")
+		hp = 3
 		
 	elif current_type == Type.SHIPWRECKA:
-		sprite.hide()
 		shipwreck.show()
+		bone.hide()
 		shipwreck.play("shipA")
 		hp = 5
 		scale = Vector2(1.2, 1.2)
 		
 	elif current_type == Type.SHIPWRECKB:
-		sprite.hide()
 		shipwreck.show()
+		bone.hide()
 		shipwreck.play("shipB")
 		hp = 5
 		scale = Vector2(1.2, 1.2)
 
 	elif current_type == Type.SHIPWRECKC:
-		sprite.hide()
 		shipwreck.show()
+		bone.hide()
 		shipwreck.play("shipC")
 		hp = 5
 		scale = Vector2(1.2, 1.2)
-		# --- FIX: Cek apakah ini bagian maze sebelum spawn minion ---
-		if not is_maze_obstacle and randf() <= 0.2:
-			call_deferred("spawn_minions", 1)
-
+		
+	if not is_maze_obstacle:
+		# KASUS A: Jika Tipe BONES (Chance 30%)
+		if current_type == Type.BONESA or Type.BONESB or Type.BONESC:
+			if randf() <= 0.3:
+				call_deferred("spawn_minions", 1)
+		
+		# KASUS B: Jika Tipe KAPAL KARAM (Chance 20%)
+		else:
+			if randf() <= 0.2:
+				call_deferred("spawn_minions", 1)
 func spawn_minions(count):
 	for i in range(count):
 		var enemy = enemy_scene.instantiate()
@@ -81,5 +94,9 @@ func _on_body_entered(body):
 func explode():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position
+	if current_type == Type.BONESA or Type.BONESB or Type.BONESC:
+		explosion.explosion_type = "bone"
+	else:
+		explosion.explosion_type = "normal"
 	get_tree().current_scene.add_child(explosion)
 	queue_free()
