@@ -96,7 +96,7 @@ func explode():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position
 	
-	if current_type == Type.BONESA or Type.BONESB or Type.BONESC:
+	if current_type == Type.BONESA or current_type == Type.BONESB or current_type == Type.BONESC:
 		explosion.is_bone = true
 	else:
 		explosion.is_bone = false

@@ -406,8 +406,8 @@ func take_damage(amount):
 	if not enemy_type == Type.PARROT:
 		if parrotcheck == 0:
 			if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
-				if amount >= 9999:
-					die()
+				if amount < 9999:
+					return
 			
 			if enemy_type == Type.SIREN or enemy_type == Type.RSIREN:
 				if is_paralyzed:
