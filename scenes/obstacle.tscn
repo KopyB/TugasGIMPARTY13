@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bxx0n2y6gomuc"]
+[gd_scene load_steps=33 format=3 uid="uid://bxx0n2y6gomuc"]
 
 [ext_resource type="Script" uid="uid://cvx1imre4rdk" path="res://scripts/obstacle.gd" id="1_drdry"]
 [ext_resource type="Texture2D" uid="uid://biv33wjhvmeyy" path="res://assets/art/fih fossil.png" id="2_drdry"]
@@ -18,6 +18,17 @@
 [ext_resource type="Texture2D" uid="uid://7d6lb1576v3k" path="res://assets/art/kapalC/kapal karam C3.png" id="16_2ebg6"]
 [ext_resource type="Texture2D" uid="uid://bosg44xqx4sae" path="res://assets/art/kapalC/kapal karam C4.png" id="17_ux1bk"]
 [ext_resource type="Texture2D" uid="uid://quqgadv78bg7" path="res://assets/art/kapalC/kapal karam C5.png" id="18_psm4a"]
+[ext_resource type="Texture2D" uid="uid://bqolejc2fy8o0" path="res://assets/art/boneA/fih fossilA1.png" id="19_nff2i"]
+[ext_resource type="Texture2D" uid="uid://btfq3khhk36tt" path="res://assets/art/boneA/fih fossilA2.png" id="20_iafri"]
+[ext_resource type="Texture2D" uid="uid://dvogxg8uytlu8" path="res://assets/art/boneA/fih fossilA3.png" id="21_2ebg6"]
+[ext_resource type="Texture2D" uid="uid://dbaycoubnc1si" path="res://assets/art/boneB/fih fossilB1.png" id="22_ux1bk"]
+[ext_resource type="Texture2D" uid="uid://7j0qxfmkoyhc" path="res://assets/art/boneB/fih fossilB2.png" id="23_psm4a"]
+[ext_resource type="Texture2D" uid="uid://cmnklwb0l1h2c" path="res://assets/art/boneB/fih fossilB3.png" id="24_ecb7i"]
+[ext_resource type="Texture2D" uid="uid://b8x2qj55lypln" path="res://assets/art/boneB/fih fossilB4.png" id="25_qx32r"]
+[ext_resource type="Texture2D" uid="uid://b6t3bkmjdd0bk" path="res://assets/art/boneC/fih fossilC1.png" id="26_i2l0l"]
+[ext_resource type="Texture2D" uid="uid://iq1nnvs6f5b4" path="res://assets/art/boneC/fih fossilC2.png" id="27_msona"]
+[ext_resource type="Texture2D" uid="uid://bprbyyr123cu5" path="res://assets/art/boneC/fih fossilC3.png" id="28_72j8t"]
+[ext_resource type="Texture2D" uid="uid://3m6jtcu6c0fg" path="res://assets/art/boneC/fih fossilC4.png" id="29_m3k15"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qo2ef"]
 size = Vector2(207, 122)
@@ -88,6 +99,57 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_7iq0v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_nff2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_iafri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_2ebg6")
+}],
+"loop": true,
+"name": &"boneA",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_ux1bk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_psm4a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_ecb7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_qx32r")
+}],
+"loop": true,
+"name": &"boneB",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_i2l0l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_msona")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_72j8t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_m3k15")
+}],
+"loop": true,
+"name": &"boneC",
+"speed": 12.0
+}]
+
 [node name="Obstacle" type="Area2D" groups=["obstacles"]]
 collision_layer = 8
 collision_mask = 7
@@ -98,6 +160,7 @@ position = Vector2(-6.5, 30)
 shape = SubResource("RectangleShape2D_qo2ef")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(-31.999996, 6.999994)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("2_drdry")
@@ -105,8 +168,13 @@ metadata/_edit_group_ = true
 
 [node name="shipwreck" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ecb7i")
-animation = &"shipC"
-frame_progress = 0.55231655
+animation = &"shipB"
 speed_scale = 0.5
+
+[node name="bone" type="AnimatedSprite2D" parent="."]
+position = Vector2(1.0000076, -7.6293945e-06)
+scale = Vector2(0.056825876, 0.056825876)
+sprite_frames = SubResource("SpriteFrames_7iq0v")
+animation = &"boneC"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
