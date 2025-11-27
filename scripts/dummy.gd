@@ -6,10 +6,16 @@ signal enemy_died
 var enemyship: Sprite2D = null
 var collision_shape_2d: CollisionShape2D = null
 var cannon: Sprite2D = null
+var is_game_over = false
 
 # TIPE MUSUH
 enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
 @export var enemy_type = Type.GUNBOAT
+@onready var pathfollow := get_parent() as PathFollow2D
+@onready var dummy_root = get_parent().get_parent()
+@onready var shadow_path = dummy_root.get_node("shadowpath/parrotshadowpath")
+
+
 
 # STATISTIK MUSUH NORMAL
 var speed = 100
@@ -40,9 +46,11 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 var bomber_barrel = preload("res://assets/art/BomberWithBarrel.png")
 var bomber_noBarrel = preload("res://assets/art/BomberNoBarrel.png")
 var gun_boat = preload("res://assets/art/pirate gunboat base.png")
+var floating_text_scene = preload("res://scenes/FloatingText.tscn")
 
 @onready var taunt: AudioStreamPlayer2D = $parrot_taunt
 @onready var pdeath: AudioStreamPlayer2D = $parrot_hurt
+@onready var skrem : AudioStreamPlayer2D = $siren/scream
 @onready var cannonsfx: AudioStreamPlayer2D = $cannon/cannonsfx
 @onready var trails: AnimatedSprite2D = $trails
 @onready var parrot_whistle: AudioStreamPlayer2D = $parrot_whistle
@@ -95,7 +103,7 @@ func _ready():
 		
 	# --- SETUP VISUAL & LOGIKA PER TIPE ---
 	
-	# TIPE 0: GUNBOAT (Musuh Standar)
+	# TIPE 0: GUNBOAT
 	if enemy_type == Type.GUNBOAT:
 		if enemyship:
 			enemyship.texture = gun_boat
@@ -115,13 +123,11 @@ func _ready():
 		
 		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
-		
 	# TIPE 1: BOMBER (Kapal Tong)
 	elif enemy_type == Type.BOMBER:
 		if cannon: cannon.hide()
 		
 		if enemyship:
-			enemyship.texture = bomber_barrel
 			enemyship.rotation = -PI/2
 			enemyship.scale = Vector2(0.15, 0.15)
 			$trails.show()
@@ -208,19 +214,37 @@ func _ready():
 		rotation_degrees = 0
 		speed = randi_range(120, 150)
 		
+func cease_fire():
+	is_game_over = true
+	shoot_timer = 0
+	
+	if enemy_type == Type.TORPEDO_SHARK:
+		is_shark_charging = false
+		shark_charge_speed = 0	
+		
 func _process(delta):
+	if is_game_over:
+		return
+		
 	if is_paralyzed:
+		if trails and is_instance_valid(trails):
+			trails.hide()
 		if enemy_type == Type.GUNBOAT:
 			position.y += speed/2 * delta
-		elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
+		elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER or enemy_type == Type.SIREN or enemy_type == Type.RSIREN or enemy_type == Type.TORPEDO_SHARK:
 			position.y += speed * delta
 		return
+	
 		
 	if enemy_type == Type.GUNBOAT:
 		position.y += speed * delta
 		
 	elif enemy_type == Type.BOMBER:
 		position.x += speed * delta
+		if shoot_timer >= shoot_interval/2:
+			enemyship.texture = bomber_barrel
+		else:
+			enemyship.texture = bomber_noBarrel
 	
 	elif enemy_type == Type.RBOMBER:
 		position.x -= speed * delta
@@ -258,9 +282,10 @@ func check_despawn():
 
 # --- FUNGSI PARALYZED ---
 func set_paralyzed(status):
-	if enemy_type == Type.TORPEDO_SHARK and is_shark_charging and status == true:
-		return
 	is_paralyzed = status
+	if enemy_type == Type.PARROT:
+		pathfollow.is_paralyzed = status
+		shadow_path.is_paralyzed = status
 	if is_paralyzed:
 		modulate = Color(0.5, 0.5, 0.5, 1) 
 		if enemy_type == Type.TORPEDO_SHARK and torpedoshark:
@@ -276,7 +301,10 @@ func set_paralyzed(status):
 		# Resume Animasi Siren
 		elif (enemy_type == Type.SIREN or enemy_type == Type.RSIREN) and siren:
 			siren.play() 
-			
+	
+	if status == false and enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER or enemy_type == Type.GUNBOAT:
+			$trails.show()
+			 
 # --- FUNGSI SERANGAN ---
 func perform_attack():
 	if enemy_type == Type.GUNBOAT:
@@ -371,11 +399,14 @@ func trigger_siren_scream():
 	is_screaming = true
 	siren.play("shot")
 	print("SIREN SCREAM! PLAYER DIZZYY!")
+	skrem.play()
 
 	if is_instance_valid(player) and player.has_method("apply_dizziness"):
 		player.apply_dizziness(4.0)
+		cameraeffects.zoom(Vector2(1.05, 1.05), 4.0)
+		cameraeffects.flash_darken(0.5, 4.0)
 
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(3.0).timeout
 	siren.play("diveback")
 	if not is_inside_tree(): 
 		return
@@ -389,7 +420,8 @@ func take_damage(amount):
 	if not enemy_type == Type.PARROT:
 		if parrotcheck == 0:
 			if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
-				return # NO DAMAGE
+				if amount < 9999:
+					return
 			
 			if enemy_type == Type.SIREN or enemy_type == Type.RSIREN:
 				if is_paralyzed:
@@ -398,7 +430,9 @@ func take_damage(amount):
 						die()
 					return 
 				else:
-					trigger_siren_scream()
+					if amount < health:
+						trigger_siren_scream()
+						get_tree().call_group("jumpscare_manager", "play_jumpscare")
 					health -= amount
 					if health <= 0:
 						die()
@@ -417,18 +451,27 @@ func take_damage(amount):
 
 func die():
 	var add_points = 0
+	var enemy_name = ""
+	
 	match enemy_type:
 		Type.GUNBOAT:
 			add_points = 3
+			enemy_name = "Gunboat"
 		Type.BOMBER, Type.RBOMBER:
 			add_points = 3
+			enemy_name = "Bomber"
 		Type.SIREN, Type.RSIREN:   
 			add_points = 4
+			enemy_name = "Siren"
 		Type.PARROT:
 			add_points = 5
+			enemy_name = "Parrot"
 		Type.TORPEDO_SHARK:
 			add_points = 8
+			enemy_name = "Shark"
+			
 	get_tree().call_group("ui_manager", "increase_score", add_points)
+	spawn_floating_text(add_points, enemy_name)
 	
 	if not enemy_type == Type.PARROT:
 		# FIX CRASH: Cek validitas node enemyship sebelum hide
@@ -467,6 +510,22 @@ func _on_area_entered(area: Area2D) -> void:
 			
 		# 2. Musuh ini mati
 		die()
+
+func spawn_floating_text(points, e_name):
+	var text_instance = floating_text_scene.instantiate()
+	var display_text = "+" + str(points) + " " + e_name
+	
+	# Tentukan warna teks berdasarkan tipe (Opsional, biar keren)
+	var text_color = Color.WHITE
+	if points >= 8: text_color = Color(0.619, 0.149, 0.392, 1)       
+	elif points >= 5: text_color = Color(0.996, 0.909, 0.572, 1)    
+	else: text_color = Color(0.478, 0.937, 1, 1)              
+	
+	text_instance.global_position = global_position
+	text_instance.global_position.x += randf_range(-20, 20)
+	
+	get_tree().current_scene.add_child(text_instance)
+	text_instance.start_animation(display_text, text_color)
 
 func spawn_powerup_chance():
 	if randf() <= 0.25: 

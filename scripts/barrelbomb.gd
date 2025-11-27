@@ -5,7 +5,7 @@ extends Area2D
 
 var explosion_scene = preload("res://scenes/explosion.tscn")
 
-var fall_speed = 150 
+var fall_speed = randi_range(160,200)
 var damage = 1
 
 func _ready():

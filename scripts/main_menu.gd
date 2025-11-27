@@ -64,6 +64,7 @@ func _on_exit_pressed() -> void:
 func _on_start_pressed() -> void:
 	#animation stella zooming
 	buttonclick.play()
+	$animationstella/wavestransition.play()
 	animation_player.play("nyoom")
 	await animation_player.animation_finished
 	
