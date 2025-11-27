@@ -1,14 +1,34 @@
-[gd_scene load_steps=2 format=3 uid="uid://b5d35swq6gshc"]
+[gd_scene load_steps=5 format=3 uid="uid://b5d35swq6gshc"]
 
 [ext_resource type="Texture2D" uid="uid://h8guqlg8xg7" path="res://assets/art/KrakenSlayerIcon.png" id="1_bo8cm"]
+[ext_resource type="Script" uid="uid://7705tc3euegt" path="res://scripts/progress_bar.gd" id="1_e357s"]
+[ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="2_jfrr8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e357s"]
+bg_color = Color(1, 0.6484506, 0.42564166, 1)
 
 [node name="PanelContainer" type="PanelContainer"]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_e357s")
+value = 100.0
+fill_mode = 3
+show_percentage = false
+script = ExtResource("1_e357s")
+
+[node name="Timer" type="Timer" parent="ProgressBar"]
+one_shot = true
+autostart = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2
 texture = ExtResource("1_bo8cm")
 expand_mode = 3
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
-layout_mode = 2
-fill_mode = 2
+[node name="CopalGimming" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-133, 46)
+scale = Vector2(0.036126263, 0.033453584)
+texture = ExtResource("2_jfrr8")
