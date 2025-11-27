@@ -41,7 +41,7 @@ func _ready():
 			crate.texture = admiralcrate
 
 func _process(delta):
-	position.y += 150 * delta # Kecepatan jatuh
+	position.y += 80 * delta # Kecepatan jatuh
 
 func _on_body_entered(body):
 	# Cek apakah player punya fungsi untuk menerima powerup

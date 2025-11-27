@@ -1,6 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=15 format=3 uid="uid://c3fmrec3ntaaj"]
 
-[ext_resource type="Script" uid="uid://68ok3weuksdj" path="res://scripts/main.gd" id="1_eb6dy"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="4_tbgi4"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://ierkg61h23va" path="res://scenes/powerupview.tscn" id="9_85g3d"]
 [ext_resource type="PackedScene" uid="uid://ceelts6yey11c" path="res://scenes/screenshake.tscn" id="10_choun"]
 [ext_resource type="AudioStream" uid="uid://xwrj606v054p" path="res://assets/audio/Waves Background.ogg" id="11_ya4ey"]
+[ext_resource type="PackedScene" uid="uid://dh7tgcxbi5jy5" path="res://scenes/jumpscare_screen.tscn" id="13_trceg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20.000061, 2024)
@@ -54,7 +55,7 @@ rotation = 1.5707964
 position = Vector2(-339.99994, 212.99998)
 shape = SubResource("RectangleShape2D_h2yge")
 
-[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="." groups=["level_bgm"]]
 visible = false
 autoplay = true
 
@@ -113,5 +114,8 @@ stream = ExtResource("11_ya4ey")
 autoplay = true
 bus = &"SFX"
 parameters/looping = true
+
+[node name="JumpscareScreen" parent="." instance=ExtResource("13_trceg")]
+visible = false
 
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]
