@@ -403,8 +403,6 @@ func trigger_siren_scream():
 
 	if is_instance_valid(player) and player.has_method("apply_dizziness"):
 		player.apply_dizziness(4.0)
-		cameraeffects.zoom(Vector2(1.05, 1.05), 4.0)
-		cameraeffects.flash_darken(0.5, 4.0)
 
 	await get_tree().create_timer(3.0).timeout
 	siren.play("diveback")

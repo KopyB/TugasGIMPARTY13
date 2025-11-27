@@ -133,7 +133,7 @@ script = ExtResource("4_tefeu")
 material = SubResource("ShaderMaterial_dp3eg")
 motion_mirroring = Vector2(0, 1080)
 
-[node name="Sprite2D3" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer2" groups=["shaded"]]
+[node name="Sprite2D3" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
 visible = false
 material = SubResource("ShaderMaterial_yc10j")
 position = Vector2(-1662, -1346)

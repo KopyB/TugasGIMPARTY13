@@ -176,5 +176,7 @@ position = Vector2(1.0000076, -7.6293945e-06)
 scale = Vector2(0.056825876, 0.056825876)
 sprite_frames = SubResource("SpriteFrames_7iq0v")
 animation = &"boneC"
+frame_progress = 0.5154967
+speed_scale = 0.25
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

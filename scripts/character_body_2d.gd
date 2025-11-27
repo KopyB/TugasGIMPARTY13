@@ -411,7 +411,9 @@ func apply_dizziness(duration):
 	Powerupview.show_icons("Dizziness", duration)
 	is_dizzy = true
 	dizzy_timer = duration
-
+	
+	cameraeffects.zoom(Vector2(1.05, 1.05), duration)
+	cameraeffects.flash_darken(0.5, duration)
 
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
