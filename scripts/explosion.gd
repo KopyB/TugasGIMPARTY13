@@ -2,6 +2,7 @@ extends AnimatedSprite2D
 
 @onready var explosion: AnimatedSprite2D = $"."
 @onready var boomsfx: AudioStreamPlayer2D = $boomsfx
+@onready var bonesfx: AudioStreamPlayer2D = $bone_boom
 var is_bone = false
 
 # Called when the node enters the scene tree for the first time.
@@ -24,7 +25,7 @@ func exploded():
 func exploded_bone():
 	cameraeffects.shake(8.0, 0.25)
 	explosion.show()
-	boomsfx.play()
+	bonesfx.play()
 	explosion.play("boombone")
 	await explosion.animation_finished
 	explosion.hide()
