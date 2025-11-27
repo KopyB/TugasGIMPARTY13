@@ -173,7 +173,7 @@ speed_scale = 0.5
 
 [node name="bone" type="AnimatedSprite2D" parent="."]
 position = Vector2(1.0000076, -7.6293945e-06)
-scale = Vector2(0.056825876, 0.056825876)
+scale = Vector2(0.57, 0.57)
 sprite_frames = SubResource("SpriteFrames_7iq0v")
 animation = &"boneC"
 frame_progress = 0.5154967
