@@ -20,7 +20,6 @@ var laser_scene = preload("res://scenes/LaserBeam.tscn")
 var active_laser_node = null
 var is_invincible = false
 
-
 # --- ??? ---
 var input_buffer: String = ""      
 var some_code: String = "SOMETHING" 
