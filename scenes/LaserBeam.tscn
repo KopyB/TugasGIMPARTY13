@@ -86,6 +86,7 @@ shape = SubResource("RectangleShape2D_1nnux")
 
 [node name="lazer" type="AnimatedSprite2D" parent="."]
 visible = false
+visibility_layer = 25
 position = Vector2(0, -90)
 sprite_frames = SubResource("SpriteFrames_tuomb")
 animation = &"beaming it"

@@ -188,7 +188,7 @@ func die():
 	get_tree().call_group("level_bgm", "stop")
 	if game_over_music:
 		game_over_music.play()
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(0.4).timeout
 	# Angka 0 artinya tipe "YOU DIED!" 
 	get_tree().call_group("ui_manager", "toggled_handler", 0)
 	
@@ -316,7 +316,7 @@ func activate_kraken():
 		await lazer.animation_finished
 		print("SHAKE NOW")
 		cameraeffects.shake(20.0, 0.05)
-		cameraeffects.start_loop_shake(8.0, 0.08)
+		cameraeffects.start_loop_shake(10.0, 0.08)
 		print("SHAKE CALLED")
 		lazer.scale = Vector2(3.0,5.0)
 		lazer.position.y = -3230.0
@@ -341,7 +341,7 @@ func activate_kraken():
 		lazer.play_backwards("start beam")
 		cameraeffects.stop_loop_shake()
 		await lazer.animation_finished
-		lazer.scale = Vector2(2.0,2.0)
+		lazer.scale = Vector2(2.0,3.0)
 		lazer.position.y = -150.0
 		lazer.play("end")
 		#await lazer.animation_finished
@@ -408,10 +408,12 @@ func apply_dizziness(duration):
 		return
 	modulate = Color(0.832, 0.381, 0.83, 0.851)
 	print("PLAYER KENA MENTAL! PUSING!")
+	cameraeffects.zoom(Vector2(1.05, 1.05), duration)
+	cameraeffects.flash_darken(0.5, duration)
 	Powerupview.show_icons("Dizziness", duration)
 	is_dizzy = true
 	dizzy_timer = duration
-
+	cameraeffects.flash_darken(0.5, duration)
 
 func trigger_shockwave():
 	# Efek visual (opsional, misal flash layar)
