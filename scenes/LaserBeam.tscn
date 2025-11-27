@@ -1,0 +1,92 @@
+[gd_scene load_steps=15 format=3 uid="uid://hfikht0ndhtf"]
+
+[ext_resource type="Script" uid="uid://b3q75qsg2r7cn" path="res://scripts/LaserBeam.gd" id="1_tuomb"]
+[ext_resource type="Texture2D" uid="uid://3i4mlr3hc3r" path="res://assets/art/KSFrameBlast1.png" id="2_h8gcy"]
+[ext_resource type="Texture2D" uid="uid://bqaynxvm25akj" path="res://assets/art/KSFrameBlast2.png" id="3_r4wxb"]
+[ext_resource type="Texture2D" uid="uid://dyx2n2xktebuv" path="res://assets/art/KSFrameBlast3.png" id="4_vpe0x"]
+[ext_resource type="Texture2D" uid="uid://burg78sccelho" path="res://assets/art/KSFrameWinding1.png" id="5_s21nt"]
+[ext_resource type="Texture2D" uid="uid://cohhqcv5h4buo" path="res://assets/art/KSFrameWinding2.png" id="6_ajviy"]
+[ext_resource type="Texture2D" uid="uid://bupujt18hvgc4" path="res://assets/art/KSFrameStart1.png" id="7_vpe0x"]
+[ext_resource type="Texture2D" uid="uid://kto437in2pqd" path="res://assets/art/KSFrameStart2.png" id="8_dddg3"]
+[ext_resource type="Texture2D" uid="uid://bp0far1ypjyxo" path="res://assets/art/KSFrameStart3.png" id="9_7fchi"]
+[ext_resource type="Texture2D" uid="uid://bismunaeh5mas" path="res://assets/art/KSFrameStart4.png" id="10_xv8p5"]
+[ext_resource type="Texture2D" uid="uid://jb3k3fjqqih8" path="res://assets/art/KSFrameStart5.png" id="11_r16r8"]
+[ext_resource type="Texture2D" uid="uid://doj3kah5u4i80" path="res://assets/art/KSFrameStart6.png" id="12_wx00j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1nnux"]
+size = Vector2(182, 2636)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tuomb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_h8gcy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_r4wxb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vpe0x")
+}],
+"loop": true,
+"name": &"beaming it",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_s21nt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ajviy")
+}],
+"loop": false,
+"name": &"start beam",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_vpe0x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_dddg3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_7fchi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_xv8p5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_r16r8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_wx00j")
+}],
+"loop": false,
+"name": &"winding_up",
+"speed": 12.0
+}]
+
+[node name="LaserBeam" type="Area2D"]
+z_index = 10
+collision_mask = 13
+script = ExtResource("1_tuomb")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_left = -128.0
+offset_top = -2748.0
+offset_right = 127.0
+offset_bottom = -111.0
+color = Color(0.63411003, 0.1311, 0.69, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(7, -1431)
+shape = SubResource("RectangleShape2D_1nnux")
+
+[node name="lazer" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -90)
+sprite_frames = SubResource("SpriteFrames_tuomb")
+animation = &"beaming it"
+offset = Vector2(0, -30)

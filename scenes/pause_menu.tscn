@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8qv1r8ggddgm"]
+
+[ext_resource type="Script" uid="uid://dpho3o8db7fek" path="res://scripts/pause_menu.gd" id="1_n87rw"]
+[ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="2_myx47"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kukqi"]
+bg_color = Color(0.21960784, 0.49411765, 0.7529412, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+shadow_size = 3
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5d2l8"]
+bg_color = Color(0.12763059, 0.3429742, 0.5397971, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+shadow_size = 1
+shadow_offset = Vector2(0, 5)
+
+[node name="pause_menu" type="Control" node_paths=PackedStringArray("state", "resume_button")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n87rw")
+state = NodePath("VBoxContainer/state")
+resume_button = NodePath("VBoxContainer/RESUME")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -207.0
+offset_top = -257.0
+offset_right = 207.0
+offset_bottom = 257.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -147.0
+offset_top = -179.5
+offset_right = 147.0
+offset_bottom = 115.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+
+[node name="state" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 50
+text = "[GAME STATE]"
+horizontal_alignment = 1
+
+[node name="scorelabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 30
+text = "score point"
+horizontal_alignment = 1
+
+[node name="RESUME" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
+text = "Resume"
+
+[node name="RESTART" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
+text = "Restart"
+
+[node name="EXIT" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
+text = "Main Menu"
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 1
+autostart = true
+
+[connection signal="pressed" from="VBoxContainer/RESUME" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/RESTART" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="VBoxContainer/EXIT" to="." method="_on_exit_pressed"]
