@@ -239,12 +239,14 @@ animation = &"trailvert_up"
 frame_progress = 0.8998523
 
 [node name="enemyship" type="Sprite2D" parent="."]
+visibility_layer = 8
 position = Vector2(-6.9999924, 1.9073486e-06)
 rotation = 3.1415927
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_k5f3b")
 
 [node name="cannon" type="Sprite2D" parent="."]
+visibility_layer = 17
 position = Vector2(-1.9999999, -13.999999)
 rotation = -6.2831855
 scale = Vector2(0.6, 0.6)

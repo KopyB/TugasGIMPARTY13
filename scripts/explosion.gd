@@ -13,7 +13,7 @@ func _ready() -> void:
 		exploded()
 		
 func exploded():
-	cameraeffects.shake(8.0, 0.25)
+	cameraeffects.shake(12.0, 0.25)
 	explosion.show()
 	boomsfx.play()
 	explosion.play("boom")
@@ -23,7 +23,7 @@ func exploded():
 	queue_free()
 
 func exploded_bone():
-	cameraeffects.shake(8.0, 0.25)
+	cameraeffects.shake(12.0, 0.25)
 	explosion.show()
 	bonesfx.play()
 	explosion.play("boombone")

@@ -1,24 +1,29 @@
-[gd_scene load_steps=32 format=3 uid="uid://ynu4bos33vch"]
+[gd_scene load_steps=38 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
-[ext_resource type="Texture2D" uid="uid://bsubp1vu05x1o" path="res://assets/art/base/base1.png" id="3_8egab"]
-[ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="3_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://bwy6nk3q1q4we" path="res://assets/art/waterbg/WaterBGFrame1.png" id="2_hstxw"]
+[ext_resource type="Texture2D" uid="uid://bsexnd1gi82lx" path="res://assets/art/waterbg/WaterBGFrame2and10.png" id="3_8egab"]
 [ext_resource type="AudioStream" uid="uid://bvrdv4gonfpxj" path="res://assets/audio/Waves Transition.ogg" id="4_1ajci"]
 [ext_resource type="Script" uid="uid://ci7epneqyxjoa" path="res://music_control.gd" id="4_8ln24"]
-[ext_resource type="Texture2D" uid="uid://bftf6qcnwc34b" path="res://assets/art/base/base2.png" id="4_gw5y6"]
+[ext_resource type="Texture2D" uid="uid://bdwm45bs6p0sd" path="res://assets/art/waterbg/WaterBGFrame3and9.png" id="4_gw5y6"]
 [ext_resource type="Texture2D" uid="uid://clrobd014juo2" path="res://assets/art/Untitled1062_20251121122153.png" id="4_jk1qb"]
 [ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="4_wu84c"]
 [ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="5_rcqid"]
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_rtw2f"]
-[ext_resource type="Texture2D" uid="uid://d0wghygkbu1cd" path="res://assets/art/base/base3.png" id="5_svtp6"]
-[ext_resource type="Texture2D" uid="uid://cwnj48fs41x00" path="res://assets/art/base/base4.png" id="6_1dfpl"]
+[ext_resource type="Texture2D" uid="uid://borsmvyxorra3" path="res://assets/art/waterbg/WaterBGFrame4and8.png" id="5_svtp6"]
+[ext_resource type="Texture2D" uid="uid://dlxrq6n5eubno" path="res://assets/art/waterbg/WaterBGFrame5and7.png" id="6_1dfpl"]
 [ext_resource type="AudioStream" uid="uid://dik1asa4k5rqs" path="res://assets/audio/Calm Waters.ogg" id="6_lgwnu"]
 [ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_flqon"]
-[ext_resource type="Texture2D" uid="uid://rwushyo0qp7i" path="res://assets/art/base/base5.png" id="7_qywvv"]
+[ext_resource type="Texture2D" uid="uid://bv8c11vhkale6" path="res://assets/art/waterbg/WaterBGFrame6.png" id="7_qywvv"]
+[ext_resource type="Texture2D" uid="uid://bsubp1vu05x1o" path="res://assets/art/base/base1.png" id="8_1acrt"]
 [ext_resource type="Texture2D" uid="uid://cnh5rudmqjcnr" path="res://assets/art/base/base6.png" id="8_3wgol"]
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="8_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://bftf6qcnwc34b" path="res://assets/art/base/base2.png" id="9_vr8o3"]
+[ext_resource type="Texture2D" uid="uid://d0wghygkbu1cd" path="res://assets/art/base/base3.png" id="10_1a85y"]
+[ext_resource type="Texture2D" uid="uid://cwnj48fs41x00" path="res://assets/art/base/base4.png" id="11_hl5e0"]
 [ext_resource type="AudioStream" uid="uid://cp6l6ms5o5es8" path="res://assets/audio/Click.mp3" id="11_lgwnu"]
+[ext_resource type="Texture2D" uid="uid://rwushyo0qp7i" path="res://assets/art/base/base5.png" id="12_engjn"]
 [ext_resource type="AudioStream" uid="uid://xwrj606v054p" path="res://assets/audio/Waves Background.ogg" id="13_rcqid"]
 
 [sub_resource type="GDScript" id="GDScript_oa1go"]
@@ -32,9 +37,12 @@ func _process(delta):
 	
 "
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_1acrt"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_6h3lr"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hstxw")
+}, {
 "duration": 1.0,
 "texture": ExtResource("3_8egab")
 }, {
@@ -51,7 +59,7 @@ animations = [{
 "texture": ExtResource("7_qywvv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_3wgol")
+"texture": ExtResource("6_1dfpl")
 }, {
 "duration": 1.0,
 "texture": ExtResource("5_svtp6")
@@ -61,6 +69,41 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("3_8egab")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.5
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1acrt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_1acrt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_vr8o3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1a85y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hl5e0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_engjn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3wgol")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1a85y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_vr8o3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_1acrt")
 }],
 "loop": true,
 "name": &"base",
@@ -170,10 +213,9 @@ script = SubResource("GDScript_oa1go")
 [node name="ParallaxLayer" type="ParallaxLayer" parent="BackgroundAtmosphere"]
 motion_mirroring = Vector2(0, 1080)
 
-[node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
-position = Vector2(-1662, -1346)
-scale = Vector2(2.0760417, 2.9935184)
-texture = ExtResource("3_tbmy8")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
+position = Vector2(0, -9.999878)
+sprite_frames = SubResource("SpriteFrames_6h3lr")
 centered = false
 
 [node name="base" type="Control" parent="."]
