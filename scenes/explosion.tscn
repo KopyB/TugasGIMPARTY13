@@ -58,6 +58,7 @@ animations = [{
 }]
 
 [node name="explosion" type="AnimatedSprite2D"]
+visibility_layer = 513
 z_index = 20
 sprite_frames = SubResource("SpriteFrames_v8gpv")
 animation = &"boombone"

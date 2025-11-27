@@ -316,7 +316,7 @@ func activate_kraken():
 		await lazer.animation_finished
 		print("SHAKE NOW")
 		cameraeffects.shake(20.0, 0.05)
-		cameraeffects.start_loop_shake(8.0, 0.08)
+		cameraeffects.start_loop_shake(10.0, 0.08)
 		print("SHAKE CALLED")
 		lazer.scale = Vector2(3.0,5.0)
 		lazer.position.y = -3230.0
@@ -341,7 +341,7 @@ func activate_kraken():
 		lazer.play_backwards("start beam")
 		cameraeffects.stop_loop_shake()
 		await lazer.animation_finished
-		lazer.scale = Vector2(2.0,2.0)
+		lazer.scale = Vector2(2.0,3.0)
 		lazer.position.y = -150.0
 		lazer.play("end")
 		#await lazer.animation_finished
@@ -411,8 +411,6 @@ func apply_dizziness(duration):
 	Powerupview.show_icons("Dizziness", duration)
 	is_dizzy = true
 	dizzy_timer = duration
-	
-	cameraeffects.zoom(Vector2(1.05, 1.05), duration)
 	cameraeffects.flash_darken(0.5, duration)
 
 func trigger_shockwave():
