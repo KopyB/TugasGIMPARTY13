@@ -136,14 +136,6 @@ expand_margin_bottom = 5.0
 shadow_size = 1
 shadow_offset = Vector2(0, 5)
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_bqqt6"]
-color = Color(1, 1, 1, 1)
-thickness = 8
-
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_wu84c"]
-color = Color(0.21960784, 0.49411765, 0.7529412, 1)
-thickness = 8
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rcqid"]
 bg_color = Color(0.12763059, 0.3429742, 0.5397971, 1)
 corner_radius_top_left = 16
@@ -154,6 +146,14 @@ expand_margin_top = 5.0
 expand_margin_bottom = 5.0
 shadow_size = 1
 shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_bqqt6"]
+color = Color(1, 1, 1, 1)
+thickness = 8
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_wu84c"]
+color = Color(0.21960784, 0.49411765, 0.7529412, 1)
+thickness = 8
 
 [node name="main_menu" type="Control"]
 layout_mode = 3
@@ -262,6 +262,17 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
 theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
 text = "START"
 
+[node name="LEADERBOARD" type="Button" parent="mainbuttons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "LEADERBOARD"
+
 [node name="SETTINGS" type="Button" parent="mainbuttons"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -306,7 +317,58 @@ playback_type = 1
 parameters/looping = true
 script = ExtResource("7_flqon")
 
+[node name="LeaderboardPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 275.0
+offset_top = 332.0
+offset_right = 1645.0
+offset_bottom = 1038.0
+
+[node name="Title" type="Label" parent="LeaderboardPanel"]
+layout_mode = 0
+offset_left = 525.0
+offset_top = 16.0
+offset_right = 844.0
+offset_bottom = 82.0
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 50
+text = "LEADERBOARD"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LeaderboardPanel"]
+layout_mode = 0
+offset_left = 267.0
+offset_top = 114.0
+offset_right = 1126.0
+offset_bottom = 607.0
+
+[node name="ScoreList" type="VBoxContainer" parent="LeaderboardPanel/ScrollContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="LeaderboardPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -81.0
+offset_right = 118.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "BACK"
+expand_icon = true
+
 [node name="Settings" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -429,8 +491,7 @@ text = " Controls
  Up
  Down
  Left
- Right
- "
+ Right"
 
 [node name="Label2" type="Label" parent="Settings/VBoxContainer/Label"]
 layout_mode = 1
@@ -445,6 +506,24 @@ LeftArrow or A
 RightArrow or D
 "
 horizontal_alignment = 2
+
+[node name="PLAYERLABEL" type="Label" parent="Settings/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 30
+text = "Player name
+ "
+
+[node name="NameInput" type="LineEdit" parent="Settings/VBoxContainer/PLAYERLABEL"]
+layout_mode = 0
+offset_left = 412.75
+offset_top = -5.0
+offset_right = 878.75
+offset_bottom = 30.0
+theme_override_fonts/font = ExtResource("5_rcqid")
+placeholder_text = "Enter your username (max 12)"
+alignment = 1
+max_length = 12
 
 [node name="Back" type="Button" parent="Settings"]
 layout_mode = 1
@@ -606,9 +685,11 @@ bus = &"SFX"
 parameters/looping = true
 
 [connection signal="pressed" from="mainbuttons/START" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="mainbuttons/LEADERBOARD" to="." method="_on_leaderboard_pressed"]
 [connection signal="pressed" from="mainbuttons/SETTINGS" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="mainbuttons/CREDITS" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="mainbuttons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="LeaderboardPanel/Back" to="." method="_on_leaderboard_close_pressed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/Labelmusic/MusicControl" to="Settings/VBoxContainer/Labelmusic/MusicControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/labelSFX/SFXControl" to="Settings/VBoxContainer/labelSFX/SFXControl" method="_on_value_changed"]
 [connection signal="toggled" from="Settings/VBoxContainer/fulltoggle" to="Settings/VBoxContainer/fulltoggle" method="_on_toggled"]

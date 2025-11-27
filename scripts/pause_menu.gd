@@ -74,6 +74,16 @@ func check_and_save_highscore(current_score: int):
 		# Change text if high score
 		scorelabel.text = "NEW HIGH SCORE: " + str(current_score)
 		scorelabel.modulate = Color(1, 0.84, 0) # Warna Emas
+		
+		var settings_config = ConfigFile.new()
+		var err_settings = settings_config.load("user://settings.cfg")
+		var uploader_name = "Captain" 
+		
+		if err_settings == OK:
+			uploader_name = settings_config.get_value("player", "name", "Captain")
+		
+		print("Uploading score as: ", uploader_name)
+		SilentWolf.Scores.save_score(uploader_name, current_score, "main")
 		 
 func _on_score_timer_timeout():
 	score += 1
