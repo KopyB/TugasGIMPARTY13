@@ -55,7 +55,7 @@ rotation = 1.5707964
 position = Vector2(-339.99994, 212.99998)
 shape = SubResource("RectangleShape2D_h2yge")
 
-[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="." groups=["level_bgm"]]
 visible = false
 autoplay = true
 

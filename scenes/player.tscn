@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=3 uid="uid://fujugshyvkm6"]
+[gd_scene load_steps=98 format=3 uid="uid://fujugshyvkm6"]
 
 [ext_resource type="Script" uid="uid://c6x27pd0p3sc7" path="res://scripts/character_body_2d.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://cmc60vajq856e" path="res://assets/art/player boat.png" id="2_i4ail"]
@@ -87,6 +87,7 @@
 [ext_resource type="Texture2D" uid="uid://b1whheiwjtoah" path="res://assets/art/speed/start/8.png" id="83_b5l0c"]
 [ext_resource type="Texture2D" uid="uid://bkjleo8qqnx3h" path="res://assets/art/speed/start/9.png" id="84_2a33p"]
 [ext_resource type="Texture2D" uid="uid://b01h2w2q8iw81" path="res://assets/art/speed/start/10.png" id="85_reqs7"]
+[ext_resource type="AudioStream" uid="uid://brie88jgn0ewp" path="res://assets/audio/Defeated2.ogg" id="88_au8ao"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjrip"]
 radius = 30.0
@@ -564,5 +565,10 @@ stream = ExtResource("66_fuw3a")
 stream = ExtResource("68_770dr")
 volume_db = -6.0
 bus = &"SFX"
+
+[node name="gameover" type="AudioStreamPlayer2D" parent="."]
+process_mode = 2
+stream = ExtResource("88_au8ao")
+volume_db = 20.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

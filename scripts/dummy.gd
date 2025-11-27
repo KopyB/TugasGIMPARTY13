@@ -6,6 +6,7 @@ signal enemy_died
 var enemyship: Sprite2D = null
 var collision_shape_2d: CollisionShape2D = null
 var cannon: Sprite2D = null
+var is_game_over = false
 
 # TIPE MUSUH
 enum Type {GUNBOAT, BOMBER, RBOMBER, PARROT, TORPEDO_SHARK, SIREN, RSIREN}
@@ -211,8 +212,19 @@ func _ready():
 			
 		rotation_degrees = 0
 		speed = randi_range(120, 150)
+		
+func cease_fire():
+	is_game_over = true
+	shoot_timer = 0
 	
+	if enemy_type == Type.TORPEDO_SHARK:
+		is_shark_charging = false
+		shark_charge_speed = 0	
+		
 func _process(delta):
+	if is_game_over:
+		return
+		
 	if is_paralyzed:
 		if trails and is_instance_valid(trails):
 			trails.hide()

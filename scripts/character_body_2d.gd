@@ -44,7 +44,7 @@ var lightning_scene = preload("res://scenes/lightning_strike.tscn")
 
 #audio
 @onready var _2_ndwind_sfx: AudioStreamPlayer2D = $"secondwind_anim/2ndwind_sfx"
-
+@onready var game_over_music: AudioStreamPlayer2D = $gameover
 @onready var skill_timer = $SkillDurationTimer
 @onready var laser_timer = $LaserDurationTimer 
 
@@ -162,10 +162,16 @@ func activate_iframes(duration):
 	print("Invincibility berakhir")
 	
 func die():
+	if is_dead: 
+		return
+	
 	is_dead = true
 	print("Player Mati - Memulai Sequence Game Over")
+	$Timer.stop()
 	reset_all_skills()
+	get_tree().call_group("enemies", "cease_fire")
 	get_tree().call_group("enemy_projectiles", "queue_free")
+	exploded()
 	# Matikan visual kapal agar terlihat 'hancur'
 	for node in get_tree().get_nodes_in_group("player_anims"):
 		node.visible = false
@@ -175,7 +181,14 @@ func die():
 	$multiturret.hide()
 	$burst_turret.hide()
 	$multiburst.hide()
-
+	$shadow.hide()
+	
+	set_physics_process(false)
+	$CollisionShape2D.set_deferred("disabled", true)
+	get_tree().call_group("level_bgm", "stop")
+	if game_over_music:
+		game_over_music.play()
+	await get_tree().create_timer(1.0).timeout
 	# Angka 0 artinya tipe "YOU DIED!" 
 	get_tree().call_group("ui_manager", "toggled_handler", 0)
 	
@@ -585,6 +598,8 @@ func total_nigger_death():
 	tween.tween_property(self, "modulate", Color.WHITE, 1.0)
 	
 func _on_timer_timeout() -> void: # Timer
+	if is_dead: 
+		return
 	# Pasang gatekeeping peluru
 	if is_kraken_active:
 		return
