@@ -20,6 +20,7 @@ func _ready() -> void:
 	settings.visible = false
 	credits.visible = false
 	Powerupview.stop_timer_score()
+	$base/AnimatedSprite2D.play("base")
 	
 	var load_err = config.load("user://settings.cfg")
 	if load_err == OK:
