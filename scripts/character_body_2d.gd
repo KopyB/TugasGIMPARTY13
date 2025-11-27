@@ -188,7 +188,7 @@ func die():
 	get_tree().call_group("level_bgm", "stop")
 	if game_over_music:
 		game_over_music.play()
-	await get_tree().create_timer(0.4).timeout
+	await get_tree().create_timer(1.0).timeout
 	# Angka 0 artinya tipe "YOU DIED!" 
 	get_tree().call_group("ui_manager", "toggled_handler", 0)
 	
@@ -408,8 +408,6 @@ func apply_dizziness(duration):
 		return
 	modulate = Color(0.832, 0.381, 0.83, 0.851)
 	print("PLAYER KENA MENTAL! PUSING!")
-	cameraeffects.zoom(Vector2(1.05, 1.05), duration)
-	cameraeffects.flash_darken(0.5, duration)
 	Powerupview.show_icons("Dizziness", duration)
 	is_dizzy = true
 	dizzy_timer = duration

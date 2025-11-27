@@ -5,4 +5,3 @@ extends Control
 func _ready() -> void:
 	Powerupview.stop_timer_score()
 	Powerupview.start_timer_score()# Replace with function body.
-	$tutoriallayer/AnimationPlayer.play("tutorialfade")

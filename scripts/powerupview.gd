@@ -32,16 +32,16 @@ func start_timer_score():
 	timer.timeout.connect(_on_score_timer_timeout)
 	timer.start() 
 	update_score_display()
-	#desc.show()
-	#icons.show()
+	desc.show()
+	icons.show()
 	is_reset = false
 
 func stop_timer_score():
 	timer.stop()
 	$score.hide()
 	score = 0
-	#desc.hide()
-	#icons.hide()
+	desc.hide()
+	icons.hide()
 	is_reset = true
 
 func _on_score_timer_timeout():
@@ -112,24 +112,3 @@ func show_icons(message :String, duration : float):
 	tween.tween_callback(allicon.queue_free)
 	#if is_reset:
 		#icons.queue_free()
-func reset_icon():
-	var tempicon : HBoxContainer
-	tempicon = HBoxContainer.new()
-	tempicon.name = "icons"
-	tempicon.global_position = icons.global_position
-	tempicon.scale = icons.scale
-	tempicon.size = icons.size
-	icons.queue_free()
-	icons = tempicon
-	add_child(icons)
-	
-func reset_desc():
-	var tempdesc : VBoxContainer
-	tempdesc = VBoxContainer.new()
-	tempdesc.name = "desc"
-	tempdesc.global_position = desc.global_position
-	tempdesc.scale = desc.scale
-	tempdesc.size = desc.size
-	desc.queue_free()
-	desc = tempdesc
-	add_child(desc)

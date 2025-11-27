@@ -29,15 +29,11 @@ func _on_resume_pressed() -> void:
 	
 func _on_restart_pressed() -> void:
 	resume()
-	Powerupview.reset_desc()
-	Powerupview.reset_icon()
 	Transition.reload_scene()
 	#get_tree().reload_current_scene()
 
 func _on_exit_pressed() -> void:
 	resume()
-	Powerupview.reset_desc()
-	Powerupview.reset_icon()
 	Transition.load_scene("res://scenes/main_menu.tscn")
 	#get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	

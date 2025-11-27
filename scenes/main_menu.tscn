@@ -1,15 +1,8 @@
 [gd_scene load_steps=30 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
-[ext_resource type="Texture2D" uid="uid://bsubp1vu05x1o" path="res://assets/art/base/base1.png" id="3_8egab"]
-[ext_resource type="Texture2D" uid="uid://bftf6qcnwc34b" path="res://assets/art/base/base2.png" id="4_gw5y6"]
-[ext_resource type="Texture2D" uid="uid://d0wghygkbu1cd" path="res://assets/art/base/base3.png" id="5_svtp6"]
-[ext_resource type="Texture2D" uid="uid://cwnj48fs41x00" path="res://assets/art/base/base4.png" id="6_1dfpl"]
 [ext_resource type="Texture2D" uid="uid://bwy6nk3q1q4we" path="res://assets/art/waterbg/WaterBGFrame1.png" id="2_hstxw"]
 [ext_resource type="Texture2D" uid="uid://bsexnd1gi82lx" path="res://assets/art/waterbg/WaterBGFrame2and10.png" id="3_8egab"]
-[ext_resource type="Texture2D" uid="uid://borsmvyxorra3" path="res://assets/art/waterbg/WaterBGFrame4and8.png" id="5_svtp6"]
-[ext_resource type="Texture2D" uid="uid://dlxrq6n5eubno" path="res://assets/art/waterbg/WaterBGFrame5and7.png" id="6_1dfpl"]
-[ext_resource type="Texture2D" uid="uid://bv8c11vhkale6" path="res://assets/art/waterbg/WaterBGFrame6.png" id="7_qywvv"]
 [ext_resource type="AudioStream" uid="uid://bvrdv4gonfpxj" path="res://assets/audio/Waves Transition.ogg" id="4_1ajci"]
 [ext_resource type="Script" uid="uid://ci7epneqyxjoa" path="res://music_control.gd" id="4_8ln24"]
 [ext_resource type="Texture2D" uid="uid://bdwm45bs6p0sd" path="res://assets/art/waterbg/WaterBGFrame3and9.png" id="4_gw5y6"]
@@ -17,8 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="4_wu84c"]
 [ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="5_rcqid"]
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://borsmvyxorra3" path="res://assets/art/waterbg/WaterBGFrame4and8.png" id="5_svtp6"]
+[ext_resource type="Texture2D" uid="uid://dlxrq6n5eubno" path="res://assets/art/waterbg/WaterBGFrame5and7.png" id="6_1dfpl"]
 [ext_resource type="AudioStream" uid="uid://dik1asa4k5rqs" path="res://assets/audio/Calm Waters.ogg" id="6_lgwnu"]
 [ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_flqon"]
+[ext_resource type="Texture2D" uid="uid://bv8c11vhkale6" path="res://assets/art/waterbg/WaterBGFrame6.png" id="7_qywvv"]
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="8_5dd4i"]
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://cp6l6ms5o5es8" path="res://assets/audio/Click.mp3" id="11_lgwnu"]
@@ -59,7 +55,7 @@ animations = [{
 "texture": ExtResource("7_qywvv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_3wgol")
+"texture": ExtResource("6_1dfpl")
 }, {
 "duration": 1.0,
 "texture": ExtResource("5_svtp6")
@@ -71,8 +67,8 @@ animations = [{
 "texture": ExtResource("3_8egab")
 }],
 "loop": true,
-"name": &"base",
-"speed": 5.0
+"name": &"default",
+"speed": 2.5
 }]
 
 [sub_resource type="Animation" id="Animation_5dd4i"]
@@ -110,17 +106,6 @@ _data = {
 &"RESET": SubResource("Animation_5dd4i"),
 &"nyoom": SubResource("Animation_jk1qb")
 }
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8egab"]
-bg_color = Color(0.17254902, 0.27058825, 0.30980393, 0.8392157)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-expand_margin_left = 3.0
-expand_margin_top = 3.0
-expand_margin_right = 3.0
-expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vue75"]
 bg_color = Color(0.21960784, 0.49411765, 0.7529412, 1)
@@ -183,23 +168,6 @@ position = Vector2(0, -9.999878)
 sprite_frames = SubResource("SpriteFrames_3wgol")
 centered = false
 
-[node name="base" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_top = 168.0
-offset_bottom = 168.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="base"]
-sprite_frames = SubResource("SpriteFrames_1acrt")
-animation = &"base"
-frame_progress = 0.5671799
-
 [node name="animationstella" type="Node2D" parent="."]
 position = Vector2(975, 2000)
 scale = Vector2(0.06, 0.06)
@@ -223,22 +191,14 @@ scale = Vector2(0.8, 0.8)
 texture = ExtResource("4_jk1qb")
 
 [node name="HighScoreLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -113.0
-offset_top = -182.5
-offset_right = 113.0
-offset_bottom = -137.5
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 858.0
+offset_top = 394.0
+offset_right = 1084.0
+offset_bottom = 439.0
 theme_override_colors/font_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("5_rcqid")
 theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_8egab")
 text = "HIGH SCORE: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
