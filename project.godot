@@ -13,7 +13,10 @@ config_version=5
 config/name="Rogue Waves"
 run/main_scene="uid://ynu4bos33vch"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/bg_color=Color(1, 1, 1, 1)
+boot_splash/image="uid://d05p57njysrq5"
 config/icon="uid://xli8bl2lqfi3"
+boot_splash/minimum_display_time=1000
 
 [autoload]
 
