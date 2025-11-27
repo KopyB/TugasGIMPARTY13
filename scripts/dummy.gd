@@ -248,6 +248,10 @@ func _process(delta):
 	
 	elif enemy_type == Type.RBOMBER:
 		position.x -= speed * delta
+		if shoot_timer >= shoot_interval/2:
+			enemyship.texture = bomber_barrel
+		else:
+			enemyship.texture = bomber_noBarrel
 	
 	elif enemy_type == Type.TORPEDO_SHARK:
 		handle_shark_behavior(delta)
