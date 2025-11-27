@@ -20,6 +20,7 @@ func _ready() -> void:
 	settings.visible = false
 	credits.visible = false
 	Powerupview.stop_timer_score()
+	$base/AnimatedSprite2D.play("base")
 	
 	SilentWolf.configure({
 	"api_key": "XUaM20pqhU255gp5amSnY74JmRRU5NeD2lop7Xbp",
