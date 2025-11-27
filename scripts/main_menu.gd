@@ -21,6 +21,12 @@ func _ready() -> void:
 	credits.visible = false
 	Powerupview.stop_timer_score()
 	
+	SilentWolf.configure({
+	"api_key": "XUaM20pqhU255gp5amSnY74JmRRU5NeD2lop7Xbp",
+	"game_id": "RogueWaves",
+	"log_level": 1
+  })
+	
 	var load_err = config.load("user://settings.cfg")
 	if load_err == OK:
 		# Apply loaded settings
