@@ -64,6 +64,7 @@ func _ready():
 	$speed_anim.hide()
 	$trails.play("trailvert_up")
 	
+	
 # IGNORE (DEBUG MODE)
 func _input(event):
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -386,10 +387,14 @@ func trigger_shockwave():
 	# LOGIKA MEMBUNUH SEMUA MUSUH
 	# Kita panggil grup "enemies" yang sudah kita buat di Langkah 1
 	get_tree().call_group("enemies", "take_damage", 9999)
+	get_tree().call_group("enemy_projectiles", "meledak")
 	await shockwaves_anim.animation_finished
 	shockwaves_anim.hide()
 	
 func _physics_process(delta: float) -> void:
+	#if Input.is_action_just_pressed("ui_accept"):
+		#trigger_shockwave()
+		
 	if is_dizzy:
 		dizzy_timer -= delta
 		if dizzy_timer <= 0:

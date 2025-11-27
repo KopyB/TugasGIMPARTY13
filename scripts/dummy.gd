@@ -101,7 +101,7 @@ func _ready():
 		
 	# --- SETUP VISUAL & LOGIKA PER TIPE ---
 	
-	# TIPE 0: GUNBOAT (Musuh Standar)
+	# TIPE 0: GUNBOAT
 	if enemy_type == Type.GUNBOAT:
 		if enemyship:
 			enemyship.texture = gun_boat
@@ -214,11 +214,13 @@ func _ready():
 	
 func _process(delta):
 	if is_paralyzed:
+		$trails.hide()
 		if enemy_type == Type.GUNBOAT:
 			position.y += speed/2 * delta
-		elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
+		elif enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER or enemy_type == Type.SIREN or enemy_type == Type.RSIREN or enemy_type == Type.TORPEDO_SHARK:
 			position.y += speed * delta
 		return
+	
 		
 	if enemy_type == Type.GUNBOAT:
 		position.y += speed * delta
@@ -266,8 +268,6 @@ func check_despawn():
 
 # --- FUNGSI PARALYZED ---
 func set_paralyzed(status):
-	if enemy_type == Type.TORPEDO_SHARK and is_shark_charging and status == true:
-		return
 	is_paralyzed = status
 	if enemy_type == Type.PARROT:
 		pathfollow.is_paralyzed = status
@@ -287,7 +287,10 @@ func set_paralyzed(status):
 		# Resume Animasi Siren
 		elif (enemy_type == Type.SIREN or enemy_type == Type.RSIREN) and siren:
 			siren.play() 
-			
+	
+	if status == false and enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER or enemy_type == Type.GUNBOAT:
+			$trails.show()
+			 
 # --- FUNGSI SERANGAN ---
 func perform_attack():
 	if enemy_type == Type.GUNBOAT:
@@ -403,7 +406,8 @@ func take_damage(amount):
 	if not enemy_type == Type.PARROT:
 		if parrotcheck == 0:
 			if enemy_type == Type.TORPEDO_SHARK and is_shark_charging:
-				return # NO DAMAGE
+				if amount >= 9999:
+					die()
 			
 			if enemy_type == Type.SIREN or enemy_type == Type.RSIREN:
 				if is_paralyzed:
@@ -412,7 +416,8 @@ func take_damage(amount):
 						die()
 					return 
 				else:
-					trigger_siren_scream()
+					if amount < health:
+						trigger_siren_scream()
 					health -= amount
 					if health <= 0:
 						die()
