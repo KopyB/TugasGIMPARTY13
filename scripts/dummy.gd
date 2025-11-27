@@ -419,6 +419,7 @@ func take_damage(amount):
 				else:
 					if amount < health:
 						trigger_siren_scream()
+						get_tree().call_group("jumpscare_manager", "play_jumpscare")
 					health -= amount
 					if health <= 0:
 						die()

@@ -418,8 +418,8 @@ func trigger_shockwave():
 	shockwaves_anim.hide()
 	
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		activate_admiral()
+	#if Input.is_action_just_pressed("ui_accept"):
+		#activate_admiral()
 		
 	if is_dizzy:
 		dizzy_timer -= delta
