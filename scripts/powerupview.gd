@@ -62,18 +62,25 @@ func show_desc(message : String):
 	descs.get_child(1).text = message
 	if message == "Second Wind":
 		descs.get_child(0).texture = secondwindlogo
+		descs.get_child(1).get_child(0).text = "This upgrade allows your ship to refuse death once and create a shockwave that clears all enemies upon revival."
 	elif message == "Kraken Slayer":
 		descs.get_child(0).texture = krakenlogo
+		descs.get_child(1).get_child(0).text = "This upgrade allows your ship to fire a giant beam."
 	elif message == "Artillery":
 		descs.get_child(0).texture = artillerylogo
+		descs.get_child(1).get_child(0).text = "This upgrade allows your ship increases the number of shots for a few second."
 	elif message == "Multishot":
 		descs.get_child(0).texture = multishotlogo
+		descs.get_child(1).get_child(0).text = "This upgrade allows your ship to shoot three shots at once"
 	elif message == "SPEED IS KEY":
 		descs.get_child(0).texture = speedlogo
+		descs.get_child(1).get_child(0).text = "This upgrade allows your ship to perform rapid left and right dodges for a short time"
 	elif message == "Shield":
 		descs.get_child(0).texture = shieldlogo
+		descs.get_child(1).get_child(0).text = "This upgrade allows your ship to survive ONE hit from any kind of enemy fire."
 	elif message == "Admiral's Will":
 		descs.get_child(0).texture = admirallogo
+		descs.get_child(1).get_child(0).text = "The upgrade will release a shockwave that paralyzes enemies for a brief moment."
 	else: # nanti tambahin yang lain lagi, ini placeholder
 		descs.get_child(0).texture = logo
 	desc.add_child(descs)
