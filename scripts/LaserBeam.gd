@@ -1,10 +1,5 @@
 extends Area2D
 
-# Logika DPS:
-# Misal Artillery DPS = 30. Maka Kraken = 20.
-# Kita akan beri damage setiap 0.1 detik.
-# Berarti damage per tick = 2. (2 damage * 10 tick/detik = 20 DPS)
-
 var damage_per_tick = 30 
 var tick_timer = 0.0
 
