@@ -297,9 +297,6 @@ func activate_kraken():
 	anim_cannon.hide()
 	
 	# Spawn Laser
-	# Kita tunggu sebentar (animasi charge) pakai timer juga
-	#skill_timer.start(0.5)
-	#await skill_timer.timeout 
 	
 	if active_laser_node == null:
 		active_laser_node = laser_scene.instantiate()
@@ -327,9 +324,8 @@ func activate_kraken():
 		active_laser_node.position = Vector2(0, 50) 
 
 	
-	# --- PERBAIKAN DURASI ---
-	# Gunakan Node Timer, bukan get_tree().create_timer
-	# Saat game dipause, timer ini akan berhenti menghitung.
+
+
 	laser_timer.start(4.5) # Durasi Laser 4.5 detik
 	await laser_timer.timeout
 	
@@ -352,7 +348,7 @@ func activate_kraken():
 	is_kraken_active = false
 	anim_cannon.show()
 	
-# --- LOGIKA BARU: SECOND WIND (REVIVE) ---
+# --- SECOND WIND (REVIVE) ---
 func activate_second_wind():
 	has_second_wind = true
 	print("Second Wind Ready! (Nyawa cadangan aktif)")
@@ -362,13 +358,11 @@ func activate_second_wind():
 func activate_admiral():
 	print("ADMIRAL'S WILL ACTIVATED! Musuh Terhenti!")
 	
-	# 1. Efek Visual: Flash Layar Kuning
 	modulate = Color(3, 3, 0, 1) # Terang banget (Kuning)
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5)
 	
-	# 2. Panggil grup "enemies" untuk stop bergerak
-	# Pastikan di dummy.gd sudah ada add_to_group("enemies")
+	# Panggil grup "enemies" untuk stop bergerak
 	shockwaves_anim.show()
 	cameraeffects.shake(8.0, 0.25)
 	shockwaves_anim.modulate = Color(3, 3, 0, 1)
@@ -379,11 +373,11 @@ func activate_admiral():
 	spawn_lightning_on_enemies()
 	await shockwaves_anim.animation_finished
 	shockwaves_anim.hide()
-	# 3. Tunggu 5 Detik
+	# Tunggu 5 Detik
 	skill_timer.start(5.0)
 	await skill_timer.timeout
 	
-	# 4. Kembalikan musuh jadi normal
+	# Kembalikan musuh jadi normal
 	print("Admiral's Will berakhir.")
 	get_tree().call_group("enemies", "set_paralyzed", false)
 func spawn_lightning_on_enemies():
@@ -414,7 +408,6 @@ func apply_dizziness(duration):
 	cameraeffects.flash_darken(0.5, duration)
 
 func trigger_shockwave():
-	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
 	shockwaves_anim.show()
 	cameraeffects.shake(8.0, 0.25)
@@ -423,8 +416,7 @@ func trigger_shockwave():
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5) # Fade balik ke normal
 	
-	# LOGIKA MEMBUNUH SEMUA MUSUH
-	# Kita panggil grup "enemies" yang sudah kita buat di Langkah 1
+	
 	get_tree().call_group("enemies", "take_damage", 9999)
 	get_tree().call_group("enemy_projectiles", "meledak")
 	await shockwaves_anim.animation_finished
@@ -496,26 +488,6 @@ func _physics_process(delta: float) -> void:
 	var mid_y := get_viewport().get_visible_rect().size.y / 2
 	global_position.y = clamp(global_position.y, mid_y, INF)
 	
-	# if is_dizzy == true:
-	# 	if Input.is_action_pressed("Left"):
-	# 		_animation_player.play("left")
-	# 		k_sturret.position.x = 15.0
-	# 	elif Input.is_action_pressed("Right"):
-	# 		_animation_player.play("right")
-	# 		k_sturret.position.x = -15.0
-	# 	else:
-	# 		_animation_player.play("idle")
-	# elif is_dizzy == false:
-	# 	if Input.is_action_pressed("Left"):
-	# 		_animation_player.play("left")
-	# 		k_sturret.position.x = -15.0
-	# 	elif Input.is_action_pressed("Right"):
-	# 		_animation_player.play("right")
-	# 		k_sturret.position.x = 15.0
-	# 	else:
-	# 		_animation_player.play("idle")
-	
-	# rotasi kapal
 	rotation_direction = Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
 	
 	if is_dizzy:
