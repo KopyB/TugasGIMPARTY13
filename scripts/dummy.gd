@@ -1,6 +1,5 @@
 extends Area2D
 
-#Beri signal saat musuh mati (BOSS EXCLUSIVE)
 signal enemy_died
 
 var enemyship: Sprite2D = null
@@ -55,10 +54,9 @@ var floating_text_scene = preload("res://scenes/FloatingText.tscn")
 @onready var trails: AnimatedSprite2D = $trails
 @onready var parrot_whistle: AudioStreamPlayer2D = $parrot_whistle
 
-var player = null # Referensi
+var player = null 
 
 func _ready():
-	# 1. Setup Group & Player
 	add_to_group("enemies") 
 	player = get_tree().get_first_node_in_group("player")
 	
@@ -93,15 +91,12 @@ func _ready():
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 		
-	# 2. FIX HITBOX MENULAR (Wajib duplicate agar ukuran tiap musuh independen)
 	if collision_shape_2d and collision_shape_2d.shape:
 		collision_shape_2d.shape = collision_shape_2d.shape.duplicate()
-	
-	# 3. Aktifkan Collision (Aman dari null)
+
 	if collision_shape_2d:
 		collision_shape_2d.disabled = false
 		
-	# --- SETUP VISUAL & LOGIKA PER TIPE ---
 	
 	# TIPE 0: GUNBOAT
 	if enemy_type == Type.GUNBOAT:
@@ -117,13 +112,13 @@ func _ready():
 		if cannon:
 			cannon.show()
 		
-		# Set Hitbox Gunboat (Ukuran Penuh)
+		# Set Hitbox Gunboat 
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(284.0, 116.0)
 		
 		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
-	# TIPE 1: BOMBER (Kapal Tong)
+	# TIPE 1: BOMBER 
 	elif enemy_type == Type.BOMBER:
 		if cannon: cannon.hide()
 		
@@ -167,18 +162,18 @@ func _ready():
 		speed = randf_range(160, 200) 
 		rotation_degrees = -90 # Hadap Kiri (Mundur)
 
-	# TIPE 3: PARROT (Burung)
+	# TIPE 3: PARROT 
 	elif enemy_type == Type.PARROT:
 		health = 1
 		add_to_group("parrots")
 		# Parrot biasanya tidak punya collision fisik yang sama, jadi kita skip setup hitbox
 		print("Parrot spawned")
 
-	# TIPE 4: TORPEDO SHARK (Hiu Penabrak)
+	# TIPE 4: TORPEDO SHARK 
 	elif enemy_type == Type.TORPEDO_SHARK:
 		health = 2
 		speed = 60 # Speed awal (aiming phase)
-		# Hitbox Shark (bisa pakai default atau diatur khusus)
+		# Hitbox Shark 
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(100.0, 50.0)
 		if cannon:
@@ -188,7 +183,7 @@ func _ready():
 		if torpedoshark:
 			torpedoshark.show()
 
-	# TIPE 5: SIREN (Putri Duyung Kiri)
+	# TIPE 5: SIREN 
 	elif enemy_type == Type.SIREN:
 		if cannon: cannon.hide()
 		if enemyship:
@@ -201,7 +196,7 @@ func _ready():
 		rotation_degrees = 0
 		speed = randi_range(120, 150)
 	
-	# TIPE 6: RSIREN (Putri Duyung Kanan)
+	# TIPE 6: RSIREN 
 	elif enemy_type == Type.RSIREN:
 		if cannon: cannon.hide()
 		if enemyship:
@@ -344,13 +339,13 @@ func drop_barrel():
 	# Opsional: Ubah sprite musuh jadi "kosong" sebentar (Visual Direction)
 	# $Sprite2D.texture = load("res://assets/bomber_empty.png")
 
-# --- LOGIKA TABRAKAN (KAMIKAZE) ---
+# --- KAMIKAZE ---
 func _on_body_entered(body):
 	if body.has_method("take_damage_player"):
 		body.take_damage_player()
 		die() 
 		
-# --- FUNGSI KHUSUS PERILAKU SHARK ---
+# --- FUNGSI KHUSUS BEHAVIOUR SHARK ---
 func handle_shark_behavior(delta):
 	if not is_shark_charging:
 		# FASE 1: LOCKING ON (5 Detik)
@@ -377,7 +372,7 @@ func handle_shark_behavior(delta):
 			#await torpedoshark.animation_finished
 			start_shark_charge()
 	else:
-		# FASE 2: CHARGING (Lurus terus)
+		# FASE 2: CHARGING 
 		if torpedoshark:
 			torpedoshark.play("swimming")
 		position += shark_charge_direction * shark_charge_speed * delta
@@ -389,11 +384,9 @@ func handle_shark_behavior(delta):
 
 func start_shark_charge():
 	is_shark_charging = true
-	# Kunci arah saat ini (berdasarkan rotasi terakhir ke player)
 	shark_charge_direction = Vector2.RIGHT.rotated(rotation)
 	$torpedoshark/sharkcharge.play()
 	torpedoshark.play("swimming")
-	# Visual Feedback: Ubah warna jadi Merah (Tanda bahaya & Kebal)
 	print("SHARK CHARGING! IMMUNE ACTIVATED!")
 
 func trigger_siren_scream():
@@ -476,11 +469,9 @@ func die():
 	spawn_floating_text(add_points, enemy_name)
 	
 	if not enemy_type == Type.PARROT:
-		# FIX CRASH: Cek validitas node enemyship sebelum hide
 		if enemyship and is_instance_valid(enemyship):
 			enemyship.hide()
 			
-		# FIX: Cek validitas collision shape juga (praktik aman)
 		if collision_shape_2d and is_instance_valid(collision_shape_2d):
 			collision_shape_2d.disabled = true
 		exploded()
