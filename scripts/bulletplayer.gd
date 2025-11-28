@@ -3,10 +3,6 @@ extends Area2D
 @export var speed = 1000
 
 func _process(delta):
-	# LAMA: position.y -= speed * delta
-	
-	# BARU: Bergerak ke arah "atas" relatif terhadap rotasi peluru
-	# Vector2.UP adalah (0, -1). Kita putar vektor ini sesuai rotasi peluru.
 	var direction = Vector2.UP.rotated(rotation)
 	position += direction * speed * delta
 
