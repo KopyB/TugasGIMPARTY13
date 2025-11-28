@@ -1,17 +1,15 @@
 extends Area2D
-
+#the
 var damage_per_tick = 30 
 var tick_timer = 0.0
 
 func _process(delta):
-	# Timer manual untuk memberi damage per 0.1 detik
 	tick_timer += delta
 	if tick_timer >= 0.1:
 		tick_timer = 0.0
 		apply_damage()
 
 func apply_damage():
-	# Ambil semua body yang sedang menyentuh area laser ini
 	var bodies = get_overlapping_bodies()
 	for body in bodies:
 		if body.has_method("take_damage"):
