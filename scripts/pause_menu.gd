@@ -41,7 +41,7 @@ func _on_exit_pressed() -> void:
 	Transition.load_scene("res://scenes/main_menu.tscn")
 	#get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("escape") and not get_tree().paused:
 		toggled_handler(1) #masukin var baru buat klo mati atau tidak
 	elif Input.is_action_just_pressed("escape") and get_tree().paused:

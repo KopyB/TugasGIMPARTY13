@@ -303,7 +303,7 @@ func set_paralyzed(status):
 	
 	if status == false and enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER or enemy_type == Type.GUNBOAT:
 			$trails.show()
-			 
+			
 # --- FUNGSI SERANGAN ---
 func perform_attack():
 	if enemy_type == Type.GUNBOAT:
