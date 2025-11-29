@@ -30,6 +30,7 @@ var bullet_scene = preload("res://scenes/bulletplayer.tscn")
 var tex_artillery = preload("res://assets/art/ArtilleryBurstProjectile.png")
 
 var explosion_scene = preload("res://scenes/explosion.tscn")
+var lightning_scene = preload("res://scenes/lightning_strike.tscn")
 #animation
 @onready var anim_shipbase = $shipbase
 @onready var anim_cannon = $cannon
@@ -42,8 +43,9 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 
 #audio
 @onready var _2_ndwind_sfx: AudioStreamPlayer2D = $"secondwind_anim/2ndwind_sfx"
-
+@onready var game_over_music: AudioStreamPlayer2D = $gameover
 @onready var skill_timer = $SkillDurationTimer
+@onready var laser_timer = $LaserDurationTimer 
 
 func _ready():
 	add_to_group("player")
@@ -63,6 +65,9 @@ func _ready():
 	secondwind_anim.hide()
 	$speed_anim.hide()
 	$trails.play("trailvert_up")
+	laser_timer = Timer.new()
+	laser_timer.one_shot = true 
+	add_child(laser_timer)      
 	
 # IGNORE (DEBUG MODE)
 func _input(event):
@@ -156,10 +161,16 @@ func activate_iframes(duration):
 	print("Invincibility berakhir")
 	
 func die():
+	if is_dead: 
+		return
+	
 	is_dead = true
 	print("Player Mati - Memulai Sequence Game Over")
+	$Timer.stop()
 	reset_all_skills()
+	get_tree().call_group("enemies", "cease_fire")
 	get_tree().call_group("enemy_projectiles", "queue_free")
+	exploded()
 	# Matikan visual kapal agar terlihat 'hancur'
 	for node in get_tree().get_nodes_in_group("player_anims"):
 		node.visible = false
@@ -169,7 +180,14 @@ func die():
 	$multiturret.hide()
 	$burst_turret.hide()
 	$multiburst.hide()
-
+	$shadow.hide()
+	
+	set_physics_process(false)
+	$CollisionShape2D.set_deferred("disabled", true)
+	get_tree().call_group("level_bgm", "stop")
+	if game_over_music:
+		game_over_music.play()
+	await get_tree().create_timer(0.4).timeout
 	# Angka 0 artinya tipe "YOU DIED!" 
 	get_tree().call_group("ui_manager", "toggled_handler", 0)
 	
@@ -179,16 +197,16 @@ func apply_powerup(type):
 	match type:
 		0: # SHIELD
 			activate_shield()
-			Powerupview.show_desc("insert power up here")
+			Powerupview.show_desc("Shield")
 		1: # MULTISHOT
 			activate_multishot()
-			Powerupview.show_desc("insert power up here")
+			Powerupview.show_desc("Multishot")
 		2: # ARTILLERY BURST
 			activate_artillery()
-			Powerupview.show_desc("insert power up here")
+			Powerupview.show_desc("Artillery")
 		3: # SPEED
 			activate_speed()
-			Powerupview.show_desc("insert power up here")
+			Powerupview.show_desc("SPEED IS KEY")
 		4: # KRAKEN SLAYER
 			activate_kraken()      
 			Powerupview.show_desc("Kraken Slayer")
@@ -197,7 +215,7 @@ func apply_powerup(type):
 			Powerupview.show_desc("Second Wind")
 		6: # ADMIRAL WILL
 			activate_admiral()
-			Powerupview.show_desc("insert power up here")
+			Powerupview.show_desc("Admiral's Will")
 
 # --- LOGIKA 1: SHIELD ---
 func activate_shield():
@@ -271,13 +289,14 @@ func activate_speed():
 	# --- LOGIKA BARU: KRAKEN SLAYER (LASER) ---
 func activate_kraken():
 	print("KRAKEN RELEASED!")
+	if is_kraken_active:
+		if laser_timer:
+			laser_timer.start(4.5)
+		return
 	is_kraken_active = true 
 	anim_cannon.hide()
 	
 	# Spawn Laser
-	# Kita tunggu sebentar (animasi charge) pakai timer juga
-	#skill_timer.start(0.5)
-	#await skill_timer.timeout 
 	
 	if active_laser_node == null:
 		active_laser_node = laser_scene.instantiate()
@@ -293,10 +312,10 @@ func activate_kraken():
 		await lazer.animation_finished
 		print("SHAKE NOW")
 		cameraeffects.shake(20.0, 0.05)
-		cameraeffects.start_loop_shake(8.0, 0.08)
+		cameraeffects.start_loop_shake(10.0, 0.08)
 		print("SHAKE CALLED")
-		lazer.scale = Vector2(3.0,5.0)
-		lazer.position.y = -3230.0
+		lazer.scale = Vector2(3.0,6.0)
+		lazer.position.y = -3870.0
 		lazer.play("start beam")
 		await lazer.animation_finished
 		lazer.play("beaming it")
@@ -305,11 +324,10 @@ func activate_kraken():
 		active_laser_node.position = Vector2(0, 50) 
 
 	
-	# --- PERBAIKAN DURASI ---
-	# Gunakan Node Timer, bukan get_tree().create_timer
-	# Saat game dipause, timer ini akan berhenti menghitung.
-	skill_timer.start(4.5) # Durasi Laser 4.5 detik
-	await skill_timer.timeout
+
+
+	laser_timer.start(4.5) # Durasi Laser 4.5 detik
+	await laser_timer.timeout
 	
 	# Clear Laser
 	if active_laser_node != null:
@@ -330,7 +348,7 @@ func activate_kraken():
 	is_kraken_active = false
 	anim_cannon.show()
 	
-# --- LOGIKA BARU: SECOND WIND (REVIVE) ---
+# --- SECOND WIND (REVIVE) ---
 func activate_second_wind():
 	has_second_wind = true
 	print("Second Wind Ready! (Nyawa cadangan aktif)")
@@ -340,41 +358,56 @@ func activate_second_wind():
 func activate_admiral():
 	print("ADMIRAL'S WILL ACTIVATED! Musuh Terhenti!")
 	
-	# 1. Efek Visual: Flash Layar Kuning
 	modulate = Color(3, 3, 0, 1) # Terang banget (Kuning)
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5)
 	
-	# 2. Panggil grup "enemies" untuk stop bergerak
-	# Pastikan di dummy.gd sudah ada add_to_group("enemies")
+	# Panggil grup "enemies" untuk stop bergerak
 	shockwaves_anim.show()
 	cameraeffects.shake(8.0, 0.25)
 	shockwaves_anim.modulate = Color(3, 3, 0, 1)
-	Powerupview.show_icons("Admiral's Will", 5.0)
+	Powerupview.show_icons("Admiral's Will", 2.0)
 	$admiralsfx.play()
 	shockwaves_anim.play("shocking")
 	get_tree().call_group("enemies", "set_paralyzed", true)
+	spawn_lightning_on_enemies()
 	await shockwaves_anim.animation_finished
 	shockwaves_anim.hide()
-	# 3. Tunggu 5 Detik
+	# Tunggu 5 Detik
 	skill_timer.start(5.0)
 	await skill_timer.timeout
 	
-	# 4. Kembalikan musuh jadi normal
+	# Kembalikan musuh jadi normal
 	print("Admiral's Will berakhir.")
 	get_tree().call_group("enemies", "set_paralyzed", false)
-
+func spawn_lightning_on_enemies():
+	var all_enemies = get_tree().get_nodes_in_group("enemies")
+	for enemy in all_enemies:
+		if is_instance_valid(enemy):
+			# Jangan sambar musuh yang sudah mati/diluar layar
+			if enemy.global_position.y < -50: 
+				continue 
+			var bolt = lightning_scene.instantiate()
+			bolt.global_position = enemy.global_position
+			
+			# Tambahkan variasi sedikit agar tidak terlalu seragam (opsional)
+			bolt.position.y -= 20 # Geser ke atas sedikit biar kena kepala
+			
+			# Masukkan ke Main Scene (bukan ke Player)
+			get_tree().current_scene.call_deferred("add_child", bolt)
+			
 func apply_dizziness(duration):
 	if is_dead:
 		return
 	modulate = Color(0.832, 0.381, 0.83, 0.851)
 	print("PLAYER KENA MENTAL! PUSING!")
+	cameraeffects.flash_darken(0.5, duration)
+	Powerupview.show_icons("Dizziness", duration)
 	is_dizzy = true
 	dizzy_timer = duration
-
+	cameraeffects.flash_darken(0.5, duration)
 
 func trigger_shockwave():
-	# Efek visual (opsional, misal flash layar)
 	modulate = Color(10, 10, 10, 1) # Flash putih terang
 	shockwaves_anim.show()
 	cameraeffects.shake(8.0, 0.25)
@@ -383,13 +416,16 @@ func trigger_shockwave():
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.5) # Fade balik ke normal
 	
-	# LOGIKA MEMBUNUH SEMUA MUSUH
-	# Kita panggil grup "enemies" yang sudah kita buat di Langkah 1
+	
 	get_tree().call_group("enemies", "take_damage", 9999)
+	get_tree().call_group("enemy_projectiles", "meledak")
 	await shockwaves_anim.animation_finished
 	shockwaves_anim.hide()
 	
 func _physics_process(delta: float) -> void:
+	#if Input.is_action_just_pressed("ui_accept"):
+		#activate_kraken()
+		
 	if is_dizzy:
 		dizzy_timer -= delta
 		if dizzy_timer <= 0:
@@ -452,26 +488,6 @@ func _physics_process(delta: float) -> void:
 	var mid_y := get_viewport().get_visible_rect().size.y / 2
 	global_position.y = clamp(global_position.y, mid_y, INF)
 	
-	# if is_dizzy == true:
-	# 	if Input.is_action_pressed("Left"):
-	# 		_animation_player.play("left")
-	# 		k_sturret.position.x = 15.0
-	# 	elif Input.is_action_pressed("Right"):
-	# 		_animation_player.play("right")
-	# 		k_sturret.position.x = -15.0
-	# 	else:
-	# 		_animation_player.play("idle")
-	# elif is_dizzy == false:
-	# 	if Input.is_action_pressed("Left"):
-	# 		_animation_player.play("left")
-	# 		k_sturret.position.x = -15.0
-	# 	elif Input.is_action_pressed("Right"):
-	# 		_animation_player.play("right")
-	# 		k_sturret.position.x = 15.0
-	# 	else:
-	# 		_animation_player.play("idle")
-	
-	# rotasi kapal
 	rotation_direction = Input.get_axis("Left", "Right") # (kuganti biar bisa WASD - kaiser)
 	
 	if is_dizzy:
@@ -525,7 +541,10 @@ func reset_all_skills():
 	
 	if has_node("SkillDurationTimer"):
 		$SkillDurationTimer.stop()
-
+		
+	if laser_timer:
+		laser_timer.stop()
+		
 	if shoot_timer:
 		shoot_timer.wait_time = 0.2 
 	
@@ -551,6 +570,8 @@ func total_nigger_death():
 	tween.tween_property(self, "modulate", Color.WHITE, 1.0)
 	
 func _on_timer_timeout() -> void: # Timer
+	if is_dead: 
+		return
 	# Pasang gatekeeping peluru
 	if is_kraken_active:
 		return

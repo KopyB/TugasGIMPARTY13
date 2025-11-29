@@ -20,7 +20,7 @@ var next_shark_time = 0.0
 var shark_event_count = 0
 
 # --- GLOBAL STATE ---
-var is_maze_active = false # Ganti nama 'is_spawning' jadi lebih jelas
+var is_maze_active = false 
 var maze_cooldown_timer = 0.0
 var next_maze_time = 45.0 
 var current_gap_index = 4  
@@ -31,26 +31,25 @@ func _ready():
 	block_size = screen_width / columns
 	randomize()
 	
-	# Setup waktu event pertama
+	# Waktu event pertama
 	next_maze_time = randf_range(50.0, 60.0)
-	next_shark_time = randf_range(70.0, 90.0) # Sesuai request (70-90 detik)
+	next_shark_time = randf_range(70.0, 90.0) 
 	
 	print("Next Maze: %.1f | Next Shark: %.1f" % [next_maze_time, next_shark_time])
 
 func _process(delta):
-	# LOGIKA UTAMA: Cek apakah ada event yang sedang aktif?
+	# Cek apakah ada event yang sedang aktif?
 	var any_event_active = is_maze_active or is_shark_event_active
 	
 	if not any_event_active:
-		# --- FASE MENUNGGU (Semua timer jalan) ---
 		
-		# 1. Hitung Timer Maze
+		# Hitung Timer Maze
 		maze_cooldown_timer += delta
 		if maze_cooldown_timer >= next_maze_time:
 			start_maze_event()
 			return # Prioritas: Langsung return agar tidak cek shark di frame yang sama
 
-		# 2. Hitung Timer Shark
+		# Hitung Timer Shark
 		shark_timer += delta
 		if shark_timer >= next_shark_time:
 			start_shark_event()
@@ -58,7 +57,6 @@ func _process(delta):
 		if randi() % 1000000000000000 == 0:
 			start_chaos_shark_mode()
 	else:
-		# --- FASE EVENT SEDANG JALAN ---
 		
 		# Jika Maze aktif, jalankan logika spawn row maze
 		if is_maze_active:
@@ -67,8 +65,6 @@ func _process(delta):
 				maze_timer = 0
 				spawn_maze_row()
 		
-		# Jika Shark aktif, logikanya dihandle via Coroutine (await), 
-		# jadi tidak perlu code di _process.
 
 # =========================================
 #           LOGIKA SHARK ATTACK
@@ -81,14 +77,10 @@ func start_shark_event():
 	is_shark_event_active = true
 	shark_timer = 0.0 # Reset timer
 	
-	# 1. Pause Musuh Biasa
 	get_tree().call_group("spawner_utama", "pause_spawning")
 	
-	# 2. Tampilkan Warning 
-	# Beri jeda 2 detik agar player siap
 	await get_tree().create_timer(2.0).timeout
 	
-	# 3. Mulai Spawn Gelombang Shark
 	spawn_shark_waves()
 
 func spawn_shark_waves():
@@ -157,24 +149,18 @@ func end_shark_event():
 	print("!!! SHARK ATTACK EVENT ENDED !!!")
 	is_shark_event_active = false
 	
-	# Tentukan waktu event Shark berikutnya (Random lagi)
 	next_shark_time = randf_range(70.0, 90.0) 
 	
-	# Resume Musuh Biasa
 	get_tree().call_group("spawner_utama", "resume_spawning")
 
 func spawn_parrot_event():
 	var new_parrot = parrot_scene.instantiate()
 	
-	# Setup Data Parrot (Meniru cara enemy_spawner.gd Anda)
-	# Mengakses anak-anak node karena struktur scene Parrot Anda bertingkat
-	# Path2D -> PathFollow2D -> Area2D (Script dummy ada di sini)
 	var parrot_logic = new_parrot.get_child(0).get_child(0)
 	
 	parrot_logic.enemy_type = 3 # Tipe 3 = PARROT
-	parrot_logic.add_to_group("parrots") # Masukkan ke grup agar droprate 100% jalan
+	parrot_logic.add_to_group("parrots") 
 	
-	# Posisi Spawn (Biasanya Parrot punya path sendiri, jadi kita taruh di 0,0 parentnya)
 	new_parrot.global_position = Vector2.ZERO
 	
 	get_tree().current_scene.call_deferred("add_child", new_parrot)
@@ -193,14 +179,13 @@ func start_chaos_shark_mode():
 	# Pause musuh biasa
 	get_tree().call_group("spawner_utama", "pause_spawning")
 	
-	# Beri peringatan visual/delay sedikit
 	await get_tree().create_timer(1.0, false).timeout
 	
 	spawn_chaos_waves()
 
 func spawn_chaos_waves():
-	var total_waves = randi_range(6, 8)  # 6 sampai 8 Wave
-	var sharks_per_wave = randi_range(40, 60)             # 40 Hiu per Wave
+	var total_waves = randi_range(6, 8)  
+	var sharks_per_wave = randi_range(40, 60)             
 	
 	print(">>> START CHAOS EVENT: %d Waves <<<" % total_waves)
 	
@@ -224,7 +209,7 @@ func spawn_safe_parrot():
 	var new_parrot = parrot_scene.instantiate()
 	var parrot_logic = new_parrot.get_child(0).get_child(0)
 	
-	parrot_logic.enemy_type = 3 # Tipe 3 = PARROT
+	parrot_logic.enemy_type = 3 
 	
 	new_parrot.global_position = Vector2.ZERO
 	get_tree().current_scene.call_deferred("add_child", new_parrot)

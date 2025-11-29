@@ -9,14 +9,14 @@ var parrot_scene = preload("res://scenes/parrot.tscn")
 var time_elapsed = 0.0
 var wave_duration = 60.0
 
-# 1. Setting Kecepatan Spawn (Sumbu Y)
+# Setting Kecepatan Spawn (Sumbu Y)
 var spawn_time_slow = 6.5  # Paling santai (Lembah gelombang)
 var peak_difficulty_start = 4.0     # Puncak Gelombang 1 (4 detik - Santai)
 var peak_difficulty_final = 0.5     # Puncak Gelombang 10++ (0.5 detik - Cepat)
 var current_peak = peak_difficulty_start # Variable dinamis yang akan berubah
 
 var wave_counter = 0                # Menghitung sudah berapa kali "Jeda" terjadi
-var target_waves_to_max = 12.0      # Butuh 8 jeda untuk sampai max difficulty
+var target_waves_to_max = 12.0      # Butuh 12 jeda untuk sampai max difficulty
 
 var is_spawning_paused = false
 
@@ -33,24 +33,22 @@ func _process(delta):
 	if not is_spawning_paused:
 		time_elapsed += delta # biar ga lompat ke puncak
 
-# --- FUNGSI KONTROL (Dipanggil oleh MazeSpawner) ---
 func pause_spawning():
 	print(">>> SYSTEM: Musuh Biasa PAUSED (Maze Mulai) <<<")
 	is_spawning_paused = true # Set flag pause
-	spawn_timer.stop()        # Matikan timer fisik
+	spawn_timer.stop()        
 	
 func resume_spawning():
 	print(">>> SYSTEM: Musuh Biasa RESUMED (Maze Selesai) <<<")
 	# FUNGSI INI DIPANGGIL SAAT MAZE SELESAI
-	# Artinya kita masuk ke Wave berikutnya
 	
 	is_spawning_paused = false 
 	
 	# Tambah Counter Wave
 	wave_counter += 1
 	
-	# Hitung Kesulitan Puncak yang Baru
-	# Rumus: (Wave Sekarang / Target 10) -> Hasilnya 0.0 sampai 1.0
+
+	# Rumus: (Wave Sekarang / Target ) -> Hasilnya 0.0 sampai 1.0
 	var progress_ratio = float(wave_counter) / target_waves_to_max
 	
 	# Clamp agar tidak melebihi 1.0 (Supaya tidak makin cepat dari 0.5)
@@ -74,10 +72,8 @@ func _on_spawn_timer_timeout():
 
 	spawn_logic()
 	
-	# --- IMPLEMENTASI GELOMBANG SINUS ---
 	var frequency = (2.0 * PI) / wave_duration
 	
-	# Phase shift -PI/2 agar mulai dari lembah
 	var sine_value = sin((time_elapsed * frequency) - (PI / 2.0))
 	
 	var difficulty_factor = (sine_value + 1.0) / 2.0
@@ -94,8 +90,8 @@ func spawn_logic():
 	var chance = randi() % 100
 	print(chance)
 	
-	# --- SUSUNAN PROBABILITAS BARU (Total 100%) ---
-	# TOTAL HARUS 100%. SELALU FOLLOW SUSUNAN LIKE BELOW -nigga
+	
+	# TOTAL HARUS 100%. SELALU FOLLOW SUSUNAN LIKE BELOW 
 	# 1. PARROT (Sangat Jarang: 5%)
 	if chance < 5 and parrotcheck == 0 and get_tree().get_nodes_in_group("enemies").size() >= 1: 
 		spawn_parrot(viewport_rect)
@@ -140,7 +136,7 @@ func spawn_single_obstacle(viewport_rect):
 	
 	get_tree().current_scene.add_child(obs)
 
-# --- TIPE 2: GUNBOAT BERKELOMPOK ---
+# --- TIPE 2: GUNBOAT GROUP ---
 func spawn_gunboat_group(viewport_rect):
 	var group_count = randi_range(1, 3) # 1 sampai 3 kapal
 	for i in range(group_count):
@@ -148,7 +144,6 @@ func spawn_gunboat_group(viewport_rect):
 		new_enemy.enemy_type = 0 # Gunboat
 		var enemyshape = new_enemy.get_node("enemyship")
 		
-		# Atur formasi berjejer (jarak antar kapal random dari 60 sampai lebar viewport - ukuran sprite/2)
 		var viewport_width = get_viewport().get_visible_rect().size.x - enemyshape.get_rect().size.x*0.06/2
 		#aku ganti logika spacingnya biar g fix 60 -kaiser
 		var min_spacing = 60 #minimal 60 kyk kode awal

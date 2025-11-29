@@ -32,7 +32,7 @@ func shake(intensity, duration): #shake pendek
 		duration * 0.5
 	)
 
-func start_loop_shake(intensity := 6.0, speed := 0.1): #shake panjang (buat laser sm siren)
+func start_loop_shake(intensity, speed): #shake panjang (buat laser sm siren)
 	if not camera or not is_screenshake_enabled:
 		return
 

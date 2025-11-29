@@ -3,15 +3,21 @@ extends Control
 @onready var mainbuttons: VBoxContainer = $mainbuttons
 @onready var settings: Panel = $Settings
 @onready var credits : Panel = $Credits
+@onready var leaderboard : Panel = $LeaderboardPanel
 @onready var config = ConfigFile.new()
 @onready var animation_player: AnimationPlayer = $animationstella/AnimationPlayer
 @onready var buttonclick: AudioStreamPlayer = $buttonclick
 @onready var high_score_label: Label = $HighScoreLabel
+@onready var leaderboard_panel = $LeaderboardPanel 
+@onready var score_list_container = $LeaderboardPanel/ScrollContainer/ScoreList
+@onready var name_input: LineEdit = $Settings/VBoxContainer/PLAYERLABEL/NameInput
 
 var fstoggle
 var shake_setting
 var volume
 var sfx
+var player_name = "Captain"
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,7 +25,16 @@ func _ready() -> void:
 	mainbuttons.visible = true
 	settings.visible = false
 	credits.visible = false
+	leaderboard.visible = false
 	Powerupview.stop_timer_score()
+	$base/AnimatedSprite2D.play("base")
+	$LeaderboardPanel/Back.pressed.connect(_on_leaderboard_close_pressed)
+	
+	SilentWolf.configure({
+	"api_key": "XUaM20pqhU255gp5amSnY74JmRRU5NeD2lop7Xbp",
+	"game_id": "RogueWaves",
+	"log_level": 1
+  })
 	
 	var load_err = config.load("user://settings.cfg")
 	if load_err == OK:
@@ -36,9 +51,14 @@ func _ready() -> void:
 		shake_setting = config.get_value("video", "screenshake", true) 
 		$Settings/VBoxContainer/ShakeToggle.button_pressed = shake_setting
 		cameraeffects.is_screenshake_enabled = shake_setting	
+		player_name = config.get_value("player", "name", "Captain")
+		if name_input:
+			name_input.text = player_name
 	else:
 		print("No config found. Using default settings.")
 		cameraeffects.is_screenshake_enabled = true
+		var def_username = "Guest" + str(randi_range(1, 100000))
+		if name_input: name_input.text = def_username
 	high_score_label.show()
 	load_highscore()
 
@@ -64,6 +84,7 @@ func _on_exit_pressed() -> void:
 func _on_start_pressed() -> void:
 	#animation stella zooming
 	buttonclick.play()
+	$animationstella/wavestransition.play()
 	animation_player.play("nyoom")
 	await animation_player.animation_finished
 	
@@ -102,7 +123,16 @@ func _on_apply_pressed() -> void:
 	sfx = $Settings/VBoxContainer/labelSFX/SFXControl.value
 	$Settings/VBoxContainer/labelSFX/SFXControl._on_value_changed(sfx)
 	print(sfx)
-
+	
+	if name_input:
+		player_name = name_input.text
+		
+		if player_name.strip_edges() == "":
+			player_name = "Captain"
+			name_input.text = player_name
+			
+		print("Player Name Saved: ", player_name)
+		
 	# Example settings—replace with your own controls
 	config.set_value("video", "fullscreen", fstoggle)
 	config.set_value("video", "screenshake", shake_setting)
@@ -117,3 +147,46 @@ func _on_apply_pressed() -> void:
 	buttonclick.play()
 	# Go back to main layout
 	_ready()
+
+
+func _on_leaderboard_pressed() -> void:
+	# 1. Show the panel & Hide buttons
+	mainbuttons.visible = false
+	leaderboard_panel.visible = true # Show the new panel
+	buttonclick.play()
+	
+	# 2. Clear previous list (to avoid duplicates)
+	for child in score_list_container.get_children():
+		child.queue_free()
+		
+	# 3. Add a "Loading..." text temporarily
+	var loading_label = Label.new()
+	loading_label.text = "Loading Scores..."
+	score_list_container.add_child(loading_label)
+	
+	print("Fetching data...")
+	
+	# 4. Fetch Data
+	var result = await SilentWolf.Scores.get_scores(10, "main").sw_get_scores_complete
+	
+	# 5. Clear "Loading..."
+	if is_instance_valid(loading_label):
+		loading_label.queue_free()
+	
+	# 6. Populate List
+	var rank = 1
+	for score_data in result.scores:
+		var row_label = Label.new()
+		row_label.text = str(rank) + ". " + str(score_data.player_name) + " : " + str(score_data.score)
+		
+		# Optional: Styling
+		row_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		
+		score_list_container.add_child(row_label)
+		rank += 1
+		
+		
+func _on_leaderboard_close_pressed():
+	leaderboard_panel.visible = false
+	mainbuttons.visible = true
+	buttonclick.play()

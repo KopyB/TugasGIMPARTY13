@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c0b17q68j2xqh"]
+[gd_scene load_steps=15 format=3 uid="uid://c0b17q68j2xqh"]
 
 [ext_resource type="Texture2D" uid="uid://y2vak2ke27xr" path="res://assets/art/gimming beledug 1.png" id="1_hbmxj"]
 [ext_resource type="Texture2D" uid="uid://bokn48o0vifr0" path="res://assets/art/gimming beledug 2.png" id="2_xfoey"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://df3obhmui4o5l" path="res://assets/art/debu3.png" id="8_4hpr0"]
 [ext_resource type="Texture2D" uid="uid://bpytjscb3gf88" path="res://assets/art/debu4.png" id="9_dcqkm"]
 [ext_resource type="Texture2D" uid="uid://ijvtgoj2cbuc" path="res://assets/art/debu5.png" id="10_pw7mt"]
+[ext_resource type="AudioStream" uid="uid://chqn2eqt3kc0j" path="res://assets/audio/explodingbone.ogg" id="13_dvsvq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v8gpv"]
 animations = [{
@@ -57,6 +58,7 @@ animations = [{
 }]
 
 [node name="explosion" type="AnimatedSprite2D"]
+visibility_layer = 513
 z_index = 20
 sprite_frames = SubResource("SpriteFrames_v8gpv")
 animation = &"boombone"
@@ -64,5 +66,10 @@ script = ExtResource("6_xfoey")
 
 [node name="boomsfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_v8gpv")
+volume_db = 3.0
+bus = &"SFX"
+
+[node name="bone_boom" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_dvsvq")
 volume_db = 3.0
 bus = &"SFX"

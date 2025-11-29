@@ -13,13 +13,18 @@ config_version=5
 config/name="Rogue Waves"
 run/main_scene="uid://ynu4bos33vch"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/bg_color=Color(1, 1, 1, 1)
+boot_splash/image="uid://d05p57njysrq5"
 config/icon="uid://xli8bl2lqfi3"
+boot_splash/minimum_display_time=1000
 
 [autoload]
 
 Transition="*res://scenes/transition.tscn"
 cameraeffects="*res://scripts/camera_effects.gd"
 Powerupview="*res://scenes/powerupview.tscn"
+SilentWolf="*res://addons/silent_wolf/SilentWolf.gd"
+Global="*res://addons/silent_wolf/global.gd"
 
 [debug]
 
@@ -32,6 +37,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/silent_wolf/plugin.cfg")
 
 [global_group]
 

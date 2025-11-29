@@ -1,25 +1,126 @@
-[gd_scene load_steps=14 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=29 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="Script" uid="uid://68ok3weuksdj" path="res://scripts/main.gd" id="1_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
-[ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="4_tbgi4"]
 [ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
+[ext_resource type="Shader" uid="uid://nfwa4fxuwn7i" path="res://scripts/wave.gdshader" id="5_dp3eg"]
+[ext_resource type="Texture2D" uid="uid://bwy6nk3q1q4we" path="res://assets/art/waterbg/WaterBGFrame1.png" id="5_muem4"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://bsexnd1gi82lx" path="res://assets/art/waterbg/WaterBGFrame2and10.png" id="6_dp3eg"]
 [ext_resource type="AudioStream" uid="uid://c8e0e01ye6ulh" path="res://assets/audio/Rogue Waves.ogg" id="6_tipki"]
+[ext_resource type="Texture2D" uid="uid://bdwm45bs6p0sd" path="res://assets/art/waterbg/WaterBGFrame3and9.png" id="7_0ld40"]
 [ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_85g3d"]
+[ext_resource type="Texture2D" uid="uid://borsmvyxorra3" path="res://assets/art/waterbg/WaterBGFrame4and8.png" id="8_gqmmt"]
 [ext_resource type="Script" uid="uid://dlp03cxd8mca3" path="res://scripts/maze_spawner.gd" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://ierkg61h23va" path="res://scenes/powerupview.tscn" id="9_85g3d"]
+[ext_resource type="Texture2D" uid="uid://dlxrq6n5eubno" path="res://assets/art/waterbg/WaterBGFrame5and7.png" id="9_yc10j"]
 [ext_resource type="PackedScene" uid="uid://ceelts6yey11c" path="res://scenes/screenshake.tscn" id="10_choun"]
+[ext_resource type="Texture2D" uid="uid://bv8c11vhkale6" path="res://assets/art/waterbg/WaterBGFrame6.png" id="10_jscy8"]
 [ext_resource type="AudioStream" uid="uid://xwrj606v054p" path="res://assets/audio/Waves Background.ogg" id="11_ya4ey"]
+[ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="12_0ld40"]
+[ext_resource type="PackedScene" uid="uid://dh7tgcxbi5jy5" path="res://scenes/jumpscare_screen.tscn" id="13_trceg"]
+[ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="14_a8y0u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20.000061, 2024)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dp3eg"]
+shader = ExtResource("5_dp3eg")
+shader_parameter/wave_strength = 5.0
+shader_parameter/wave_speed = 2.0
+shader_parameter/wave_frequency = 10.0
+shader_parameter/paused = false
+shader_parameter/time_scale = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yc10j"]
+shader = ExtResource("5_dp3eg")
+shader_parameter/wave_strength = 1.0
+shader_parameter/wave_speed = 0.25
+shader_parameter/wave_frequency = 25.0
+shader_parameter/paused = false
+shader_parameter/time_scale = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_muem4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_muem4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dp3eg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_0ld40")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gqmmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_yc10j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_jscy8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_yc10j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gqmmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_0ld40")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dp3eg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.5
+}]
+
+[sub_resource type="Animation" id="Animation_jbj1t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jkv2x"]
+resource_name = "tutorialfade"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_muem4"]
+_data = {
+&"RESET": SubResource("Animation_jbj1t"),
+&"tutorialfade": SubResource("Animation_jkv2x")
+}
 
 [node name="main" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_eb6dy")
+metadata/_edit_horizontal_guides_ = [-3191.0]
 
 [node name="CharacterBody2D" parent="." groups=["player"] instance=ExtResource("1_jyhfs")]
 position = Vector2(971, 944)
@@ -54,7 +155,7 @@ rotation = 1.5707964
 position = Vector2(-339.99994, 212.99998)
 shape = SubResource("RectangleShape2D_h2yge")
 
-[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="." groups=["level_bgm"]]
 visible = false
 autoplay = true
 
@@ -67,12 +168,21 @@ scroll_ignore_camera_zoom = true
 script = ExtResource("4_tefeu")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="BackgroundAtmosphere"]
+material = SubResource("ShaderMaterial_dp3eg")
 motion_mirroring = Vector2(0, 1080)
 
-[node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
+[node name="Sprite2D3" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
+visible = false
+material = SubResource("ShaderMaterial_yc10j")
 position = Vector2(-1662, -1346)
-scale = Vector2(2.0760417, 2.9935184)
-texture = ExtResource("4_tbgi4")
+scale = Vector2(2.1020834, 2.9861112)
+texture = ExtResource("12_0ld40")
+centered = false
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
+position = Vector2(0, -9.999878)
+sprite_frames = SubResource("SpriteFrames_muem4")
+frame_progress = 0.88227355
 centered = false
 
 [node name="EnemySpawner" type="Marker2D" parent="."]
@@ -88,6 +198,7 @@ stream = ExtResource("6_tipki")
 volume_db = -3.0
 autoplay = true
 bus = &"Music"
+parameters/looping = true
 script = ExtResource("7_85g3d")
 
 [node name="MazeSpawner" type="Node2D" parent="."]
@@ -113,5 +224,50 @@ stream = ExtResource("11_ya4ey")
 autoplay = true
 bus = &"SFX"
 parameters/looping = true
+
+[node name="JumpscareScreen" parent="." instance=ExtResource("13_trceg")]
+visible = false
+
+[node name="tutoriallayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Panel" type="Panel" parent="tutoriallayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -322.0
+offset_top = -418.0
+offset_right = 322.0
+offset_bottom = -232.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="tutoriallayer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -277.5
+offset_top = -73.5
+offset_right = 277.5
+offset_bottom = 73.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("14_a8y0u")
+theme_override_font_sizes/font_size = 50
+text = "W, A, S, D to move
+Avoid enemies
+Pick up power upgrades"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="tutoriallayer"]
+libraries = {
+&"": SubResource("AnimationLibrary_muem4")
+}
 
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]
