@@ -86,7 +86,7 @@ func _input(event):
 				input_buffer = ""
 			
 			elif input_buffer.ends_with("PLQA00"):
-				total_nigger_death()
+				total_enemy_death()
 				input_buffer = ""
 
 func toggle_something_mode():
@@ -561,7 +561,7 @@ func reset_all_skills():
 
 	get_tree().call_group("enemies", "set_paralyzed", false)
 	
-func total_nigger_death():
+func total_enemy_death():
 	get_tree().call_group("event_manager", "start_chaos_shark_mode")
 	
 	# Visual Feedback (Flash Merah Darah)
