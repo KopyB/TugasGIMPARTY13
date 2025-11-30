@@ -2,10 +2,8 @@ extends Area2D
 
 @onready var crate: Sprite2D = $crate
 
-# Daftar tipe power-up sesuai tabel Anda
 enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND, ADMIRAL}
 
-# Variabel untuk menyimpan tipe bola ini (Default Multishot)
 var current_type = Type.MULTISHOT
 
 # variabel texture crates 
@@ -18,7 +16,6 @@ var secondwindcrate = preload("res://assets/art/secondwindcrate.png")
 var admiralcrate = preload("res://assets/art/will_box.png")
 
 func _ready():
-	# Ubah warna bola berdasarkan tipe agar pemain tahu
 
 	match current_type:
 		Type.SHIELD:
@@ -44,7 +41,6 @@ func _process(delta):
 	position.y += 80 * delta # Kecepatan jatuh
 
 func _on_body_entered(body):
-	# Cek apakah player punya fungsi untuk menerima powerup
 	if body.has_method("apply_powerup"):
 		# Kirim tipe power-up ini ke player
 		body.apply_powerup(current_type)

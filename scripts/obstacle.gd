@@ -10,7 +10,6 @@ var enemy_scene = preload("res://scenes/dummy.tscn")
 var explosion_scene = preload("res://scenes/explosion.tscn")
 var floating_text_scene = preload("res://scenes/FloatingText.tscn")
 
-# --- FIX: Tambahkan variabel ini ---
 var is_maze_obstacle = false 
 
 func setup_obstacle(type):

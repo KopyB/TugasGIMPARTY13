@@ -1,10 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=29 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="Script" uid="uid://68ok3weuksdj" path="res://scripts/main.gd" id="1_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
-[ext_resource type="Shader" uid="uid://nfwa4fxuwn7i" path="res://scripts/wave.gdshader" id="5_dp3eg"]
+[ext_resource type="Shader" path="res://scripts/wave.gdshader" id="5_dp3eg"]
 [ext_resource type="Texture2D" uid="uid://bwy6nk3q1q4we" path="res://assets/art/waterbg/WaterBGFrame1.png" id="5_muem4"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://bsexnd1gi82lx" path="res://assets/art/waterbg/WaterBGFrame2and10.png" id="6_dp3eg"]
@@ -78,21 +78,6 @@ animations = [{
 "name": &"default",
 "speed": 2.5
 }]
-[sub_resource type="Animation" id="Animation_jkv2x"]
-resource_name = "tutorialfade"
-length = 5.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Panel:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.5, 5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_jbj1t"]
 length = 0.001
@@ -107,6 +92,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jkv2x"]
+resource_name = "tutorialfade"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_muem4"]
@@ -158,10 +159,6 @@ shape = SubResource("RectangleShape2D_h2yge")
 visible = false
 autoplay = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_tbgi4")]
-
 [node name="BackgroundAtmosphere" type="ParallaxBackground" parent="."]
 scroll_ignore_camera_zoom = true
 script = ExtResource("4_tefeu")
@@ -197,6 +194,7 @@ stream = ExtResource("6_tipki")
 volume_db = -3.0
 autoplay = true
 bus = &"Music"
+parameters/looping = true
 script = ExtResource("7_85g3d")
 
 [node name="MazeSpawner" type="Node2D" parent="."]
@@ -267,5 +265,9 @@ vertical_alignment = 1
 libraries = {
 &"": SubResource("AnimationLibrary_muem4")
 }
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_tbgi4")]
 
 [connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]
