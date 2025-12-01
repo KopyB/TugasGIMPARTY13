@@ -5,6 +5,7 @@ extends Control
 @onready var scorelabel: Label = $VBoxContainer/scorelabel
 @onready var timer: Timer = $Timer
 var score: int = 0
+var is_gameover = false
 #signal end_screen_toggled(type: int)
 
 const MAP_TYPE_STRING = {0: "YOU DIED!", 1: "PAUSED"}
@@ -23,6 +24,7 @@ func _ready() -> void:
 	update_score_display()
 	hide()
 	add_to_group("ui_manager")
+	
 
 func _on_resume_pressed() -> void:
 	resume()
@@ -46,10 +48,11 @@ func _process(_delta: float) -> void:
 		toggled_handler(1) #masukin var baru buat klo mati atau tidak
 	elif Input.is_action_just_pressed("escape") and get_tree().paused:
 		resume()
-
+	
 func toggled_handler(type: int) -> void:
 	state.text = MAP_TYPE_STRING[type]
 	if type == 0:
+		is_gameover = true
 		resume_button.hide()
 		scorelabel.show()
 		check_and_save_highscore(score)
