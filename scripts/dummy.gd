@@ -528,9 +528,16 @@ func spawn_powerup():
 	var powerup = powerup_scene.instantiate()
 	powerup.global_position = global_position
 	
-	# Random angka acak 0 sampai 6
-	var random_type = randi() % 7 
-	powerup.current_type = random_type
+	var player = get_tree().current_scene.get_node("CharacterBody2D")
+
+	var random_type = randi() % 7
+
+	# reroll yahaha -kaiser
+	while (
+		(random_type == 0 and player.has_shield) or
+		(random_type == 5 and player.has_second_wind)
+	):
+		random_type = randi() % 7
 	
 	get_tree().current_scene.call_deferred("add_child", powerup)
 		
