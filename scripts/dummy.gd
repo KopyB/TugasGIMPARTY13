@@ -539,6 +539,8 @@ func spawn_powerup():
 	):
 		random_type = randi() % 7
 	
+	powerup.current_type = random_type
+	
 	get_tree().current_scene.call_deferred("add_child", powerup)
 		
 func exploded():
