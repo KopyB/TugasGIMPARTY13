@@ -138,7 +138,8 @@ func _on_apply_pressed() -> void:
 	config.set_value("video", "screenshake", shake_setting)
 	config.set_value("audio", "volume", volume)
 	config.set_value("audio", "sfx", sfx)
-
+	config.set_value("player", "name", player_name)
+	
 	# Save file
 	var err = config.save("user://settings.cfg")
 	if err != OK:
