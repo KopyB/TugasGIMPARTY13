@@ -66,6 +66,8 @@ func update_score_display():
 	# You can add other functions to increase score from game events if needed
 func increase_score(amount: int):
 	score += amount
+	if score < 0:
+		score = 0
 	update_score_display()
 
 func show_desc(message : String):

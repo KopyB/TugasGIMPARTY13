@@ -26,10 +26,10 @@ var is_paralyzed = false
 
 # --- SHARK VARIABLE ---
 var shark_timer = 0.0
-var shark_lock_duration = randf_range(4.5, 6.0) # Locks on randomly
+var shark_lock_duration = randf_range(5.0, 6.0) # Locks on randomly
 var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
-var shark_charge_speed = randf_range(900.0, 1250.0)
+var shark_charge_speed = randf_range(1000.0, 1350.0)
 var torpedoshark: AnimatedSprite2D = null
 
 # --- SIREN VARIABLE ---
@@ -158,8 +158,8 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0)
 			
-		shoot_interval = randf_range(1.5, 2.0) 
-		speed = randf_range(160, 200) 
+		shoot_interval = randf_range(0.5, 1.0) 
+		speed = randf_range(350, 400) 
 		rotation_degrees = -90 # Hadap Kiri (Mundur)
 
 	# TIPE 3: PARROT 
@@ -172,7 +172,7 @@ func _ready():
 	# TIPE 4: TORPEDO SHARK 
 	elif enemy_type == Type.TORPEDO_SHARK:
 		health = 2
-		speed = 60 # Speed awal (aiming phase)
+		speed = 70 # Speed awal (aiming phase)
 		# Hitbox Shark 
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(100.0, 50.0)
@@ -521,7 +521,7 @@ func spawn_floating_text(points, e_name):
 	text_instance.start_animation(display_text, text_color)
 
 func spawn_powerup_chance():
-	if randf() <= 0.25: 
+	if randf() <= 0.10: 
 		spawn_powerup()
 
 func spawn_powerup():
