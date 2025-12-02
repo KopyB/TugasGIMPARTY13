@@ -29,7 +29,7 @@ var shark_timer = 0.0
 var shark_lock_duration = randf_range(5.0, 6.0) # Locks on randomly
 var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
-var shark_charge_speed = randf_range(1000.0, 1350.0)
+var shark_charge_speed = randf_range(1000.0, 1300.0)
 var torpedoshark: AnimatedSprite2D = null
 
 # --- SIREN VARIABLE ---
@@ -172,7 +172,7 @@ func _ready():
 	# TIPE 4: TORPEDO SHARK 
 	elif enemy_type == Type.TORPEDO_SHARK:
 		health = 2
-		speed = 70 # Speed awal (aiming phase)
+		speed = 65 # Speed awal (aiming phase)
 		# Hitbox Shark 
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(100.0, 50.0)
