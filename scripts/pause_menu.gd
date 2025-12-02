@@ -119,22 +119,28 @@ func _on_exit_pressed() -> void:
 func _process(delta: float) -> void:
 	if is_gameover:
 		return
-	if Input.is_action_just_pressed("escape") and not get_tree().paused:
-		toggled_handler(1) #masukin var baru buat klo mati atau tidak
-	elif Input.is_action_just_pressed("escape") and get_tree().paused:
-		resume()
-	
+	if Input.is_action_just_pressed("escape"):
+		if not get_tree().paused:
+			toggled_handler(1) 
+		else:
+			if settings_panel and settings_panel.visible:
+				_on_settings_back_pressed()
+			else:
+				resume()
 	
 
 func toggled_handler(type: int) -> void:
 	state.text = MAP_TYPE_STRING[type]
+	var settings = $VBoxContainer/SETTINGS
 	if type == 0:
 		is_gameover = true
 		resume_button.hide()
+		settings.hide()
 		scorelabel.show()
 		check_and_save_highscore(score)
 	else:
 		resume_button.show()
+		settings.show()
 		scorelabel.hide()
 	paused()
 	
@@ -162,8 +168,14 @@ func check_and_save_highscore(current_score: int):
 		if err_settings == OK:
 			uploader_name = settings_config.get_value("player", "name", "Captain")
 		
-		print("Uploading score as: ", uploader_name)
-		SilentWolf.Scores.save_score(uploader_name, current_score, "main")
+		var time_str = Powerupview.get_formatted_time()
+		
+		var my_metadata = {
+			"time_survived": time_str
+		}
+		
+		print("Uploading score: ", current_score, " | Time: ", time_str)
+		SilentWolf.Scores.save_score(uploader_name, current_score, "main", my_metadata)
 		 
 func _on_score_timer_timeout():
 	score += 1

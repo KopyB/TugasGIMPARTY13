@@ -9,6 +9,7 @@ extends CanvasLayer
 @export var desc_scene : PackedScene = preload("res://scenes/powerup_notif.tscn")
 @export var icon_scene = preload("res://scenes/iconpowerup.tscn")
 
+
 #preload icons
 var secondwindlogo = preload("res://assets/art/Icon.png")
 var krakenlogo = preload("res://assets/art/KrakenSlayerIcon.png")
@@ -22,11 +23,23 @@ var sirendebufflogo = preload("res://assets/art/powerup icon/Debuff icon.png")
 var logo = preload("res://assets/art/Untitled1063_20251117223413.png")
 
 var score: int = 0
+var time_elapsed: float = 0.0
 var is_reset: bool = false
+
 func _ready() -> void:
 	add_to_group("ui_manager")
 	start_timer_score()
+	time_elapsed = 0.0
 
+func _process(delta):
+	if not timer.is_stopped():
+		time_elapsed += delta
+		
+func get_formatted_time() -> String:
+	var minutes = int(time_elapsed / 60)
+	var seconds = int(time_elapsed) % 60
+	return "%02d:%02d" % [minutes, seconds]
+	
 func start_timer_score():
 	$score.show()
 	timer.timeout.connect(_on_score_timer_timeout)

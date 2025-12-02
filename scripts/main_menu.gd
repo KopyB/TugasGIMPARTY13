@@ -151,26 +151,26 @@ func _on_apply_pressed() -> void:
 
 
 func _on_leaderboard_pressed() -> void:
-	# 1. Show the panel & Hide buttons
+	# Show the panel & Hide buttons
 	mainbuttons.visible = false
-	leaderboard_panel.visible = true # Show the new panel
+	leaderboard_panel.visible = true 
 	buttonclick.play()
 	
-	# 2. Clear previous list (to avoid duplicates)
+	# Clear previous list (to avoid duplicates)
 	for child in score_list_container.get_children():
 		child.queue_free()
 		
-	# 3. Add a "Loading..." text temporarily
+	# Add a "Loading" text temporarily
 	var loading_label = Label.new()
 	loading_label.text = "Loading Scores..."
 	score_list_container.add_child(loading_label)
 	
 	print("Fetching data...")
 	
-	# 4. Fetch Data
+	# Fetch Data
 	var result = await SilentWolf.Scores.get_scores(10, "main").sw_get_scores_complete
 	
-	# 5. Clear "Loading..."
+	# Clear "Loading..."
 	if is_instance_valid(loading_label):
 		loading_label.queue_free()
 	
@@ -178,14 +178,17 @@ func _on_leaderboard_pressed() -> void:
 	var rank = 1
 	for score_data in result.scores:
 		var row_label = Label.new()
-		row_label.text = str(rank) + ". " + str(score_data.player_name) + " : " + str(score_data.score)
+		var meta = score_data.get("metadata")
 		
-		# Optional: Styling
+		if meta and "time_survived" in meta:
+			var time_text = str(meta["time_survived"])
+			row_label.text = str(rank) + ". " + str(score_data.player_name) + " : " + str(score_data.score) + " (" + time_text + ")"
+		else:
+			row_label.text = str(rank) + ". " + str(score_data.player_name) + " : " + str(score_data.score)
+			
 		row_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		
 		score_list_container.add_child(row_label)
 		rank += 1
-		
 		
 func _on_leaderboard_close_pressed():
 	leaderboard_panel.visible = false
