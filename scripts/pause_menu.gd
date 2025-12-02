@@ -4,8 +4,17 @@ extends Control
 @export var resume_button: Button
 @onready var scorelabel: Label = $VBoxContainer/scorelabel
 @onready var timer: Timer = $Timer
+@onready var pause_buttons: VBoxContainer = $VBoxContainer
+@onready var settings_panel: Panel = $Settings 
+@onready var config = ConfigFile.new()
+
+var fstoggle
+var shake_setting
+var volume
+var sfx
+
 var score: int = 0
-var is_gameover = false
+var is_gameover : bool = false
 #signal end_screen_toggled(type: int)
 
 const MAP_TYPE_STRING = {0: "YOU DIED!", 1: "PAUSED"}
@@ -25,6 +34,70 @@ func _ready() -> void:
 	hide()
 	add_to_group("ui_manager")
 	
+	
+	if settings_panel: 
+		settings_panel.hide()
+	is_gameover = false 
+
+	load_current_settings()
+
+func load_current_settings():
+	var load_err = config.load("user://settings.cfg")
+	if load_err == OK:
+		fstoggle = config.get_value("video", "fullscreen", false)
+		
+		if has_node("Settings/VBoxContainer/fulltoggle"):
+			$Settings/VBoxContainer/fulltoggle.button_pressed = fstoggle
+			
+		shake_setting = config.get_value("video", "screenshake", true)
+		if has_node("Settings/VBoxContainer/ShakeToggle"):
+			$Settings/VBoxContainer/ShakeToggle.button_pressed = shake_setting
+			
+		volume = config.get_value("audio", "volume", 1.0)
+		if has_node("Settings/VBoxContainer/Labelmusic/MusicControl"):
+			$Settings/VBoxContainer/Labelmusic/MusicControl.value = volume
+			
+		sfx = config.get_value("audio", "sfx", 1.0)
+		if has_node("Settings/VBoxContainer/labelSFX/SFXControl"):
+			$Settings/VBoxContainer/labelSFX/SFXControl.value = sfx
+			
+func _on_settings_pressed(): 
+	pause_buttons.hide()   
+	settings_panel.show()    
+	load_current_settings()   
+
+func _on_settings_back_pressed(): 
+	settings_panel.hide()
+	pause_buttons.show()
+
+func _on_apply_pressed(): 
+	if has_node("Settings/VBoxContainer/fulltoggle"):
+		fstoggle = $Settings/VBoxContainer/fulltoggle.button_pressed
+		if fstoggle: DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		else: DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
+	if has_node("Settings/VBoxContainer/ShakeToggle"):
+		shake_setting = $Settings/VBoxContainer/ShakeToggle.button_pressed
+		cameraeffects.is_screenshake_enabled = shake_setting
+		
+	if has_node("Settings/VBoxContainer/Labelmusic/MusicControl"):
+		volume = $Settings/VBoxContainer/Labelmusic/MusicControl.value
+		AudioServer.set_bus_volume_db(0, linear_to_db(volume)) 
+		
+	if has_node("Settings/VBoxContainer/labelSFX/SFXControl"):
+		sfx = $Settings/VBoxContainer/labelSFX/SFXControl.value
+		AudioServer.set_bus_volume_db(1, linear_to_db(sfx)) 
+
+	config.set_value("video", "fullscreen", fstoggle)
+	config.set_value("video", "screenshake", shake_setting)
+	config.set_value("audio", "volume", volume)
+	config.set_value("audio", "sfx", sfx)
+	
+	var err = config.save("user://settings.cfg")
+	if err == OK:
+		print("Settings saved from Pause Menu")
+	
+	_on_settings_back_pressed()
 
 func _on_resume_pressed() -> void:
 	resume()
