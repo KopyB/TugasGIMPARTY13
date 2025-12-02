@@ -529,7 +529,7 @@ func spawn_powerup():
 	powerup.global_position = global_position
 	
 	var player = get_tree().current_scene.get_node("CharacterBody2D")
-
+	
 	var random_type = randi() % 7
 
 	# reroll yahaha -kaiser
