@@ -165,7 +165,8 @@ script = ExtResource("4_tefeu")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="BackgroundAtmosphere"]
 material = SubResource("ShaderMaterial_dp3eg")
-motion_mirroring = Vector2(0, 1080)
+position = Vector2(-143, 0)
+motion_mirroring = Vector2(1040, 1080)
 
 [node name="Sprite2D3" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
 visible = false
@@ -178,7 +179,7 @@ centered = false
 [node name="Sprite2D" type="AnimatedSprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
 position = Vector2(0, -9.999878)
 sprite_frames = SubResource("SpriteFrames_muem4")
-frame_progress = 0.88227355
+frame_progress = 0.7142096
 centered = false
 
 [node name="EnemySpawner" type="Marker2D" parent="."]
