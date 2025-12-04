@@ -213,10 +213,10 @@ func _ready():
 		apply_hard_mode_stats()
 
 func apply_hard_mode_stats():
-	var hp_multiplier = 1.0     # Multiply?: 1.5 (darah alot)
-	var speed_multiplier = 1.0  # Multiply?: 1.2 (lebih cepat)
-	var shoot_multiplier = 1.0  # Multiply?: 0.8 (fire rate lebih cepat)
-	var shark_detection_reducer = 1.0 # Reduce?: 1.0 (faster shark lock duration)
+	var hp_multiplier = 2.0     # Multiply?: 2.0 (darah alot)
+	var speed_multiplier = 1.2  # Multiply?: 1.2 (lebih cepat)
+	var shoot_multiplier = 3.0  # Multiply?: 3.0 (fire rate lebih cepat)
+	var shark_detection_reducer = 1.5 # Reduce?: 1.0 (faster shark lock duration)
 	
 	health = int(health * hp_multiplier)
 	
@@ -443,14 +443,18 @@ func take_damage(amount):
 					if health <= 0:
 						die()
 					return 
-				else:
-					if amount < health:
-						trigger_siren_scream()
-						get_tree().call_group("jumpscare_manager", "play_jumpscare")
+				if is_screaming:
 					health -= amount
 					if health <= 0:
 						die()
-					return 
+					return
+				if amount < health:
+					trigger_siren_scream()
+					get_tree().call_group("jumpscare_manager", "play_jumpscare")
+				health -= amount
+				if health <= 0:
+					die()
+				return 
 			health -= amount
 			if health <= 0:
 				die()
@@ -483,6 +487,10 @@ func die():
 		Type.TORPEDO_SHARK:
 			add_points = 8
 			enemy_name = "Shark"
+			
+	if GameData.is_hard_mode:
+		add_points += 2 
+		enemy_name = "Buffed " + enemy_name	
 			
 	get_tree().call_group("ui_manager", "increase_score", add_points)
 	spawn_floating_text(add_points, enemy_name)
