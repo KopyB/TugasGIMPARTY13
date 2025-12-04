@@ -209,7 +209,25 @@ func _ready():
 		rotation_degrees = 0
 		speed = randi_range(140, 160)
 	
-		
+	if GameData.is_hard_mode:
+		apply_hard_mode_stats()
+
+func apply_hard_mode_stats():
+	var hp_multiplier = 1.0     # Multiply?: 1.5 (darah alot)
+	var speed_multiplier = 1.0  # Multiply?: 1.2 (lebih cepat)
+	var shoot_multiplier = 1.0  # Multiply?: 0.8 (fire rate lebih cepat)
+	var shark_detection_reducer = 1.0 # Reduce?: 1.0 (faster shark lock duration)
+	
+	health = int(health * hp_multiplier)
+	
+	if enemy_type != Type.TORPEDO_SHARK:
+		speed = speed * speed_multiplier
+	else:
+		shark_charge_speed = shark_charge_speed * speed_multiplier
+		shark_lock_duration = shark_lock_duration - shark_detection_reducer
+
+	shoot_interval = shoot_interval / shoot_multiplier
+
 func cease_fire():
 	is_game_over = true
 	shoot_timer = 0

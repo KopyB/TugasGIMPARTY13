@@ -29,6 +29,30 @@ func _ready():
 	
 	spawn_timer.start(spawn_time_slow)
 	
+	if GameData.is_hard_mode:
+		
+		# Base Spawn Rate 
+		# Normal: 6.5 detik -> Hard: 4.0 detik
+		spawn_time_slow = 4.0
+		
+		# Peak Spawn Rate 
+		# Normal: 4.0 detik -> Hard: 2.0 detik
+		peak_difficulty_start = 2.0
+		
+		# Final Peak 
+		# Normal: 0.5 detik -> Hard: 0.3 detik 
+		peak_difficulty_final = 0.3
+		
+		# Progresi 
+		# Normal: 8 Wave -> Hard: 4 Wave 
+		target_waves_to_max = 6.0
+		
+		# Durasi Gelombang (tempo)
+		# Normal: 60 detik -> Hard: 45 detik
+		wave_duration = 30.0
+	
+	spawn_timer.start(spawn_time_slow)
+	
 func _process(delta):
 	if not is_spawning_paused:
 		time_elapsed += delta # biar ga lompat ke puncak

@@ -317,7 +317,92 @@ playback_type = 1
 parameters/looping = true
 script = ExtResource("7_flqon")
 
+[node name="DifficultyPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -371.0
+offset_top = -96.0
+offset_right = 366.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DifficultyPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -159.5
+offset_top = 16.0
+offset_right = 159.5
+offset_bottom = 82.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 50
+text = "SELECT DIFFICULTY"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DifficultyPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -224.50003
+offset_top = -103.0
+offset_right = 227.57825
+offset_bottom = 95.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="NORMAL" type="Button" parent="DifficultyPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "NORMAL"
+expand_icon = true
+
+[node name="HARD" type="Button" parent="DifficultyPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.42352942, 0.5411765, 0.5647059, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "total"
+expand_icon = true
+
+[node name="Back" type="Button" parent="DifficultyPanel"]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 371.0
+offset_right = 437.0
+offset_bottom = 405.0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "BACK"
+expand_icon = true
+
 [node name="LeaderboardPanel" type="Panel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 275.0
 offset_top = 332.0
@@ -689,6 +774,9 @@ parameters/looping = true
 [connection signal="pressed" from="mainbuttons/SETTINGS" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="mainbuttons/CREDITS" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="mainbuttons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="DifficultyPanel/VBoxContainer/NORMAL" to="." method="_on_normal_pressed"]
+[connection signal="pressed" from="DifficultyPanel/VBoxContainer/HARD" to="." method="_on_hard_pressed"]
+[connection signal="pressed" from="DifficultyPanel/Back" to="." method="_on_difficulty_back_pressed"]
 [connection signal="pressed" from="LeaderboardPanel/Back" to="." method="_on_leaderboard_close_pressed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/Labelmusic/MusicControl" to="Settings/VBoxContainer/Labelmusic/MusicControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/labelSFX/SFXControl" to="Settings/VBoxContainer/labelSFX/SFXControl" method="_on_value_changed"]
