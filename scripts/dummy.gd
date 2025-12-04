@@ -93,10 +93,9 @@ func _ready():
 		
 	if collision_shape_2d and collision_shape_2d.shape:
 		collision_shape_2d.shape = collision_shape_2d.shape.duplicate()
-
+	
 	if collision_shape_2d:
 		collision_shape_2d.disabled = false
-		
 	
 	# TIPE 0: GUNBOAT
 	if enemy_type == Type.GUNBOAT:
@@ -118,6 +117,7 @@ func _ready():
 		
 		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
+		
 	# TIPE 1: BOMBER 
 	elif enemy_type == Type.BOMBER:
 		if cannon: cannon.hide()
@@ -194,7 +194,7 @@ func _ready():
 			siren.flip_h = false
 			
 		rotation_degrees = 0
-		speed = randi_range(120, 150)
+		speed = randi_range(140, 160)
 	
 	# TIPE 6: RSIREN 
 	elif enemy_type == Type.RSIREN:
@@ -207,7 +207,8 @@ func _ready():
 			siren.flip_h = true
 			
 		rotation_degrees = 0
-		speed = randi_range(120, 150)
+		speed = randi_range(140, 160)
+	
 		
 func cease_fire():
 	is_game_over = true

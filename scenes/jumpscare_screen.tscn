@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dh7tgcxbi5jy5"]
 
-[ext_resource type="Script" uid="uid://b3vbj4ecfsucg" path="res://scripts/jumpscare_screen.gd" id="1_4tslb"]
+[ext_resource type="Script" path="res://scripts/jumpscare_screen.gd" id="1_4tslb"]
 [ext_resource type="Texture2D" uid="uid://kecloxmbx20n" path="res://assets/art/jumpscare/Untitled1086_20251126225400.png" id="2_1oumi"]
 [ext_resource type="Texture2D" uid="uid://d1fiwyrlg8ojd" path="res://assets/art/jumpscare/Untitled1086_20251126225404.png" id="3_e2x05"]
 [ext_resource type="Texture2D" uid="uid://b4angbongh3b5" path="res://assets/art/jumpscare/Untitled1086_20251126225406.png" id="4_tumua"]
@@ -35,7 +35,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"scare",
-"speed": 6.0
+"speed": 8.0
 }]
 
 [node name="JumpscareScreen" type="CanvasLayer"]
@@ -62,4 +62,5 @@ position = Vector2(958.99994, 541.00006)
 scale = Vector2(2.99375, 2.2416666)
 sprite_frames = SubResource("SpriteFrames_gcytf")
 animation = &"scare"
-frame_progress = 0.618628
+frame = 6
+frame_progress = 1.0

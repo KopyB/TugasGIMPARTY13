@@ -92,41 +92,51 @@ func spawn_logic():
 	
 	
 	# TOTAL HARUS 100%. SELALU FOLLOW SUSUNAN LIKE BELOW 
-	# 1. PARROT (Sangat Jarang: 5%)
-	if chance < 5 and parrotcheck == 0 and get_tree().get_nodes_in_group("enemies").size() >= 1: 
+	# 1. PARROT (Sangat Jarang: 7.5%)
+	if chance < 7.5 and parrotcheck == 0 and get_tree().get_nodes_in_group("enemies").size() >= 1: 
 		spawn_parrot(viewport_rect)
-
-	# 2. GUNBOAT (40%) -> Range 5 sampai 39
-	elif chance < 40: 
+		if randf() > 0.5:
+			spawn_gunboat_group(viewport_rect)
+		else:
+			if randf() > 0.5:
+				spawn_bomber(viewport_rect)
+			else:
+				spawn_rbomber(viewport_rect)
+			
+	# 2. GUNBOAT (27.5%) -> Range 5 sampai 39
+	elif chance < 35: 
 		spawn_gunboat_group(viewport_rect)
 		
-	# 3. BOMBER (25%) -> Range 40 sampai 64
-	elif chance < 65: 
+	# 3. BOMBER (20%) -> Range 40 sampai 64
+	elif chance < 55: 
 		if randf() > 0.5:
 			spawn_bomber(viewport_rect)
 		else:
 			spawn_rbomber(viewport_rect)
 
 	# 4. SHARK (15%) -> Range 65 sampai 79
-	elif chance < 80:
+	elif chance < 70:
 		spawn_shark(viewport_rect)
 	
-	# 5. SIREN (10%) -> Range 85 sampai 89
-	elif chance < 90:
+	# 5. SIREN (15%) -> Range 85 sampai 89
+	elif chance < 85:
 		if randf() > 0.5:
 			spawn_siren(viewport_rect)
 		else:
 			spawn_rsiren(viewport_rect)
 
-	# 6. OBSTACLE (Sisanya 10%) -> Range 90 sampai 99
+	# 6. OBSTACLE (Sisanya 15%) -> Range 90 sampai 99
 	else: 
-		spawn_single_obstacle(viewport_rect)
+		if randf() > 0.80:
+			spawn_obstacle_row(viewport_rect)
+		else:
+			spawn_single_obstacle(viewport_rect)
 		
-# --- TIPE 1: OBSTACLE SATUAN ---
+# --- TIPE 1A: OBSTACLE SATUAN ---
 func spawn_single_obstacle(viewport_rect):
 	var obs = obstacle_scene.instantiate()
 	
-	# Random Tipe (0 = Bones, 1 = Shipwreck)
+	# Random type (0 = Bones, 1 = Shipwreck)
 	var type = randi() % 2
 	obs.setup_obstacle(type) 
 	
@@ -135,7 +145,32 @@ func spawn_single_obstacle(viewport_rect):
 	obs.global_position = Vector2(spawn_x, -80)
 	
 	get_tree().current_scene.add_child(obs)
-
+	
+# --- TIPE 1B: OBSTACLE PACKED ---
+func spawn_obstacle_row(viewport_rect):
+	var columns = 8 
+	var col_width = viewport_rect.x / columns
+	
+	# Column: 0-7
+	var available_cols = []
+	for i in range(columns):
+		available_cols.append(i)
+	
+	available_cols.shuffle()
+	
+	for i in range(randi_range(3, 6)):
+		var col_index = available_cols[i]
+		
+		var obs = obstacle_scene.instantiate()
+		var type = randi() % 2
+		obs.setup_obstacle(type) 
+		
+		var spawn_x = (col_index * col_width) + (col_width / 2)
+		var spawn_y = -80 - randf_range(0, 40)
+		
+		obs.global_position = Vector2(spawn_x, spawn_y)
+		get_tree().current_scene.add_child(obs)
+		
 # --- TIPE 2: GUNBOAT GROUP ---
 func spawn_gunboat_group(viewport_rect):
 	var group_count = randi_range(1, 3) # 1 sampai 3 kapal
