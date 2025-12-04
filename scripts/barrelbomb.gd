@@ -4,7 +4,7 @@ extends Area2D
 @onready var barrel: Sprite2D = $barrel
 
 var explosion_scene = preload("res://scenes/explosion.tscn")
-
+var is_already_exploded = false
 var fall_speed = randi_range(160,200)
 var damage = 1
 
@@ -24,8 +24,11 @@ func take_damage(amount):
 	meledak()
 
 func meledak():
+	if is_already_exploded:
+		return
+	is_already_exploded = true
 	barrel.hide()
-	collision_shape_2d.disabled = true
+	collision_shape_2d.set_deferred("disabled", true)
 	exploded()
 	queue_free()
 

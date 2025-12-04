@@ -135,8 +135,8 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0) 
 
-		shoot_interval = randf_range(1.5, 2.0) 
-		speed = randf_range(160, 200)
+		shoot_interval = randf_range(0.8, 1.0) 
+		speed = randf_range(210, 275)
 		rotation_degrees = 90 # Hadap Kanan
 		
 	# TIPE 2: RBOMBER (Bomber dari Kanan)
@@ -159,7 +159,7 @@ func _ready():
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0)
 			
 		shoot_interval = randf_range(0.5, 1.0) 
-		speed = randf_range(350, 400) 
+		speed = randf_range(210, 275) 
 		rotation_degrees = -90 # Hadap Kiri (Mundur)
 
 	# TIPE 3: PARROT 

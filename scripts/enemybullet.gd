@@ -6,6 +6,7 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 
 func _ready():
 	add_to_group("enemy_projectiles")
+	area_entered.connect(_on_area_entered)
 	
 func _process(delta):
 	position += direction * speed * delta
@@ -20,6 +21,21 @@ func _on_body_entered(body):
 	else: 
 		pass
 
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy_projectiles"):
+		return
+
+	# Cek jika nabrak Barrel
+	if area.has_method("meledak") or area.has_method("take_damage"):
+		print("Peluru Musuh nabrak Barrel!")
+		
+		if area.has_method("take_damage"):
+			area.take_damage(1)
+		elif area.has_method("meledak"):
+			area.meledak()
+			
+		meledak()
+	
 func meledak():
 	hide()
 	exploded()
