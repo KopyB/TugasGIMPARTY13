@@ -1,10 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://b8qv1r8ggddgm"]
+[gd_scene load_steps=14 format=3 uid="uid://b8qv1r8ggddgm"]
 
 [ext_resource type="Script" uid="uid://dpho3o8db7fek" path="res://scripts/pause_menu.gd" id="1_n87rw"]
 [ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="2_myx47"]
 [ext_resource type="Script" uid="uid://ci7epneqyxjoa" path="res://music_control.gd" id="3_7l7mv"]
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="4_v4r4p"]
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_1s2dm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7l7mv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kukqi"]
 bg_color = Color(0.21960784, 0.49411765, 0.7529412, 1)
@@ -78,8 +80,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n87rw")
-state = NodePath("VBoxContainer/state")
-resume_button = NodePath("VBoxContainer/RESUME")
+state = NodePath("PanelContainer2/VBoxContainer/state")
+resume_button = NodePath("PanelContainer2/VBoxContainer/RESUME")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -95,37 +97,43 @@ offset_bottom = 257.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="PanelContainer2" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -155.0
-offset_top = -209.5
-offset_right = 155.0
-offset_bottom = 191.5
+offset_left = -158.0
+offset_top = -217.0
+offset_right = 159.0
+offset_bottom = 204.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 35
+theme_override_styles/panel = SubResource("StyleBoxEmpty_7l7mv")
 
-[node name="state" type="Label" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 30
+metadata/_edit_use_anchors_ = true
+
+[node name="state" type="Label" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 50
 text = "[GAME STATE]"
 horizontal_alignment = 1
 
-[node name="scorelabel" type="Label" parent="VBoxContainer"]
+[node name="scorelabel" type="Label" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 30
 text = "score point"
 horizontal_alignment = 1
 
-[node name="RESUME" type="Button" parent="VBoxContainer"]
+[node name="RESUME" type="Button" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 40
@@ -134,8 +142,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
 text = "Resume"
 
-[node name="SETTINGS" type="Button" parent="VBoxContainer"]
+[node name="SETTINGS" type="Button" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 40
@@ -144,8 +153,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
 text = "Settings"
 
-[node name="RESTART" type="Button" parent="VBoxContainer"]
+[node name="RESTART" type="Button" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 40
@@ -154,8 +164,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
 text = "Restart"
 
-[node name="EXIT" type="Button" parent="VBoxContainer"]
+[node name="EXIT" type="Button" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 40
@@ -354,10 +365,10 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_71k7c")
 text = "APPLY"
 expand_icon = true
 
-[connection signal="pressed" from="VBoxContainer/RESUME" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="VBoxContainer/SETTINGS" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="VBoxContainer/RESTART" to="." method="_on_restart_pressed"]
-[connection signal="pressed" from="VBoxContainer/EXIT" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="PanelContainer2/VBoxContainer/RESUME" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PanelContainer2/VBoxContainer/SETTINGS" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="PanelContainer2/VBoxContainer/RESTART" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="PanelContainer2/VBoxContainer/EXIT" to="." method="_on_exit_pressed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/Labelmusic/MusicControl" to="Settings/VBoxContainer/Labelmusic/MusicControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/labelSFX/SFXControl" to="Settings/VBoxContainer/labelSFX/SFXControl" method="_on_value_changed"]
 [connection signal="toggled" from="Settings/VBoxContainer/fulltoggle" to="Settings/VBoxContainer/fulltoggle" method="_on_toggled"]

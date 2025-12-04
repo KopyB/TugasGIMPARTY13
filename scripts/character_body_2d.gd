@@ -131,6 +131,7 @@ func take_damage_player():
 	# --- LOGIKA SHIELD DI SINI ---
 	if has_shield:
 		has_shield = false
+		Powerupview.show_icons("Shield", 0)
 		shield_anim.show()
 		$shieldsfx2.play()
 		shield_anim.play_backwards()
@@ -143,6 +144,7 @@ func take_damage_player():
 	# --- LOGIKA REVIVE DI SINI ---
 	if has_second_wind:
 		has_second_wind = false # Pakai nyawa cadangannya
+		Powerupview.show_icons("Second Wind", 0)
 		activate_iframes(1.5) # Invicible 1.5 sec
 		for node in get_tree().get_nodes_in_group("player_anims"):
 			node.visible = false

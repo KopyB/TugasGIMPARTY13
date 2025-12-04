@@ -2,9 +2,9 @@ extends Control
 
 @export var state: Label
 @export var resume_button: Button
-@onready var scorelabel: Label = $VBoxContainer/scorelabel
+@onready var scorelabel: Label = $PanelContainer2/VBoxContainer/scorelabel
 @onready var timer: Timer = $Timer
-@onready var pause_buttons: VBoxContainer = $VBoxContainer
+@onready var pause_buttons: VBoxContainer = $PanelContainer2/VBoxContainer
 @onready var settings_panel: Panel = $Settings 
 @onready var config = ConfigFile.new()
 
@@ -62,11 +62,13 @@ func load_current_settings():
 			$Settings/VBoxContainer/labelSFX/SFXControl.value = sfx
 			
 func _on_settings_pressed(): 
+	$PanelContainer.hide()
 	pause_buttons.hide()   
 	settings_panel.show()    
 	load_current_settings()   
 
 func _on_settings_back_pressed(): 
+	$PanelContainer.show()
 	settings_panel.hide()
 	pause_buttons.show()
 
@@ -131,7 +133,7 @@ func _process(delta: float) -> void:
 
 func toggled_handler(type: int) -> void:
 	state.text = MAP_TYPE_STRING[type]
-	var settings = $VBoxContainer/SETTINGS
+	var settings = $PanelContainer2/VBoxContainer/SETTINGS
 	if type == 0:
 		is_gameover = true
 		resume_button.hide()

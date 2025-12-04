@@ -22,6 +22,7 @@ var sirendebufflogo = preload("res://assets/art/powerup icon/Debuff icon.png")
 
 var logo = preload("res://assets/art/Untitled1063_20251117223413.png")
 
+var active_boolean_icons : Dictionary = {}
 var score: int = 0
 var time_elapsed: float = 0.0
 var is_reset: bool = false
@@ -107,12 +108,36 @@ func show_desc(message : String):
 		#descs.queue_free()
 	
 func show_icons(message :String, duration : float):
+	if message == "Shield" or message == "Second Wind":
+		var is_active = duration > 0 
+		
+		if is_active:
+			if active_boolean_icons.has(message):
+				return 
+			var icon_instance = icon_scene.instantiate()
+			
+			if message == "Second Wind":
+				icon_instance.get_child(1).texture = secondwindlogo
+			elif message == "Shield":
+				icon_instance.get_child(1).texture = shieldlogo
+			
+			icon_instance.get_child(0).max_value = 100
+			icon_instance.get_child(0).value = 100
+			icon_instance.get_child(0).stop_countdown()
+			icons.add_child(icon_instance)
+			active_boolean_icons[message] = icon_instance
+			
+		else:
+			if active_boolean_icons.has(message):
+				var node_to_delete = active_boolean_icons[message]
+				node_to_delete.queue_free()
+				active_boolean_icons.erase(message)
+		return
+	
 	var allicon = icon_scene.instantiate()
 	var tween = icons.create_tween()
 	
-	if message == "Second Wind":
-		allicon.get_child(1).texture = secondwindlogo
-	elif message == "Kraken Slayer":
+	if message == "Kraken Slayer":
 		allicon.get_child(1).texture = krakenlogo
 		allicon.get_child(0).start_countdown(duration)
 	elif message == "Artillery":
@@ -124,8 +149,6 @@ func show_icons(message :String, duration : float):
 	elif message == "SPEED IS KEY":
 		allicon.get_child(1).texture = speedlogo
 		allicon.get_child(0).start_countdown(duration)
-	elif message == "Shield":
-		allicon.get_child(1).texture = shieldlogo
 	elif message == "Admiral's Will":
 		allicon.get_child(1).texture = admirallogo
 		allicon.get_child(0).start_countdown(duration)

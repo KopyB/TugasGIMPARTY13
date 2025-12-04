@@ -522,7 +522,7 @@ func spawn_floating_text(points, e_name):
 	text_instance.start_animation(display_text, text_color)
 
 func spawn_powerup_chance():
-	if randf() <= 0.10: 
+	if randf() <= 0.15: 
 		spawn_powerup()
 
 func spawn_powerup():
