@@ -1,7 +1,7 @@
 extends Area2D
 
-enum Type {BONESA, BONESB, BONESC, SHIPWRECKA, SHIPWRECKB, SHIPWRECKC}
-var current_type = Type.BONESA
+enum Type {BONES, SHIPWRECK}
+var current_type = Type.BONES
 var hp = 2
 var speed = 150 
 
@@ -17,56 +17,31 @@ func setup_obstacle(type):
 	current_type = type
 	var shipwreck = $shipwreck
 	var bone = $bone
+	var variants = ["A", "B", "C"]
+	var pick = variants.pick_random()
 	
-	if current_type == Type.BONESA:
+	if current_type == Type.BONES:
 		shipwreck.hide()
 		bone.show()
-		bone.play("boneA")
+		bone.play("bone" + pick)
 		hp = 3
 		
-	elif current_type == Type.BONESB:
-		shipwreck.hide()
-		bone.show()
-		bone.play("boneB")
-		hp = 3
-	
-	elif current_type == Type.BONESC:
-		shipwreck.hide()
-		bone.show()
-		bone.play("boneC")
-		hp = 3
-		
-	elif current_type == Type.SHIPWRECKA:
+	elif current_type == Type.SHIPWRECK:
 		shipwreck.show()
 		bone.hide()
-		shipwreck.play("shipA")
-		hp = 5
-		scale = Vector2(1.2, 1.2)
-		
-	elif current_type == Type.SHIPWRECKB:
-		shipwreck.show()
-		bone.hide()
-		shipwreck.play("shipB")
-		hp = 5
-		scale = Vector2(1.2, 1.2)
-
-	elif current_type == Type.SHIPWRECKC:
-		shipwreck.show()
-		bone.hide()
-		shipwreck.play("shipC")
+		shipwreck.play("ship" + pick)
 		hp = 5
 		scale = Vector2(1.2, 1.2)
 		
 	if not is_maze_obstacle:
-		# KASUS A: Jika Tipe BONES (Chance 30%)
-		if current_type == Type.BONESA or Type.BONESB or Type.BONESC:
+		if current_type == Type.BONES:
 			if randf() <= 0.3:
 				call_deferred("spawn_minions", 1)
 		
-		# KASUS B: Jika Tipe KAPAL KARAM (Chance 20%)
-		else:
+		elif current_type == Type.SHIPWRECK:
 			if randf() <= 0.2:
 				call_deferred("spawn_minions", 1)
+				
 func spawn_minions(count):
 	for i in range(count):
 		var enemy = enemy_scene.instantiate()
@@ -100,7 +75,7 @@ func explode():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position
 	
-	if current_type == Type.BONESA or current_type == Type.BONESB or current_type == Type.BONESC:
+	if current_type == Type.BONES:
 		explosion.is_bone = true
 	else:
 		explosion.is_bone = false

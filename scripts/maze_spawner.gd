@@ -32,8 +32,8 @@ func _ready():
 	randomize()
 	
 	# Waktu event pertama
-	next_maze_time = randf_range(50.0, 60.0)
-	next_shark_time = randf_range(70.0, 90.0) 
+	next_maze_time = get_next_maze_interval()
+	next_shark_time = get_next_shark_interval()
 	
 	print("Next Maze: %.1f | Next Shark: %.1f" % [next_maze_time, next_shark_time])
 
@@ -54,7 +54,12 @@ func _process(delta):
 		if shark_timer >= next_shark_time:
 			start_shark_event()
 			
-		if randi() % 1000000000000000 == 0:
+		var chaos_chance = 1000000000000000 
+		
+		if GameData.is_hard_mode:
+			chaos_chance = 1000000000000    
+			
+		if randi() % chaos_chance == 0:
 			start_chaos_shark_mode()
 	else:
 		
@@ -96,7 +101,11 @@ func spawn_shark_waves():
 		
 		min_sharks += 3  
 		max_sharks += 5  
-
+		
+	if GameData.is_hard_mode:
+		min_sharks += 5  
+		max_sharks += 10
+		
 	var total_waves = randi_range(min_waves, max_waves)
 	print(">>> START SHARK EVENT: Total %d Waves <<<" % total_waves)
 	
@@ -149,7 +158,7 @@ func end_shark_event():
 	print("!!! SHARK ATTACK EVENT ENDED !!!")
 	is_shark_event_active = false
 	
-	next_shark_time = randf_range(70.0, 90.0) 
+	next_shark_time = get_next_shark_interval()
 	
 	get_tree().call_group("spawner_utama", "resume_spawning")
 
@@ -230,7 +239,7 @@ func start_maze_event():
 func end_maze_event():
 	print("!!! EVENT MAZE SELESAI !!!")
 	is_maze_active = false
-	next_maze_time = randf_range(45.0, 70.0) 
+	next_maze_time = get_next_maze_interval()
 	get_tree().call_group("spawner_utama", "resume_spawning")
 
 func spawn_maze_row():
@@ -265,3 +274,15 @@ func spawn_obstacle_at_column(col_index):
 	else: obs.setup_obstacle(3) 
 
 	add_child(obs)
+
+func get_next_maze_interval():
+	if GameData.is_hard_mode:
+		return randf_range(40.0, 45.0) 
+	else:
+		return randf_range(50.0, 60.0) 
+
+func get_next_shark_interval():
+	if GameData.is_hard_mode:
+		return randf_range(60.0, 65.0) 
+	else:
+		return randf_range(70.0, 90.0) 

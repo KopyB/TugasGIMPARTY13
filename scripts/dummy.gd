@@ -26,10 +26,10 @@ var is_paralyzed = false
 
 # --- SHARK VARIABLE ---
 var shark_timer = 0.0
-var shark_lock_duration = randf_range(4.5, 6.0) # Locks on randomly
+var shark_lock_duration = randf_range(5.0, 6.0) # Locks on randomly
 var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
-var shark_charge_speed = randf_range(900.0, 1250.0)
+var shark_charge_speed = randf_range(1000.0, 1300.0)
 var torpedoshark: AnimatedSprite2D = null
 
 # --- SIREN VARIABLE ---
@@ -93,10 +93,9 @@ func _ready():
 		
 	if collision_shape_2d and collision_shape_2d.shape:
 		collision_shape_2d.shape = collision_shape_2d.shape.duplicate()
-
+	
 	if collision_shape_2d:
 		collision_shape_2d.disabled = false
-		
 	
 	# TIPE 0: GUNBOAT
 	if enemy_type == Type.GUNBOAT:
@@ -118,6 +117,7 @@ func _ready():
 		
 		shoot_interval = randf_range(2.0, 3.0)
 		rotation_degrees = 180 # Hadap Bawah
+		
 	# TIPE 1: BOMBER 
 	elif enemy_type == Type.BOMBER:
 		if cannon: cannon.hide()
@@ -135,8 +135,8 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0) 
 
-		shoot_interval = randf_range(1.5, 2.0) 
-		speed = randf_range(160, 200)
+		shoot_interval = randf_range(0.8, 1.0) 
+		speed = randf_range(210, 275)
 		rotation_degrees = 90 # Hadap Kanan
 		
 	# TIPE 2: RBOMBER (Bomber dari Kanan)
@@ -158,8 +158,8 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0)
 			
-		shoot_interval = randf_range(1.5, 2.0) 
-		speed = randf_range(160, 200) 
+		shoot_interval = randf_range(0.5, 1.0) 
+		speed = randf_range(210, 275) 
 		rotation_degrees = -90 # Hadap Kiri (Mundur)
 
 	# TIPE 3: PARROT 
@@ -172,7 +172,7 @@ func _ready():
 	# TIPE 4: TORPEDO SHARK 
 	elif enemy_type == Type.TORPEDO_SHARK:
 		health = 2
-		speed = 60 # Speed awal (aiming phase)
+		speed = 65 # Speed awal (aiming phase)
 		# Hitbox Shark 
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(100.0, 50.0)
@@ -194,7 +194,7 @@ func _ready():
 			siren.flip_h = false
 			
 		rotation_degrees = 0
-		speed = randi_range(120, 150)
+		speed = randi_range(140, 160)
 	
 	# TIPE 6: RSIREN 
 	elif enemy_type == Type.RSIREN:
@@ -207,8 +207,27 @@ func _ready():
 			siren.flip_h = true
 			
 		rotation_degrees = 0
-		speed = randi_range(120, 150)
-		
+		speed = randi_range(140, 160)
+	
+	if GameData.is_hard_mode:
+		apply_hard_mode_stats()
+
+func apply_hard_mode_stats():
+	var hp_multiplier = 2.0     # Multiply?: 2.0 (darah alot)
+	var speed_multiplier = 1.2  # Multiply?: 1.2 (lebih cepat)
+	var shoot_multiplier = 3.0  # Multiply?: 3.0 (fire rate lebih cepat)
+	var shark_detection_reducer = 1.5 # Reduce?: 1.0 (faster shark lock duration)
+	
+	health = int(health * hp_multiplier)
+	
+	if enemy_type != Type.TORPEDO_SHARK:
+		speed = speed * speed_multiplier
+	else:
+		shark_charge_speed = shark_charge_speed * speed_multiplier
+		shark_lock_duration = shark_lock_duration - shark_detection_reducer
+
+	shoot_interval = shoot_interval / shoot_multiplier
+
 func cease_fire():
 	is_game_over = true
 	shoot_timer = 0
@@ -424,14 +443,18 @@ func take_damage(amount):
 					if health <= 0:
 						die()
 					return 
-				else:
-					if amount < health:
-						trigger_siren_scream()
-						get_tree().call_group("jumpscare_manager", "play_jumpscare")
+				if is_screaming:
 					health -= amount
 					if health <= 0:
 						die()
-					return 
+					return
+				if amount < health:
+					trigger_siren_scream()
+					get_tree().call_group("jumpscare_manager", "play_jumpscare")
+				health -= amount
+				if health <= 0:
+					die()
+				return 
 			health -= amount
 			if health <= 0:
 				die()
@@ -464,6 +487,10 @@ func die():
 		Type.TORPEDO_SHARK:
 			add_points = 8
 			enemy_name = "Shark"
+			
+	if GameData.is_hard_mode:
+		add_points += 2 
+		enemy_name = "Buffed " + enemy_name	
 			
 	get_tree().call_group("ui_manager", "increase_score", add_points)
 	spawn_floating_text(add_points, enemy_name)
@@ -521,15 +548,24 @@ func spawn_floating_text(points, e_name):
 	text_instance.start_animation(display_text, text_color)
 
 func spawn_powerup_chance():
-	if randf() <= 0.25: 
+	if randf() <= 0.15: 
 		spawn_powerup()
 
 func spawn_powerup():
 	var powerup = powerup_scene.instantiate()
 	powerup.global_position = global_position
 	
-	# Random angka acak 0 sampai 6
-	var random_type = randi() % 7 
+	var player = get_tree().current_scene.get_node("CharacterBody2D")
+	
+	var random_type = randi() % 7
+
+	# reroll yahaha -kaiser
+	while (
+		(random_type == 0 and player.has_shield) or
+		(random_type == 5 and player.has_second_wind)
+	):
+		random_type = randi() % 7
+	
 	powerup.current_type = random_type
 	
 	get_tree().current_scene.call_deferred("add_child", powerup)

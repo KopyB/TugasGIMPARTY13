@@ -86,7 +86,27 @@ func _input(event):
 				input_buffer = ""
 			
 			elif input_buffer.ends_with("PLQA00"):
-				total_enemy_death()
+				shark_rage()
+				input_buffer = ""
+			
+			elif input_buffer.ends_with("HYPOINTWW"):
+				get_tree().call_group("ui_manager", "increase_score", 1000)
+				print("CHEAT ACTIVATED: +1000 Points")
+				input_buffer = "" 
+
+			elif input_buffer.ends_with("HYPOINTSS"):
+				get_tree().call_group("ui_manager", "increase_score", -1000)
+				print("CHEAT ACTIVATED: -1000 Points")
+				input_buffer = ""
+
+			elif input_buffer.ends_with("HYPOINTDD"):
+				get_tree().call_group("ui_manager", "increase_score", 500)
+				print("CHEAT ACTIVATED: +500 Points")
+				input_buffer = ""
+
+			elif input_buffer.ends_with("HYPOINTAA"):
+				get_tree().call_group("ui_manager", "increase_score", -500)
+				print("CHEAT ACTIVATED: -500 Points")
 				input_buffer = ""
 
 func toggle_something_mode():
@@ -111,6 +131,7 @@ func take_damage_player():
 	# --- LOGIKA SHIELD DI SINI ---
 	if has_shield:
 		has_shield = false
+		Powerupview.show_icons("Shield", 0)
 		shield_anim.show()
 		$shieldsfx2.play()
 		shield_anim.play_backwards()
@@ -123,6 +144,7 @@ func take_damage_player():
 	# --- LOGIKA REVIVE DI SINI ---
 	if has_second_wind:
 		has_second_wind = false # Pakai nyawa cadangannya
+		Powerupview.show_icons("Second Wind", 0)
 		activate_iframes(1.5) # Invicible 1.5 sec
 		for node in get_tree().get_nodes_in_group("player_anims"):
 			node.visible = false
@@ -561,7 +583,7 @@ func reset_all_skills():
 
 	get_tree().call_group("enemies", "set_paralyzed", false)
 	
-func total_enemy_death():
+func shark_rage():
 	get_tree().call_group("event_manager", "start_chaos_shark_mode")
 	
 	# Visual Feedback (Flash Merah Darah)

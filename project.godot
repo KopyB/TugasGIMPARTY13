@@ -24,7 +24,7 @@ Transition="*res://scenes/transition.tscn"
 cameraeffects="*res://scripts/camera_effects.gd"
 Powerupview="*res://scenes/powerupview.tscn"
 SilentWolf="*res://addons/silent_wolf/SilentWolf.gd"
-Global="*res://addons/silent_wolf/global.gd"
+GameData="*res://scripts/GameData.gd"
 
 [debug]
 

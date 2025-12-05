@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://rqegf05s37d6" path="res://scripts/enemy_spawner.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://bn0herctfm110" path="res://scripts/background_atmosphere.gd" id="4_tefeu"]
-[ext_resource type="Shader" path="res://scripts/wave.gdshader" id="5_dp3eg"]
+[ext_resource type="Shader" uid="uid://nfwa4fxuwn7i" path="res://scripts/wave.gdshader" id="5_dp3eg"]
 [ext_resource type="Texture2D" uid="uid://bwy6nk3q1q4we" path="res://assets/art/waterbg/WaterBGFrame1.png" id="5_muem4"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://bsexnd1gi82lx" path="res://assets/art/waterbg/WaterBGFrame2and10.png" id="6_dp3eg"]
@@ -165,7 +165,8 @@ script = ExtResource("4_tefeu")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="BackgroundAtmosphere"]
 material = SubResource("ShaderMaterial_dp3eg")
-motion_mirroring = Vector2(0, 1080)
+position = Vector2(-143, 0)
+motion_mirroring = Vector2(1040, 1080)
 
 [node name="Sprite2D3" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
 visible = false
@@ -178,7 +179,7 @@ centered = false
 [node name="Sprite2D" type="AnimatedSprite2D" parent="BackgroundAtmosphere/ParallaxLayer2"]
 position = Vector2(0, -9.999878)
 sprite_frames = SubResource("SpriteFrames_muem4")
-frame_progress = 0.88227355
+frame_progress = 0.7142096
 centered = false
 
 [node name="EnemySpawner" type="Marker2D" parent="."]
@@ -222,6 +223,7 @@ bus = &"SFX"
 parameters/looping = true
 
 [node name="JumpscareScreen" parent="." instance=ExtResource("13_trceg")]
+layer = 0
 visible = false
 
 [node name="tutoriallayer" type="CanvasLayer" parent="."]

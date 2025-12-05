@@ -10,6 +10,8 @@ extends Control
 @onready var leaderboard_panel = $LeaderboardPanel 
 @onready var score_list_container = $LeaderboardPanel/ScrollContainer/ScoreList
 @onready var name_input: LineEdit = $Settings/VBoxContainer/PLAYERLABEL/NameInput
+@onready var difficulty_panel: Panel = $DifficultyPanel
+@onready var hard_button: Button = $DifficultyPanel/VBoxContainer/HARD
 
 @onready var fullscreen_toggle: CheckButton = $Settings/VBoxContainer/fulltoggle
 @onready var shake_setting: CheckButton = $Settings/VBoxContainer/ShakeToggle
@@ -109,8 +111,55 @@ func load_highscore():
 		high_score_label.text = "HIGH SCORE: " + str(best_score)
 		
 func _on_start_pressed() -> void:
-	#animation stella zooming
 	buttonclick.play()
+	mainbuttons.visible = false
+	difficulty_panel.show()
+	check_hard_mode_unlock()
+	
+func check_hard_mode_unlock():
+	var save_config = ConfigFile.new()
+	var err = save_config.load("user://savegame.cfg")
+	var best_score = 0
+	
+	if err == OK:
+		best_score = save_config.get_value("game", "highscore", 0)
+	
+	if best_score >= 1500:
+		# UNLOCKED
+		hard_button.disabled = false
+		hard_button.text = "HARD"
+		hard_button.modulate = Color(1, 0, 0, 1) 
+		hard_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	else:
+		# LOCKED
+		hard_button.disabled = true
+		hard_button.text = "LOCKED (Req: 1500 P)"
+		hard_button.modulate = Color(0.5, 0.5, 0.5, 1) 
+		hard_button.mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
+
+func _on_normal_pressed() -> void:
+	buttonclick.play()
+	
+	# Set GameData ke Normal
+	GameData.is_hard_mode = false
+	print("Mode Selected: NORMAL")
+	
+	start_game_sequence()
+	
+func _on_hard_pressed() -> void:
+	buttonclick.play()
+	
+	# Set GameData ke Hard
+	GameData.is_hard_mode = true
+	print("Mode Selected: HARD")
+	
+	start_game_sequence()
+	
+func start_game_sequence():
+	# Sembunyikan panel agar bersih saat transisi
+	difficulty_panel.hide()
+	high_score_label.hide()
+	
 	$animationstella/wavestransition.play()
 	animation_player.play("nyoom")
 	await animation_player.animation_finished
@@ -118,6 +167,11 @@ func _on_start_pressed() -> void:
 	#fade in transition
 	Transition.load_scene("res://scenes/main.tscn")
 	#get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+func _on_difficulty_back_pressed() -> void:
+	buttonclick.play()
+	difficulty_panel.hide()
+	mainbuttons.visible = true
 
 func _on_settings_pressed() -> void:
 	buttonclick.play()
@@ -143,26 +197,26 @@ func _on_apply_pressed() -> void:
 	_switch_menu(mainbuttons)
 
 func _on_leaderboard_pressed() -> void:
-	# 1. Show the panel & Hide buttons
+	# Show the panel & Hide buttons
 	mainbuttons.visible = false
-	leaderboard_panel.visible = true # Show the new panel
+	leaderboard_panel.visible = true 
 	buttonclick.play()
 	
-	# 2. Clear previous list (to avoid duplicates)
+	# Clear previous list (to avoid duplicates)
 	for child in score_list_container.get_children():
 		child.queue_free()
 		
-	# 3. Add a "Loading..." text temporarily
+	# Add a "Loading" text temporarily
 	var loading_label = Label.new()
 	loading_label.text = "Loading Scores..."
 	score_list_container.add_child(loading_label)
 	
 	print("Fetching data...")
 	
-	# 4. Fetch Data
+	# Fetch Data
 	var result = await SilentWolf.Scores.get_scores(10, "main").sw_get_scores_complete
 	
-	# 5. Clear "Loading..."
+	# Clear "Loading..."
 	if is_instance_valid(loading_label):
 		loading_label.queue_free()
 	
@@ -170,14 +224,17 @@ func _on_leaderboard_pressed() -> void:
 	var rank = 1
 	for score_data in result.scores:
 		var row_label = Label.new()
-		row_label.text = str(rank) + ". " + str(score_data.player_name) + " : " + str(score_data.score)
+		var meta = score_data.get("metadata")
 		
-		# Optional: Styling
+		if meta and "time_survived" in meta:
+			var time_text = str(meta["time_survived"])
+			row_label.text = str(rank) + ". " + str(score_data.player_name) + " : " + str(score_data.score) + " (" + time_text + ")"
+		else:
+			row_label.text = str(rank) + ". " + str(score_data.player_name) + " : " + str(score_data.score)
+			
 		row_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		
 		score_list_container.add_child(row_label)
 		rank += 1
-		
 		
 func _on_leaderboard_close_pressed():
 	leaderboard_panel.visible = false
