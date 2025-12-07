@@ -5,7 +5,6 @@ var current_type = Type.BONES
 var hp = 2
 var speed = 150 
 
-
 var enemy_scene = preload("res://scenes/dummy.tscn")
 var explosion_scene = preload("res://scenes/explosion.tscn")
 var floating_text_scene = preload("res://scenes/FloatingText.tscn")
@@ -25,14 +24,15 @@ func setup_obstacle(type):
 		bone.show()
 		bone.play("bone" + pick)
 		hp = 3
-		
+		scale = Vector2(1.0, 1.0)
+
 	elif current_type == Type.SHIPWRECK:
 		shipwreck.show()
 		bone.hide()
 		shipwreck.play("ship" + pick)
 		hp = 5
 		scale = Vector2(1.2, 1.2)
-		
+	
 	if not is_maze_obstacle:
 		if current_type == Type.BONES:
 			if randf() <= 0.3:
@@ -46,7 +46,7 @@ func spawn_minions(count):
 	for i in range(count):
 		var enemy = enemy_scene.instantiate()
 		enemy.enemy_type = 0 # Gunboat
-		var offset_x = randf_range(-40, 40)
+		var offset_x = randf_range(-150, 150)
 		var offset_y = randf_range(30, 60) 
 		enemy.global_position = global_position + Vector2(offset_x, offset_y)
 		get_tree().current_scene.add_child(enemy)

@@ -5,7 +5,7 @@ extends Area2D
 enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND, ADMIRAL}
 
 var current_type = Type.MULTISHOT
-
+var apply_xray_effect = false
 # variabel texture crates 
 var shieldcrate = preload("res://assets/art/shield/1shield box.png")
 var multishotcrate = preload("res://assets/art/multi_box.png")
@@ -16,7 +16,6 @@ var secondwindcrate = preload("res://assets/art/secondwindcrate.png")
 var admiralcrate = preload("res://assets/art/will_box.png")
 
 func _ready():
-
 	match current_type:
 		Type.SHIELD:
 			crate.texture = shieldcrate
@@ -32,13 +31,21 @@ func _ready():
 			
 		Type.KRAKEN:
 			crate.texture = krakencrate
+			
 		Type.SECOND_WIND:
 			crate.texture = secondwindcrate
+			
 		Type.ADMIRAL:
 			crate.texture = admiralcrate
-
+	
+	# Tween effect drop
+	if apply_xray_effect:
+		modulate.a = 0.5 
+		var tween = create_tween()
+		tween.tween_interval(1.0) 
+		tween.tween_property(self, "modulate:a", 1.0, 0.5) 
 func _process(delta):
-	position.y += 80 * delta # Kecepatan jatuh
+	position.y += 150 * delta # Kecepatan jatuh
 
 func _on_body_entered(body):
 	if body.has_method("apply_powerup"):

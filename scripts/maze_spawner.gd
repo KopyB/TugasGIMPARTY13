@@ -38,7 +38,6 @@ func _ready():
 	print("Next Maze: %.1f | Next Shark: %.1f" % [next_maze_time, next_shark_time])
 
 func _process(delta):
-	# Cek apakah ada event yang sedang aktif?
 	var any_event_active = is_maze_active or is_shark_event_active
 	
 	if not any_event_active:
@@ -47,9 +46,8 @@ func _process(delta):
 		maze_cooldown_timer += delta
 		if maze_cooldown_timer >= next_maze_time:
 			start_maze_event()
-			return # Prioritas: Langsung return agar tidak cek shark di frame yang sama
+			return # Langsung return biar ga di cek shark di frame  sama
 
-		# Hitung Timer Shark
 		shark_timer += delta
 		if shark_timer >= next_shark_time:
 			start_shark_event()
@@ -63,7 +61,7 @@ func _process(delta):
 			start_chaos_shark_mode()
 	else:
 		
-		# Jika Maze aktif, jalankan logika spawn row maze
+		# Kalo Maze aktif, jalankan logika spawn row maze
 		if is_maze_active:
 			maze_timer += delta
 			if maze_timer >= maze_row_interval:
@@ -72,7 +70,7 @@ func _process(delta):
 		
 
 # =========================================
-#           LOGIKA SHARK ATTACK
+#            SHARK ATTACK
 # =========================================
 
 func start_shark_event():
@@ -136,7 +134,7 @@ func spawn_single_shark():
 	var viewport_rect = get_viewport_rect().size
 	var spawn_pos = Vector2.ZERO
 	
-	# Random Spawn: Atas, Kiri, atau Kanan (Mirip EnemySpawner)
+	# Random Spawn: Atas, Kiri, atau Kanan 
 	var spawn_side = randi() % 3
 	
 	if spawn_side == 0: # Atas
@@ -151,7 +149,6 @@ func spawn_single_shark():
 	
 	shark.global_position = spawn_pos
 	
-	# PENTING: Add ke current_scene agar koordinat aman
 	get_tree().current_scene.call_deferred("add_child", shark)
 
 func end_shark_event():
@@ -175,7 +172,7 @@ func spawn_parrot_event():
 	get_tree().current_scene.call_deferred("add_child", new_parrot)
 	
 # =========================================
-#      LOGIKA SHARK ATTACK (HARD/CHAOS MODE)
+#  SHARK ATTACK (HARD/CHAOS MODE)
 # =========================================
 func start_chaos_shark_mode():
 	if is_shark_event_active or is_maze_active:
@@ -204,6 +201,8 @@ func spawn_chaos_waves():
 		print(">>> CHAOS WAVE %d/%d: RELEASE THE SWARM!" % [i + 1, total_waves])
 		
 		for j in range(sharks_per_wave):
+			while get_tree().paused:
+				await get_tree().process_frame #kalo paused jangan mulai
 			spawn_single_shark()
 			if randf() <= 0.20:
 				spawn_safe_parrot()
@@ -224,7 +223,7 @@ func spawn_safe_parrot():
 	get_tree().current_scene.call_deferred("add_child", new_parrot)
 
 # =========================================
-#           LOGIKA MAZE (EXISTING)
+#            MAZE (EXISTING)
 # =========================================
 
 func start_maze_event():

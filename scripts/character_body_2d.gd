@@ -533,28 +533,22 @@ func spawn_bullet(angle_in_degrees):
 	# Set posisi awal
 	bullet.global_position = $FiringPosition.global_position
 	
-	# Set rotasi peluru (konversi derajat ke radian karena Godot pakai radian)
+	# Set rotasi peluru 
 	bullet.rotation_degrees = rotation_degrees + angle_in_degrees
 	
 	# Ganti texture
 	if is_artillery_active:
-		# Kita cari node Sprite2D di dalam scene peluru
-		# NOTE: Pastikan nama node sprite di scene bulletplayer.tscn adalah "Sprite2D"
 		var sprite = bullet.get_node_or_null("Sprite2D")
 		
 		if sprite:
 			sprite.texture = tex_artillery
-			# Opsional: Ubah skala jika gambar artillery terlalu besar/kecil
-			# sprite.scale = Vector2(1.5, 1.5)
 			
-	# Tambahkan ke Main Scene
 	get_parent().add_child(bullet)
 	$cannon/cannonsfx.play()
 	
 func reset_all_skills():
-	print("Membersihkan semua skill aktif...")
+	print("Membersihkan semua skill aktif")
 	
-	# ... (Reset skill lain yg sudah ada) ...
 	is_kraken_active = false
 	is_multishot_active = false
 	is_artillery_active = false

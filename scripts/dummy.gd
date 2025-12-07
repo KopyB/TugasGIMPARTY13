@@ -146,7 +146,6 @@ func _ready():
 		if enemyship:
 			enemyship.texture = bomber_barrel
 			enemyship.rotation = -PI/2 
-			# FIX MIRROR: Scale Y negatif agar tidak terbalik saat rotasi parent -90
 			enemyship.scale = Vector2(0.15, -0.15) 
 			$trails.show()
 			$trails.position = Vector2(-9.0, -16.0)
@@ -158,15 +157,14 @@ func _ready():
 		if collision_shape_2d and collision_shape_2d.shape is RectangleShape2D:
 			collision_shape_2d.shape.size = Vector2(280.0, 145.0)
 			
-		shoot_interval = randf_range(0.5, 1.0) 
+		shoot_interval = randf_range(0.8, 1.0) 
 		speed = randf_range(210, 275) 
-		rotation_degrees = -90 # Hadap Kiri (Mundur)
+		rotation_degrees = -90 
 
 	# TIPE 3: PARROT 
 	elif enemy_type == Type.PARROT:
 		health = 1
 		add_to_group("parrots")
-		# Parrot biasanya tidak punya collision fisik yang sama, jadi kita skip setup hitbox
 		print("Parrot spawned")
 
 	# TIPE 4: TORPEDO SHARK 
@@ -213,9 +211,9 @@ func _ready():
 		apply_hard_mode_stats()
 
 func apply_hard_mode_stats():
-	var hp_multiplier = 2.0     # Multiply?: 2.0 (darah alot)
-	var speed_multiplier = 1.2  # Multiply?: 1.2 (lebih cepat)
-	var shoot_multiplier = 3.0  # Multiply?: 3.0 (fire rate lebih cepat)
+	var hp_multiplier = 1.5     # Multiply?: 1.5 (darah alot)
+	var speed_multiplier = 1.0  # Multiply?: 1.0 (SEMENTARA MASIH DEFAULT)
+	var shoot_multiplier = 1.5  # Multiply?: 1.5 (fire rate lebih cepat)
 	var shark_detection_reducer = 1.5 # Reduce?: 1.0 (faster shark lock duration)
 	
 	health = int(health * hp_multiplier)
@@ -338,7 +336,15 @@ func fire_gunboat():
 		# Beri toleransi sedikit (50 pixel)
 		if global_position.y >= player.global_position.y - 50:
 			return 
-			
+		spawn_enemy_bullet(0)
+		
+		if GameData.is_hard_mode:   
+			if randf() <= 0.60:
+				spawn_enemy_bullet(-15)  
+				spawn_enemy_bullet(15)   
+		
+		cannonsfx.play()
+		
 		var bullet = bullet_scene.instantiate()
 		bullet.global_position = global_position
 		
@@ -350,6 +356,16 @@ func fire_gunboat():
 		cannonsfx.play()
 		await cannonsfx.finished
 		
+func spawn_enemy_bullet(angle_offset):
+	var bullet = bullet_scene.instantiate()
+	bullet.global_position = global_position
+	
+	bullet.look_at(player.global_position)
+	bullet.rotation_degrees += angle_offset
+	bullet.direction = Vector2.RIGHT.rotated(bullet.rotation)
+	
+	get_tree().current_scene.add_child(bullet)
+			
 func drop_barrel():
 	var barrel = barrel_scene.instantiate()
 	barrel.global_position = global_position
@@ -489,7 +505,7 @@ func die():
 			enemy_name = "Shark"
 			
 	if GameData.is_hard_mode:
-		add_points += 2 
+		add_points += 10 
 		enemy_name = "Buffed " + enemy_name	
 			
 	get_tree().call_group("ui_manager", "increase_score", add_points)
@@ -537,7 +553,9 @@ func spawn_floating_text(points, e_name):
 	
 	# Tentukan warna teks berdasarkan tipe (Opsional, biar keren)
 	var text_color = Color.WHITE
-	if points >= 8: text_color = Color(0.619, 0.149, 0.392, 1)       
+	if points >= 15: text_color = Color(0.216, 0.137, 0.369, 1.0)
+	elif points >= 12: text_color = Color(0.592, 0.0, 0.0, 1.0)  
+	elif points >= 8: text_color = Color(0.619, 0.149, 0.392, 1)       
 	elif points >= 5: text_color = Color(0.996, 0.909, 0.572, 1)    
 	else: text_color = Color(0.478, 0.937, 1, 1)              
 	
@@ -568,6 +586,9 @@ func spawn_powerup():
 	
 	powerup.current_type = random_type
 	
+	if enemy_type == Type.BOMBER or enemy_type == Type.RBOMBER:
+		powerup.apply_xray_effect = true
+		
 	get_tree().current_scene.call_deferred("add_child", powerup)
 		
 func exploded():
