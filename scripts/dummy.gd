@@ -212,8 +212,8 @@ func _ready():
 
 func apply_hard_mode_stats():
 	var hp_multiplier = 1.5     # Multiply?: 1.5 (darah alot)
-	var speed_multiplier = 1.0  # Multiply?: 1.0 (SEMENTARA MASIH DEFAULT)
-	var shoot_multiplier = 1.5  # Multiply?: 1.5 (fire rate lebih cepat)
+	var speed_multiplier = 1.5  # Multiply?: 1.5 (lebih cepat)
+	var shoot_multiplier = 1.1  # Multiply?: 1.1 (fire rate lebih cepat)
 	var shark_detection_reducer = 1.5 # Reduce?: 1.0 (faster shark lock duration)
 	
 	health = int(health * hp_multiplier)

@@ -44,7 +44,7 @@ func _ready():
 		peak_difficulty_final = 0.3
 		
 		# Progresi 
-		# Normal: 8 Wave -> Hard: 4 Wave 
+		# Normal: 8 Wave -> Hard: 6 Wave 
 		target_waves_to_max = 6.0
 		
 		# Durasi Gelombang (tempo)
