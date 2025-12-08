@@ -145,7 +145,7 @@ func take_damage_player():
 	if has_second_wind:
 		has_second_wind = false # Pakai nyawa cadangannya
 		Powerupview.show_icons("Second Wind", 0)
-		activate_iframes(1.5) # Invicible 1.5 sec
+		activate_iframes(2.5) # Invicible 2.5 sec
 		for node in get_tree().get_nodes_in_group("player_anims"):
 			node.visible = false
 		secondwind_anim.show()

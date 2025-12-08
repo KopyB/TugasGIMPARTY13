@@ -115,7 +115,6 @@ func show_icons(message :String, duration : float):
 			if active_boolean_icons.has(message):
 				return 
 			var icon_instance = icon_scene.instantiate()
-			
 			if message == "Second Wind":
 				icon_instance.get_child(1).texture = secondwindlogo
 			elif message == "Shield":

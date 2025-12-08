@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5d35swq6gshc"]
+[gd_scene load_steps=7 format=3 uid="uid://b5d35swq6gshc"]
 
 [ext_resource type="Texture2D" uid="uid://h8guqlg8xg7" path="res://assets/art/KrakenSlayerIcon.png" id="1_bo8cm"]
 [ext_resource type="Script" uid="uid://7705tc3euegt" path="res://scripts/progress_bar.gd" id="1_e357s"]
+[ext_resource type="Shader" uid="uid://nfwa4fxuwn7i" path="res://scripts/wave.gdshader" id="2_3y027"]
 [ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="2_jfrr8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e357s"]
 bg_color = Color(1, 0.6484506, 0.42564166, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qlo8n"]
+shader = ExtResource("2_3y027")
 
 [node name="PanelContainer" type="PanelContainer"]
 
@@ -23,6 +27,7 @@ one_shot = true
 autostart = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_qlo8n")
 layout_mode = 2
 texture = ExtResource("1_bo8cm")
 expand_mode = 3
