@@ -71,6 +71,8 @@ func _ready():
 	
 # IGNORE (DEBUG MODE)
 func _input(event):
+	# if event is InputEventKey and event.pressed and event.keycode == KEY_L:
+		# get_tree().call_group("visual_effect_manager", "trigger_siren_blindness", 4.0)
 	if event is InputEventKey and event.pressed and not event.echo:
 		var key_typed = OS.get_keycode_string(event.physical_keycode).to_upper()
 	

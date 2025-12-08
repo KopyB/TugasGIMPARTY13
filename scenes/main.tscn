@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=30 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="Script" uid="uid://68ok3weuksdj" path="res://scripts/main.gd" id="1_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
@@ -21,25 +21,16 @@
 [ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="12_0ld40"]
 [ext_resource type="PackedScene" uid="uid://dh7tgcxbi5jy5" path="res://scenes/jumpscare_screen.tscn" id="13_trceg"]
 [ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="14_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://bqkyby1axvhxr" path="res://scenes/cursed_screen.tscn" id="20_jscy8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(20.000061, 2024)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dp3eg"]
 shader = ExtResource("5_dp3eg")
-shader_parameter/wave_strength = 5.0
-shader_parameter/wave_speed = 2.0
-shader_parameter/wave_frequency = 10.0
-shader_parameter/paused = false
-shader_parameter/time_scale = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yc10j"]
 shader = ExtResource("5_dp3eg")
-shader_parameter/wave_strength = 1.0
-shader_parameter/wave_speed = 0.25
-shader_parameter/wave_frequency = 25.0
-shader_parameter/paused = false
-shader_parameter/time_scale = 1.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_muem4"]
 animations = [{
@@ -226,8 +217,10 @@ parameters/looping = true
 layer = 0
 visible = false
 
+[node name="CursedScreen" parent="." instance=ExtResource("20_jscy8")]
+
 [node name="tutoriallayer" type="CanvasLayer" parent="."]
-layer = 0
+layer = 5
 
 [node name="Panel" type="Panel" parent="tutoriallayer"]
 anchors_preset = 8
@@ -269,6 +262,7 @@ libraries = {
 }
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
 
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_tbgi4")]
 

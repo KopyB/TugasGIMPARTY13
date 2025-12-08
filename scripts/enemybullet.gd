@@ -1,6 +1,6 @@
 extends Area2D
 
-var speed = 800
+var speed = 800 # 800
 var direction = Vector2.ZERO 
 var explosion_scene = preload("res://scenes/explosion.tscn")
 

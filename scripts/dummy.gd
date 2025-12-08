@@ -31,6 +31,7 @@ var is_shark_charging = false
 var shark_charge_direction = Vector2.ZERO
 var shark_charge_speed = randf_range(1000.0, 1300.0)
 var torpedoshark: AnimatedSprite2D = null
+var shark_dash_count = 0
 
 # --- SIREN VARIABLE ---
 var is_diving = false
@@ -214,7 +215,7 @@ func apply_hard_mode_stats():
 	var hp_multiplier = 1.5     # Multiply?: 1.5 (darah alot)
 	var speed_multiplier = 1.5  # Multiply?: 1.5 (lebih cepat)
 	var shoot_multiplier = 1.1  # Multiply?: 1.1 (fire rate lebih cepat)
-	var shark_detection_reducer = 1.5 # Reduce?: 1.0 (faster shark lock duration)
+	var shark_detection_reducer = 1.5 # Reduce?: 1.5 (faster shark lock duration)
 	
 	health = int(health * hp_multiplier)
 	
@@ -369,6 +370,11 @@ func spawn_enemy_bullet(angle_offset):
 func drop_barrel():
 	var barrel = barrel_scene.instantiate()
 	barrel.global_position = global_position
+	
+	if GameData.is_hard_mode:
+		if randf() <= 0.40:
+			barrel.enable_fast_mode()
+			
 	get_tree().current_scene.call_deferred("add_child", barrel)
 	$splashsfx.play()
 	# Opsional: Ubah sprite musuh jadi "kosong" sebentar (Visual Direction)
@@ -399,6 +405,7 @@ func handle_shark_behavior(delta):
 		
 		# Cek waktu lock habis
 		if shark_timer >= shark_lock_duration and not is_shark_charging:
+			shark_dash_count = 0
 			is_shark_charging = true
 			#torpedoshark.play_backwards("transition")
 			#await torpedoshark.animation_finished
@@ -416,7 +423,54 @@ func handle_shark_behavior(delta):
 			for body in get_overlapping_bodies():
 				if body.is_in_group("player"):
 					_on_body_entered(body) # Panggil fungsi paksa
+					
+		if GameData.is_hard_mode and shark_dash_count < 1: # Max 1x Extra Dash
+			var viewport_rect = get_viewport_rect().size
+			
+			# Cek apakah Shark sudah mau keluar layar (Miss)?
+			# Logic: Jika dia charging ke Kanan DAN posisinya > lebar layar
+			# ATAU Jika dia charging ke Kiri DAN posisinya < 0
+			var is_missed = false
+			
+			# 1. Cek Kanan (Keluar X positif)
+			if shark_charge_direction.x > 0 and position.x > viewport_rect.x - 50:
+				is_missed = true
+			# 2. Cek Kiri (Keluar X negatif)
+			elif shark_charge_direction.x < 0 and position.x < 50:
+				is_missed = true
+			# 3. Cek Bawah (Keluar Y positif) - REQUEST ANDA
+			elif shark_charge_direction.y > 0 and position.y > viewport_rect.y - 50:
+				is_missed = true
+			# 4. Cek Atas (Keluar Y negatif)
+			elif shark_charge_direction.y < 0 and position.y < 50:
+				is_missed = true
+				
+			if is_missed:
+				if randf() <= 0.3:
+					perform_double_dash()
+				else:
+					shark_dash_count = 99
 
+func perform_double_dash():
+	print("SHARK MISSED! PREPARING SECOND CHARGE!")
+	shark_dash_count += 1
+	
+	is_shark_charging = false
+	shark_timer = 0.0 
+	shark_lock_duration = 1.0 
+	
+	# Reset animasi 
+	if torpedoshark: torpedoshark.play("scout")
+	
+	var viewport = get_viewport_rect().size
+	# Geser Horizontal 
+	if position.x > viewport.x: position.x -= 150
+	elif position.x < 0: position.x += 150
+	
+	# Geser Vertikal 
+	if position.y > viewport.y: position.y -= 150  
+	elif position.y < 0: position.y += 150         
+				
 func start_shark_charge():
 	is_shark_charging = true
 	shark_charge_direction = Vector2.RIGHT.rotated(rotation)
@@ -467,6 +521,9 @@ func take_damage(amount):
 				if amount < health:
 					trigger_siren_scream()
 					get_tree().call_group("jumpscare_manager", "play_jumpscare")
+					if GameData.is_hard_mode:
+						print("HARD MODE: SIREN BLINDNESS APPLIED!")
+						get_tree().call_group("visual_effect_manager", "trigger_siren_blindness", 4.0)
 				health -= amount
 				if health <= 0:
 					die()
@@ -528,9 +585,35 @@ func die():
 		remove_from_group("parrots")
 		spawn_powerup()
 		print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
+		hide()
+		if collision_shape_2d:
+			collision_shape_2d.set_deferred("disabled", true)
+		if GameData.is_hard_mode and is_instance_valid(player):
+			# Simpan posisi X player saat ini
+			var target_x = player.global_position.x
+			# Panggil airstrike (tanpa await agar parrot bisa langsung hilang)
+			await trigger_airstrike(target_x)
+			
 		queue_free()
 	else:
 		queue_free()
+
+func trigger_airstrike(target_x):
+	var count = 10
+	var viewport_height = get_viewport_rect().size.y
+	var start_y = -50
+	var gap = (viewport_height + 100) / count 
+	
+	for i in range(count):
+		var explosion = explosion_scene.instantiate()
+		explosion.is_barrel_explosion = true 
+		
+		
+		explosion.global_position = Vector2(target_x, start_y + (i * gap))
+		
+		get_tree().current_scene.call_deferred("add_child", explosion)
+		
+		await get_tree().create_timer(0.1, false).timeout
 
 func _on_area_entered(area: Area2D) -> void:
 	if not is_instance_valid(area) or area == self:

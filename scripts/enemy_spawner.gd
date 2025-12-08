@@ -56,7 +56,23 @@ func _ready():
 func _process(delta):
 	if not is_spawning_paused:
 		time_elapsed += delta # biar ga lompat ke puncak
+		
+func _input(event):
+	# Hanya aktif di mode debug editor (opsional, biar aman)
+	if not OS.has_feature("editor"):
+		return
 
+	if event is InputEventKey and event.pressed and event.keycode == KEY_U:
+		print("DEBUG: Force Spawning Parrot!")
+		var viewport_rect = get_viewport_rect().size
+		spawn_parrot(viewport_rect)
+		
+		# Opsional: Jika ingin parrot langsung bawa teman (sesuai logika baru)
+		if randf() > 0.5:
+			spawn_gunboat_group(viewport_rect)
+		else:
+			spawn_shark(viewport_rect)
+			
 func pause_spawning():
 	print(">>> SYSTEM: Musuh Biasa PAUSED (Maze Mulai) <<<")
 	is_spawning_paused = true # Set flag pause

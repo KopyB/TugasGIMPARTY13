@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqkyby1axvhxr"]
+
+[ext_resource type="Script" uid="uid://bt5vhyff3xhlw" path="res://scripts/cursed_screen.gd" id="1_8hght"]
+[ext_resource type="Shader" uid="uid://brlydxob3e1as" path="res://scenes/cursed_screen.gdshader" id="2_3770h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jwnem"]
+shader = ExtResource("2_3770h")
+shader_parameter/strength = 0.0
+
+[node name="CursedScreen" type="CanvasLayer"]
+script = ExtResource("1_8hght")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="DizzyEffect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_jwnem")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

@@ -376,7 +376,7 @@ expand_icon = true
 [node name="HARD" type="Button" parent="DifficultyPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.42352942, 0.5411765, 0.5647059, 1)
+theme_override_colors/font_color = Color(0.633415, 0.7444987, 0.7668674, 1)
 theme_override_fonts/font = ExtResource("5_rcqid")
 theme_override_font_sizes/font_size = 36
 theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")

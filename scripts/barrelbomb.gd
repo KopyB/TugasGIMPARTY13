@@ -7,12 +7,29 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 var is_already_exploded = false
 var fall_speed = randi_range(160,200)
 var damage = 1
+var is_fast_mode = false
 
 func _ready():
 	add_to_group("enemy_projectiles")
+	if is_fast_mode:
+		fall_speed *= 1.8
+		if barrel:
+			var tween = create_tween().set_loops()
+			tween.tween_property(barrel, "modulate", Color(1, 0.5, 0.5), 0.2)
+			tween.tween_property(barrel, "modulate", Color.WHITE, 0.2)
+		
+		# Timer Meledak
+		get_tree().create_timer(randf_range(1.0, 1.5), false).timeout.connect(_on_auto_explode)
 	
 func _process(delta):
 	position.y += fall_speed * delta
+	
+func enable_fast_mode():
+	is_fast_mode = true
+
+func _on_auto_explode():
+	if is_instance_valid(self) and not is_already_exploded:
+		meledak()
 
 func _on_body_entered(body):
 	if body.has_method("take_damage_player"):

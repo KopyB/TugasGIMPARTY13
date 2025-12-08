@@ -39,7 +39,7 @@ animations = [{
 }]
 
 [node name="JumpscareScreen" type="CanvasLayer"]
-layer = 100
+layer = 20
 script = ExtResource("1_4tslb")
 
 [node name="ColorRect" type="ColorRect" parent="."]

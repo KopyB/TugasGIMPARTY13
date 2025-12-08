@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="2_bpq5q"]
 
 [node name="POWERUPVIEW" type="CanvasLayer"]
+layer = 5
 script = ExtResource("1_bpq5q")
 debug = true
 
