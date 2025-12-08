@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cvj110i0jqfwq" path="res://assets/art/COPAL GIMMING.png" id="2_jfrr8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e357s"]
-bg_color = Color(1, 0.6484506, 0.42564166, 1)
+bg_color = Color(0.105882354, 0.4627451, 0.69803923, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qlo8n"]
 shader = ExtResource("2_3y027")
