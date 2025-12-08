@@ -422,26 +422,18 @@ func handle_shark_behavior(delta):
 		if has_overlapping_bodies():
 			for body in get_overlapping_bodies():
 				if body.is_in_group("player"):
-					_on_body_entered(body) # Panggil fungsi paksa
+					_on_body_entered(body) 
 					
-		if GameData.is_hard_mode and shark_dash_count < 1: # Max 1x Extra Dash
+		if GameData.is_hard_mode and shark_dash_count < 1: 
 			var viewport_rect = get_viewport_rect().size
-			
-			# Cek apakah Shark sudah mau keluar layar (Miss)?
-			# Logic: Jika dia charging ke Kanan DAN posisinya > lebar layar
-			# ATAU Jika dia charging ke Kiri DAN posisinya < 0
 			var is_missed = false
 			
-			# 1. Cek Kanan (Keluar X positif)
 			if shark_charge_direction.x > 0 and position.x > viewport_rect.x - 50:
 				is_missed = true
-			# 2. Cek Kiri (Keluar X negatif)
 			elif shark_charge_direction.x < 0 and position.x < 50:
 				is_missed = true
-			# 3. Cek Bawah (Keluar Y positif) - REQUEST ANDA
 			elif shark_charge_direction.y > 0 and position.y > viewport_rect.y - 50:
 				is_missed = true
-			# 4. Cek Atas (Keluar Y negatif)
 			elif shark_charge_direction.y < 0 and position.y < 50:
 				is_missed = true
 				
@@ -589,9 +581,7 @@ func die():
 		if collision_shape_2d:
 			collision_shape_2d.set_deferred("disabled", true)
 		if GameData.is_hard_mode and is_instance_valid(player):
-			# Simpan posisi X player saat ini
 			var target_x = player.global_position.x
-			# Panggil airstrike (tanpa await agar parrot bisa langsung hilang)
 			await trigger_airstrike(target_x)
 			
 		queue_free()
