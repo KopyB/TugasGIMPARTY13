@@ -24,14 +24,14 @@ func setup_obstacle(type):
 		bone.show()
 		bone.play("bone" + pick)
 		hp = 3
-		scale = Vector2(1.0, 1.0)
+		scale = Vector2(1.2, 1.2)
 
 	elif current_type == Type.SHIPWRECK:
 		shipwreck.show()
 		bone.hide()
 		shipwreck.play("ship" + pick)
 		hp = 5
-		scale = Vector2(1.2, 1.2)
+		scale = Vector2(1.0, 1.0)
 	
 	if not is_maze_obstacle:
 		if current_type == Type.BONES:
