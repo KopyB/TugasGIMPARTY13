@@ -54,6 +54,9 @@ func _ready():
 	anim_stella.add_to_group("player_anims")
 	for node in get_tree().get_nodes_in_group("player_anims"):
 		node.show()
+	if GameData.is_hard_mode:
+		normal_speed = 350.0 
+		current_speed = normal_speed
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	k_sturret.hide()

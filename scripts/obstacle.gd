@@ -41,26 +41,6 @@ func setup_obstacle(type):
 		elif current_type == Type.SHIPWRECK:
 			if randf() <= 0.2:
 				call_deferred("spawn_minions", 1)
-				
-func spawn_minions(count):
-	for i in range(count):
-		var enemy = enemy_scene.instantiate()
-		enemy.enemy_type = 0 # Gunboat
-		
-		# biar ga nempel obstacle
-		var min_dist = 150.0  
-		var max_dist = 250.0 
-		
-		# Tentukan sisi: Kiri (-1) atau Kanan (1)
-		var side = 1 if randf() > 0.5 else -1
-		
-		# Offset X
-		var offset_x = randf_range(min_dist, max_dist) * side
-		# Offset Y (Variasi vertikal)
-		var offset_y = randf_range(20, 70) 
-		
-		enemy.global_position = global_position + Vector2(offset_x, offset_y)
-		get_tree().current_scene.add_child(enemy)
 
 func _process(delta):
 	position.y += speed * delta

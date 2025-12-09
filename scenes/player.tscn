@@ -421,6 +421,7 @@ animations = [{
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+z_index = 10
 position = Vector2(-10, 0)
 collision_layer = 2
 script = ExtResource("1_g2els")

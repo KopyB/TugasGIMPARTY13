@@ -340,7 +340,7 @@ func fire_gunboat():
 		spawn_enemy_bullet(0)
 		
 		if GameData.is_hard_mode:   
-			if randf() <= 0.60:
+			if randf() <= 0.40:
 				spawn_enemy_bullet(-15)  
 				spawn_enemy_bullet(15)   
 		
@@ -406,6 +406,7 @@ func handle_shark_behavior(delta):
 		# Cek waktu lock habis
 		if shark_timer >= shark_lock_duration and not is_shark_charging:
 			shark_dash_count = 0
+			show_charge_indicator()
 			is_shark_charging = true
 			#torpedoshark.play_backwards("transition")
 			#await torpedoshark.animation_finished
@@ -591,6 +592,8 @@ func die():
 		queue_free()
 
 func trigger_airstrike(target_x):
+	show_warning_indicator(target_x)
+	await get_tree().create_timer(0.8, false).timeout
 	var count = 10
 	var viewport_height = get_viewport_rect().size.y
 	var start_y = -50
@@ -600,13 +603,47 @@ func trigger_airstrike(target_x):
 		var explosion = explosion_scene.instantiate()
 		explosion.is_barrel_explosion = true 
 		
-		
 		explosion.global_position = Vector2(target_x, start_y + (i * gap))
 		
 		get_tree().current_scene.call_deferred("add_child", explosion)
 		
 		await get_tree().create_timer(0.2, false).timeout
-
+		
+func show_warning_indicator(x_pos):
+	var warning = ColorRect.new()
+	var view_size = get_viewport_rect().size
+	
+	# Lebar 450 Tinggi Full Height layar
+	warning.size = Vector2(450, view_size.y + 200) 
+	warning.position = Vector2(x_pos - 250, -100) # Tengah
+	warning.color = Color(1, 0, 0, 0) 
+	
+	get_tree().current_scene.add_child(warning)
+	
+	var tween = create_tween()
+	tween.tween_property(warning, "color:a", 0.4, 0.2) 
+	tween.tween_property(warning, "color:a", 0.1, 0.2)
+	tween.tween_property(warning, "color:a", 0.6, 0.2) 
+	tween.tween_property(warning, "color:a", 0.0, 0.2)
+	
+	tween.tween_callback(warning.queue_free)
+	
+func show_charge_indicator():
+	var indicator = ColorRect.new()
+	indicator.color = Color(1, 0, 0, 0) 
+	
+	# Panjang 2000 Lebar 60
+	indicator.size = Vector2(2000, 60)
+	indicator.position = Vector2(0, -30)
+	indicator.z_index = -1 
+	
+	add_child(indicator)
+	var tween = create_tween()
+	tween.tween_property(indicator, "color:a", 0.5, 0.3)
+	tween.tween_interval(0.2)
+	tween.tween_property(indicator, "color:a", 0.0, 0.2)
+	tween.tween_callback(indicator.queue_free)
+		
 func _on_area_entered(area: Area2D) -> void:
 	if not is_instance_valid(area) or area == self:
 		return
