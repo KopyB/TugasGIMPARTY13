@@ -46,8 +46,19 @@ func spawn_minions(count):
 	for i in range(count):
 		var enemy = enemy_scene.instantiate()
 		enemy.enemy_type = 0 # Gunboat
-		var offset_x = randf_range(-150, 150)
-		var offset_y = randf_range(30, 60) 
+		
+		# biar ga nempel obstacle
+		var min_dist = 150.0  
+		var max_dist = 250.0 
+		
+		# Tentukan sisi: Kiri (-1) atau Kanan (1)
+		var side = 1 if randf() > 0.5 else -1
+		
+		# Offset X
+		var offset_x = randf_range(min_dist, max_dist) * side
+		# Offset Y (Variasi vertikal)
+		var offset_y = randf_range(20, 70) 
+		
 		enemy.global_position = global_position + Vector2(offset_x, offset_y)
 		get_tree().current_scene.add_child(enemy)
 
