@@ -578,6 +578,8 @@ func die():
 		spawn_powerup()
 		print("Parrots alive: ", get_tree().get_nodes_in_group("parrots").size())
 		hide()
+		if shadow_path and is_instance_valid(shadow_path):
+			shadow_path.hide()
 		if collision_shape_2d:
 			collision_shape_2d.set_deferred("disabled", true)
 		if GameData.is_hard_mode and is_instance_valid(player):
@@ -603,7 +605,7 @@ func trigger_airstrike(target_x):
 		
 		get_tree().current_scene.call_deferred("add_child", explosion)
 		
-		await get_tree().create_timer(0.1, false).timeout
+		await get_tree().create_timer(0.2, false).timeout
 
 func _on_area_entered(area: Area2D) -> void:
 	if not is_instance_valid(area) or area == self:
