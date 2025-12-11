@@ -19,6 +19,8 @@ var has_second_wind = false
 var laser_scene = preload("res://scenes/LaserBeam.tscn")
 var active_laser_node = null
 var is_invincible = false
+var is_speed_active = false   # Baru
+var is_admiral_active = false # Baru
 
 # --- ??? ---
 var input_buffer: String = ""      
@@ -55,7 +57,7 @@ func _ready():
 	for node in get_tree().get_nodes_in_group("player_anims"):
 		node.show()
 	if GameData.is_hard_mode:
-		normal_speed = 350.0 
+		normal_speed = 400.0 
 		current_speed = normal_speed
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -88,30 +90,36 @@ func _input(event):
 			
 			if input_buffer.ends_with(some_code): 
 				toggle_something_mode()
+				GameData.check_and_unlock("cheater", "Cheater")
 				input_buffer = ""
 			
 			elif input_buffer.ends_with("PLQA00"):
 				shark_rage()
+				GameData.check_and_unlock("cheater", "Cheater")
 				input_buffer = ""
 			
 			elif input_buffer.ends_with("HYPOINTWW"):
 				get_tree().call_group("ui_manager", "increase_score", 1000)
 				print("CHEAT ACTIVATED: +1000 Points")
+				GameData.check_and_unlock("cheater", "Cheater")
 				input_buffer = "" 
 
 			elif input_buffer.ends_with("HYPOINTSS"):
 				get_tree().call_group("ui_manager", "increase_score", -1000)
 				print("CHEAT ACTIVATED: -1000 Points")
+				GameData.check_and_unlock("cheater", "Cheater")
 				input_buffer = ""
 
 			elif input_buffer.ends_with("HYPOINTDD"):
 				get_tree().call_group("ui_manager", "increase_score", 500)
 				print("CHEAT ACTIVATED: +500 Points")
+				GameData.check_and_unlock("cheater", "Cheater")
 				input_buffer = ""
 
 			elif input_buffer.ends_with("HYPOINTAA"):
 				get_tree().call_group("ui_manager", "increase_score", -500)
 				print("CHEAT ACTIVATED: -500 Points")
+				GameData.check_and_unlock("cheater", "Cheater")
 				input_buffer = ""
 
 func toggle_something_mode():
@@ -150,6 +158,10 @@ func take_damage_player():
 	if has_second_wind:
 		has_second_wind = false # Pakai nyawa cadangannya
 		Powerupview.show_icons("Second Wind", 0)
+		GameData.revives_count += 1
+		GameData.save_stats()
+		if GameData.revives_count >= 1:
+			GameData.check_and_unlock("revive_1", "Immortality")
 		activate_iframes(2.5) # Invicible 2.5 sec
 		for node in get_tree().get_nodes_in_group("player_anims"):
 			node.visible = false
@@ -243,7 +255,10 @@ func apply_powerup(type):
 		6: # ADMIRAL WILL
 			activate_admiral()
 			Powerupview.show_desc("Admiral's Will")
-
+func check_overload_achievement():
+	if has_shield and is_multishot_active and is_artillery_active and is_kraken_active and has_second_wind and is_speed_active and is_admiral_active and is_dizzy:
+		GameData.check_and_unlock("overload_master", "Need more power...")
+		
 # --- LOGIKA 1: SHIELD ---
 func activate_shield():
 	has_shield = true
@@ -298,6 +313,7 @@ func activate_artillery():
 
 # --- LOGIKA 4: SPEED (Movement) ---
 func activate_speed():
+	is_speed_active = true
 	current_speed = 800.0 
 	rotation_speed = 6
 	Powerupview.show_icons("SPEED IS KEY", 5.0)
@@ -310,7 +326,8 @@ func activate_speed():
 	await skill_timer.timeout # Durasi 5 detik
 	$speed_anim.stop()
 	$speed_anim.hide()
-	current_speed = normal_speed # Balik normal
+	current_speed = normal_speed
+	is_speed_active = false 
 	rotation_speed = 2
 	
 	# --- LOGIKA BARU: KRAKEN SLAYER (LASER) ---
@@ -320,7 +337,8 @@ func activate_kraken():
 		if laser_timer:
 			laser_timer.start(4.5)
 		return
-	is_kraken_active = true 
+	is_kraken_active = true
+	GameData.kraken_session_kills = 0
 	anim_cannon.hide()
 	
 	# Spawn Laser
@@ -384,6 +402,7 @@ func activate_second_wind():
 
 func activate_admiral():
 	print("ADMIRAL'S WILL ACTIVATED! Musuh Terhenti!")
+	is_admiral_active = true
 	
 	modulate = Color(3, 3, 0, 1) # Terang banget (Kuning)
 	var tween = create_tween()
@@ -400,6 +419,7 @@ func activate_admiral():
 	spawn_lightning_on_enemies()
 	await shockwaves_anim.animation_finished
 	shockwaves_anim.hide()
+	
 	# Tunggu 5 Detik
 	skill_timer.start(5.0)
 	await skill_timer.timeout
@@ -407,6 +427,8 @@ func activate_admiral():
 	# Kembalikan musuh jadi normal
 	print("Admiral's Will berakhir.")
 	get_tree().call_group("enemies", "set_paralyzed", false)
+	is_admiral_active = false
+	
 func spawn_lightning_on_enemies():
 	var all_enemies = get_tree().get_nodes_in_group("enemies")
 	for enemy in all_enemies:

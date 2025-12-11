@@ -25,6 +25,7 @@ cameraeffects="*res://scripts/camera_effects.gd"
 Powerupview="*res://scenes/powerupview.tscn"
 SilentWolf="*res://addons/silent_wolf/SilentWolf.gd"
 GameData="*res://scripts/GameData.gd"
+Notify="*res://scenes/achievement_notify.tscn"
 
 [debug]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c3fmrec3ntaaj"]
+[gd_scene load_steps=29 format=3 uid="uid://c3fmrec3ntaaj"]
 
 [ext_resource type="Script" uid="uid://68ok3weuksdj" path="res://scripts/main.gd" id="1_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://fujugshyvkm6" path="res://scenes/player.tscn" id="1_jyhfs"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://bwy6nk3q1q4we" path="res://assets/art/waterbg/WaterBGFrame1.png" id="5_muem4"]
 [ext_resource type="PackedScene" uid="uid://b8qv1r8ggddgm" path="res://scenes/pause_menu.tscn" id="5_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://bsexnd1gi82lx" path="res://assets/art/waterbg/WaterBGFrame2and10.png" id="6_dp3eg"]
-[ext_resource type="AudioStream" uid="uid://c8e0e01ye6ulh" path="res://assets/audio/Rogue Waves.ogg" id="6_tipki"]
 [ext_resource type="Texture2D" uid="uid://bdwm45bs6p0sd" path="res://assets/art/waterbg/WaterBGFrame3and9.png" id="7_0ld40"]
 [ext_resource type="Script" uid="uid://c7t5eqv50vuc8" path="res://scripts/musiclooper.gd" id="7_85g3d"]
 [ext_resource type="Texture2D" uid="uid://borsmvyxorra3" path="res://assets/art/waterbg/WaterBGFrame4and8.png" id="8_gqmmt"]
@@ -182,11 +181,8 @@ one_shot = true
 autostart = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_tipki")
-volume_db = -3.0
-autoplay = true
+volume_db = 10.0
 bus = &"Music"
-parameters/looping = true
 script = ExtResource("7_85g3d")
 
 [node name="MazeSpawner" type="Node2D" parent="."]

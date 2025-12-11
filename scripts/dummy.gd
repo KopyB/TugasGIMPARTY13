@@ -287,9 +287,12 @@ func _process(delta):
 
 # --- FUNGSI DESPAWN ---
 func check_despawn():
+	if enemy_type == Type.TORPEDO_SHARK and shark_dash_count > 0 and not is_shark_charging:
+		return
+		
 	var viewport_width = get_viewport_rect().size.x
 	var viewport_height = get_viewport_rect().size.y
-
+	
 	if (position.x > viewport_width + 20 or position.y > viewport_height + 100) and not (enemy_type == Type.RBOMBER or enemy_type == Type.RSIREN):
 		queue_free()
 
@@ -393,7 +396,6 @@ func handle_shark_behavior(delta):
 		shark_timer += delta
 		
 		if is_instance_valid(player):
-			# Selalu menatap player (Lock on visual)
 			look_at(player.global_position)
 		
 		# Bergerak maju pelan-pelan 
@@ -439,7 +441,7 @@ func handle_shark_behavior(delta):
 				is_missed = true
 				
 			if is_missed:
-				if randf() <= 0.3:
+				if randf() <= 0.40:
 					perform_double_dash()
 				else:
 					shark_dash_count = 99
@@ -457,12 +459,12 @@ func perform_double_dash():
 	
 	var viewport = get_viewport_rect().size
 	# Geser Horizontal 
-	if position.x > viewport.x: position.x -= 150
-	elif position.x < 0: position.x += 150
+	if position.x > viewport.x: position.x -= 100
+	elif position.x < 0: position.x += 100
 	
 	# Geser Vertikal 
-	if position.y > viewport.y: position.y -= 150  
-	elif position.y < 0: position.y += 150         
+	if position.y > viewport.y: position.y -= 100  
+	elif position.y < 0: position.y = 100   
 				
 func start_shark_charge():
 	is_shark_charging = true
@@ -561,6 +563,23 @@ func die():
 	get_tree().call_group("ui_manager", "increase_score", add_points)
 	spawn_floating_text(add_points, enemy_name)
 	
+	GameData.enemies_killed += 1
+	GameData.save_stats()
+	if GameData.enemies_killed >= 30: GameData.check_and_unlock("kill_30", "Rookie")
+	if GameData.enemies_killed >= 150: GameData.check_and_unlock("kill_150", "Pro")
+	if GameData.enemies_killed >= 700: GameData.check_and_unlock("kill_700", "Hunter")
+	if GameData.enemies_killed >= 2000: GameData.check_and_unlock("kill_2000", "True Hunter")
+	if GameData.enemies_killed >= 15000: GameData.check_and_unlock("kill_15000", "Omnipotent")
+	if GameData.enemies_killed >= 80000: GameData.check_and_unlock("kill_80000", "That's enough, brochacho")
+	
+	if is_instance_valid(player):
+		if player.is_kraken_active:
+			GameData.kraken_session_kills += 1
+			print("Kraken Kill: ", GameData.kraken_session_kills)
+			
+			if GameData.kraken_session_kills >= 10:
+				GameData.check_and_unlock("death_ray", "Death Ray")
+				
 	if not enemy_type == Type.PARROT:
 		if enemyship and is_instance_valid(enemyship):
 			enemyship.hide()
@@ -633,7 +652,7 @@ func show_charge_indicator():
 	indicator.color = Color(1, 0, 0, 0) 
 	
 	# Panjang 2000 Lebar 60
-	indicator.size = Vector2(2000, 60)
+	indicator.size = Vector2(4000, 60)
 	indicator.position = Vector2(0, -30)
 	indicator.z_index = -1 
 	

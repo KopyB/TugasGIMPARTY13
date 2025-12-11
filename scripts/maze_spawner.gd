@@ -18,6 +18,7 @@ var is_shark_event_active = false
 var shark_timer = 0.0
 var next_shark_time = 0.0
 var shark_event_count = 0
+var is_chaos_mode_active = false
 
 # --- GLOBAL STATE ---
 var is_maze_active = false 
@@ -155,8 +156,15 @@ func end_shark_event():
 	print("!!! SHARK ATTACK EVENT ENDED !!!")
 	is_shark_event_active = false
 	
+	if is_chaos_mode_active:
+		GameData.check_and_unlock("chaos_survivor", "...?")
+		is_chaos_mode_active = false 
+	elif GameData.is_hard_mode:
+		GameData.check_and_unlock("nightmare_shark", "Nightmare Shark")
+	else:
+		GameData.check_and_unlock("sharkphobia", "Sharkphobia")
+		
 	next_shark_time = get_next_shark_interval()
-	
 	get_tree().call_group("spawner_utama", "resume_spawning")
 
 func spawn_parrot_event():
@@ -177,7 +185,9 @@ func spawn_parrot_event():
 func start_chaos_shark_mode():
 	if is_shark_event_active or is_maze_active:
 		return
-
+		
+	is_chaos_mode_active = true 
+	is_shark_event_active = true
 	print("if that's what you want, okay...")
 	is_shark_event_active = true
 	shark_timer = 0.0
@@ -238,6 +248,7 @@ func start_maze_event():
 func end_maze_event():
 	print("!!! EVENT MAZE SELESAI !!!")
 	is_maze_active = false
+	GameData.check_and_unlock("dont_get_lost", "Dont get lost...")
 	next_maze_time = get_next_maze_interval()
 	get_tree().call_group("spawner_utama", "resume_spawning")
 

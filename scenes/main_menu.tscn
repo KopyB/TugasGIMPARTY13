@@ -285,7 +285,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
 text = "SETTINGS"
 expand_icon = true
 
-[node name="CREDITS" type="Button" parent="mainbuttons"]
+[node name="EXTRAS" type="Button" parent="mainbuttons"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
@@ -294,7 +294,7 @@ theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
 theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
-text = "CREDITS"
+text = "EXTRAS"
 expand_icon = true
 
 [node name="Exit" type="Button" parent="mainbuttons"]
@@ -318,6 +318,7 @@ parameters/looping = true
 script = ExtResource("7_flqon")
 
 [node name="DifficultyPanel" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -656,6 +657,132 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
 text = "APPLY"
 expand_icon = true
 
+[node name="Index" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -684.0
+offset_top = -208.0
+offset_right = 684.0
+offset_bottom = 498.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Index"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -159.5
+offset_top = 16.0
+offset_right = 159.5
+offset_bottom = 82.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 50
+text = "INDEX"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Index"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 83.0
+offset_right = 455.0
+offset_bottom = 470.0
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 30
+text = "Coming SOON"
+
+[node name="Back" type="Button" parent="Index"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -126.0
+offset_top = -88.0
+offset_right = 102.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "BACK"
+expand_icon = true
+
+[node name="Achievements" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -685.0
+offset_top = -210.0
+offset_right = 683.0
+offset_bottom = 496.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Achievements"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -159.5
+offset_top = 16.0
+offset_right = 159.5
+offset_bottom = 82.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 50
+text = "ACHIEVEMENTS LIST"
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="Achievements"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -126.0
+offset_top = -88.0
+offset_right = 102.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "BACK"
+expand_icon = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Achievements"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 89.0
+offset_right = 1299.0
+offset_bottom = 586.0
+
+[node name="AchieveList" type="VBoxContainer" parent="Achievements/ScrollContainer"]
+layout_mode = 2
+
 [node name="Credits" type="Panel" parent="."]
 visible = false
 layout_mode = 1
@@ -752,6 +879,196 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
 text = "BACK"
 expand_icon = true
 
+[node name="DeleteConfirm" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -221.0
+offset_top = -11.0
+offset_right = 247.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DeleteConfirm"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -159.5
+offset_top = 16.0
+offset_right = 159.5
+offset_bottom = 82.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 50
+text = "ARE YOU SURE?"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DeleteConfirm"]
+clip_contents = true
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.0
+offset_top = -32.5
+offset_right = 170.49997
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="YES" type="Button" parent="DeleteConfirm/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "YES"
+expand_icon = true
+
+[node name="NO" type="Button" parent="DeleteConfirm/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "NO"
+expand_icon = true
+
+[node name="Extras" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -684.0
+offset_top = -209.0
+offset_right = 684.0
+offset_bottom = 497.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Extras"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -159.5
+offset_top = 16.0
+offset_right = 159.5
+offset_bottom = 82.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 50
+text = "EXTRAS"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Extras"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -625.0
+offset_top = -217.0
+offset_right = -153.75
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Index" type="Button" parent="Extras/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "INDEX"
+expand_icon = true
+
+[node name="Achievements" type="Button" parent="Extras/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "ACHIEVEMENTS"
+expand_icon = true
+
+[node name="Credits" type="Button" parent="Extras/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "CREDITS"
+expand_icon = true
+
+[node name="DeleteData" type="Button" parent="Extras/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "ERASE DATA"
+expand_icon = true
+
+[node name="Back" type="Button" parent="Extras"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -126.0
+offset_top = -88.0
+offset_right = 102.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "BACK"
+expand_icon = true
+
 [node name="CopalGimming" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(429, 639.00006)
@@ -772,7 +1089,7 @@ parameters/looping = true
 [connection signal="pressed" from="mainbuttons/START" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="mainbuttons/LEADERBOARD" to="." method="_on_leaderboard_pressed"]
 [connection signal="pressed" from="mainbuttons/SETTINGS" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="mainbuttons/CREDITS" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="mainbuttons/EXTRAS" to="." method="_on_extras_pressed"]
 [connection signal="pressed" from="mainbuttons/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="DifficultyPanel/VBoxContainer/NORMAL" to="." method="_on_normal_pressed"]
 [connection signal="pressed" from="DifficultyPanel/VBoxContainer/HARD" to="." method="_on_hard_pressed"]
@@ -783,4 +1100,13 @@ parameters/looping = true
 [connection signal="toggled" from="Settings/VBoxContainer/fulltoggle" to="Settings/VBoxContainer/fulltoggle" method="_on_toggled"]
 [connection signal="pressed" from="Settings/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Settings/Apply" to="." method="_on_apply_pressed"]
-[connection signal="pressed" from="Credits/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Index/Back" to="." method="_on_index_back_pressed"]
+[connection signal="pressed" from="Achievements/Back" to="." method="_on_achievements_back_pressed"]
+[connection signal="pressed" from="Credits/Back" to="." method="_on_credits_back_pressed"]
+[connection signal="pressed" from="DeleteConfirm/HBoxContainer/YES" to="." method="_on_confirm_delete_pressed"]
+[connection signal="pressed" from="DeleteConfirm/HBoxContainer/NO" to="." method="_on_cancel_delete__pressed"]
+[connection signal="pressed" from="Extras/VBoxContainer/Index" to="." method="_on_index_pressed"]
+[connection signal="pressed" from="Extras/VBoxContainer/Achievements" to="." method="_on_achievements_pressed"]
+[connection signal="pressed" from="Extras/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="Extras/VBoxContainer/DeleteData" to="." method="_on_delete_data_pressed"]
+[connection signal="pressed" from="Extras/Back" to="." method="_on_extras_back_pressed"]

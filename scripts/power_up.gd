@@ -51,6 +51,21 @@ func _on_body_entered(body):
 	if body.has_method("apply_powerup"):
 		# Kirim tipe power-up ini ke player
 		body.apply_powerup(current_type)
+		GameData.powerups_collected += 1
+		GameData.save_stats() 
+		print("Powerup Count: ", GameData.powerups_collected)
+		
+		if GameData.powerups_collected >= 1:
+			GameData.check_and_unlock("powerup_1", "Starter Pack")
+			
+		if GameData.powerups_collected >= 100:
+			GameData.check_and_unlock("powerup_100", "Greedy Pack")
+			
+		if GameData.powerups_collected >= 1000:
+			GameData.check_and_unlock("powerup_1000", "Champion Pack")
+			
+		if GameData.powerups_collected >= 5000:
+			GameData.check_and_unlock("powerup_5000", "Mythical Pack")
 		queue_free()
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

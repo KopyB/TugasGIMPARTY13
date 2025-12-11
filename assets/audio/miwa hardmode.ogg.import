@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bmyyi16nfvw6r"
+path="res://.godot/imported/miwa hardmode.ogg-cc864647e1b53c27e07203412033c15f.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/miwa hardmode.ogg"
+dest_files=["res://.godot/imported/miwa hardmode.ogg-cc864647e1b53c27e07203412033c15f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
