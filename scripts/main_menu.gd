@@ -25,6 +25,7 @@ var volume
 var sfx
 var player_name = "Captain"
 
+var fonttheme : FontFile = preload("res://assets/norwester.otf")
 # Data Achievement (Konfigurasi)
 var achievements_data = [
 	{"id": "rogue_waves","title": "Rogue Waves","desc": "Play the game for the first time","target": 1 },
@@ -47,7 +48,6 @@ var achievements_data = [
 	{ "id": "score_4000", "title": "Point Grinder", "desc": "Obtain 4000 points", "target": 4000 },
 	{ "id": "score_10000", "title": "Unstoppable", "desc": "Obtain 10000 points", "target": 10000 },
 	{ "id": "score_50000", "title": "TOTAL POINT DEATH", "desc": "Obtain 50000 points", "target": 50000 },
-	{ "id": "are_you_kidding", "title": "Are you kidding me?", "desc": "Get 5 points or less in a single match", "target": 1 },
 	{ "id": "dont_get_lost", "title": "Dont get lost...", "desc": "Survive obstacle maze", "target": 1 },
 	{ "id": "sharkphobia", "title": "Sharkphobia", "desc": "Survive shark attack", "target": 1 },
 	{ "id": "nightmare_shark", "title": "Nightmare Shark", "desc": "Survive harder version of shark attack", "target": 1 },
@@ -371,7 +371,7 @@ func update_achievements_ui():
 	if err == OK:
 		current_highscore = temp_config.get_value("game", "highscore", 0)
 		
-	var bool_ids = ["death_ray", "overload_master", "are_you_kidding", 
+	var bool_ids = ["death_ray", "overload_master", 
 					"dont_get_lost", "sharkphobia", "nightmare_shark", 
 					"chaos_survivor", "challenger", "cheater"]	
 	# loop data buat baru

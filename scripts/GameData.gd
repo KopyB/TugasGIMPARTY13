@@ -30,7 +30,7 @@ func check_score_achievements(final_score: int):
 	if highscore >= 4000: check_and_unlock("score_4000", "Point Grinder")
 	if highscore >= 10000: check_and_unlock("score_10000", "Unstoppable")
 	if highscore >= 50000: check_and_unlock("score_50000", "TOTAL POINT DEATH")
-	if final_score <= 5: check_and_unlock("are_you_kidding", "Are you kidding me?")
+	
 func check_and_unlock(id: String, title: String):
 	if not id in unlocked_achievements:
 		unlocked_achievements.append(id)
