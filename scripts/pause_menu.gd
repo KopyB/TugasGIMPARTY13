@@ -1,8 +1,8 @@
 extends Control
 
 @export var state: Label
-@export var resume_button: Button
-@onready var scorelabel: Label = $PanelContainer2/VBoxContainer/scorelabel
+@export var resume_button: TextureButton
+@onready var scorelabel: Label = $PanelContainer/VBoxContainer/scorelabel
 @onready var timer: Timer = $Timer
 @onready var pause_buttons: VBoxContainer = $PanelContainer2/VBoxContainer
 @onready var settings_panel: Panel = $Settings 

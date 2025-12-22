@@ -1,34 +1,22 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8qv1r8ggddgm"]
+[gd_scene load_steps=18 format=3 uid="uid://b8qv1r8ggddgm"]
 
 [ext_resource type="Script" uid="uid://dpho3o8db7fek" path="res://scripts/pause_menu.gd" id="1_n87rw"]
+[ext_resource type="Texture2D" uid="uid://cnvfmlrk63gix" path="res://assets/art/pausemenu/PauseContainer.png" id="2_88e76"]
+[ext_resource type="Shader" uid="uid://kawd2stce062" path="res://scenes/pause_menu.gdshader" id="2_knqa7"]
 [ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="2_myx47"]
 [ext_resource type="Script" uid="uid://ci7epneqyxjoa" path="res://music_control.gd" id="3_7l7mv"]
+[ext_resource type="Texture2D" uid="uid://l2kjg5sa62wq" path="res://assets/art/pausemenu/ButtonExample.png" id="4_knqa7"]
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="4_v4r4p"]
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_1s2dm"]
+[ext_resource type="Texture2D" uid="uid://bqcc17pvhinf8" path="res://assets/art/pausemenu/ButtonExampleClicked.png" id="5_71k7c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_71k7c"]
+shader = ExtResource("2_knqa7")
+shader_parameter/lod = 1.5000000712500001
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_88e76"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7l7mv"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kukqi"]
-bg_color = Color(0.21960784, 0.49411765, 0.7529412, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-shadow_size = 3
-shadow_offset = Vector2(0, 5)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5d2l8"]
-bg_color = Color(0.12763059, 0.3429742, 0.5397971, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-shadow_size = 1
-shadow_offset = Vector2(0, 5)
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_88e76"]
 color = Color(1, 1, 1, 1)
@@ -80,8 +68,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n87rw")
-state = NodePath("PanelContainer2/VBoxContainer/state")
+state = NodePath("PanelContainer/VBoxContainer/state")
 resume_button = NodePath("PanelContainer2/VBoxContainer/RESUME")
+
+[node name="blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_71k7c")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.7666196, 0.76661956, 0.76661956, 1)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+position = Vector2(3, 0)
+texture = ExtResource("2_88e76")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -90,12 +106,31 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -207.0
-offset_top = -257.0
-offset_right = 207.0
-offset_bottom = 257.0
+offset_left = -112.0
+offset_top = -199.0
+offset_right = 112.0
+offset_bottom = -111.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_88e76")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="state" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 35
+text = "[GAME STATE]"
+horizontal_alignment = 1
+
+[node name="scorelabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 25
+text = "score point"
+horizontal_alignment = 1
 
 [node name="PanelContainer2" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -105,7 +140,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -158.0
-offset_top = -217.0
+offset_top = -92.0
 offset_right = 159.0
 offset_bottom = 204.0
 grow_horizontal = 2
@@ -114,66 +149,100 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_7l7mv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2"]
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = -2
 metadata/_edit_use_anchors_ = true
 
-[node name="state" type="Label" parent="PanelContainer2/VBoxContainer"]
+[node name="RESUME" type="TextureButton" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 50
-text = "[GAME STATE]"
-horizontal_alignment = 1
+texture_normal = ExtResource("4_knqa7")
+texture_pressed = ExtResource("5_71k7c")
+stretch_mode = 3
 
-[node name="scorelabel" type="Label" parent="PanelContainer2/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 30
-text = "score point"
-horizontal_alignment = 1
-
-[node name="RESUME" type="Button" parent="PanelContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+[node name="Label" type="Label" parent="PanelContainer2/VBoxContainer/RESUME"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
-text = "Resume"
+text = "RESUME"
 
-[node name="SETTINGS" type="Button" parent="PanelContainer2/VBoxContainer"]
+[node name="SETTINGS" type="TextureButton" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+texture_normal = ExtResource("4_knqa7")
+texture_pressed = ExtResource("5_71k7c")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="PanelContainer2/VBoxContainer/SETTINGS"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
-text = "Settings"
+text = "Setting"
 
-[node name="RESTART" type="Button" parent="PanelContainer2/VBoxContainer"]
+[node name="RESTART" type="TextureButton" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+texture_normal = ExtResource("4_knqa7")
+texture_pressed = ExtResource("5_71k7c")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="PanelContainer2/VBoxContainer/RESTART"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
-text = "Restart"
+text = "RESTART"
 
-[node name="EXIT" type="Button" parent="PanelContainer2/VBoxContainer"]
+[node name="EXIT" type="TextureButton" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
+texture_normal = ExtResource("4_knqa7")
+texture_pressed = ExtResource("5_71k7c")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="PanelContainer2/VBoxContainer/EXIT"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_kukqi")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5d2l8")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kukqi")
-text = "Main Menu"
+text = "EXIT"
 
 [node name="Timer" type="Timer" parent="."]
 process_mode = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ynu4bos33vch"]
+[gd_scene load_steps=34 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://bsubp1vu05x1o" path="res://assets/art/base/base1.png" id="3_8egab"]
@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://cp6l6ms5o5es8" path="res://assets/audio/Click.mp3" id="11_lgwnu"]
 [ext_resource type="AudioStream" uid="uid://xwrj606v054p" path="res://assets/audio/Waves Background.ogg" id="13_rcqid"]
+[ext_resource type="Texture2D" uid="uid://l2kjg5sa62wq" path="res://assets/art/pausemenu/ButtonExample.png" id="13_svtp6"]
+[ext_resource type="Texture2D" uid="uid://bqcc17pvhinf8" path="res://assets/art/pausemenu/ButtonExampleClicked.png" id="14_1dfpl"]
 
 [sub_resource type="GDScript" id="GDScript_oa1go"]
 script/source = "extends ParallaxBackground
@@ -125,7 +127,7 @@ expand_margin_bottom = 5.0
 shadow_size = 3
 shadow_offset = Vector2(0, 5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_flqon"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rcqid"]
 bg_color = Color(0.12763059, 0.3429742, 0.5397971, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
@@ -136,7 +138,7 @@ expand_margin_bottom = 5.0
 shadow_size = 1
 shadow_offset = Vector2(0, 5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rcqid"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_flqon"]
 bg_color = Color(0.12763059, 0.3429742, 0.5397971, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
@@ -249,65 +251,122 @@ offset_right = 143.5
 offset_bottom = 267.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 5
 
-[node name="START" type="Button" parent="mainbuttons"]
+[node name="START" type="TextureButton" parent="mainbuttons"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
+texture_normal = ExtResource("13_svtp6")
+texture_pressed = ExtResource("14_1dfpl")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="mainbuttons/START"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_rcqid")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
 text = "START"
 
-[node name="LEADERBOARD" type="Button" parent="mainbuttons"]
+[node name="LEADERBOARD" type="TextureButton" parent="mainbuttons"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
-text = "LEADERBOARD"
+texture_normal = ExtResource("13_svtp6")
+texture_pressed = ExtResource("14_1dfpl")
+stretch_mode = 3
 
-[node name="SETTINGS" type="Button" parent="mainbuttons"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
+[node name="Label" type="Label" parent="mainbuttons/LEADERBOARD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_rcqid")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+text = "LEaderboard"
+
+[node name="SETTINGS" type="TextureButton" parent="mainbuttons"]
+layout_mode = 2
+texture_normal = ExtResource("13_svtp6")
+texture_pressed = ExtResource("14_1dfpl")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="mainbuttons/SETTINGS"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_rcqid")
+theme_override_font_sizes/font_size = 40
 text = "SETTINGS"
-expand_icon = true
 
-[node name="EXTRAS" type="Button" parent="mainbuttons"]
+[node name="EXTRAS" type="TextureButton" parent="mainbuttons"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
+texture_normal = ExtResource("13_svtp6")
+texture_pressed = ExtResource("14_1dfpl")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="mainbuttons/EXTRAS"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_rcqid")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
 text = "EXTRAS"
-expand_icon = true
 
-[node name="Exit" type="Button" parent="mainbuttons"]
+[node name="EXIT" type="TextureButton" parent="mainbuttons"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19170848, 0.21082667, 0.30449837, 1)
+texture_normal = ExtResource("13_svtp6")
+texture_pressed = ExtResource("14_1dfpl")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="mainbuttons/EXIT"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_rcqid")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
 text = "EXIT"
-expand_icon = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_lgwnu")
@@ -1090,7 +1149,7 @@ parameters/looping = true
 [connection signal="pressed" from="mainbuttons/LEADERBOARD" to="." method="_on_leaderboard_pressed"]
 [connection signal="pressed" from="mainbuttons/SETTINGS" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="mainbuttons/EXTRAS" to="." method="_on_extras_pressed"]
-[connection signal="pressed" from="mainbuttons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="mainbuttons/EXIT" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="DifficultyPanel/VBoxContainer/NORMAL" to="." method="_on_normal_pressed"]
 [connection signal="pressed" from="DifficultyPanel/VBoxContainer/HARD" to="." method="_on_hard_pressed"]
 [connection signal="pressed" from="DifficultyPanel/Back" to="." method="_on_difficulty_back_pressed"]
