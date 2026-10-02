@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ierkg61h23va"]
+[gd_scene format=3 uid="uid://ierkg61h23va"]
 
 [ext_resource type="Script" uid="uid://bp1rnjahcwc4y" path="res://scripts/powerupview.gd" id="1_bpq5q"]
 [ext_resource type="FontFile" uid="uid://bi6ujbfkisdva" path="res://assets/Fifties Movies.ttf" id="2_bpq5q"]
+
+[ext_resource type="Theme" path="res://themes/nautical.tres" id="rw_theme"]
 
 [node name="POWERUPVIEW" type="CanvasLayer"]
 layer = 5
@@ -9,30 +11,36 @@ script = ExtResource("1_bpq5q")
 debug = true
 
 [node name="score" type="Panel" parent="."]
-anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -92.0
-offset_right = 92.0
-offset_bottom = 40.0
+offset_left = -132.0
+offset_top = 20.0
+offset_right = 132.0
+offset_bottom = 84.0
 grow_horizontal = 2
+mouse_filter = 2
+theme = ExtResource("rw_theme")
+
+[node name="Caption" type="Label" parent="score"]
+offset_left = 24.0
+offset_top = 18.0
+offset_right = 91.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "SCORE"
+vertical_alignment = 1
 
 [node name="scorepoint" type="Label" parent="score"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_bpq5q")
-theme_override_font_sizes/font_size = 25
-text = "[SCORE:   ]"
+offset_left = 98.0
+offset_top = 10.0
+offset_right = 240.0
+offset_bottom = 54.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 34
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="scoretimer" type="Timer" parent="."]
 
@@ -40,16 +48,19 @@ text = "[SCORE:   ]"
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
+offset_left = 24.0
 offset_top = -104.0
-offset_right = 374.0
+offset_right = 398.0
 grow_vertical = 0
 
 [node name="desc" type="VBoxContainer" parent="."]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -206.0
-offset_right = 279.0
+offset_left = 24.0
+offset_top = -302.0
+offset_right = 424.0
+theme_override_constants/separation = 8
 offset_bottom = -120.0
 grow_vertical = 0
 alignment = 2

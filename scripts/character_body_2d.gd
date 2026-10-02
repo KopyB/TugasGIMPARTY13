@@ -4,7 +4,7 @@ var target_position : Vector2
 # VARIABEL MOVEMENT
 var rotation_speed = 2
 var rotation_direction = 0
-var normal_speed = 300.0
+var normal_speed = 360.0
 var current_speed = normal_speed
 var is_dead = false
 var is_dizzy = false
@@ -50,6 +50,7 @@ var lightning_scene = preload("res://scenes/lightning_strike.tscn")
 @onready var laser_timer = $LaserDurationTimer 
 
 func _ready():
+	VisualFX.register_actor(self, true)
 	add_to_group("player")
 	anim_shipbase.add_to_group("player_anims")
 	anim_cannon.add_to_group("player_anims")
@@ -57,7 +58,7 @@ func _ready():
 	for node in get_tree().get_nodes_in_group("player_anims"):
 		node.show()
 	if GameData.is_hard_mode:
-		normal_speed = 400.0 
+		normal_speed = 440.0 
 		current_speed = normal_speed
 	target_position = global_position # Store initial position as center
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -143,6 +144,8 @@ func take_damage_player():
 	
 	# --- LOGIKA SHIELD DI SINI ---
 	if has_shield:
+		VisualFX.hit(self)
+		VisualFX.impact(global_position)
 		has_shield = false
 		Powerupview.show_icons("Shield", 0)
 		shield_anim.show()
@@ -571,9 +574,16 @@ func spawn_bullet(angle_in_degrees):
 			sprite.texture = tex_artillery
 			
 	get_parent().add_child(bullet)
+	if angle_in_degrees == 0:
+		VisualFX.muzzle($FiringPosition.global_position)
+		for barrel_name in ["cannon", "burst_turret", "multiturret", "multiburst"]:
+			var barrel_visual := get_node(barrel_name) as Node2D
+			if barrel_visual.visible:
+				VisualFX.recoil(barrel_visual)
 	$cannon/cannonsfx.play()
 	
 func reset_all_skills():
+	cameraeffects.stop_loop_shake()
 	print("Membersihkan semua skill aktif")
 	
 	is_kraken_active = false
@@ -635,5 +645,5 @@ func _on_timer_timeout() -> void: # Timer
 func exploded():
 	var explosion = explosion_scene.instantiate()
 	explosion.global_position = global_position
-	get_tree().current_scene.add_child(explosion)
+	get_tree().current_scene.call_deferred("add_child", explosion)
 	

@@ -19,6 +19,8 @@ extends Control
 @onready var hard_button: Button = $DifficultyPanel/VBoxContainer/HARD
 @onready var delete_confirm_panel: Panel = $DeleteConfirm
 
+var starting_game: bool = false
+
 var fstoggle
 var shake_setting
 var volume
@@ -58,6 +60,11 @@ var achievements_data = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	StormFX.reset_menu()
+	if not has_node("Departure"):
+		var departure := preload("res://scripts/menu_departure.gd").new()
+		departure.name = "Departure"
+		add_child(departure)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	mainbuttons.visible = true
 	settings.visible = false
@@ -69,7 +76,9 @@ func _ready() -> void:
 	achievements_panel.hide()
 	Powerupview.stop_timer_score()
 	$base/AnimatedSprite2D.play("base")
-	$LeaderboardPanel/Back.pressed.connect(_on_leaderboard_close_pressed)
+	if not $LeaderboardPanel/Back.pressed.is_connected(_on_leaderboard_close_pressed):
+		$LeaderboardPanel/Back.pressed.connect(_on_leaderboard_close_pressed)
+	$mainbuttons/START.grab_focus.call_deferred()
 	
 	SilentWolf.configure({
 	"api_key": "XUaM20pqhU255gp5amSnY74JmRRU5NeD2lop7Xbp",
@@ -101,6 +110,7 @@ func _ready() -> void:
 		var def_username = "Guest" + str(randi_range(1, 100000))
 		if name_input: name_input.text = def_username
 	high_score_label.show()
+	high_score_label.add_theme_stylebox_override("normal", theme.get_stylebox("panel", "Panel"))
 	load_highscore()
 	
 	var current_best = 0
@@ -129,10 +139,13 @@ func _on_exit_pressed() -> void:
 	get_tree().quit()
 
 func _on_start_pressed() -> void:
+	if starting_game or Transition.busy:
+		return
 	buttonclick.play()
 	mainbuttons.visible = false
 	difficulty_panel.show()
 	check_hard_mode_unlock()
+	$DifficultyPanel/VBoxContainer/NORMAL.grab_focus()
 	
 func check_hard_mode_unlock():
 	var temp_config = ConfigFile.new() 
@@ -146,55 +159,62 @@ func check_hard_mode_unlock():
 		# UNLOCKED
 		hard_button.disabled = false
 		hard_button.text = "HARD"
-		hard_button.modulate = Color(1, 0, 0, 1) 
+		hard_button.modulate = Color.WHITE 
 		hard_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	else:
 		# LOCKED
 		hard_button.disabled = true
-		hard_button.text = "LOCKED (Req: 1500 P)"
-		hard_button.modulate = Color(0.5, 0.5, 0.5, 1) 
+		hard_button.text = "LOCKED  1500 POINTS"
+		hard_button.modulate = Color.WHITE 
 		hard_button.mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
 
 func _on_normal_pressed() -> void:
+	if starting_game or Transition.busy:
+		return
 	buttonclick.play()
 	
 	# Set GameData ke Normal
 	GameData.is_hard_mode = false
+	StormFX.begin_departure(false)
 	print("Mode Selected: NORMAL")
 	
 	start_game_sequence()
 	
 func _on_hard_pressed() -> void:
+	if starting_game or Transition.busy:
+		return
 	buttonclick.play()
 	
 	# Set GameData ke Hard
 	GameData.is_hard_mode = true
+	StormFX.begin_departure(true)
 	print("Mode Selected: HARD")
 	GameData.check_and_unlock("challenger", "Challenger")
 	start_game_sequence()
 	
 func start_game_sequence():
-	# Sembunyikan panel agar bersih saat transisi
-	difficulty_panel.hide()
-	high_score_label.hide()
-	
-	$animationstella/wavestransition.play()
-	animation_player.play("nyoom")
-	await animation_player.animation_finished
-	
+	if starting_game or Transition.busy:
+		return
+	starting_game = true
+
 	if not GameData.has_played_game:
 		GameData.has_played_game = true
 		GameData.save_stats()
 		GameData.check_and_unlock("rogue_waves", "Rogue Waves")
-		
-	#fade in transition
-	Transition.load_scene("res://scenes/main.tscn")
-	#get_tree().change_scene_to_file("res://scenes/main.tscn")
+	var departed: bool = await Transition.depart_from_menu(self)
+	if not departed:
+		StormFX.reset_menu()
+	# The caller may survive a failed scene load and must remain usable.
+	if is_inside_tree():
+		starting_game = false
 
 func _on_difficulty_back_pressed() -> void:
+	if starting_game or Transition.busy:
+		return
 	buttonclick.play()
 	difficulty_panel.hide()
 	mainbuttons.visible = true
+	$mainbuttons/START.grab_focus()
 
 func _on_settings_pressed() -> void:
 	mainbuttons.visible = false
@@ -353,8 +373,8 @@ func _on_confirm_delete_pressed() -> void:
 	if high_score_label:
 		high_score_label.text = "HIGH SCORE: 0"
 	hard_button.disabled = true
-	hard_button.text = "LOCKED (Req: 1500 P)"
-	hard_button.modulate = Color(0.5, 0.5, 0.5, 1)
+	hard_button.text = "LOCKED  1500 POINTS"
+	hard_button.modulate = Color.WHITE
 	if name_input:
 		name_input.text = "Captain"
 	delete_confirm_panel.hide()
@@ -363,6 +383,7 @@ func _on_confirm_delete_pressed() -> void:
 func update_achievements_ui():
 	# clear list lama
 	for child in achieve_list.get_children():
+		achieve_list.remove_child(child)
 		child.queue_free()
 		
 	var temp_config = ConfigFile.new() 
@@ -404,6 +425,7 @@ func update_achievements_ui():
 			is_unlocked = data["id"] in GameData.unlocked_achievements
 			current_val = 1 if is_unlocked else 0
 			
+		is_unlocked = is_unlocked or str(data["id"]) in GameData.unlocked_achievements
 		var progress_text = ""
 		
 		if is_unlocked:
@@ -412,37 +434,39 @@ func update_achievements_ui():
 			var display_val = min(current_val, data["target"])
 			progress_text = str(display_val) + " / " + str(data["target"])
 		
-		# panel
-		var item = Panel.new()
-		item.custom_minimum_size = Vector2(0, 80) # Tinggi baris
-		
-		var style = StyleBoxFlat.new()
-		if is_unlocked:
-			style.bg_color = Color(0.835, 0.82, 0.0, 1.0) 
-		else:
-			style.bg_color = Color(0.2, 0.2, 0.2, 1) 
+		var item := PanelContainer.new()
+		item.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		item.custom_minimum_size.y = 104
+		item.mouse_filter = Control.MOUSE_FILTER_PASS
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color(0.09, 0.16, 0.20, 0.98)
+		style.border_color = Color(0.88, 0.76, 0.46) if is_unlocked else Color(0.38, 0.45, 0.49)
+		style.set_border_width_all(2)
+		style.set_corner_radius_all(6)
+		style.content_margin_left = 18
+		style.content_margin_right = 18
+		style.content_margin_top = 12
+		style.content_margin_bottom = 12
 		item.add_theme_stylebox_override("panel", style)
-		
-		# Judul
-		var title_lbl = Label.new()
-		title_lbl.text = data["title"]
-		title_lbl.position = Vector2(20, 10)
-		# title_lbl.add_theme_font_size_override("font_size", 24) 
-		
-		# Deskripsi
-		var desc_lbl = Label.new()
-		desc_lbl.text = data["desc"]
-		desc_lbl.position = Vector2(20, 40)
-		desc_lbl.modulate = Color(0.8, 0.8, 0.8, 1)
-		
-		# Progress 
-		var prog_lbl = Label.new()
-		prog_lbl.text = progress_text
-		prog_lbl.position = Vector2(400, 30) 
-		
-	
-		item.add_child(title_lbl)
-		item.add_child(desc_lbl)
-		item.add_child(prog_lbl)
-		
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 18)
+		item.add_child(row)
+		var copy := VBoxContainer.new()
+		copy.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(copy)
+		var title := Label.new()
+		title.text = str(data["title"])
+		title.add_theme_font_size_override("font_size", 24)
+		title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		copy.add_child(title)
+		var description := Label.new()
+		description.text = str(data["desc"])
+		description.add_theme_font_size_override("font_size", 18)
+		description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		copy.add_child(description)
+		var progress := Label.new()
+		progress.text = progress_text
+		progress.custom_minimum_size.x = 175
+		progress.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		row.add_child(progress)
 		achieve_list.add_child(item)

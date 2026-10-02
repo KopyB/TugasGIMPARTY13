@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/background_atmosphere.gd" id="water_script"]
+
+[ext_resource type="Texture2D" uid="uid://bwy6nk3q1q4we" path="res://assets/art/waterbg/WaterBGFrame1.png" id="5_muem4"]
+
+[ext_resource type="Texture2D" uid="uid://bsexnd1gi82lx" path="res://assets/art/waterbg/WaterBGFrame2and10.png" id="6_dp3eg"]
+
+[ext_resource type="Texture2D" uid="uid://bdwm45bs6p0sd" path="res://assets/art/waterbg/WaterBGFrame3and9.png" id="7_0ld40"]
+
+[ext_resource type="Texture2D" uid="uid://borsmvyxorra3" path="res://assets/art/waterbg/WaterBGFrame4and8.png" id="8_gqmmt"]
+
+[ext_resource type="Texture2D" uid="uid://dlxrq6n5eubno" path="res://assets/art/waterbg/WaterBGFrame5and7.png" id="9_yc10j"]
+
+[ext_resource type="Texture2D" uid="uid://bv8c11vhkale6" path="res://assets/art/waterbg/WaterBGFrame6.png" id="10_jscy8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_muem4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_muem4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dp3eg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_0ld40")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gqmmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_yc10j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_jscy8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_yc10j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gqmmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_0ld40")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dp3eg")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.5
+}]
+
+[node name="BackgroundAtmosphere" type="ParallaxBackground"]
+script = ExtResource("water_script")
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+position = Vector2(-143, 0)
+motion_mirroring = Vector2(1040, 1080)
+[node name="Sprite2D" type="AnimatedSprite2D" parent="ParallaxLayer2"]
+position = Vector2(0, -10)
+sprite_frames = SubResource("SpriteFrames_muem4")
+centered = false

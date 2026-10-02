@@ -1,62 +1,35 @@
 extends Marker2D
 
+const ARENA = preload("res://scripts/arena_geometry.gd")
+const GUNBOAT_EDGE_INSET := 192.0
+const GUNBOAT_SPACING := 336.0
+const GUNBOAT_ROW_GAP := 220.0
+
 var enemy_scene = preload("res://scenes/dummy.tscn")
 var obstacle_scene = preload("res://scenes/obstacle.tscn")
 var parrot_scene = preload("res://scenes/parrot.tscn")
 @onready var spawn_timer = $SpawnTimer
 
-# --- SETTING DIFFICULTY (WAVE SYSTEM) ---
-var time_elapsed = 0.0
-var wave_duration = 60.0
+const PACING = preload("res://scripts/voyage_pacing.gd")
+var time_elapsed := 0.0
+var survival_seconds := 0.0
+var wave_counter := 0
+var is_spawning_paused := false
+var opening_spawn := true
 
-# Setting Kecepatan Spawn (Sumbu Y)
-var spawn_time_slow = 6.5  # Paling santai (Lembah gelombang)
-var peak_difficulty_start = 4.0     # Puncak Gelombang 1 (4 detik - Santai)
-var peak_difficulty_final = 0.5     # Puncak Gelombang 10++ (0.5 detik - Cepat)
-var current_peak = peak_difficulty_start # Variable dinamis yang akan berubah
+func _ready() -> void:
+	add_to_group("spawner_utama")
+	spawn_timer.start(PACING.first_spawn_delay(GameData.is_hard_mode))
 
-var wave_counter = 0                # Menghitung sudah berapa kali "Jeda" terjadi
-var target_waves_to_max = 8.0      # Butuh 12 jeda untuk sampai max difficulty
-
-var is_spawning_paused = false
-
-func _ready():
-	var viewport_rect = get_viewport_rect().size
-	randomize()
-	
-	# WAJIB: Daftar ke group agar bisa diperintah oleh MazeSpawner
-	add_to_group("spawner_utama") 
-	
-	spawn_timer.start(spawn_time_slow)
-	
-	if GameData.is_hard_mode:
-		
-		# Base Spawn Rate 
-		# Normal: 6.5 detik -> Hard: 4.0 detik
-		spawn_time_slow = 4.0
-		
-		# Peak Spawn Rate 
-		# Normal: 4.0 detik -> Hard: 2.0 detik
-		peak_difficulty_start = 2.0
-		
-		# Final Peak 
-		# Normal: 0.5 detik -> Hard: 0.3 detik 
-		peak_difficulty_final = 0.3
-		
-		# Progresi 
-		# Normal: 8 Wave -> Hard: 6 Wave 
-		target_waves_to_max = 6.0
-		
-		# Durasi Gelombang (tempo)
-		# Normal: 60 detik -> Hard: 45 detik
-		wave_duration = 30.0
-	
-	spawn_timer.start(spawn_time_slow)
-	
-func _process(delta):
+func _process(delta: float) -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	if player != null and player.get("is_dead") == true:
+		spawn_timer.stop()
+		return
+	survival_seconds += delta
 	if not is_spawning_paused:
-		time_elapsed += delta # biar ga lompat ke puncak
-		
+		time_elapsed += delta
+
 func _input(event):
 	# Hanya aktif di mode debug editor (opsional, biar aman)
 	if not OS.has_feature("editor"):
@@ -64,7 +37,7 @@ func _input(event):
 
 	if event is InputEventKey and event.pressed and event.keycode == KEY_U:
 		print("DEBUG: Force Spawning Parrot!")
-		var viewport_rect = get_viewport_rect().size
+		var viewport_rect = ARENA.SIZE
 		spawn_parrot(viewport_rect)
 		
 		# Opsional: Jika ingin parrot langsung bawa teman (sesuai logika baru)
@@ -78,57 +51,35 @@ func pause_spawning():
 	is_spawning_paused = true # Set flag pause
 	spawn_timer.stop()        
 	
-func resume_spawning():
-	print(">>> SYSTEM: Musuh Biasa RESUMED (Maze Selesai) <<<")
-	# FUNGSI INI DIPANGGIL SAAT MAZE SELESAI
-	
-	is_spawning_paused = false 
-	
-	# Tambah Counter Wave
+func resume_spawning() -> void:
+	is_spawning_paused = false
 	wave_counter += 1
-	
+	# Reset only the pressure cycle. Long-term progression survives event breaks.
+	time_elapsed = 0.0
+	spawn_timer.start(PACING.recovery_delay(GameData.is_hard_mode))
 
-	# Rumus: (Wave Sekarang / Target ) -> Hasilnya 0.0 sampai 1.0
-	var progress_ratio = float(wave_counter) / target_waves_to_max
-	
-	# Clamp agar tidak melebihi 1.0 (Supaya tidak makin cepat dari 0.5)
-	progress_ratio = clamp(progress_ratio, 0.0, 1.0)
-	
-	# Update Current Peak menggunakan Lerp
-	# Jika ratio 0 (Awal) -> 4.0 detik
-	# Jika ratio 0.5 (Wave 5) -> Sekitar 2.25 detik
-	# Jika ratio 1.0 (Wave 10) -> 0.5 detik
-	current_peak = lerp(peak_difficulty_start, peak_difficulty_final, progress_ratio)
-	
-	print(">>> Wave ke-%d Dimulai! Peak Speed sekarang: %.2f detik <<<" % [wave_counter, current_peak])
-	
-	# Reset posisi gelombang ke awal (Lembah/Slow) agar player napas dulu
-	time_elapsed = 0.0 
-	spawn_timer.start(spawn_time_slow)
-
-func _on_spawn_timer_timeout():
+func _on_spawn_timer_timeout() -> void:
 	if is_spawning_paused:
 		return
-
-	spawn_logic()
-	
-	var frequency = (2.0 * PI) / wave_duration
-	
-	var sine_value = sin((time_elapsed * frequency) - (PI / 2.0))
-	
-	var difficulty_factor = (sine_value + 1.0) / 2.0
-	
-	var new_wait_time = lerp(spawn_time_slow, current_peak, difficulty_factor)
-	
-	spawn_timer.start(new_wait_time)
+	# A soft population cap prevents an invulnerability chain from piling up forever.
+	var limit := 42 if GameData.is_hard_mode else 30
+	if get_tree().get_nodes_in_group("enemies").size() < limit:
+		if opening_spawn:
+			spawn_gunboat_group(ARENA.SIZE)
+			opening_spawn = false
+		else:
+			spawn_logic()
+	spawn_timer.start(PACING.spawn_interval(survival_seconds, time_elapsed, GameData.is_hard_mode))
 
 func spawn_logic():
 	var parrotcheck = get_tree().get_nodes_in_group("parrots").size()
-	var viewport_rect = get_viewport_rect().size
+	var viewport_rect = ARENA.SIZE
 	
 	# Randomizer Tipe Musuh (Total 100%)
 	var chance = randi() % 100
-	print(chance)
+	var introduction_time := survival_seconds * (1.5 if GameData.is_hard_mode else 1.0)
+	if (chance < 7.5 and introduction_time < 45.0) or (chance >= 35 and chance < 55 and introduction_time < 9.0) or (chance >= 55 and chance < 70 and introduction_time < 16.0) or (chance >= 70 and chance < 85 and introduction_time < 25.0):
+		chance = 20 # Keep spawning boats while introducing threats in stages.
 	
 	
 	# TOTAL HARUS 100%. SELALU FOLLOW SUSUNAN LIKE BELOW 
@@ -167,6 +118,9 @@ func spawn_logic():
 
 	# 6. OBSTACLE (Sisanya 15%) -> Range 90 sampai 99
 	else: 
+		if get_tree().get_nodes_in_group("obstacles").size() >= 24:
+			spawn_gunboat_group(viewport_rect)
+			return
 		if randf() > 0.80:
 			spawn_obstacle_row(viewport_rect)
 		else:
@@ -212,27 +166,58 @@ func spawn_obstacle_row(viewport_rect):
 		get_tree().current_scene.add_child(obs)
 		
 # --- TIPE 2: GUNBOAT GROUP ---
-func spawn_gunboat_group(viewport_rect):
-	var group_count = randi_range(1, 3) # 1 sampai 3 kapal
-	for i in range(group_count):
-		var new_enemy = enemy_scene.instantiate()
-		new_enemy.enemy_type = 0 # Gunboat
-		var enemyshape = new_enemy.get_node("enemyship")
-		
-		var viewport_width = get_viewport().get_visible_rect().size.x - enemyshape.get_rect().size.x*0.06/2
-		#aku ganti logika spacingnya biar g fix 60 -kaiser
-		var min_spacing = 60 #minimal 60 kyk kode awal
-		var max_spacing = viewport_width / float(group_count - 1) #ngitung spacing paling jauh berdasarkan lebar viewport sm jumlah kapal
-		var extra_spacing = randi_range(0, max_spacing - min_spacing) #ngitung jarak tambahan
-		var spacing = min_spacing + extra_spacing #rumus jarak antar kapal yg baru
-		# Tentukan posisi tengah grup
-		var half_width = ((group_count - 1) / 2.0) * spacing #aku tambah var ini biar milih titik tengah yang kanan kirinya keluar viewport -kaiser
-		var center_x = randf_range(half_width, viewport_width - half_width) #rumus baru center -kaiser
+func spawn_gunboat_group(_viewport_rect):
+	var count := 1 if opening_spawn else randi_range(1, 2 if survival_seconds < 40.0 else 3)
+	var spacing := randf_range(GUNBOAT_SPACING, 520.0)
+	var half_width := float(count - 1) * spacing * 0.5
+	var left := GUNBOAT_EDGE_INSET + half_width
+	var right := ARENA.SIZE.x - GUNBOAT_EDGE_INSET - half_width
+	var positions: Array[Vector2] = []
+	var existing: Array[Vector2] = []
+	var earliest_y := -180.0
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if enemy.get("enemy_type") == 0 and not enemy.is_queued_for_deletion():
+			existing.append(enemy.global_position)
+			earliest_y = minf(earliest_y, enemy.global_position.y - GUNBOAT_ROW_GAP - 1.0)
+	# Prefer an immediate clear entry row. If crowded, stagger the whole group
+	# upstream. Never drop enemies or change the wave timer to resolve overlaps.
+	for attempt in range(24):
+		var center := randf_range(left, right)
+		var y := -180.0 - floorf(float(attempt) / 8.0) * GUNBOAT_ROW_GAP
+		positions = _gunboat_positions(count, center, spacing, y)
+		if _gunboat_positions_clear(positions, existing):
+			break
+	if not _gunboat_positions_clear(positions, existing):
+		positions = _gunboat_positions(count, randf_range(left, right), spacing, earliest_y)
+	for spawn_position in positions:
+		var enemy = enemy_scene.instantiate()
+		enemy.enemy_type = 0
+		enemy.global_position = spawn_position
+		get_tree().current_scene.add_child(enemy)
 
-		var offset_x = (i - (group_count - 1) / 2.0) * spacing
-		
-		new_enemy.global_position = Vector2(center_x + offset_x, -60)
-		get_tree().current_scene.add_child(new_enemy)
+func _gunboat_positions(count: int, center: float, spacing: float, y: float) -> Array[Vector2]:
+	var result: Array[Vector2] = []
+	for index in range(count):
+		result.append(Vector2(center + (float(index) - float(count - 1) * 0.5) * spacing, y))
+	return result
+
+func _gunboat_positions_clear(positions: Array[Vector2], existing: Array[Vector2]) -> bool:
+	for candidate in positions:
+		for other in existing:
+			if absf(candidate.x - other.x) < GUNBOAT_SPACING and absf(candidate.y - other.y) < GUNBOAT_ROW_GAP:
+				return false
+	return true
+
+func _add_entering_enemy(enemy: Node2D, side: String) -> void:
+	get_tree().current_scene.add_child(enemy)
+	# _ready sets the correct texture, orientation and scale for this type.
+	var bounds: Rect2 = ARENA.visual_bounds(enemy)
+	if side == "left":
+		enemy.global_position.x -= maxf(0.0, bounds.end.x + 24.0)
+	elif side == "right":
+		enemy.global_position.x += maxf(0.0, ARENA.SIZE.x + 24.0 - bounds.position.x)
+	else:
+		enemy.global_position.y -= maxf(0.0, bounds.end.y + 24.0)
 
 # --- TIPE 3A: BOMBER DARI KIRI (DEFAULT) ---
 func spawn_bomber(viewport_rect):
@@ -244,7 +229,7 @@ func spawn_bomber(viewport_rect):
 	var spawn_y = randf_range(50, viewport_rect.y / 2) 
 	
 	new_enemy.global_position = Vector2(spawn_x, spawn_y)
-	get_tree().current_scene.add_child(new_enemy)
+	_add_entering_enemy(new_enemy, "left")
 
 
 # --- TIPE 3B: RBOMBER DARI KANAN (BARU) ---
@@ -258,7 +243,7 @@ func spawn_rbomber(viewport_rect):
 	var spawn_y = randf_range(50, viewport_rect.y / 2) 
 	
 	new_enemy.global_position = Vector2(spawn_x, spawn_y)
-	get_tree().current_scene.add_child(new_enemy)
+	_add_entering_enemy(new_enemy, "right")
   
 func spawn_parrot(viewport_rect):
 	var new_enemy = parrot_scene.instantiate()
@@ -290,7 +275,7 @@ func spawn_shark(viewport_rect):
 		spawn_pos.y = randf_range(50, viewport_rect.y / 4)
 		
 	new_enemy.global_position = spawn_pos
-	get_tree().current_scene.add_child(new_enemy)
+	_add_entering_enemy(new_enemy, ["top", "left", "right"][spawn_side])
 
 func spawn_siren(viewport_rect):
 	var new_enemy = enemy_scene.instantiate()
@@ -299,7 +284,7 @@ func spawn_siren(viewport_rect):
 	var spawn_x = -60
 	var spawn_y = randf_range(50, viewport_rect.y / 2)
 	new_enemy.global_position = Vector2(spawn_x,spawn_y)
-	get_tree().current_scene.add_child(new_enemy)
+	_add_entering_enemy(new_enemy, "left")
 
 func spawn_rsiren(viewport_rect):
 	var new_enemy = enemy_scene.instantiate()
@@ -308,4 +293,4 @@ func spawn_rsiren(viewport_rect):
 	var spawn_x = viewport_rect.x + 60
 	var spawn_y = randf_range(50, viewport_rect.y / 2)
 	new_enemy.global_position = Vector2(spawn_x,spawn_y)
-	get_tree().current_scene.add_child(new_enemy)
+	_add_entering_enemy(new_enemy, "right")

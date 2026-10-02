@@ -7,9 +7,9 @@ var hard_music = preload("res://assets/audio/miwa hardmode.ogg")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	StormFX.enter_game(GameData.is_hard_mode)
 	Powerupview.stop_timer_score()
 	Powerupview.start_timer_score()# Replace with function body.
-	$tutoriallayer/AnimationPlayer.play("tutorialfade")
 	setup_and_play_music()
 	
 func setup_and_play_music():

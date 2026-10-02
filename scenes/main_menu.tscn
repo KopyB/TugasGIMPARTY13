@@ -1,8 +1,7 @@
-[gd_scene load_steps=34 format=3 uid="uid://ynu4bos33vch"]
+[gd_scene load_steps=29 format=3 uid="uid://ynu4bos33vch"]
 
 [ext_resource type="Script" uid="uid://dpjp8k75e11mm" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://bsubp1vu05x1o" path="res://assets/art/base/base1.png" id="3_8egab"]
-[ext_resource type="Texture2D" uid="uid://cieiujp8f00mc" path="res://assets/art/WaterBGSmall.png" id="3_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://bvrdv4gonfpxj" path="res://assets/audio/Waves Transition.ogg" id="4_1ajci"]
 [ext_resource type="Script" uid="uid://ci7epneqyxjoa" path="res://music_control.gd" id="4_8ln24"]
 [ext_resource type="Texture2D" uid="uid://bftf6qcnwc34b" path="res://assets/art/base/base2.png" id="4_gw5y6"]
@@ -20,19 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://tyadxxpq1q1d" path="res://assets/art/player.png" id="8_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://cp6l6ms5o5es8" path="res://assets/audio/Click.mp3" id="11_lgwnu"]
 [ext_resource type="AudioStream" uid="uid://xwrj606v054p" path="res://assets/audio/Waves Background.ogg" id="13_rcqid"]
-[ext_resource type="Texture2D" uid="uid://l2kjg5sa62wq" path="res://assets/art/pausemenu/ButtonExample.png" id="13_svtp6"]
-[ext_resource type="Texture2D" uid="uid://bqcc17pvhinf8" path="res://assets/art/pausemenu/ButtonExampleClicked.png" id="14_1dfpl"]
-
-[sub_resource type="GDScript" id="GDScript_oa1go"]
-script/source = "extends ParallaxBackground
-
-@export var scroll_speed = 60.0 
-
-func _process(delta):
-	scroll_offset.y += scroll_speed * delta
-	
-	
-"
+[ext_resource type="PackedScene" path="res://scenes/menu_ocean.tscn" id="rw_ocean"]
+[ext_resource type="Theme" uid="uid://yflhosx7w4l3" path="res://themes/nautical.tres" id="rw_theme"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1acrt"]
 animations = [{
@@ -116,39 +104,6 @@ expand_margin_top = 3.0
 expand_margin_right = 3.0
 expand_margin_bottom = 3.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vue75"]
-bg_color = Color(0.21960784, 0.49411765, 0.7529412, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-shadow_size = 3
-shadow_offset = Vector2(0, 5)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rcqid"]
-bg_color = Color(0.12763059, 0.3429742, 0.5397971, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-shadow_size = 1
-shadow_offset = Vector2(0, 5)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_flqon"]
-bg_color = Color(0.12763059, 0.3429742, 0.5397971, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-shadow_size = 1
-shadow_offset = Vector2(0, 5)
-
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_bqqt6"]
 color = Color(1, 1, 1, 1)
 thickness = 8
@@ -164,19 +119,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("rw_theme")
 script = ExtResource("1_ekxnf")
 
-[node name="BackgroundAtmosphere" type="ParallaxBackground" parent="."]
-script = SubResource("GDScript_oa1go")
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="BackgroundAtmosphere"]
-motion_mirroring = Vector2(0, 1080)
-
-[node name="Sprite2D" type="Sprite2D" parent="BackgroundAtmosphere/ParallaxLayer"]
-position = Vector2(-1662, -1346)
-scale = Vector2(2.0760417, 2.9935184)
-texture = ExtResource("3_tbmy8")
-centered = false
+[node name="BackgroundAtmosphere" parent="." instance=ExtResource("rw_ocean")]
+scroll_speed = 60.0
 
 [node name="base" type="Control" parent="."]
 layout_mode = 1
@@ -230,7 +177,7 @@ offset_right = 113.0
 offset_bottom = -137.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_color = Color(1, 0.94, 0.72, 1)
 theme_override_fonts/font = ExtResource("5_rcqid")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_8egab")
@@ -245,127 +192,43 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -143.5
+offset_left = -180.0
 offset_top = -28.0
-offset_right = 143.5
-offset_bottom = 267.0
+offset_right = 180.0
+offset_bottom = 340.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 5
+theme_override_constants/separation = 12
 
-[node name="START" type="TextureButton" parent="mainbuttons"]
+[node name="START" type="Button" parent="mainbuttons"]
+custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
-texture_normal = ExtResource("13_svtp6")
-texture_pressed = ExtResource("14_1dfpl")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="mainbuttons/START"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 40
+mouse_default_cursor_shape = 2
+theme_type_variation = &"PrimaryButton"
 text = "START"
 
-[node name="LEADERBOARD" type="TextureButton" parent="mainbuttons"]
+[node name="LEADERBOARD" type="Button" parent="mainbuttons"]
+custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
-texture_normal = ExtResource("13_svtp6")
-texture_pressed = ExtResource("14_1dfpl")
-stretch_mode = 3
+mouse_default_cursor_shape = 2
+text = "LEADERBOARD"
 
-[node name="Label" type="Label" parent="mainbuttons/LEADERBOARD"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 40
-text = "LEaderboard"
-
-[node name="SETTINGS" type="TextureButton" parent="mainbuttons"]
+[node name="SETTINGS" type="Button" parent="mainbuttons"]
+custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
-texture_normal = ExtResource("13_svtp6")
-texture_pressed = ExtResource("14_1dfpl")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="mainbuttons/SETTINGS"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 40
+mouse_default_cursor_shape = 2
 text = "SETTINGS"
 
-[node name="EXTRAS" type="TextureButton" parent="mainbuttons"]
+[node name="EXTRAS" type="Button" parent="mainbuttons"]
+custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
-texture_normal = ExtResource("13_svtp6")
-texture_pressed = ExtResource("14_1dfpl")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="mainbuttons/EXTRAS"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 40
+mouse_default_cursor_shape = 2
 text = "EXTRAS"
 
-[node name="EXIT" type="TextureButton" parent="mainbuttons"]
+[node name="EXIT" type="Button" parent="mainbuttons"]
+custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
-texture_normal = ExtResource("13_svtp6")
-texture_pressed = ExtResource("14_1dfpl")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="mainbuttons/EXIT"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 40
+mouse_default_cursor_shape = 2
 text = "EXIT"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -424,40 +287,29 @@ theme_override_constants/separation = 40
 [node name="NORMAL" type="Button" parent="DifficultyPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
+theme_type_variation = &"PrimaryButton"
 text = "NORMAL"
 expand_icon = true
 
 [node name="HARD" type="Button" parent="DifficultyPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.633415, 0.7444987, 0.7668674, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
+theme_type_variation = &"DangerButton"
 text = "total"
 expand_icon = true
 
 [node name="Back" type="Button" parent="DifficultyPanel"]
 layout_mode = 0
-offset_left = 306.0
-offset_top = 371.0
-offset_right = 437.0
-offset_bottom = 405.0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_top = 344.0
+offset_right = 90.0
+offset_bottom = 400.0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "BACK"
 expand_icon = true
 
@@ -503,12 +355,7 @@ offset_bottom = -26.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "BACK"
 expand_icon = true
 
@@ -684,12 +531,7 @@ offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "BACK"
 expand_icon = true
 
@@ -707,12 +549,7 @@ offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "APPLY"
 expand_icon = true
 
@@ -770,12 +607,7 @@ offset_bottom = -33.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "BACK"
 expand_icon = true
 
@@ -823,12 +655,7 @@ offset_bottom = -33.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "BACK"
 expand_icon = true
 
@@ -838,9 +665,13 @@ offset_left = 56.0
 offset_top = 89.0
 offset_right = 1299.0
 offset_bottom = 586.0
+follow_focus = true
+horizontal_scroll_mode = 0
 
 [node name="AchieveList" type="VBoxContainer" parent="Achievements/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
 
 [node name="Credits" type="Panel" parent="."]
 visible = false
@@ -929,12 +760,7 @@ offset_bottom = -33.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "BACK"
 expand_icon = true
 
@@ -990,12 +816,7 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rcqid")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "YES"
 expand_icon = true
 
@@ -1003,12 +824,7 @@ expand_icon = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "NO"
 expand_icon = true
 
@@ -1060,48 +876,28 @@ theme_override_constants/separation = 40
 [node name="Index" type="Button" parent="Extras/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "INDEX"
 expand_icon = true
 
 [node name="Achievements" type="Button" parent="Extras/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "ACHIEVEMENTS"
 expand_icon = true
 
 [node name="Credits" type="Button" parent="Extras/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "CREDITS"
 expand_icon = true
 
 [node name="DeleteData" type="Button" parent="Extras/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "ERASE DATA"
 expand_icon = true
 
@@ -1119,12 +915,7 @@ offset_bottom = -33.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("5_rcqid")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_flqon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_vue75")
+mouse_default_cursor_shape = 2
 text = "BACK"
 expand_icon = true
 

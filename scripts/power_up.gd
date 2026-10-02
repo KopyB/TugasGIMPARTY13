@@ -1,5 +1,7 @@
 extends Area2D
 
+const PACING = preload("res://scripts/voyage_pacing.gd")
+
 @onready var crate: Sprite2D = $crate
 
 enum Type {SHIELD, MULTISHOT, ARTILLERY, SPEED, KRAKEN, SECOND_WIND, ADMIRAL}
@@ -16,6 +18,7 @@ var secondwindcrate = preload("res://assets/art/secondwindcrate.png")
 var admiralcrate = preload("res://assets/art/will_box.png")
 
 func _ready():
+	VisualFX.register_weather_sprite(crate)
 	match current_type:
 		Type.SHIELD:
 			crate.texture = shieldcrate
@@ -45,7 +48,7 @@ func _ready():
 		tween.tween_interval(1.0) 
 		tween.tween_property(self, "modulate:a", 1.0, 0.5) 
 func _process(delta):
-	position.y += 150 * delta # Kecepatan jatuh
+	position.y += PACING.current_speed(GameData.is_hard_mode) * delta # Kecepatan jatuh
 
 func _on_body_entered(body):
 	if body.has_method("apply_powerup"):

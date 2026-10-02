@@ -3,7 +3,7 @@
 [sub_resource type="GDScript" id="GDScript_bue53"]
 script/source = "extends Node2D
 
-var obstacle_scene = preload(\"res://scenes/Obstacle.tscn\")
+var obstacle_scene = preload(\"res://scenes/obstacle.tscn\")
 
 # --- KONFIGURASI GRID MAZE ---
 var columns = 8          # Layar dibagi menjadi 8 kolom

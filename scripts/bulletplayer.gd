@@ -17,12 +17,14 @@ func _on_area_entered(area: Area2D) -> void:
 		return # IGNORE SELF QUEUE.FREE WHILE MULTISHOT
 	
 	if area.has_method("take_damage"):
+		VisualFX.impact(global_position)
 		area.take_damage(1)
 		queue_free()
 	
 func hit_something(target):
 	# Cek apakah target punya nyawa/bisa mati
 	if target.has_method("take_damage"):
+		VisualFX.impact(global_position)
 		target.take_damage(1)
 		queue_free() # Hapus peluru
 		

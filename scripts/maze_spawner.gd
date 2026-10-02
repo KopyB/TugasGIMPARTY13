@@ -28,6 +28,7 @@ var current_gap_index = 4
 
 func _ready():
 	add_to_group("event_manager")
+	maze_row_interval = 300.0 / preload("res://scripts/voyage_pacing.gd").current_speed(GameData.is_hard_mode)
 	var screen_width = get_viewport_rect().size.x
 	block_size = screen_width / columns
 	randomize()
@@ -83,28 +84,20 @@ func start_shark_event():
 	
 	get_tree().call_group("spawner_utama", "pause_spawning")
 	
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(2.0, false).timeout
 	
 	spawn_shark_waves()
 
 func spawn_shark_waves():
-	# Konfigurasi wave spawn:
-	var min_waves = 2
-	var max_waves = 4
-	var min_sharks = 5
-	var max_sharks = 10
-		# --- HARD MODE  ---
-	if shark_event_count >= 3:
-		min_waves += 1   
-		max_waves += 1   
-		
-		min_sharks += 3  
-		max_sharks += 5  
-		
+	var tier := mini(shark_event_count - 1, 3)
+	var min_waves := 2
+	var max_waves := 3 if tier == 0 else 4
+	var min_sharks := 4 + tier
+	var max_sharks := 6 + tier * 2
 	if GameData.is_hard_mode:
-		min_sharks += 5  
-		max_sharks += 10
-		
+		min_sharks += 2
+		max_sharks += 3
+
 	var total_waves = randi_range(min_waves, max_waves)
 	print(">>> START SHARK EVENT: Total %d Waves <<<" % total_waves)
 	
@@ -114,17 +107,17 @@ func spawn_shark_waves():
 			# Delay 6 - 10 detik
 			var delay_time = randf_range(6.0, 10.0)
 			
-			get_tree().create_timer(delay_time).timeout.connect(spawn_parrot_event)
+			get_tree().create_timer(delay_time, false).timeout.connect(spawn_parrot_event)
 			
 		var sharks_this_wave = randi_range(min_sharks, max_sharks)
 		print(">>> Wave %d/%d: Spawning %d Sharks" % [i + 1, total_waves, sharks_this_wave])
 		
 		for j in range(sharks_this_wave):
 			spawn_single_shark()
-			await get_tree().create_timer(randf_range(0.25, 1.25)).timeout
+			await get_tree().create_timer(randf_range(0.35, 0.75), false).timeout
 		
 		if i < total_waves - 1: 
-			await get_tree().create_timer(randf_range(4.0, 6.0)).timeout
+			await get_tree().create_timer(randf_range(2.5, 3.5), false).timeout
 	
 	end_shark_event()
 
@@ -285,12 +278,12 @@ func spawn_obstacle_at_column(col_index):
 
 func get_next_maze_interval():
 	if GameData.is_hard_mode:
-		return randf_range(40.0, 45.0) 
+		return randf_range(30.0, 36.0) 
 	else:
-		return randf_range(50.0, 60.0) 
+		return randf_range(38.0, 46.0) 
 
 func get_next_shark_interval():
 	if GameData.is_hard_mode:
-		return randf_range(60.0, 65.0) 
+		return randf_range(45.0, 54.0) 
 	else:
-		return randf_range(70.0, 90.0) 
+		return randf_range(56.0, 68.0) 

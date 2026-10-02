@@ -29,6 +29,7 @@ var is_reset: bool = false
 
 func _ready() -> void:
 	add_to_group("ui_manager")
+	icons.add_child(preload("res://scripts/siren_status.gd").new())
 	start_timer_score()
 	time_elapsed = 0.0
 
@@ -43,7 +44,8 @@ func get_formatted_time() -> String:
 	
 func start_timer_score():
 	$score.show()
-	timer.timeout.connect(_on_score_timer_timeout)
+	if not timer.timeout.is_connected(_on_score_timer_timeout):
+		timer.timeout.connect(_on_score_timer_timeout)
 	timer.start() 
 	update_score_display()
 	#desc.show()
@@ -62,7 +64,7 @@ func _on_score_timer_timeout():
 	increase_score(1)
 
 func update_score_display():
-	scorepoint.text = "Score: " + str(score)
+	scorepoint.text = str(score)
 
 	# You can add other functions to increase score from game events if needed
 func increase_score(amount: int):
@@ -71,43 +73,22 @@ func increase_score(amount: int):
 		score = 0
 	update_score_display()
 
-func show_desc(message : String):
-	var descs = desc_scene.instantiate()
-	var tween = descs.create_tween()
-	
-	descs.get_child(1).get_child(0).text = message
-	if message == "Second Wind":
-		descs.get_child(0).texture = secondwindlogo
-		descs.get_child(1).get_child(1).text = "This upgrade allows your ship to refuse death once and create a shockwave that clears all enemies upon revival."
-	elif message == "Kraken Slayer":
-		descs.get_child(0).texture = krakenlogo
-		descs.get_child(1).get_child(1).text = "This upgrade allows your ship to fire a giant beam."
-	elif message == "Artillery":
-		descs.get_child(0).texture = artillerylogo
-		descs.get_child(1).get_child(1).text = "This upgrade allows your ship increases the number of shots for a few second."
-	elif message == "Multishot":
-		descs.get_child(0).texture = multishotlogo
-		descs.get_child(1).get_child(1).text = "This upgrade allows your ship to shoot three shots at once"
-	elif message == "SPEED IS KEY":
-		descs.get_child(0).texture = speedlogo
-		descs.get_child(1).get_child(1).text = "This upgrade allows your ship to perform rapid left and right dodges for a short time"
-	elif message == "Shield":
-		descs.get_child(0).texture = shieldlogo
-		descs.get_child(1).get_child(1).text = "This upgrade allows your ship to survive ONE hit from any kind of enemy fire."
-	elif message == "Admiral's Will":
-		descs.get_child(0).texture = admirallogo
-		descs.get_child(1).get_child(1).text = "The upgrade will release a shockwave that paralyzes enemies for a brief moment."
-	else: # nanti tambahin yang lain lagi, ini placeholder
-		descs.get_child(0).texture = logo
-	desc.add_child(descs)
-	
-	tween.tween_interval(4)
-	tween.tween_callback(descs.queue_free)
+func show_desc(message: String):
+	# Keep only the newest two cards so pickups cannot cover the playfield.
+	while desc.get_child_count() >= 2:
+		var old := desc.get_child(0)
+		desc.remove_child(old)
+		old.queue_free()
+	var card := preload("res://scripts/powerup_catalog.gd").make_card(message)
+	desc.add_child(card)
+	var tween := card.create_tween()
+	tween.tween_interval(3.0)
+	tween.tween_property(card, "modulate:a", 0.0, 0.2)
+	tween.tween_callback(card.queue_free)
 
-	#if is_reset:
-		#descs.queue_free()
-	
 func show_icons(message :String, duration : float):
+	if message == "Dizziness":
+		return # The live status card handles duration refresh and pause correctly.
 	if message == "Shield" or message == "Second Wind":
 		var is_active = duration > 0 
 		
@@ -134,7 +115,8 @@ func show_icons(message :String, duration : float):
 		return
 	
 	var allicon = icon_scene.instantiate()
-	var tween = icons.create_tween()
+	icons.add_child(allicon)
+	var tween = allicon.create_tween()
 	
 	if message == "Kraken Slayer":
 		allicon.get_child(1).texture = krakenlogo
@@ -156,30 +138,19 @@ func show_icons(message :String, duration : float):
 		allicon.get_child(0).start_countdown(duration)
 	else: # nanti tambahin yang lain lagi, ini placeholder
 		allicon.get_child(1).texture = logo
-	icons.add_child(allicon)
 
 	tween.tween_interval(duration)
 	tween.tween_callback(allicon.queue_free)
 	#if is_reset:
 		#icons.queue_free()
 func reset_icon():
-	var tempicon : HBoxContainer
-	tempicon = HBoxContainer.new()
-	tempicon.name = "icons"
-	tempicon.global_position = icons.global_position
-	tempicon.scale = icons.scale
-	tempicon.size = icons.size
-	icons.queue_free()
-	icons = tempicon
-	add_child(icons)
-	
+	active_boolean_icons.clear()
+	for child in icons.get_children():
+		icons.remove_child(child)
+		child.queue_free()
+	icons.add_child(preload("res://scripts/siren_status.gd").new())
+
 func reset_desc():
-	var tempdesc : VBoxContainer
-	tempdesc = VBoxContainer.new()
-	tempdesc.name = "desc"
-	tempdesc.global_position = desc.global_position
-	tempdesc.scale = desc.scale
-	tempdesc.size = desc.size
-	desc.queue_free()
-	desc = tempdesc
-	add_child(desc)
+	for child in desc.get_children():
+		desc.remove_child(child)
+		child.queue_free()

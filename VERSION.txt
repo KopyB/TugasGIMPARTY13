@@ -1,0 +1,2 @@
+RW VISUAL R11 · 2026-09-30
+Press F9 to verify. Full screen Hard transition, gunboat friendly fire, enemy ramming and barrel blast damage.

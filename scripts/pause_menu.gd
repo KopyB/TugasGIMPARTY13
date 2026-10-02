@@ -1,12 +1,15 @@
 extends Control
 
 @export var state: Label
-@export var resume_button: TextureButton
+@export var resume_button: Button
 @onready var scorelabel: Label = $PanelContainer/VBoxContainer/scorelabel
 @onready var timer: Timer = $Timer
 @onready var pause_buttons: VBoxContainer = $PanelContainer2/VBoxContainer
 @onready var settings_panel: Panel = $Settings 
 @onready var config = ConfigFile.new()
+
+var guide: PanelContainer
+var guide_button: Button
 
 var fstoggle
 var shake_setting
@@ -22,6 +25,10 @@ const MAP_TYPE_STRING = {0: "YOU DIED!", 1: "PAUSED"}
 func paused():
 	get_tree().paused = true
 	show()
+	if is_gameover:
+		$PanelContainer2/VBoxContainer/RESTART.grab_focus()
+	else:
+		resume_button.grab_focus()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 func resume():
 	get_tree().paused = false
@@ -40,6 +47,7 @@ func _ready() -> void:
 	is_gameover = false 
 
 	load_current_settings()
+	_build_power_guide()
 
 func load_current_settings():
 	var load_err = config.load("user://settings.cfg")
@@ -119,13 +127,15 @@ func _on_exit_pressed() -> void:
 	#get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	
 func _process(delta: float) -> void:
-	if is_gameover:
+	if is_gameover or Transition.busy:
 		return
 	if Input.is_action_just_pressed("escape"):
 		if not get_tree().paused:
 			toggled_handler(1) 
 		else:
-			if settings_panel and settings_panel.visible:
+			if guide != null and guide.visible:
+				_close_power_guide()
+			elif settings_panel and settings_panel.visible:
 				_on_settings_back_pressed()
 			else:
 				resume()
@@ -192,3 +202,58 @@ func increase_score(amount: int):
 	if score < 0:
 		score = 0
 	update_score_display()
+
+func _build_power_guide() -> void:
+	guide_button = Button.new()
+	guide_button.text = "POWER GUIDE"
+	guide_button.custom_minimum_size.y = 58
+	pause_buttons.add_child(guide_button)
+	pause_buttons.move_child(guide_button, 1)
+	guide_button.pressed.connect(_open_power_guide)
+	guide = PanelContainer.new()
+	guide.name = "PowerGuide"
+	add_child(guide)
+	guide.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	guide.offset_left = -400
+	guide.offset_right = 400
+	guide.offset_top = -380
+	guide.offset_bottom = 380
+	var column := VBoxContainer.new()
+	column.name = "VBoxContainer"
+	column.add_theme_constant_override("separation", 12)
+	guide.add_child(column)
+	var title := Label.new()
+	title.text = "POWER GUIDE"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 32)
+	column.add_child(title)
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	column.add_child(scroll)
+	var cards := VBoxContainer.new()
+	cards.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	cards.add_theme_constant_override("separation", 8)
+	scroll.add_child(cards)
+	var catalog = preload("res://scripts/powerup_catalog.gd")
+	for power in catalog.ENTRIES:
+		cards.add_child(catalog.make_card(power, true))
+	var back := Button.new()
+	back.name = "Back"
+	back.text = "BACK"
+	back.custom_minimum_size.y = 58
+	column.add_child(back)
+	back.pressed.connect(_close_power_guide)
+	guide.hide()
+
+func _open_power_guide() -> void:
+	$PanelContainer.hide()
+	pause_buttons.hide()
+	guide.show()
+	guide.get_node("VBoxContainer/Back").grab_focus()
+
+func _close_power_guide() -> void:
+	guide.hide()
+	$PanelContainer.show()
+	pause_buttons.show()
+	guide_button.grab_focus()

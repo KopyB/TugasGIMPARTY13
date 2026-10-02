@@ -10,6 +10,7 @@ func _ready():
 	#global_position.y = -69.0
 	$".".show()
 	$".".play("lightning")
+	VisualFX.lightning(global_position)
 	await $".".animation_finished
 	$".".play("nothing")
 	#global_position.y = -200.0

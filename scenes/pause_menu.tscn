@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b8qv1r8ggddgm"]
+[gd_scene format=3 uid="uid://b8qv1r8ggddgm"]
 
 [ext_resource type="Script" uid="uid://dpho3o8db7fek" path="res://scripts/pause_menu.gd" id="1_n87rw"]
 [ext_resource type="Texture2D" uid="uid://cnvfmlrk63gix" path="res://assets/art/pausemenu/PauseContainer.png" id="2_88e76"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://b4pkbsybbi3c5" path="res://scripts/sfx_control.gd" id="4_v4r4p"]
 [ext_resource type="Script" uid="uid://b4134r2a3o0u7" path="res://fulltoggle.gd" id="5_1s2dm"]
 [ext_resource type="Texture2D" uid="uid://bqcc17pvhinf8" path="res://assets/art/pausemenu/ButtonExampleClicked.png" id="5_71k7c"]
+
+[ext_resource type="Theme" path="res://themes/nautical.tres" id="rw_theme"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_71k7c"]
 shader = ExtResource("2_knqa7")
@@ -70,6 +72,7 @@ grow_vertical = 2
 script = ExtResource("1_n87rw")
 state = NodePath("PanelContainer/VBoxContainer/state")
 resume_button = NodePath("PanelContainer2/VBoxContainer/RESUME")
+theme = ExtResource("rw_theme")
 
 [node name="blur" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_71k7c")
@@ -149,100 +152,37 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_7l7mv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2"]
 layout_mode = 2
-theme_override_constants/separation = -2
+theme_override_constants/separation = 10
 metadata/_edit_use_anchors_ = true
 
-[node name="RESUME" type="TextureButton" parent="PanelContainer2/VBoxContainer"]
+[node name="RESUME" type="Button" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("4_knqa7")
-texture_pressed = ExtResource("5_71k7c")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="PanelContainer2/VBoxContainer/RESUME"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 40
 text = "RESUME"
+custom_minimum_size = Vector2(0, 58)
+theme_type_variation = &"PrimaryButton"
+mouse_default_cursor_shape = 2
+focus_mode = 2
 
-[node name="SETTINGS" type="TextureButton" parent="PanelContainer2/VBoxContainer"]
+[node name="SETTINGS" type="Button" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("4_knqa7")
-texture_pressed = ExtResource("5_71k7c")
-stretch_mode = 3
+text = "SETTING"
+custom_minimum_size = Vector2(0, 58)
+mouse_default_cursor_shape = 2
+focus_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer2/VBoxContainer/SETTINGS"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 40
-text = "Setting"
-
-[node name="RESTART" type="TextureButton" parent="PanelContainer2/VBoxContainer"]
+[node name="RESTART" type="Button" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("4_knqa7")
-texture_pressed = ExtResource("5_71k7c")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="PanelContainer2/VBoxContainer/RESTART"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 40
 text = "RESTART"
+custom_minimum_size = Vector2(0, 58)
+mouse_default_cursor_shape = 2
+focus_mode = 2
 
-[node name="EXIT" type="TextureButton" parent="PanelContainer2/VBoxContainer"]
+[node name="EXIT" type="Button" parent="PanelContainer2/VBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("4_knqa7")
-texture_pressed = ExtResource("5_71k7c")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="PanelContainer2/VBoxContainer/EXIT"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 40
 text = "EXIT"
+custom_minimum_size = Vector2(0, 58)
+mouse_default_cursor_shape = 2
+focus_mode = 2
 
 [node name="Timer" type="Timer" parent="."]
 process_mode = 1
@@ -402,14 +342,10 @@ offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_71k7c")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_cmnsq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_71k7c")
 text = "BACK"
 expand_icon = true
+mouse_default_cursor_shape = 2
+focus_mode = 2
 
 [node name="Apply" type="Button" parent="Settings"]
 layout_mode = 1
@@ -425,14 +361,10 @@ offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.19215687, 0.21176471, 0.30588236, 1)
-theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_71k7c")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ofnjo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_71k7c")
 text = "APPLY"
 expand_icon = true
+mouse_default_cursor_shape = 2
+focus_mode = 2
 
 [connection signal="pressed" from="PanelContainer2/VBoxContainer/RESUME" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PanelContainer2/VBoxContainer/SETTINGS" to="." method="_on_settings_pressed"]

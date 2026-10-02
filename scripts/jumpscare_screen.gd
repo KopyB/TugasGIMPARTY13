@@ -1,7 +1,6 @@
 extends CanvasLayer
 
 @onready var anim_sprite = $CenterContainer/AnimatedSprite2D
-@onready var scream_sfx = $AudioStreamPlayer
 @onready var background = $ColorRect
 
 func _ready():
